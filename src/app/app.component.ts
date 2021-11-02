@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Fuck} from "./fuck";
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'fooFuck';
+  fuck = new Fuck('fickteuch', '2', 2, 3);
 }
