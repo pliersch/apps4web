@@ -8,5 +8,5 @@ import {Fuck} from "./fuck";
 })
 export class AppComponent {
   title = 'fooFuck';
-  fuck = new Fuck('fickteuch', '2', 2, 3);
+  fuck = new Fuck('fickt_euch', '2', 2, 3);
 }
