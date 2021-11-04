@@ -1,0 +1,22 @@
+.grid {
+  display: grid;
+  //width: 100%;
+  height: 100%;
+  grid-template:
+    'appbar' auto
+    'main' 1fr
+    / 1fr;
+}
+.appbar {
+  grid-area: appbar;
+}
+.main {
+  position: relative;
+  box-sizing: border-box;
+  overflow-y: auto;
+  grid-area: main;
+}
+
+.sidenav-container {
+  height: 100vh;
+}

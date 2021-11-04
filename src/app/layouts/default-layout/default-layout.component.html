@@ -1,0 +1,42 @@
+<mat-sidenav-container class="sidenav-container" autosize>
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false"
+  >
+    <mat-toolbar>A4W</mat-toolbar>
+    <mat-nav-list>
+      <nav>
+        <a routerLink="/dashboard" routerLinkActive="active-link" class="mat-menu-item">Home</a>
+      </nav>
+      <nav>
+        <a routerLink="/gallery" routerLinkActive="active-link" class="mat-menu-item">Galerie</a>
+      </nav>
+      <nav>
+        <a routerLink="/admin" routerLinkActive="active-link" class="mat-menu-item">Admin</a>
+      </nav>
+      <nav>
+        <a routerLink="/heroes" routerLinkActive="active-link" class="mat-menu-item">Shiba</a>
+      </nav>
+      <nav>
+        <a routerLink="/account/login" routerLinkActive="active-link" class="mat-menu-item">Login</a>
+      </nav>
+      <nav>
+        <a routerLink="/address" routerLinkActive="active-link" class="mat-menu-item">Address</a>
+      </nav>
+      <nav>
+        <a routerLink="/account" routerLinkActive="active-link" class="mat-menu-item">Account</a>
+      </nav>
+      <nav>
+        <a routerLink="/profile" routerLinkActive="active-link" class="mat-menu-item">Profil</a>
+      </nav>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="grid">
+    <app-appbar class="appbar" (toggleNavEvent)="toggleNav()"></app-appbar>
+    <div class="main">
+      <router-outlet></router-outlet>
+    </div>
+<!--    <app-app-footer class="footer mat-toolbar mat-toolbar-single-row"></app-app-footer>-->
+  </mat-sidenav-content>
+</mat-sidenav-container>

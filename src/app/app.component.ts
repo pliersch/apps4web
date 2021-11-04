@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Fuck} from "./fuck";
 
 @Component({
@@ -6,7 +6,12 @@ import {Fuck} from "./fuck";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'fooFuck';
   fuck = new Fuck('fickt_euch', '2', 2, 3);
+
+  ngOnInit(): void {
+    console.log(this.fuck.title)
+  }
+
 }
