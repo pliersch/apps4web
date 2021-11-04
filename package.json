@@ -26,7 +26,6 @@
     "@ngrx/schematics": "^12.5.0",
     "@ngrx/store": "^12.5.0",
     "@ngrx/store-devtools": "^12.5.0",
-    "angularx-social-login": "^3.5.7",
     "lodash-es": "^4.17.21",
     "ngx-scrollbar": "^7.6.1",
     "rxjs": "~6.6.0",
