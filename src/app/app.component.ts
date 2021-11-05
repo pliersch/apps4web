@@ -7,7 +7,7 @@ import {Fuck} from "./fuck";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
-  title = 'fooFuck';
+  title = 'apps4web';
   fuck = new Fuck('fickt_euch', '2', 2, 3);
 
   ngOnInit(): void {

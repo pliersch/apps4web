@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-// import { ThemeService } from '@app/services';
 import { MatButton } from '@angular/material/button';
 import { MediaMatcher } from '@angular/cdk/layout';
+import {ThemeService} from "../services/theme.service";
 
 @Component({
   selector: 'app-theme-menu',
@@ -9,22 +9,20 @@ import { MediaMatcher } from '@angular/cdk/layout';
   styleUrls: ['./theme-menu.component.scss']
 })
 export class ThemeMenuComponent implements OnInit {
-  @Input() menuTrigger!: MatButton;
+  @Input() menuTrigger: MatButton | undefined;
 
-  // options$: Observable<Array<OptionsModel>> = this.themeService.getThemeOptions();
   darkMode = false;
 
-  constructor(/*private readonly themeService: ThemeService,*/
+  constructor(private readonly themeService: ThemeService,
               private mediaMatcher: MediaMatcher) {
   }
 
   ngOnInit(): void {
     this.detectOsTheme();
-    this.readThemeOptions();
   }
 
   changeTheme(themeToSet: string): void {
-    // this.themeService.setTheme(themeToSet);
+    this.themeService.setTheme(themeToSet);
     localStorage.setItem('theme', themeToSet);
   }
 
@@ -40,11 +38,5 @@ export class ThemeMenuComponent implements OnInit {
       console.log('os theme mode: ' + theme);
 
     }
-  }
-
-  private readThemeOptions(): void {
-    // this.options$.subscribe(value => {
-    //     console.log(value);
-    //   });
   }
 }

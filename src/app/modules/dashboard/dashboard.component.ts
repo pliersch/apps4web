@@ -13,9 +13,9 @@ export class DashboardComponent implements OnInit {
 
   defaultCards = [
     new DashboardItem("Card 1", "", 1, 1),
-    new DashboardItem("Card 1", "", 1, 1),
-    new DashboardItem("Card 1", "", 1, 1),
-    new DashboardItem("Card 1", "", 1, 1)
+    new DashboardItem("Card 2", "", 1, 1),
+    new DashboardItem("Card 3", "", 1, 1),
+    new DashboardItem("Card 4", "", 1, 1)
   ];
 
   cards: Observable<DashboardItem[]> = of(this.defaultCards);
@@ -37,9 +37,9 @@ export class DashboardComponent implements OnInit {
         if (matches) {
           return [
             new DashboardItem("Card 1", '"', 1, 1),
-            new DashboardItem("Card 1", '"', 1, 1),
-            new DashboardItem("Card 1", '"', 1, 1),
-            new DashboardItem("Card 1", '"', 1, 1)
+            new DashboardItem("Card 2", '"', 1, 1),
+            new DashboardItem("Card 3", '"', 1, 1),
+            new DashboardItem("Card 4", '"', 1, 1)
           ];
         } else {
           return this.defaultCards;
@@ -54,9 +54,9 @@ export class DashboardComponent implements OnInit {
         if (matches) {
           return [
             new DashboardItem("Card 1", '"', 1, 1),
-            new DashboardItem("Card 1", '"', 1, 1),
-            new DashboardItem("Card 1", '"', 1, 1),
-            new DashboardItem("Card 1", '"', 1, 1)
+            new DashboardItem("Card 2", '"', 1, 1),
+            new DashboardItem("Card 3", '"', 1, 1),
+            new DashboardItem("Card 4", '"', 1, 1)
           ];
         } else {
           return this.defaultCards;
@@ -71,9 +71,9 @@ export class DashboardComponent implements OnInit {
         if (matches) {
           return [
             new DashboardItem("Card 1", '"', 1, 1),
-            new DashboardItem("Card 1", '"', 1, 1),
-            new DashboardItem("Card 1", '"', 1, 1),
-            new DashboardItem("Card 1", '"', 1, 1)
+            new DashboardItem("Card 2", '"', 1, 1),
+            new DashboardItem("Card 3", '"', 1, 1),
+            new DashboardItem("Card 4", '"', 1, 1)
           ];
         } else {
           return this.defaultCards;
@@ -88,9 +88,9 @@ export class DashboardComponent implements OnInit {
         if (matches) {
           return [
             new DashboardItem("Card 1", '"', 2, 1),
-            new DashboardItem("Card 1", '"', 1, 1),
-            new DashboardItem("Card 1", '"', 1, 1),
-            new DashboardItem("Card 1", '"', 1, 1)
+            new DashboardItem("Card 2", '"', 1, 1),
+            new DashboardItem("Card 3", '"', 1, 1),
+            new DashboardItem("Card 4", '"', 1, 1)
           ];
         } else {
           return this.defaultCards;

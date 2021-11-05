@@ -24,9 +24,9 @@ import {MatButtonModule} from "@angular/material/button";
 import {HttpClientModule} from "@angular/common/http";
 import {AppBarComponent} from "./modules/app-bar/app-bar.component";
 import {AccountMenuComponent} from "./modules/account/account-menu/account-menu.component";
-import {ThemeMenuComponent} from "./modules/theme-menu/theme-menu.component";
 import {DashboardComponent} from "./modules/dashboard/dashboard.component";
 import {DashboardCardComponent} from "./modules/dashboard/cards/dashboard-card.component";
+import {ThemeMenuComponent} from "./modules/themes/menus/theme-menu.component";
 
 @NgModule({
   declarations: [
