@@ -1,4 +1,98 @@
-/* You can add global styles to this file, and also import other style files */
+//@import '../node_modules/@angular/material/prebuilt-themes/purple-green.css';
+//@import '../node_modules/@angular/material/prebuilt-themes/indigo-pink.css';
+//@import 'styles/material-theme';
+@import 'styles/scrollbar';
+@import 'styles/copy';
+@import 'styles/app-layout';
+//@import 'styles/test';
+html, body {
+  height: 100%;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.card-size-m {
+  max-width: 400px;
+}
+
+.card-size-l {
+  max-width: 600px;
+}
+
+.component {
+  margin: 10px;
+}
+
+.container {
+  width: 100%;
+  padding: 12px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 1264px) {
+  .container {
+    max-width: 1185px;
+  }
+}
+
+@media (min-width: 960px) {
+  .container {
+    max-width: 900px;
+  }
+}
+
+.center-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff;
+  //-webkit-box-shadow: 0 0 0 1000px #000 inset;
+  transition: background-color 10000s;
+}
+
+.mat-loading .mat-button-wrapper {
+  visibility: hidden;
+}
+
+.mat-loading .mat-progress-spinner {
+  position: absolute;
+  top: calc(50% - 10px);
+  left: calc(50% - 10px);
+}
+
+.card-no-avatar-margin-fix {
+  .mat-card-header-text {
+    margin: 0;
+  }
+}
+
+.a-nav {
+  color: white;
+  text-decoration: none;
+}

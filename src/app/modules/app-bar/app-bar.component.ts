@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import {Component, Output, EventEmitter, Input} from '@angular/core';
 
 @Component({
   selector: 'app-appbar',
@@ -6,6 +6,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./app-bar.component.scss']
 })
 export class AppBarComponent {
+  @Input() title: string | undefined;
   @Output() toggleNavEvent = new EventEmitter<string>();
 
   constructor() {

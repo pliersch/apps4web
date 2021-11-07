@@ -27,17 +27,25 @@ import {AccountMenuComponent} from "./modules/account/account-menu/account-menu.
 import {DashboardComponent} from "./modules/dashboard/dashboard.component";
 import {DashboardCardComponent} from "./modules/dashboard/cards/dashboard-card.component";
 import {ThemeMenuComponent} from "./modules/themes/menus/theme-menu.component";
+import {DynamicAppbarDirective} from "./modules/app-bar/dynamic/dynamic-appbar.directive";
+import {DynamicAppbarComponent} from "./modules/app-bar/dynamic/dynamic-appbar.component";
+import {AppFooterComponent} from "@modules//app-footer/app-footer.component";
+import {LegalNoticeComponent} from "@modules//legal-notice/legal-notice.component";
 
 @NgModule({
   declarations: [
     AppComponent,
+    AppBarComponent,
+    AppFooterComponent,
     AuthLayoutComponent,
     DefaultLayoutComponent,
-    AppBarComponent,
     AccountMenuComponent,
     ThemeMenuComponent,
     DashboardComponent,
-    DashboardCardComponent
+    DashboardCardComponent,
+    DynamicAppbarDirective,
+    DynamicAppbarComponent,
+    LegalNoticeComponent
   ],
   imports: [
     BrowserModule,
