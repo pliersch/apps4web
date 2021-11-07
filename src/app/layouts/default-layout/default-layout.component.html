@@ -1,8 +1,8 @@
-<ng-container>
+<div class="grid">
   <app-appbar class="appbar" title="A4W" (toggleNavEvent)="toggleNav()">A4W</app-appbar>
 
-  <mat-sidenav-container class="example-container" autosize>
-    <mat-sidenav #drawer fixedInViewport = "false" mode="side" opened class="example-sidenav"
+  <mat-sidenav-container class="main" autosize>
+    <mat-sidenav #drawer fixedInViewport="false" mode="side" opened class="example-sidenav"
                  [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
                  [mode]="(isHandset$ | async) ? 'over' : 'side'"
                  [opened]="(isHandset$ | async) === false"
@@ -34,12 +34,11 @@
         </nav>
       </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content class="grid">
+    <mat-sidenav-content>
       <div class="main">
         <router-outlet></router-outlet>
       </div>
-      <!--    <app-app-footer class="footer mat-toolbar mat-toolbar-single-row"></app-app-footer>-->
     </mat-sidenav-content>
   </mat-sidenav-container>
-  <mat-toolbar class="example-footer">Footer</mat-toolbar>
-</ng-container>
+  <app-app-footer class="footer mat-toolbar mat-toolbar-single-row"></app-app-footer>
+</div>
