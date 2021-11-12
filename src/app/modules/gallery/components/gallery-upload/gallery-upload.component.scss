@@ -1,0 +1,36 @@
+.example-header-image {
+  //background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  //background-image: url('assets/svg/image-placeholder.svg');
+  //background-size: cover;
+  //height: 300px;
+  //width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  //flex: 1;
+  margin-right: 20px;
+}
+
+.col:last-child {
+  margin-right: 0;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-card {
+  //width: fit-content;
+  width: 550px;
+}

@@ -1,0 +1,25 @@
+<mat-toolbar>
+  <mat-nav-list class="list-horizontal">
+    <mat-list-item>
+      <a [routerLink]="['/gallery/home']" [class.active-route]="view == viewType.Home">Home</a>
+    </mat-list-item>
+    <mat-list-item>
+      <a [routerLink]="['/gallery/explorer']" [class.active-route]="view == viewType.Explorer">Explorer</a>
+    </mat-list-item>
+    <mat-list-item>
+      <a [routerLink]="['/gallery/lightbox']" [class.active-route]="view == viewType.Lightbox">Lightbox</a>
+    </mat-list-item>
+    <mat-list-item>
+      <a [routerLink]="['/gallery/upload']" [class.active-route]="view == viewType.Upload">Upload</a>
+    </mat-list-item>
+  </mat-nav-list>
+  <span class="spacer"></span>
+  <button mat-icon-button aria-label="Example icon-button with heart icon"
+    [class.hidden]="view != viewType.Lightbox" (click)="emitSwitchView()" >
+    <mat-icon>{{ icon }}</mat-icon>
+  </button>
+  <button mat-icon-button (click)="openFilterMenu()"
+   aria-label="Example icon-button with share icon">
+    <mat-icon>filter_alt</mat-icon>
+  </button>
+</mat-toolbar>

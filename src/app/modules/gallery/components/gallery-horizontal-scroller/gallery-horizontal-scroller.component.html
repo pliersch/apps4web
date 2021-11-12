@@ -1,0 +1,11 @@
+<ng-scrollbar class="dark-scrollbar" track="horizontal" visibility="hover">
+  <div (wheel)="onScroll($event)">
+    <div class="thumbnail-list">
+      <div class="thumbnail-item item" *ngFor="let image of (images | async); let i = index"
+        [style.background-image]="'url(' + image.fileName + ')'"
+        [class.active]="image.isSelected"
+        (click)="onSelectImage($event, image)">
+      </div>
+    </div>
+  </div>
+</ng-scrollbar>

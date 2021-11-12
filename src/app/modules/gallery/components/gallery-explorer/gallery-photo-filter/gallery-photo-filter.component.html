@@ -1,0 +1,29 @@
+<mat-card class="filter-card">
+  <mat-card-header>
+    <!--    <mat-tab-group>-->
+    <!--      <mat-tab label="First" *ngFor="let tag of tagArray; let i = index">-->
+    <!--        <app-gallery-tag-selector [tag]="tagArray[i]"></app-gallery-tag-selector>-->
+    <!--      </mat-tab>-->
+    <!--    </mat-tab-group>-->
+  </mat-card-header>
+  <mat-card-content>
+    <mat-tab-group no-header [(selectedIndex)]="index">>
+      <mat-tab>
+        <div class="row">
+          <div class="col" *ngFor="let tag of tags | async; let i = index">
+            <app-gallery-tag-selector [tag]="tagArray[i]"></app-gallery-tag-selector>
+          </div>
+          <div class="col">
+            <button mat-fab (click)="createTag()"
+              aria-label="Example icon-button with share icon">
+              <mat-icon>add_circle_outline</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab>
+<!--        <app-edit-tags></app-edit-tags>-->
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

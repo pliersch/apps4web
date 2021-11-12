@@ -1,0 +1,21 @@
+.thumbnail-list {
+  height: auto;
+
+  .thumbnail-item {
+    background-size: cover;
+    background-position: center center;
+    height: 120px;
+    width: 200px;
+  }
+
+  .item {
+    border: none;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    &.active {
+      border: 1px solid cornflowerblue;
+      box-sizing: border-box;
+    }
+  }
+}

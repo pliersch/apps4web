@@ -1,0 +1,26 @@
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>Details</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list dense>
+      <mat-list-item>
+        <span matLine style="font-size:10px"> Name </span>
+        <h2 *ngIf="currentPhoto" matLine style="font-size:16px"> {{currentPhoto.fileName}} </h2>
+      </mat-list-item>
+      <mat-list-item>
+        <span matLine style="font-size:10px"> Date </span>
+        <h2 *ngIf="currentPhoto" matLine style="font-size:16px"> {{currentPhoto.createDateTime | date}} </h2>
+      </mat-list-item>
+      <mat-list-item>
+        <app-gallery-star-rating></app-gallery-star-rating>
+      </mat-list-item>
+    </mat-list>
+    <mat-chip-list *ngIf="currentPhoto" aria-label="Fish selection">
+      <mat-chip [color]="tag === 'David' ? 'primary' : 'accent'" selected
+        *ngFor="let tag of currentPhoto.tags">
+        {{tag}}
+      </mat-chip>
+    </mat-chip-list>
+  </mat-card-content>
+</mat-card>

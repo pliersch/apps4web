@@ -1,0 +1,25 @@
+.thumbnail-list {
+  display: block;
+  height: 140px;
+  white-space: nowrap;
+
+  .thumbnail-item {
+    display: inline-block;
+    background-size: cover;
+    background-position: center center;
+    height: 120px;
+    width: 200px;
+  }
+
+  .item {
+    border: none;
+    padding: 5px;
+    margin: 0;
+    box-sizing: border-box;
+
+    &.active {
+      border: 1px solid cornflowerblue;
+      box-sizing: border-box;
+    }
+  }
+}

@@ -1,0 +1,30 @@
+﻿<form [formGroup]="form" (ngSubmit)="onSubmit()" class="example-form" autocomplete="off">
+  <mat-card class="card-size-m">
+    <mat-card-header class="card-no-avatar-margin-fix">
+      <span class="spacer"></span>
+      <h2>Login</h2>
+      <span class="spacer"></span>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="button-group">
+        <div class="row">
+          <div class="col">
+            <button [disabled]="loggedIn" mat-raised-button color="primary" (click)="signInWithGoogle()" aria-label="Google login button">
+              <mat-icon svgIcon="google" aria-hidden="false" aria-label="Google login icon"></mat-icon>
+              Login with Google
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <button mat-raised-button color="primary" disabled aria-label="Email login button">
+              <mat-icon aria-hidden="false" aria-label="email login icon">email</mat-icon>
+              Login with Email
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</form>

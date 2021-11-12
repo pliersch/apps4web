@@ -1,0 +1,23 @@
+<mat-accordion class="example-headers-align">
+  <mat-expansion-panel *ngFor="let tag of tags | async; let i = index"
+    [expanded]="step === i" (opened)="setStep(i)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ tag.tagName}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-selection-list>
+      <mat-list-option *ngFor="let entry of tag.entries">
+        {{entry}}
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-expansion-panel>
+  <div style="display: flex">
+    <span class="spacer"></span>
+    <button mat-raised-button class="new-tag-btn-align"
+      (click)="openNewTagDialog()">New Tag</button>
+    <button mat-raised-button class="new-tag-btn-align"
+      (click)="openEditTagDialog()">Edit Tag</button>
+  </div>
+</mat-accordion>

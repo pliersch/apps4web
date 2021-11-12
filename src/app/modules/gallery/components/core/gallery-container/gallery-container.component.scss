@@ -1,0 +1,27 @@
+.grid {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template:
+    'toolbar' auto
+    'main' 1fr
+    'footer' auto
+    / 1fr;
+}
+
+.toolbar {
+  grid-area: toolbar;
+}
+
+.main {
+  grid-area: main;
+  overflow: hidden;
+}
+
+.footer {
+  position: relative;
+  box-sizing: border-box;
+  //padding: 10px;
+  overflow-y: auto;
+  grid-area: footer;
+}

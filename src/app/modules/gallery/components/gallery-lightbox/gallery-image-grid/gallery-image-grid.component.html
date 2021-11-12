@@ -1,0 +1,10 @@
+<mat-grid-list [cols]="colsAvailable" [rowHeight]="rowHeight" gutterSize="6px">
+  <mat-grid-tile class="bg-image"
+    *ngFor="let image of (selection | async); let i = index"
+    [colspan]="cols"
+    [rowspan]="rows"
+    [style.background-image]="'url(' + image.fileName + ')'">
+  </mat-grid-tile>
+</mat-grid-list>
+
+

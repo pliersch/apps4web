@@ -1,20 +1,19 @@
-<button mat-menu-item style="margin: 0;">tmp</button>
-<!--<ng-container *ngIf="user && user.photoUrl;  then avatar; else svgIcon">-->
-<!--</ng-container>-->
+<ng-container *ngIf="user && user.photoUrl;  then avatar; else svgIcon">
+</ng-container>
 
-<!--<ng-template #avatar>-->
-<!--    <button mat-mini-fab disableRipple [matMenuTriggerFor]="accountMenu">-->
-<!--      <img class="avatar" [src]="user.photoUrl" >-->
-<!--    </button>-->
-<!--</ng-template>-->
+<ng-template #avatar>
+    <button mat-mini-fab disableRipple [matMenuTriggerFor]="accountMenu">
+      <img class="avatar" [src]="user.photoUrl" >
+    </button>
+</ng-template>
 
-<!--<ng-template #svgIcon>-->
-<!--  <button *ngIf="user" mat-icon-button [matMenuTriggerFor]="accountMenu"-->
-<!--    aria-label="Example icon-button with share icon">-->
-<!--    <mat-icon>account_circle</mat-icon>-->
-<!--  </button>-->
-<!--</ng-template>-->
+<ng-template #svgIcon>
+  <button *ngIf="user" mat-icon-button [matMenuTriggerFor]="accountMenu"
+    aria-label="Example icon-button with share icon">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+</ng-template>
 
-<!--<mat-menu #accountMenu="matMenu" yPosition="below">-->
-<!--  <button mat-menu-item style="margin: 0;" (click)="logout()">Logout</button>-->
-<!--</mat-menu>-->
+<mat-menu #accountMenu="matMenu" yPosition="below">
+  <button mat-menu-item style="margin: 0;" (click)="logout()">Logout</button>
+</mat-menu>

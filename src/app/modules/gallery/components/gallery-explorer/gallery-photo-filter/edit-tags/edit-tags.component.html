@@ -1,0 +1,47 @@
+<h1 mat-dialog-title>Edit</h1>
+
+  <mat-form-field>
+    <input matInput placeholder="Select or create category" [matAutocomplete]="auto"
+      [formControl]="categoryCtrl" (keyup.enter)="addCategory()">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let item of filteredItems | async" [value]="item">
+        <span>{{ item }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [formControl]="tagsCtrl"
+      placeholder="Tag Name e.g. Peter, Paul, Mary" autocomplete="off">
+    <mat-error *ngIf="tagsCtrl.hasError('required')">
+      Tag name is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+
+
+  <button mat-raised-button (click)="close()">Close</button>
+  <button mat-raised-button class="mat-primary" (click)="save()">Save</button>
+
+
+<!--<h1 mat-dialog-title>New Tag</h1>-->
+<!--<mat-dialog-content [formGroup]="form">-->
+<!--  <mat-form-field>-->
+<!--    <input matInput formControlName="category"-->
+<!--      placeholder="Category Name e.g. Persons" autocomplete="off">-->
+<!--    <mat-error *ngIf="form.controls['category'].hasError('required')">-->
+<!--      Category Name is <strong>required</strong>-->
+<!--    </mat-error>-->
+<!--  </mat-form-field>-->
+<!--  <mat-form-field>-->
+<!--    <input matInput formControlName="tagList"-->
+<!--      placeholder="Tag Name e.g. Peter, Paul, Mary" autocomplete="off">-->
+<!--    <mat-error *ngIf="form.controls['tagList'].hasError('required')">-->
+<!--      Tag name is <strong>required</strong>-->
+<!--    </mat-error>-->
+<!--  </mat-form-field>-->
+<!--</mat-dialog-content>-->
+
+<!--<mat-dialog-actions>-->
+<!--  <button mat-raised-button (click)="close()">Close</button>-->
+<!--  <button mat-raised-button class="mat-primary" (click)="save()">Save</button>-->
+<!--</mat-dialog-actions>-->

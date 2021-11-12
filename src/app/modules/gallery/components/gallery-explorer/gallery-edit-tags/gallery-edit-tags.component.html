@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>Edit Tags</h1>
+<mat-dialog-content style="overflow: hidden;">
+  <div class="flex-row">
+    <div class="flex-column">
+      <div style="width: auto; height: 300px;">
+        <ng-scrollbar class="dark-scrollbar" [autoWidthDisabled]="false"
+          track="vertical" visibility="always">
+          <mat-selection-list no-padding-top multiple="false">
+            <mat-list-option *ngFor="let tag of tagsObserver | async; let i = index"
+              [selected]="currentTag.id === tag.id"
+              [value]="tag" (click)="onSelectCategory(tag)">
+              {{tag.tagName}}
+            </mat-list-option>
+          </mat-selection-list>
+        </ng-scrollbar>
+      </div>
+      <button mat-raised-button (click)="onNewTag()">New</button>
+    </div>
+    <mat-divider [vertical]="true"></mat-divider>
+    <app-gallery-edit-tag-detail class="full-width chips-container"
+      (tagChangesEvent)="onEntriesChanged()"
+      (deleteEvent)="onDeleteCategory($event)"
+      [tag]="currentTag">
+    </app-gallery-edit-tag-detail>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <span class="spacer"></span>
+  <button mat-raised-button class="mat-primary"
+    [disabled]="!hasChanges" (click)="apply()">Apply
+  </button>
+  <button mat-raised-button (click)="close()">Cancel</button>
+  <button mat-raised-button class="mat-primary" (click)="save()">Ok</button>
+</mat-dialog-actions>

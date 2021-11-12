@@ -4,7 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && gzipper compress ./dist",
+    "serve:build": "lite-server --baseDir=\"dist/apps4web\"\n",
+    "build:prod:serve": "ng build --configuration production && lite-server --baseDir=\"dist/apps4web\"\n",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -26,6 +28,7 @@
     "@ngrx/schematics": "^12.5.0",
     "@ngrx/store": "^12.5.0",
     "@ngrx/store-devtools": "^12.5.0",
+    "angularx-social-login": "^4.0.1",
     "lodash-es": "^4.17.21",
     "ngx-scrollbar": "^7.6.1",
     "rxjs": "~6.6.0",
@@ -38,12 +41,15 @@
     "@angular/compiler-cli": "~13.0.0",
     "@types/jasmine": "~3.8.0",
     "@types/node": "^12.11.1",
+    "compression": "^1.7.4",
+    "gzipper": "^6.0.0",
     "jasmine-core": "~3.8.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "lite-server": "^2.6.1",
     "typescript": "~4.4.4"
   }
 }

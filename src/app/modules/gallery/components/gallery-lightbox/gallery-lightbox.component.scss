@@ -1,0 +1,50 @@
+.grid {
+  display: grid;
+  width: 100%;
+  height: 100%;
+
+  &.horizontal {
+    grid-template:
+      'detail' 1fr
+      'thumbs' 160px
+      / 1fr;
+  }
+
+  &.vertical {
+    grid-template-columns: 200px 1fr;
+    grid-template-areas: "thumbs detail";
+  }
+
+  .grid-detail {
+    grid-area: detail;
+    overflow: hidden;
+    min-height: 0;
+    min-width: 0;
+
+    .responsive-image {
+      background-position: center center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      width: 100%;
+      height: 100%;
+
+      //&:hover {
+      //  -webkit-transform: scale(1.2);
+      //  transform: scale(1.2);
+      //}
+    }
+  }
+
+  .grid-thumbs {
+    grid-area: thumbs;
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+}
+
+.scroll ::ng-deep .cdk-virtual-scroll-content-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

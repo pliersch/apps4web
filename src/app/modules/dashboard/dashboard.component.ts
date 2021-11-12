@@ -15,6 +15,8 @@ export class DashboardComponent implements OnInit {
     new DashboardItem("Card 1", "", 1, 1),
     new DashboardItem("Card 2", "", 1, 1),
     new DashboardItem("Card 3", "", 1, 1),
+    new DashboardItem("Card 2", "", 1, 1),
+    new DashboardItem("Card 3", "", 1, 1),
     new DashboardItem("Card 4", "", 1, 1)
   ];
 
@@ -39,6 +41,9 @@ export class DashboardComponent implements OnInit {
             new DashboardItem("Card 1", '"', 1, 1),
             new DashboardItem("Card 2", '"', 1, 1),
             new DashboardItem("Card 3", '"', 1, 1),
+            new DashboardItem("Card 1", '"', 1, 1),
+            new DashboardItem("Card 2", '"', 1, 1),
+            new DashboardItem("Card 3", '"', 1, 1),
             new DashboardItem("Card 4", '"', 1, 1)
           ];
         } else {
@@ -53,6 +58,9 @@ export class DashboardComponent implements OnInit {
       map(({matches}) => {
         if (matches) {
           return [
+            new DashboardItem("Card 1", '"', 1, 1),
+            new DashboardItem("Card 2", '"', 1, 1),
+            new DashboardItem("Card 3", '"', 1, 1),
             new DashboardItem("Card 1", '"', 1, 1),
             new DashboardItem("Card 2", '"', 1, 1),
             new DashboardItem("Card 3", '"', 1, 1),
@@ -73,6 +81,9 @@ export class DashboardComponent implements OnInit {
             new DashboardItem("Card 1", '"', 1, 1),
             new DashboardItem("Card 2", '"', 1, 1),
             new DashboardItem("Card 3", '"', 1, 1),
+            new DashboardItem("Card 1", '"', 1, 1),
+            new DashboardItem("Card 2", '"', 1, 1),
+            new DashboardItem("Card 3", '"', 1, 1),
             new DashboardItem("Card 4", '"', 1, 1)
           ];
         } else {
@@ -90,6 +101,9 @@ export class DashboardComponent implements OnInit {
             new DashboardItem("Card 1", '"', 2, 1),
             new DashboardItem("Card 2", '"', 1, 1),
             new DashboardItem("Card 3", '"', 1, 1),
+            new DashboardItem("Card 1", '"', 2, 1),
+            new DashboardItem("Card 2", '"', 1, 1),
+            new DashboardItem("Card 3", '"', 1, 1),
             new DashboardItem("Card 4", '"', 1, 1)
           ];
         } else {
@@ -104,6 +118,9 @@ export class DashboardComponent implements OnInit {
       map(({matches}) => {
         if (matches) {
           return [
+            new DashboardItem("Card 1", '"', 2, 1),
+            new DashboardItem("Card 2", '"', 1, 1),
+            new DashboardItem("Card 3", '"', 1, 2),
             new DashboardItem("Card 1", '"', 2, 1),
             new DashboardItem("Card 2", '"', 1, 1),
             new DashboardItem("Card 3", '"', 1, 2),

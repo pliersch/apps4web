@@ -4,11 +4,14 @@ import {DefaultLayoutComponent} from "./layouts/default-layout/default-layout.co
 import {DashboardComponent} from "./modules/dashboard/dashboard.component";
 import {LegalNoticeComponent} from "@modules//legal-notice/legal-notice.component";
 
+const galleryModule = () => import('@app/modules/gallery/gallery.module').then((x) => x.GalleryModule);
+
 const routes: Routes = [
   { path: '', component: DefaultLayoutComponent, children: [
       { path: '', component: DashboardComponent },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'impressum', component: LegalNoticeComponent },
+      { path: 'gallery', loadChildren: galleryModule }
     ]}
 ];
 

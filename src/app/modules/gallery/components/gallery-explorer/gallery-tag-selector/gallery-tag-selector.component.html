@@ -1,0 +1,16 @@
+<mat-card>
+  <mat-card-content>
+    <h2 *ngIf="tag">{{tag.tagName}}</h2>
+    <section *ngIf="tag">
+      <mat-selection-list>
+        <mat-list-option *ngFor="let entry of tag.entries">
+          {{entry}}
+        </mat-list-option>
+      </mat-selection-list>
+      <button mat-icon-button (click)="addEntry()"
+        aria-label="Example icon-button with share icon">
+        <mat-icon>add_circle_outline</mat-icon>
+      </button>
+    </section>
+  </mat-card-content>
+</mat-card>

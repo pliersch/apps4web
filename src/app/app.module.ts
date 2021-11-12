@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {APP_INITIALIZER, ErrorHandler, Inject, NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AuthLayoutComponent} from "./layouts/auth-layout/auth-layout.component";
 import {DefaultLayoutComponent} from "./layouts/default-layout/default-layout.component";
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -21,9 +21,8 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatCardModule} from "@angular/material/card";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AppBarComponent} from "./modules/app-bar/app-bar.component";
-import {AccountMenuComponent} from "./modules/account/account-menu/account-menu.component";
 import {DashboardComponent} from "./modules/dashboard/dashboard.component";
 import {DashboardCardComponent} from "./modules/dashboard/cards/dashboard-card.component";
 import {ThemeMenuComponent} from "./modules/themes/menus/theme-menu.component";
@@ -32,6 +31,24 @@ import {DynamicAppbarComponent} from "./modules/app-bar/dynamic/dynamic-appbar.c
 import {AppFooterComponent} from "@modules//app-footer/app-footer.component";
 import {LegalNoticeComponent} from "@modules//legal-notice/legal-notice.component";
 
+import {Store, StoreModule} from '@ngrx/store';
+import {LoaderEffect} from '@app/stores/app/app.store.loader.effect';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {EffectsModule} from '@ngrx/effects';
+import {appStateReducer} from '@app/stores/app/app.store.reducer';
+import {
+  GoogleLoginProvider,
+  SocialAuthService,
+  SocialAuthServiceConfig,
+  SocialLoginModule
+} from "angularx-social-login";
+import {UserService} from "@app/services";
+import {ErrorInterceptor, initApplication, JwtInterceptor} from "@app/core/helpers";
+import {AccountModule} from "@modules//account/account.module";
+import {NgScrollbarModule} from "ngx-scrollbar";
+import {GlobalErrorHandler} from "@app/core/helpers/global-error-handler";
+import {environment} from "@environments/environment";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +56,6 @@ import {LegalNoticeComponent} from "@modules//legal-notice/legal-notice.componen
     AppFooterComponent,
     AuthLayoutComponent,
     DefaultLayoutComponent,
-    AccountMenuComponent,
     ThemeMenuComponent,
     DashboardComponent,
     DashboardCardComponent,
@@ -47,12 +63,12 @@ import {LegalNoticeComponent} from "@modules//legal-notice/legal-notice.componen
     DynamicAppbarComponent,
     LegalNoticeComponent
   ],
-  imports: [
+   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
     MatCardModule,
     MatButtonModule,
+    BrowserAnimationsModule,
     MatRadioModule,
     MatSidenavModule,
     MatSnackBarModule,
@@ -64,11 +80,45 @@ import {LegalNoticeComponent} from "@modules//legal-notice/legal-notice.componen
     LayoutModule,
     HttpClientModule,
     MatListModule,
+    SocialLoginModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    AccountModule,
+     // @ts-ignore
+    StoreModule.forRoot({ appState: appStateReducer }),
+    EffectsModule.forRoot([LoaderEffect]),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    NgScrollbarModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: true,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '334979481378-o30p8vigr8pma4sdod58qepl6ekk1k8b.apps.googleusercontent.com'
+            )
+          }
+        ]
+      } as SocialAuthServiceConfig
+    },
+    {
+      provide: APP_INITIALIZER, useFactory: initApplication, multi: true, deps: [
+        [new Inject(Store)],
+        SocialAuthService,
+        UserService]
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+  ],
+  // exports: [MatButtonLoadingDirective],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+
+export class AppModule {
+}
