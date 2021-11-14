@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import {Component} from '@angular/core';
+import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-address-form',
@@ -7,6 +7,7 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./address-form.component.scss']
 })
 export class AddressFormComponent {
+
   addressForm = this.fb.group({
     company: null,
     firstName: [null, Validators.required],
@@ -26,7 +27,6 @@ export class AddressFormComponent {
   states = [
     {name: 'Alabama', abbreviation: 'AL'},
     {name: 'Alaska', abbreviation: 'AK'},
-    {name: 'American Samoa', abbreviation: 'AS'},
     {name: 'Arizona', abbreviation: 'AZ'},
     {name: 'Virgin Islands', abbreviation: 'VI'},
     {name: 'Virginia', abbreviation: 'VA'},
@@ -36,9 +36,11 @@ export class AddressFormComponent {
     {name: 'Wyoming', abbreviation: 'WY'}
   ];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) {
+  }
 
   onSubmit(): void {
     alert('Thanks!');
   }
+
 }

@@ -1,10 +1,8 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
-import {FooRoutingModule} from './foo-routing.module';
-import {BarComponent} from './bar/bar.component';
-import {RouterContainerComponent} from './router-container/router-container.component';
-import {AddressComponent} from './address/address.component';
+import { SamplesRoutingModule } from './samples-routing.module';
+import { AddressFormComponent } from './address-form/address-form.component';
 import {MatCardModule} from "@angular/material/card";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
@@ -15,15 +13,13 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
-    BarComponent,
-    RouterContainerComponent,
-    AddressComponent
+    AddressFormComponent
   ],
   imports: [
     CommonModule,
+    SamplesRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    FooRoutingModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
@@ -32,5 +28,4 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     MatSelectModule
   ]
 })
-export class FooModule {
-}
+export class SamplesModule { }
