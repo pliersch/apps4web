@@ -4,8 +4,8 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { first } from 'rxjs/operators';
 
 import { AlertService } from '@app/services';
-import {AccountService} from "@modules//account/services/account.service";
 import {mustMatch} from "@app/core/helpers";
+import {AccountService} from "@modules/account/services/account.service";
 
 enum TokenStatus {
   Validating,

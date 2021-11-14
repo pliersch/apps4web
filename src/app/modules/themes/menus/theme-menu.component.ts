@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MediaMatcher } from '@angular/cdk/layout';
-import {ThemeService} from "../services/theme.service";
+import {ThemeService} from "@modules/themes/services/theme.service";
 
 @Component({
   selector: 'app-theme-menu',

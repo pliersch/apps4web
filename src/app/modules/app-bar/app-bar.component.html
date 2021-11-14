@@ -1,8 +1,9 @@
-<mat-toolbar> {{appName}}
+<mat-toolbar>
   <button mat-icon-button (click)="emitNavToggle()"
           aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
   </button>
+  <span>{{appName}}</span>
   <app-dynamic-appbar></app-dynamic-appbar>
   <span class="spacer"></span>
   <app-theme-menu></app-theme-menu>

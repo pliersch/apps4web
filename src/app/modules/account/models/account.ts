@@ -1,4 +1,4 @@
-﻿import {Role} from "@modules//account/models/role";
+﻿import {Role} from "@modules/account/models/role";
 
 export class Account {
   id: string;

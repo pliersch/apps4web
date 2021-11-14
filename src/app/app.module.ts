@@ -22,14 +22,6 @@ import {MatCardModule} from "@angular/material/card";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {AppBarComponent} from "./modules/app-bar/app-bar.component";
-import {DashboardComponent} from "./modules/dashboard/dashboard.component";
-import {DashboardCardComponent} from "./modules/dashboard/cards/dashboard-card.component";
-import {ThemeMenuComponent} from "./modules/themes/menus/theme-menu.component";
-import {DynamicAppbarDirective} from "./modules/app-bar/dynamic/dynamic-appbar.directive";
-import {DynamicAppbarComponent} from "./modules/app-bar/dynamic/dynamic-appbar.component";
-import {AppFooterComponent} from "@modules//app-footer/app-footer.component";
-import {LegalNoticeComponent} from "@modules//legal-notice/legal-notice.component";
 
 import {Store, StoreModule} from '@ngrx/store';
 import {LoaderEffect} from '@app/stores/app/app.store.loader.effect';
@@ -44,13 +36,23 @@ import {
 } from "angularx-social-login";
 import {UserService} from "@app/services";
 import {ErrorInterceptor, initApplication, JwtInterceptor} from "@app/core/helpers";
-import {AccountModule} from "@modules//account/account.module";
 import {NgScrollbarModule} from "ngx-scrollbar";
 import {GlobalErrorHandler} from "@app/core/helpers/global-error-handler";
 import {environment} from "@environments/environment";
+import {AppBarComponent} from "@modules/app-bar/app-bar.component";
+import {AppFooterComponent} from "@modules/app-footer/app-footer.component";
+import {ThemeMenuComponent} from "@modules/themes/menus/theme-menu.component";
+import {DashboardComponent} from "@modules/dashboard/dashboard.component";
+import {DynamicAppbarComponent} from "@modules/app-bar/dynamic/dynamic-appbar.component";
+import {DynamicAppbarDirective} from "@modules/app-bar/dynamic/dynamic-appbar.directive";
+import {DashboardCardComponent} from "@modules/dashboard/cards/dashboard-card.component";
+import {LegalNoticeComponent} from "@modules/legal-notice/legal-notice.component";
+import {AccountModule} from "@modules/account/account.module";
+import {AddressFormComponent} from "./adress-form/address-form.component";
 
 @NgModule({
   declarations: [
+    AddressFormComponent,
     AppComponent,
     AppBarComponent,
     AppFooterComponent,
@@ -61,11 +63,12 @@ import {environment} from "@environments/environment";
     DashboardCardComponent,
     DynamicAppbarDirective,
     DynamicAppbarComponent,
-    LegalNoticeComponent
+    LegalNoticeComponent,
   ],
-   imports: [
+  imports: [
     BrowserModule,
     AppRoutingModule,
+    // SamplesModule,
     MatCardModule,
     MatButtonModule,
     BrowserAnimationsModule,
@@ -85,10 +88,10 @@ import {environment} from "@environments/environment";
     MatInputModule,
     MatSelectModule,
     AccountModule,
-     // @ts-ignore
-    StoreModule.forRoot({ appState: appStateReducer }),
+    // @ts-ignore
+    StoreModule.forRoot({appState: appStateReducer}),
     EffectsModule.forRoot([LoaderEffect]),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
     NgScrollbarModule
   ],
   providers: [
@@ -112,9 +115,9 @@ import {environment} from "@environments/environment";
         SocialAuthService,
         UserService]
     },
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: ErrorHandler, useClass: GlobalErrorHandler},
   ],
   // exports: [MatButtonLoadingDirective],
   bootstrap: [AppComponent]

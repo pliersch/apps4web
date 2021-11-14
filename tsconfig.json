@@ -26,7 +26,7 @@
         "app/*"
       ],
       "@modules/*": [
-        "app/modules*"
+        "app/modules/*"
       ],
       "@gallery/*": [
         "app/modules/gallery/*"

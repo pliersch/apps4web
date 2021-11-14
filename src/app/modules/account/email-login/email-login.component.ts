@@ -12,7 +12,7 @@ import { first } from 'rxjs/operators';
 import { AlertService } from '@app/services/';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import {AccountService} from "@modules//account/services/account.service";
+import {AccountService} from "@modules/account/services/account.service";
 
 @Component({
   selector: 'app-email-login',

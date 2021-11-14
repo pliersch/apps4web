@@ -20,8 +20,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { SocialLoginComponent } from '@app/modules/account/social-login/social-login.component';
 import { EmailLoginComponent } from './email-login/email-login.component';
-import {AccountMenuComponent} from "@modules//account/account-menu/account-menu.component";
 import {MatButtonLoadingDirective} from "@app/directives/mat-button-loading.directive";
+import {AccountMenuComponent} from "@modules/account/account-menu/account-menu.component";
 
 @NgModule({
   imports: [

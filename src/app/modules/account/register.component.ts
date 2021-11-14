@@ -5,7 +5,7 @@ import { first } from 'rxjs/operators';
 
 import { AlertService } from '@app/services';
 import { mustMatch } from '@app/core/helpers';
-import {AccountService} from "@modules//account/services/account.service";
+import {AccountService} from "@modules/account/services/account.service";
 
 @Component({ templateUrl: 'register.component.html' })
 export class RegisterComponent implements OnInit {

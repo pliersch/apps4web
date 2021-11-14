@@ -3,8 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { AccountService, AlertService } from '@app/services';
+import { AlertService } from '@app/services';
 import { mustMatch } from '@app/core/helpers';
+import {AccountService} from "@modules/account/services/account.service";
 
 @Component({ templateUrl: 'add-edit.component.html' })
 export class AddEditComponent implements OnInit {
