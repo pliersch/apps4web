@@ -4,8 +4,8 @@ import {DefaultLayoutComponent} from "./layouts/default-layout/default-layout.co
 import {DashboardComponent} from "@modules/dashboard/dashboard.component";
 import {LegalNoticeComponent} from "@modules/legal-notice/legal-notice.component";
 
-const accountModule = () => import('@app/modules/account/account.module').then((x) => x.AccountModule);
 const adminModule = () => import('@app/modules/admin/admin.module').then((x) => x.AdminModule);
+const accountModule = () => import('@app/modules/account/account.module').then((x) => x.AccountModule);
 const recipesModule = () => import('@app/modules/recipes/recipes.module').then((x) => x.RecipesModule);
 const samplesModule = () => import('@app/modules/samples/samples.module').then((x) => x.SamplesModule);
 const profileModule = () => import('@app/modules/profile/profile.module').then((x) => x.ProfileModule);
@@ -16,9 +16,10 @@ const routes: Routes = [
       { path: '', component: DashboardComponent },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'impressum', component: LegalNoticeComponent },
-      { path: 'gallery', loadChildren: galleryModule },
-      { path: 'samples', loadChildren: samplesModule },
       { path: 'admin', loadChildren: adminModule },
+      { path: 'gallery', loadChildren: galleryModule },
+      { path: 'account', loadChildren: accountModule },
+      { path: 'samples', loadChildren: samplesModule },
       { path: 'recipes', loadChildren: recipesModule },
       { path: 'profile', loadChildren: profileModule },
     ]}

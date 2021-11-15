@@ -1,15 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
+import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-ingredients',
   templateUrl: './ingredients.component.html',
   styleUrls: ['./ingredients.component.scss']
 })
-export class IngredientsComponent implements OnInit {
+export class IngredientsComponent {
 
-  constructor() { }
+  ingredientsForm = this.fb.group({
+    flour: [null, Validators.required],
+    water: [null, Validators.required],
+    yeast: [null, Validators.required],
+    honey: [null, Validators.required],
+    salt: [null, Validators.required]
+  });
 
-  ngOnInit(): void {
+  constructor(private fb: FormBuilder) {
+  }
+
+  onSubmit(): void {
+    alert('Thanks!');
   }
 
 }

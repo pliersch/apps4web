@@ -48,11 +48,9 @@ import {DynamicAppbarDirective} from "@modules/app-bar/dynamic/dynamic-appbar.di
 import {DashboardCardComponent} from "@modules/dashboard/cards/dashboard-card.component";
 import {LegalNoticeComponent} from "@modules/legal-notice/legal-notice.component";
 import {AccountModule} from "@modules/account/account.module";
-import {AddressFormComponent} from "./adress-form/address-form.component";
 
 @NgModule({
   declarations: [
-    AddressFormComponent,
     AppComponent,
     AppBarComponent,
     AppFooterComponent,
