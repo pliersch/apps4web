@@ -6,21 +6,6 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AuthLayoutComponent} from "./layouts/auth-layout/auth-layout.component";
 import {DefaultLayoutComponent} from "./layouts/default-layout/default-layout.component";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {LayoutModule} from "@angular/cdk/layout";
-import {MatSelectModule} from "@angular/material/select";
-import {MatIconModule} from "@angular/material/icon";
-import {MatListModule} from "@angular/material/list";
-import {MatSidenavModule} from "@angular/material/sidenav";
-import {MatInputModule} from "@angular/material/input";
-import {MatRadioModule} from "@angular/material/radio";
-import {MatSnackBarModule} from "@angular/material/snack-bar";
-import {MatMenuModule} from "@angular/material/menu";
-import {MatGridListModule} from "@angular/material/grid-list";
-import {MatCardModule} from "@angular/material/card";
-import {ReactiveFormsModule} from "@angular/forms";
-import {MatButtonModule} from "@angular/material/button";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 
 import {Store, StoreModule} from '@ngrx/store';
@@ -48,6 +33,7 @@ import {DynamicAppbarDirective} from "@modules/app-bar/dynamic/dynamic-appbar.di
 import {DashboardCardComponent} from "@modules/dashboard/cards/dashboard-card.component";
 import {LegalNoticeComponent} from "@modules/legal-notice/legal-notice.component";
 import {AccountModule} from "@modules/account/account.module";
+import {MaterialModule} from "@app/shared/material/material.module";
 
 @NgModule({
   declarations: [
@@ -66,31 +52,19 @@ import {AccountModule} from "@modules/account/account.module";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    // SamplesModule,
-    MatCardModule,
-    MatButtonModule,
-    BrowserAnimationsModule,
-    MatRadioModule,
-    MatSidenavModule,
-    MatSnackBarModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatMenuModule,
-    MatGridListModule,
-    LayoutModule,
     HttpClientModule,
-    MatListModule,
+    BrowserAnimationsModule,
     SocialLoginModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
     AccountModule,
+    MaterialModule,
     // @ts-ignore
     StoreModule.forRoot({appState: appStateReducer}),
     EffectsModule.forRoot([LoaderEffect]),
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
     NgScrollbarModule
+  ],
+  exports: [
+    MaterialModule
   ],
   providers: [
     {

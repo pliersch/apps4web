@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatButton } from '@angular/material/button';
-import { MediaMatcher } from '@angular/cdk/layout';
+import {Component, Input, OnInit} from '@angular/core';
+import {MatButton} from '@angular/material/button';
+import {MediaMatcher} from '@angular/cdk/layout';
 import {ThemeService} from "@modules/themes/services/theme.service";
 
 @Component({
@@ -30,13 +30,11 @@ export class ThemeMenuComponent implements OnInit {
     const theme: string | null = localStorage.getItem('theme');
     if (theme) {
       this.changeTheme(theme);
-      console.log('storage: ', theme);
     }
     if (this.mediaMatcher.matchMedia('(prefers-color-scheme: dark)').matches) {
       this.darkMode = true;
-      const theme = this.darkMode ? 'dark' : 'light';
-      console.log('os theme mode: ' + theme);
-
+      // const theme = this.darkMode ? 'dark' : 'light';
+      // console.log('os theme mode: ' + theme);
     }
   }
 }
