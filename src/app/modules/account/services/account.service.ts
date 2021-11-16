@@ -1,15 +1,15 @@
-﻿import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map, finalize } from 'rxjs/operators';
+﻿import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {finalize, map} from 'rxjs/operators';
 
-import { environment } from '@environments/environment';
+import {environment} from '@environments/environment';
 import {Account} from "@app/models";
 
 const baseUrl = `${environment.apiUrl}/accounts`;
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class AccountService {
 
   constructor(private router: Router, private http: HttpClient) {
@@ -21,6 +21,7 @@ export class AccountService {
   public get accountValue(): Account {
     return this.accountSubject.value;
   }
+
   private accountSubject: BehaviorSubject<Account>;
   public account: Observable<Account>;
 
@@ -29,7 +30,7 @@ export class AccountService {
   private refreshTokenTimeout: number;
 
   login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(`${baseUrl}/authenticate`, { email, password }, { withCredentials: true }).pipe(
+    return this.http.post<any>(`${baseUrl}/authenticate`, {email, password}, {withCredentials: true}).pipe(
       map((account) => {
         this.accountSubject.next(account);
         this.startRefreshTokenTimer();
@@ -39,7 +40,7 @@ export class AccountService {
   }
 
   logout(): void {
-    this.http.post<any>(`${baseUrl}/revoke-token`, {}, { withCredentials: true }).subscribe();
+    this.http.post<any>(`${baseUrl}/revoke-token`, {}, {withCredentials: true}).subscribe();
     this.stopRefreshTokenTimer();
     // @ts-ignore fixme
     this.accountSubject.next(null);
@@ -48,7 +49,7 @@ export class AccountService {
 
   refreshToken(): Observable<any> {
     console.log('refresh token');
-    return this.http.post<any>(`${baseUrl}/refresh-token`, {}, { withCredentials: true }).pipe(
+    return this.http.post<any>(`${baseUrl}/refresh-token`, {}, {withCredentials: true}).pipe(
       map((account) => {
         this.accountSubject.next(account);
         this.startRefreshTokenTimer();
@@ -62,19 +63,19 @@ export class AccountService {
   }
 
   verifyEmail(token: string): Observable<any> {
-    return this.http.post(`${baseUrl}/verify-email`, { token });
+    return this.http.post(`${baseUrl}/verify-email`, {token});
   }
 
   forgotPassword(email: string): Observable<any> {
-    return this.http.post(`${baseUrl}/forgot-password`, { email });
+    return this.http.post(`${baseUrl}/forgot-password`, {email});
   }
 
   validateResetToken(token: string): Observable<any> {
-    return this.http.post(`${baseUrl}/validate-reset-token`, { token });
+    return this.http.post(`${baseUrl}/validate-reset-token`, {token});
   }
 
   resetPassword(token: string, password: string, confirmPassword: string): Observable<any> {
-    return this.http.post(`${baseUrl}/reset-password`, { token, password, confirmPassword });
+    return this.http.post(`${baseUrl}/reset-password`, {token, password, confirmPassword});
   }
 
   getAll(): Observable<Account[]> {
@@ -95,7 +96,7 @@ export class AccountService {
         // update the current account if it was updated
         if (account.id === this.accountValue.id) {
           // publish updated account to subscribers
-          account = { ...this.accountValue, ...account };
+          account = {...this.accountValue, ...account};
           this.accountSubject.next(account);
         }
         return account;
@@ -122,7 +123,7 @@ export class AccountService {
     // set a timeout to refresh the token a minute before it expires
     const expires = new Date(jwtToken.exp * 1000);
     const timeout = expires.getTime() - Date.now() - 60 * 1000;
-    this.refreshTokenTimeout = setTimeout(() => this.refreshToken().subscribe(), timeout);
+    this.refreshTokenTimeout = window.setTimeout(() => this.refreshToken().subscribe(), timeout);
   }
 
   private stopRefreshTokenTimer(): void {

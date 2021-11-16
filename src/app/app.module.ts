@@ -21,6 +21,7 @@ import {
 } from "angularx-social-login";
 import {UserService} from "@app/services";
 import {ErrorInterceptor, initApplication, JwtInterceptor} from "@app/core/helpers";
+// import {NgxScrollbarModule} from "@app/shared/ngx-scrollbar/ngx-scrollbar.module";
 import {NgScrollbarModule} from "ngx-scrollbar";
 import {GlobalErrorHandler} from "@app/core/helpers/global-error-handler";
 import {environment} from "@environments/environment";
@@ -56,16 +57,17 @@ import {MaterialModule} from "@app/shared/material/material.module";
     BrowserAnimationsModule,
     SocialLoginModule,
     AccountModule,
+    // NgxScrollbarModule,
+    NgScrollbarModule,
     MaterialModule,
     // @ts-ignore
     StoreModule.forRoot({appState: appStateReducer}),
     EffectsModule.forRoot([LoaderEffect]),
-    StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
-    NgScrollbarModule
+    StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production})
   ],
-  exports: [
-    MaterialModule
-  ],
+  // exports: [
+  //   NgScrollbarModule,
+  // ],
   providers: [
     {
       provide: 'SocialAuthServiceConfig',
@@ -91,7 +93,6 @@ import {MaterialModule} from "@app/shared/material/material.module";
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: ErrorHandler, useClass: GlobalErrorHandler},
   ],
-  // exports: [MatButtonLoadingDirective],
   bootstrap: [AppComponent]
 })
 

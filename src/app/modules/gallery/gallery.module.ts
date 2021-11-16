@@ -3,6 +3,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {CommonModule} from '@angular/common';
 
 import {MaterialModule} from "@app/shared/material/material.module";
+// import {NgxScrollbarModule} from '@app/shared/ngx-scrollbar/ngx-scrollbar.module';
 import {NgScrollbarModule} from 'ngx-scrollbar';
 import {GalleryRoutingModule} from './gallery-routing.module';
 import {GalleryToolbarComponent} from './components/core/gallery-toolbar/gallery-toolbar.component';
@@ -71,6 +72,7 @@ import {GalleryEditTagListComponent} from './components/gallery-explorer/gallery
     DragDropModule,
     GalleryRoutingModule,
     ScrollingModule,
+    // NgxScrollbarModule,
     NgScrollbarModule,
     ShareModule,
     // StoreRouterConnectingModule.forRoot(),

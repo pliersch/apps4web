@@ -1,17 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { first } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators,} from '@angular/forms';
+import {first} from 'rxjs/operators';
 
-import { AlertService } from '@app/services/';
-import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
+import {AlertService} from '@app/services/';
+import {MatIconRegistry} from '@angular/material/icon';
+import {DomSanitizer} from '@angular/platform-browser';
 import {AccountService} from "@modules/account/services/account.service";
 
 @Component({
@@ -32,7 +26,7 @@ export class EmailLoginComponent implements OnInit {
     iconRegistry.addSvgIcon(
       'google',
       sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/btn_google.svg'
+        'assets/Google__G__Logo.svg'
       )
     );
   }
