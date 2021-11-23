@@ -1,10 +1,12 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {DefaultLayoutComponent} from "./layouts/default-layout/default-layout.component";
 import {DashboardComponent} from "@modules/dashboard/dashboard.component";
 import {LegalNoticeComponent} from "@modules/legal-notice/legal-notice.component";
 
+const chatModule = () => import('@app/modules/chat/chat.module').then((x) => x.ChatModule);
 const adminModule = () => import('@app/modules/admin/admin.module').then((x) => x.AdminModule);
+const doctorModule = () => import('@app/modules/doctor/doctor.module').then((x) => x.DoctorModule);
 const accountModule = () => import('@app/modules/account/account.module').then((x) => x.AccountModule);
 const recipesModule = () => import('@app/modules/recipes/recipes.module').then((x) => x.RecipesModule);
 const samplesModule = () => import('@app/modules/samples/samples.module').then((x) => x.SamplesModule);
@@ -12,21 +14,26 @@ const profileModule = () => import('@app/modules/profile/profile.module').then((
 const galleryModule = () => import('@app/modules/gallery/gallery.module').then((x) => x.GalleryModule);
 
 const routes: Routes = [
-  { path: '', component: DefaultLayoutComponent, children: [
-      { path: '', component: DashboardComponent },
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'impressum', component: LegalNoticeComponent },
-      { path: 'admin', loadChildren: adminModule },
-      { path: 'gallery', loadChildren: galleryModule },
-      { path: 'account', loadChildren: accountModule },
-      { path: 'samples', loadChildren: samplesModule },
-      { path: 'recipes', loadChildren: recipesModule },
-      { path: 'profile', loadChildren: profileModule },
-    ]}
+  {
+    path: '', component: DefaultLayoutComponent, children: [
+      {path: '', component: DashboardComponent},
+      {path: 'dashboard', component: DashboardComponent},
+      {path: 'impressum', component: LegalNoticeComponent},
+      {path: 'chat', loadChildren: chatModule},
+      {path: 'admin', loadChildren: adminModule},
+      {path: 'doctor', loadChildren: doctorModule},
+      {path: 'gallery', loadChildren: galleryModule},
+      {path: 'account', loadChildren: accountModule},
+      {path: 'samples', loadChildren: samplesModule},
+      {path: 'recipes', loadChildren: recipesModule},
+      {path: 'profile', loadChildren: profileModule},
+    ]
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

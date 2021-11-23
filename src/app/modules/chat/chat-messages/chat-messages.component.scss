@@ -1,0 +1,33 @@
+span.emoji {
+  font-size: 20px;
+  vertical-align: middle;
+  line-height: 2;
+}
+
+.message {
+  margin-bottom: 3px;
+
+  .content {
+    padding: 8px;
+    background-color: lightgreen;
+    border-radius: 10px;
+    display: inline-block;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    0 2px 1px -1px rgba(0, 0, 0, 0.12);
+    max-width: 50%;
+    word-wrap: break-word;
+  }
+
+  .username {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  &.own {
+    text-align: right;
+
+    .content {
+      background-color: lightskyblue;
+    }
+  }
+}

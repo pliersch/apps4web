@@ -1,10 +1,27 @@
+@use '~@angular/material' as mat;
+//@use './src/app/modules/doctor/footer/footer.component-theme' as footer;
+
 //@import '../node_modules/@angular/material/prebuilt-themes/purple-green.css';
 //@import '../node_modules/@angular/material/prebuilt-themes/indigo-pink.css';
-//@import 'styles/material-theme';
+@import 'styles/themes';
 @import 'styles/scrollbar';
-@import 'styles/copy';
+//@import 'styles/copy';
+//@import 'styles/colors';
 @import 'styles/app-layout';
-//@import 'styles/test';
+
+@include mat.core();
+
+
+//@include mat.all-component-themes($dark-theme);
+//@include footer.theme($dark-theme);
+//
+//@include mat.all-component-themes($light-theme);
+//@include footer.theme($light-theme);
+
+//.dark-theme {
+//  @include angular-material-color($dark-theme);
+//}
+
 html, body {
   height: 100%;
 }
@@ -12,6 +29,13 @@ html, body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+* {
+  &:active,
+  :focus {
+    outline: none !important;
+  }
 }
 
 .spacer {
@@ -95,4 +119,25 @@ select:-webkit-autofill:focus {
 .a-nav {
   color: white;
   text-decoration: none;
+}
+
+.mail {
+  text-decoration: none;
+
+  &:link {
+    color: var(--primary-color);
+  }
+
+  &:visited {
+    color: #095484;
+  }
+
+  &:hover {
+    color: #8ebf42;
+  }
+
+  &:active {
+    color: #800000;
+  }
+
 }

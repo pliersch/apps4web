@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {MatButton} from '@angular/material/button';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {ThemeService} from "@modules/themes/services/theme.service";
@@ -8,17 +8,13 @@ import {ThemeService} from "@modules/themes/services/theme.service";
   templateUrl: './theme-menu.component.html',
   styleUrls: ['./theme-menu.component.scss']
 })
-export class ThemeMenuComponent implements OnInit {
+export class ThemeMenuComponent {
   @Input() menuTrigger: MatButton | undefined;
 
   darkMode = false;
 
   constructor(private readonly themeService: ThemeService,
               private mediaMatcher: MediaMatcher) {
-  }
-
-  ngOnInit(): void {
-    this.detectOsTheme();
   }
 
   changeTheme(themeToSet: string): void {
