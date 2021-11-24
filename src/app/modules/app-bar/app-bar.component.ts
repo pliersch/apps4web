@@ -8,6 +8,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 export class AppBarComponent {
   @Input() appName: string | undefined;
   @Output() toggleNavEvent = new EventEmitter<string>();
+  @Output() switchThemeEvent = new EventEmitter<string>();
 
   constructor() {
   }
@@ -17,5 +18,9 @@ export class AppBarComponent {
   }
 
   openThemeMenu(): void {
+  }
+
+  onSwitchTheme($event: string) {
+    this.switchThemeEvent.emit($event);
   }
 }

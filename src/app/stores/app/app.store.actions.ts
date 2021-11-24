@@ -1,10 +1,10 @@
-import { Action } from '@ngrx/store';
+import {Action} from '@ngrx/store';
 
 export enum AppActionTypes {
-  StartAppInitializer = '[AppActipnTypes] Start App Initializer',
-  FinishAppInitializer = '[AppActipnTypes] Finish App Initializer',
-  LoadUsers = '[AppActipnTypes] Load Users',
-  UsersLoaded = '[AppActipnTypes] Users Loaded'
+  StartAppInitializer = '[AppActionTypes] Start App Initializer',
+  FinishAppInitializer = '[AppActionTypes] Finish App Initializer',
+  LoadUsers = '[AppActionTypes] Load Users',
+  UsersLoaded = '[AppActionTypes] Users Loaded'
 }
 
 export class StartAppInitializer implements Action {

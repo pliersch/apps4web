@@ -1,9 +1,9 @@
-import { SocialAuthService, SocialUser } from 'angularx-social-login';
-import { Store } from '@ngrx/store';
-import { FinishAppInitializer, LoadUsers, StartAppInitializer } from '@app/stores/app/app.store.actions';
-import { AppState } from '@app/stores/app/app.store.state';
-import { filter, take } from 'rxjs/operators';
-import { UserService } from '@app/services/user.service';
+import {SocialAuthService, SocialUser} from 'angularx-social-login';
+import {Store} from '@ngrx/store';
+import {FinishAppInitializer, LoadUsers, StartAppInitializer} from '@app/stores/app/app.store.actions';
+import {AppState} from '@app/stores/app/app.store.state';
+import {filter, take} from 'rxjs/operators';
+import {UserService} from '@app/services/user.service';
 import {User} from "@app/models/user";
 
 export function initApplication(store: Store<AppState>,
@@ -12,11 +12,9 @@ export function initApplication(store: Store<AppState>,
   return () => new Promise(resolve => {
     authService.authState.subscribe((authUser) => {
         if (authUser) {
-          userService.login(createUserByAuth(authUser)).subscribe((user1) => {
-            if (user1) {
-              return true;
-            }
-            return false;
+          userService.login(createUserByAuth(authUser)).subscribe((user) => {
+            return !!user;
+
           });
           // console.log(userService.getAll());
           store.dispatch(new StartAppInitializer());

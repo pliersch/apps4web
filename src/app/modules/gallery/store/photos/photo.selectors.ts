@@ -1,7 +1,7 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { PhotoState } from './photo.state';
-import { selectAll } from '@gallery/store/photos/photo.reducer';
-import { Photo } from '@gallery/store/photos/photo.model';
+import {createFeatureSelector, createSelector} from '@ngrx/store';
+import {PhotoState} from './photo.state';
+import {selectAll} from '@gallery/store/photos/photo.reducer';
+import {Photo} from '@gallery/store/photos/photo.model';
 
 export const selectPhotosState =
   createFeatureSelector<PhotoState>('photos');
@@ -15,8 +15,8 @@ export const allSelectedPhotos = createSelector(
   allPhotos,
   (selectedPhotos: Photo[]) => {
     if (selectedPhotos) {
-      const photos = selectedPhotos.filter((photo: Photo) => photo.isSelected === true);
-      return selectedPhotos.filter((photo: Photo) => photo.isSelected === true);
+      const photos = selectedPhotos.filter((photo: Photo) => photo.isSelected);
+      return selectedPhotos.filter((photo: Photo) => photo.isSelected);
     } else {
       return null;
     }

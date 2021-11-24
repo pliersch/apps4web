@@ -1,5 +1,6 @@
-<div class="grid">
-  <app-appbar class="appbar" appName="A4W" (toggleNavEvent)="toggleNav()"></app-appbar>
+<div class="grid" [class]="theme">
+  <app-appbar class="appbar" appName="A4W" (switchThemeEvent)="onSwitchTheme($event)"
+              (toggleNavEvent)="toggleNav()"></app-appbar>
 
   <mat-sidenav-container class="main" autosize>
     <mat-sidenav #drawer fixedInViewport="false" mode="side" opened class="example-sidenav"

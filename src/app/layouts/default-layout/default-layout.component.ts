@@ -13,16 +13,22 @@ export class DefaultLayoutComponent {
 
   @ViewChild(MatSidenav) drawer!: MatSidenav;
 
+  theme: string = 'dark-theme';
+
+  constructor(private breakpointObserver: BreakpointObserver) {
+  }
+
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) {
-  }
-
   toggleNav(): void {
     void this.drawer.toggle();
   }
 
+  onSwitchTheme($event: string) {
+    this.theme = $event;
+    console.log('theme', $event)
+  }
 }

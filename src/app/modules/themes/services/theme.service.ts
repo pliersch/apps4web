@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 
 import {StyleManagerService} from './style-manager.service';
 
@@ -9,12 +8,16 @@ import {StyleManagerService} from './style-manager.service';
 export class ThemeService {
 
   constructor(
-    private http: HttpClient,
+    /*private http: HttpClient,*/
     private styleManager: StyleManagerService
   ) {
   }
 
-  setTheme(themeToSet : string): void {
+  toggleTheme(theme: string) {
+    console.log('ThemeService', theme)
+  }
+
+  setTheme(themeToSet: string): void {
     this.styleManager.setStyle(
       'theme',
       `assets/configs/${themeToSet}.css`
