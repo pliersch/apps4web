@@ -62,8 +62,10 @@ import {MaterialModule} from "@app/shared/material/material.module";
     MaterialModule,
     // @ts-ignore
     StoreModule.forRoot({appState: appStateReducer}),
+    // StoreModule.forRoot(reducers, {metaReducers}),
     EffectsModule.forRoot([LoaderEffect]),
-    StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production})
+    StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
+    !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   // exports: [
   //   NgScrollbarModule,

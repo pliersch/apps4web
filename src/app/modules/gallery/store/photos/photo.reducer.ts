@@ -1,8 +1,8 @@
-import { createReducer, on } from '@ngrx/store';
-import { createEntityAdapter, EntityAdapter, Update } from '@ngrx/entity';
-import { Photo } from './photo.model';
+import {createReducer, on} from '@ngrx/store';
+import {createEntityAdapter, EntityAdapter, Update} from '@ngrx/entity';
+import {Photo} from './photo.model';
 import * as PhotoActions from './photo.actions';
-import { PhotoState } from '@gallery/store/photos/photo.state';
+import {PhotoState} from '@gallery/store/photos/photo.state';
 
 export const photoAdapter: EntityAdapter<Photo> = createEntityAdapter<Photo>({
   sortComparer: false
@@ -64,7 +64,7 @@ export const photoReducer = createReducer(
 
 function toggleOne(photo: Photo, state: PhotoState): Update<Photo> {
   const all = selectAll(state);
-  const selectedPhotos = all.filter(p => p.isSelected === true);
+  const selectedPhotos = all.filter(p => p.isSelected);
   if (selectedPhotos.length < 2) {
     return select(photo);
   }

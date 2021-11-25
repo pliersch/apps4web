@@ -4,6 +4,7 @@ import {CommonModule} from '@angular/common';
 
 import {MaterialModule} from "@app/shared/material/material.module";
 // import {NgxScrollbarModule} from '@app/shared/ngx-scrollbar/ngx-scrollbar.module';
+// TODO replace
 import {NgScrollbarModule} from 'ngx-scrollbar';
 import {GalleryRoutingModule} from './gallery-routing.module';
 import {GalleryToolbarComponent} from './components/core/gallery-toolbar/gallery-toolbar.component';
@@ -38,8 +39,6 @@ import {GalleryEditTagDetailComponent} from './components/gallery-explorer/galle
 import {GalleryEditTagsComponent} from './components/gallery-explorer/gallery-edit-tags/gallery-edit-tags.component';
 import {MatListRemovePaddingDirective} from './components/gallery-explorer/gallery-edit-tags/mat-list-remove-padding.directive';
 import {GalleryEditTagListComponent} from './components/gallery-explorer/gallery-edit-tags/gallery-edit-tag-list/gallery-edit-tag-list.component';
-
-// import { MatMomentDateModule } from "@angular/material-moment-adapter";
 
 @NgModule({
   declarations: [
