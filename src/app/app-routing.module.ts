@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {DefaultLayoutComponent} from "./layouts/default-layout/default-layout.component";
 import {DashboardComponent} from "@modules/dashboard/dashboard.component";
 import {LegalNoticeComponent} from "@modules/legal-notice/legal-notice.component";
+import {AuthGuard} from "@app/core/helpers";
 
 const chatModule = () => import('@app/modules/chat/chat.module').then((x) => x.ChatModule);
 const adminModule = () => import('@app/modules/admin/admin.module').then((x) => x.AdminModule);
@@ -20,7 +21,7 @@ const routes: Routes = [
       {path: 'dashboard', component: DashboardComponent},
       {path: 'impressum', component: LegalNoticeComponent},
       {path: 'chat', loadChildren: chatModule},
-      {path: 'admin', loadChildren: adminModule},
+      {path: 'admin', loadChildren: adminModule, canActivate: [AuthGuard]},
       {path: 'doctor', loadChildren: doctorModule},
       {path: 'gallery', loadChildren: galleryModule},
       {path: 'account', loadChildren: accountModule},

@@ -35,6 +35,10 @@ import {DashboardCardComponent} from "@modules/dashboard/cards/dashboard-card.co
 import {LegalNoticeComponent} from "@modules/legal-notice/legal-notice.component";
 import {AccountModule} from "@modules/account/account.module";
 import {MaterialModule} from "@app/shared/material/material.module";
+import {NgxsModule} from "@ngxs/store";
+import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
+import {NgxsLoggerPluginModule} from "@ngxs/logger-plugin";
+import {AuthState} from "@app/stores/auth/auth-state";
 
 @NgModule({
   declarations: [
@@ -60,6 +64,9 @@ import {MaterialModule} from "@app/shared/material/material.module";
     // NgxScrollbarModule,
     NgScrollbarModule,
     MaterialModule,
+    NgxsModule.forRoot([AuthState], {developmentMode: !environment.production}),
+    NgxsReduxDevtoolsPluginModule.forRoot(),
+    NgxsLoggerPluginModule.forRoot(),
     // @ts-ignore
     StoreModule.forRoot({appState: appStateReducer}),
     // StoreModule.forRoot(reducers, {metaReducers}),
