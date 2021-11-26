@@ -9,10 +9,12 @@ import {DefaultLayoutComponent} from "./layouts/default-layout/default-layout.co
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 
 import {Store, StoreModule} from '@ngrx/store';
+import {NgxsModule, Store as NgxsStore} from '@ngxs/store';
 import {LoaderEffect} from '@app/stores/app/app.store.loader.effect';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {EffectsModule} from '@ngrx/effects';
 import {appStateReducer} from '@app/stores/app/app.store.reducer';
+
 import {
   GoogleLoginProvider,
   SocialAuthService,
@@ -35,10 +37,11 @@ import {DashboardCardComponent} from "@modules/dashboard/cards/dashboard-card.co
 import {LegalNoticeComponent} from "@modules/legal-notice/legal-notice.component";
 import {AccountModule} from "@modules/account/account.module";
 import {MaterialModule} from "@app/shared/material/material.module";
-import {NgxsModule} from "@ngxs/store";
 import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
 import {NgxsLoggerPluginModule} from "@ngxs/logger-plugin";
 import {AuthState} from "@app/stores/auth/auth-state";
+import {ThemeState} from "@modules/themes/stores/theme-state";
+import {initTheme} from "@app/core/helpers/theme.initializer";
 
 @NgModule({
   declarations: [
@@ -64,7 +67,7 @@ import {AuthState} from "@app/stores/auth/auth-state";
     // NgxScrollbarModule,
     NgScrollbarModule,
     MaterialModule,
-    NgxsModule.forRoot([AuthState], {developmentMode: !environment.production}),
+    NgxsModule.forRoot([AuthState, ThemeState], {developmentMode: !environment.production}),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),
     // @ts-ignore
@@ -97,6 +100,11 @@ import {AuthState} from "@app/stores/auth/auth-state";
         [new Inject(Store)],
         SocialAuthService,
         UserService]
+    },
+    {
+      provide: APP_INITIALIZER, useFactory: initTheme, multi: true, deps: [
+        NgxsStore
+      ]
     },
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},

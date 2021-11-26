@@ -24,20 +24,6 @@ export class AuthGuard implements CanActivate {
     return false;
   }
 
-
-  // OLD  BUT BETTER
-
-  // canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-  //   this.authService.authState.subscribe((user) => {
-  //     if (user) {
-  //       return true;
-  //     }
-  //     this.router.navigate(['/account/login'], { queryParams: { returnUrl: state.url } });
-  //     return false;
-  //   });
-  //   return true;
-  // }
-
   // VERY OLD
 
   /*

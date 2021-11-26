@@ -28,13 +28,11 @@ export class ThemeMenuComponent implements OnInit {
   }
 
   changeTheme(theme: string): void {
-    console.log('theme', theme)
     // if (theme === Themes.Dark) {
     //   this.overlayContainer.getContainerElement().classList.add(Themes.Dark);
     // } else {
     //   this.overlayContainer.getContainerElement().classList.remove(Themes.Light);
     // }
-    // this.switchThemeEvent.emit(theme);
     localStorage.setItem('theme', theme);
     // this.themeService.setTheme(theme);
   }

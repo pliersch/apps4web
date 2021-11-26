@@ -28,7 +28,6 @@ export class AuthState {
   }
 
   constructor(private authService: AuthService) {
-    console.log('constructor')
   }
 
   @Action(LoginAction)
