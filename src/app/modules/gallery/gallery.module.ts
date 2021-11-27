@@ -39,6 +39,8 @@ import {GalleryEditTagDetailComponent} from './components/gallery-explorer/galle
 import {GalleryEditTagsComponent} from './components/gallery-explorer/gallery-edit-tags/gallery-edit-tags.component';
 import {MatListRemovePaddingDirective} from './components/gallery-explorer/gallery-edit-tags/mat-list-remove-padding.directive';
 import {GalleryEditTagListComponent} from './components/gallery-explorer/gallery-edit-tags/gallery-edit-tag-list/gallery-edit-tag-list.component';
+import {NgxsModule} from "@ngxs/store";
+import {PhotoState} from "@gallery/store/photos/photo-state";
 
 @NgModule({
   declarations: [
@@ -74,6 +76,9 @@ import {GalleryEditTagListComponent} from './components/gallery-explorer/gallery
     // NgxScrollbarModule,
     NgScrollbarModule,
     ShareModule,
+    // TODO enable, impl?
+    // RouterModule.forChild(ROUTES),
+    NgxsModule.forFeature([PhotoState]),
     // StoreRouterConnectingModule.forRoot(),
     EffectsModule.forFeature([PhotosEffects, TagEffects]),
     StoreModule.forFeature('photos', photoReducer),

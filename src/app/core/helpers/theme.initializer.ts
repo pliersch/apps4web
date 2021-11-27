@@ -11,3 +11,4 @@ export function initTheme(store: Store): () => Promise<unknown> {
     });
   };
 }
+
