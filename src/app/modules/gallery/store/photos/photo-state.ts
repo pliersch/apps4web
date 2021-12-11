@@ -59,7 +59,7 @@ export class PhotoState {
       .pipe(
         map((photos: PhotoModel[]) =>
           asapScheduler.schedule(() =>
-            ctx.dispatch(new photoAction.LoadPhotosSuccessAction({photos}))
+            ctx.dispatch(new photoAction.LoadPhotosSuccessAction(photos))
           )
         ),
         catchError(error =>
@@ -74,12 +74,14 @@ export class PhotoState {
   }
 
   @Action(photoAction.LoadPhotosSuccessAction)
-  loadPhotosSuccess({patchState}: StateContext<PhotoStateModel>, {payload}: photoAction.LoadPhotosSuccessAction): void {
-    patchState({photos: payload.photos, loaded: true, loading: false});
+  loadPhotosSuccess({patchState}: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosSuccessAction): void {
+    patchState({photos: action.photos, loaded: true, loading: false});
   }
 
   @Action(photoAction.LoadPhotosFailAction)
-  loadPhotosFail({dispatch}: StateContext<PhotoStateModel>, {payload}: photoAction.LoadPhotosFailAction): void {
+  loadPhotosFail({dispatch}: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosFailAction): void {
+    // TODO handle error!
+    console.log(action.error)
     dispatch({loaded: false, loading: false});
   }
 
@@ -95,7 +97,7 @@ export class PhotoState {
       .pipe(
         map((photos: PhotoModel[]) =>
           asapScheduler.schedule(() =>
-            ctx.dispatch(new photoAction.LoadPhotosSuccessAction({photos}))
+            ctx.dispatch(new photoAction.LoadPhotosSuccessAction(photos))
           )
         ),
         catchError(error =>
@@ -115,7 +117,7 @@ export class PhotoState {
     ctx.patchState({
       photos: [
         ...state.photos,
-        action.payload.photo,
+        action.photo,
       ], loaded: true, loading: false
     });
   }
@@ -123,7 +125,7 @@ export class PhotoState {
   @Action(photoAction.AddPhotoFailAction)
   addPhotoFail(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoFailAction): void {
     // TODO handle error!
-    console.log(action.payload.error)
+    console.log(action.error)
     ctx.dispatch({loaded: false, loading: false});
   }
 }

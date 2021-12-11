@@ -10,14 +10,14 @@ export class LoadPhotosAction {
 export class LoadPhotosSuccessAction {
   static readonly type = '[Gallery] Load Photos success';
 
-  constructor(public payload: { photos: PhotoModel[] }) {
+  constructor(public photos: PhotoModel[]) {
   }
 }
 
 export class LoadPhotosFailAction {
   static readonly type = '[Gallery] Load Photos Fail';
 
-  constructor(public payload: { error: any }) {
+  constructor(public error: any) {
   }
 }
 
@@ -26,21 +26,21 @@ export class LoadPhotosFailAction {
 export class AddPhotoAction {
   static readonly type = '[Gallery] Add Photo';
 
-  constructor(public payload: { photo: string }) {
+  constructor(public photo: string) {
   }
 }
 
 export class AddPhotoSuccessAction {
   static readonly type = '[Gallery] Add Photo success';
 
-  constructor(public payload: { photo: PhotoModel }) {
+  constructor(public photo: PhotoModel) {
   }
 }
 
 export class AddPhotoFailAction {
   static readonly type = '[Gallery] Add Photo fail';
 
-  constructor(public payload: { error: any }) {
+  constructor(public error: any) {
   }
 }
 
@@ -55,7 +55,7 @@ export class ClearPhotoSelectionAction {
 export class DeletePhotoAction {
   static readonly type = '[Gallery] Delete Photo';
 
-  constructor(public payload: { photo: string }) {
+  constructor(public photo: string) {
   }
 }
 
@@ -64,13 +64,13 @@ export class DeletePhotoAction {
 export class TogglePhotoSelectionAction {
   static readonly type = '[Gallery] Toggle Photo Selection';
 
-  constructor(public payload: { photo: string }) {
+  constructor(public photo: string) {
   }
 }
 
 export class UpdatePhotoAction {
   static readonly type = '[Gallery] Update Photo';
 
-  constructor(public payload: { photo: string }) {
+  constructor(public photo: string) {
   }
 }
