@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Photo} from '@gallery/store/photos/photo.model';
-import {Store} from '@ngrx/store';
-import {Store as XsStore} from '@ngxs/store';
-import {PhotoState} from '@gallery/store/photos/photo.state';
+import {Select, Store} from '@ngxs/store';
 import {Observable} from 'rxjs';
 import {EventBusService} from '@app/services/event-bus.service';
 import {LoadPhotosAction} from "@gallery/store/photos/photo-actions";
+import {PhotoState} from "@gallery/store/photos/photo-state";
 
 @Component({
   selector: 'app-gallery-explorer',
@@ -14,29 +13,18 @@ import {LoadPhotosAction} from "@gallery/store/photos/photo-actions";
 })
 export class GalleryExplorerComponent implements OnInit {
 
-  images: Observable<Photo[]> = this.xsStore.select(state => state.gallery.photos);
-  // images: Observable<Photo[]> = this.store.select(allPhotos);
+  @Select(PhotoState.getPhotos)
+  images: Observable<Photo[]>;
+
   currentImage!: Photo;
   showFilter = true;
 
-  constructor(private store: Store<PhotoState>,
-              private xsStore: XsStore,
+  constructor(private store: Store,
               private eventBus: EventBusService) {
   }
 
   ngOnInit(): void {
-    // this.xsStore.select()
-    // this.xsStore.select(state => state.gallery.photos).subscribe((res) => {
-    //   console.log("fuck 111!", res)
-    // });
-    this.xsStore.dispatch(new LoadPhotosAction()).subscribe((photos) => {
-      this.currentImage = photos[0];
-    });
-
-    // this.store.dispatch(loadPhotos());
-    // this.images.subscribe(photos => {
-    //   this.currentImage = photos[0];
-    // });
+    this.store.dispatch(new LoadPhotosAction());
     this.eventBus.on('filterPhotos', () => {
       this.showFilter = !this.showFilter;
     });

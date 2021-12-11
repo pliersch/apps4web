@@ -1,11 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
-import { Photo } from '@gallery/store/photos/photo.model';
-import { NgScrollbar } from 'ngx-scrollbar';
-import { Observable } from 'rxjs';
-import { allPhotos } from '@gallery/store/photos/photo.selectors';
-import { Store } from '@ngrx/store';
-import { PhotoState } from '@gallery/store/photos/photo.state';
-import { clearSelection, togglePhotoSelection } from '@gallery/store/photos/photo.actions';
+import {Component, ViewChild} from '@angular/core';
+import {Photo} from '@gallery/store/photos/photo.model';
+import {NgScrollbar} from 'ngx-scrollbar';
+import {Observable} from 'rxjs';
+import {Store} from '@ngxs/store';
+import {clearSelection, togglePhotoSelection} from '@gallery/store/photos/photo.actions';
 
 @Component({
   selector: 'app-gallery-horizontal-scroller',
@@ -17,9 +15,9 @@ export class GalleryHorizontalScrollerComponent {
   @ViewChild(NgScrollbar)
   scrollbar!: NgScrollbar;
 
-  images: Observable<Photo[]> = this.store.select(allPhotos);
+  images: Observable<Photo[]> = this.store.select(state => state.gallery.photos);
 
-  constructor(private store: Store<PhotoState>) {
+  constructor(private store: Store) {
   }
 
   onSelectImage($event: MouseEvent, photo: Photo): void {
@@ -47,11 +45,11 @@ export class GalleryHorizontalScrollerComponent {
   }
 
   private updateSelection(photo: Photo): void {
-    this.store.dispatch(togglePhotoSelection({ photo }));
+    this.store.dispatch(togglePhotoSelection({photo}));
   }
 
   private reInitializeSelection(photo: Photo): void {
     this.store.dispatch(clearSelection());
-    this.store.dispatch(togglePhotoSelection({ photo }));
+    this.store.dispatch(togglePhotoSelection({photo}));
   }
 }

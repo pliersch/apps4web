@@ -1,6 +1,8 @@
 export interface Message {
-  // id:string;
+  chatID: string;
+  userId: string;
   userName: string;
-  content: string;
-  image: string;
+  text: string;
+  image?: string;
+  date: string;
 }

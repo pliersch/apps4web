@@ -1,0 +1,1008 @@
+{
+  "emojis": [
+    {
+      "key": "grinning_face",
+      "value": "😀"
+    },
+    {
+      "key": "grimacing_face",
+      "value": "😬"
+    },
+    {
+      "key": "grimacing_face_with_smile_eyes",
+      "value": "😁"
+    },
+    {
+      "key": "face_with_tear_of_joy",
+      "value": "😂"
+    },
+    {
+      "key": "smiling_face_with_open_mouth",
+      "value": "😃"
+    },
+    {
+      "key": "smiling_face_with_open_mouth_eyes",
+      "value": "😄"
+    },
+    {
+      "key": "smiling_face_with_open_mouth_cold_sweat",
+      "value": "😅"
+    },
+    {
+      "key": "smiling_face_with_open_mouth_hand_tight",
+      "value": "😆"
+    },
+    {
+      "key": "smiling_face_with_halo",
+      "value": "😇"
+    },
+    {
+      "key": "winking_face",
+      "value": "😉"
+    },
+    {
+      "key": "black_smiling_face",
+      "value": "😊"
+    },
+    {
+      "key": "slightly_smiling_face",
+      "value": "🙂"
+    },
+    {
+      "key": "upside_down_face",
+      "value": "🙃"
+    },
+    {
+      "key": "face_savouring_delicious_food",
+      "value": "😋"
+    },
+    {
+      "key": "relieved_face",
+      "value": "😌"
+    },
+    {
+      "key": "smiling_face_heart_eyes",
+      "value": "😍"
+    },
+    {
+      "key": "face_throwing_kiss",
+      "value": "😘"
+    },
+    {
+      "key": "kissing_face",
+      "value": "😗"
+    },
+    {
+      "key": "kissing_face_with_smile_eyes",
+      "value": "😙"
+    },
+    {
+      "key": "kissing_face_with_closed_eyes",
+      "value": "😚"
+    },
+    {
+      "key": "face_with_tongue_wink_eye",
+      "value": "😜"
+    },
+    {
+      "key": "face_with_tongue_closed_eye",
+      "value": "😝"
+    },
+    {
+      "key": "face_with_stuck_out_tongue",
+      "value": "😛"
+    },
+    {
+      "key": "money_mouth_face",
+      "value": "🤑"
+    },
+    {
+      "key": "nerd_face",
+      "value": "🤓"
+    },
+    {
+      "key": "smiling_face_with_sun_glass",
+      "value": "😎"
+    },
+    {
+      "key": "hugging_face",
+      "value": "🤗"
+    },
+    {
+      "key": "smirking_face",
+      "value": "😏"
+    },
+    {
+      "key": "face_without_mouth",
+      "value": "😶"
+    },
+    {
+      "key": "neutral_face",
+      "value": "😐"
+    },
+    {
+      "key": "expressionless_face",
+      "value": "😑"
+    },
+    {
+      "key": "unamused_face",
+      "value": "😒"
+    },
+    {
+      "key": "face_with_rolling_eyes",
+      "value": "🙄"
+    },
+    {
+      "key": "thinking_face",
+      "value": "🤔"
+    },
+    {
+      "key": "flushed_face",
+      "value": "😳"
+    },
+    {
+      "key": "disappointed_face",
+      "value": "😞"
+    },
+    {
+      "key": "worried_face",
+      "value": "😟"
+    },
+    {
+      "key": "angry_face",
+      "value": "😠"
+    },
+    {
+      "key": "pouting_face",
+      "value": "😡"
+    },
+    {
+      "key": "pensive_face",
+      "value": "😔"
+    },
+    {
+      "key": "confused_face",
+      "value": "😕"
+    },
+    {
+      "key": "slightly_frowning_face",
+      "value": "🙁"
+    },
+    {
+      "key": "persevering_face",
+      "value": "😣"
+    },
+    {
+      "key": "confounded_face",
+      "value": "😖"
+    },
+    {
+      "key": "tired_face",
+      "value": "😫"
+    },
+    {
+      "key": "weary_face",
+      "value": "😩"
+    },
+    {
+      "key": "face_with_look_of_triumph",
+      "value": "😤"
+    },
+    {
+      "key": "face_with_open_mouth",
+      "value": "😮"
+    },
+    {
+      "key": "face_screaming_in_fear",
+      "value": "😱"
+    },
+    {
+      "key": "fearful_face",
+      "value": "😨"
+    },
+    {
+      "key": "face_with_open_mouth_cold_sweat",
+      "value": "😰"
+    },
+    {
+      "key": "hushed_face",
+      "value": "😯"
+    },
+    {
+      "key": "frowning_face_with_open_mouth",
+      "value": "😦"
+    },
+    {
+      "key": "anguished_face",
+      "value": "😧"
+    },
+    {
+      "key": "crying_face",
+      "value": "😢"
+    },
+    {
+      "key": "disappointed_but_relieved_face",
+      "value": "😥"
+    },
+    {
+      "key": "sleepy_face",
+      "value": "😪"
+    },
+    {
+      "key": "face_with_cold_sweat",
+      "value": "😓"
+    },
+    {
+      "key": "loudly_crying_face",
+      "value": "😭"
+    },
+    {
+      "key": "dizzy_face",
+      "value": "😵"
+    },
+    {
+      "key": "astonished_face",
+      "value": "😲"
+    },
+    {
+      "key": "zipper_mouth_face",
+      "value": "🤐"
+    },
+    {
+      "key": "face_with_medical_mask",
+      "value": "😷"
+    },
+    {
+      "key": "face_with_thermometer",
+      "value": "🤒"
+    },
+    {
+      "key": "face_with_head_bandage",
+      "value": "🤕"
+    },
+    {
+      "key": "sleeping_face",
+      "value": "😴"
+    },
+    {
+      "key": "sleeping_symbol",
+      "value": "💤"
+    },
+    {
+      "key": "pile_of_poo",
+      "value": "💩"
+    },
+    {
+      "key": "smiling_face_with_horns",
+      "value": "😈"
+    },
+    {
+      "key": "skull",
+      "value": "💀"
+    },
+    {
+      "key": "ghost",
+      "value": "👻"
+    },
+    {
+      "key": "extra_terrestrial_alien",
+      "value": "👽"
+    },
+    {
+      "key": "clapping_hand",
+      "value": "👏"
+    },
+    {
+      "key": "waving_hands",
+      "value": "👋"
+    },
+    {
+      "key": "thumbs_up",
+      "value": "👍"
+    },
+    {
+      "key": "thumbs_down",
+      "value": "👎"
+    },
+    {
+      "key": "fist_hand",
+      "value": "👊"
+    },
+    {
+      "key": "raised_fist",
+      "value": "✊"
+    },
+    {
+      "key": "victory_hand",
+      "value": "✌"
+    },
+    {
+      "key": "ok_hand",
+      "value": "👌"
+    },
+    {
+      "key": "raised_hand",
+      "value": "✋"
+    },
+    {
+      "key": "open_hand",
+      "value": "👐"
+    },
+    {
+      "key": "flexed_biceps",
+      "value": "💪"
+    },
+    {
+      "key": "folded_hands",
+      "value": "🙏"
+    },
+    {
+      "key": "up_pointing_index",
+      "value": "☝"
+    },
+    {
+      "key": "up_pointing_backhand_index",
+      "value": "👆"
+    },
+    {
+      "key": "down_pointing_backhand_index",
+      "value": "👇"
+    },
+    {
+      "key": "left_pointing_backhand_index",
+      "value": "👈"
+    },
+    {
+      "key": "right_pointing_backhand_index",
+      "value": "👉"
+    },
+    {
+      "key": "reverse_middle_finger",
+      "value": "🖕"
+    },
+    {
+      "key": "raised_hand_fingers_splayed",
+      "value": "🖐"
+    },
+    {
+      "key": "sign_of_horn",
+      "value": "🤘"
+    },
+    {
+      "key": "raised_hand_part_between_middle_ring",
+      "value": "🖖"
+    },
+    {
+      "key": "writing_hand",
+      "value": "✍"
+    },
+    {
+      "key": "nail_polish",
+      "value": "💅"
+    },
+    {
+      "key": "mouth",
+      "value": "👄"
+    },
+    {
+      "key": "tongue",
+      "value": "👅"
+    },
+    {
+      "key": "ear",
+      "value": "👂"
+    },
+    {
+      "key": "nose",
+      "value": "👃"
+    },
+    {
+      "key": "eye",
+      "value": "👁"
+    },
+    {
+      "key": "eyes",
+      "value": "👀"
+    },
+    {
+      "key": "bust_in_silhouette",
+      "value": "👤"
+    },
+    {
+      "key": "busts_in_silhouette",
+      "value": "👥"
+    },
+    {
+      "key": "speaking_head_in_silhouette",
+      "value": "🗣"
+    },
+    {
+      "key": "baby",
+      "value": "👶"
+    },
+    {
+      "key": "boy",
+      "value": "👦"
+    },
+    {
+      "key": "girl",
+      "value": "👧"
+    },
+    {
+      "key": "man",
+      "value": "👨"
+    },
+    {
+      "key": "women",
+      "value": "👩"
+    },
+    {
+      "key": "person_with_blond_hair",
+      "value": "👱"
+    },
+    {
+      "key": "older_man",
+      "value": "👴"
+    },
+    {
+      "key": "older_women",
+      "value": "👵"
+    },
+    {
+      "key": "police_officer",
+      "value": "👮"
+    },
+    {
+      "key": "construction_worker",
+      "value": "👷"
+    },
+    {
+      "key": "guards_man",
+      "value": "💂"
+    },
+    {
+      "key": "spy",
+      "value": "🕵"
+    },
+    {
+      "key": "father_christmas",
+      "value": "🎅"
+    },
+    {
+      "key": "baby_angel",
+      "value": "👼"
+    },
+    {
+      "key": "princess",
+      "value": "👸"
+    },
+    {
+      "key": "bride_with_veil",
+      "value": "👰"
+    },
+    {
+      "key": "bride_with_veil_type_1_2",
+      "value": "👰🏻"
+    },
+    {
+      "key": "bride_with_veil_type_3",
+      "value": "👰🏼"
+    },
+    {
+      "key": "bride_with_veil_type_4",
+      "value": "👰🏽"
+    },
+    {
+      "key": "bride_with_veil_type_5",
+      "value": "👰🏾"
+    },
+    {
+      "key": "bride_with_veil_type_6",
+      "value": "👰🏿"
+    },
+    {
+      "key": "pedestrian",
+      "value": "🚶"
+    },
+    {
+      "key": "pedestrian_type_1_2",
+      "value": "🚶🏻"
+    },
+    {
+      "key": "pedestrian_type_3",
+      "value": "🚶🏼"
+    },
+    {
+      "key": "pedestrian_type_4",
+      "value": "🚶🏽"
+    },
+    {
+      "key": "pedestrian_type_5",
+      "value": "🚶🏾"
+    },
+    {
+      "key": "pedestrian_type_6",
+      "value": "🚶🏿"
+    },
+    {
+      "key": "runner",
+      "value": "🏃"
+    },
+    {
+      "key": "runner_type_1_2",
+      "value": "🏃🏻"
+    },
+    {
+      "key": "runner_type_3",
+      "value": "🏃🏼"
+    },
+    {
+      "key": "runner_type_4",
+      "value": "🏃🏽"
+    },
+    {
+      "key": "runner_type_5",
+      "value": "🏃🏾"
+    },
+    {
+      "key": "runner_type_6",
+      "value": "🏃🏿"
+    },
+    {
+      "key": "dancer",
+      "value": "💃"
+    },
+    {
+      "key": "dancer_type_1_2",
+      "value": "💃🏻"
+    },
+    {
+      "key": "dancer_type_3",
+      "value": "💃🏼"
+    },
+    {
+      "key": "dancer_type_4",
+      "value": "💃🏽"
+    },
+    {
+      "key": "dancer_type_5",
+      "value": "💃🏾"
+    },
+    {
+      "key": "dancer_type_6",
+      "value": "💃🏿"
+    },
+    {
+      "key": "women_with_bunny_years",
+      "value": "👯"
+    },
+    {
+      "key": "man_women_holding_hands",
+      "value": "👫"
+    },
+    {
+      "key": "two_man_holding_hands",
+      "value": "👬"
+    },
+    {
+      "key": "two_women_holding_hands",
+      "value": "👭"
+    },
+    {
+      "key": "person_bowing_deeply",
+      "value": "🙇"
+    },
+    {
+      "key": "person_bowing_deeply_type_1_2",
+      "value": "🙇🏻"
+    },
+    {
+      "key": "person_bowing_deeply_type_3",
+      "value": "🙇🏼"
+    },
+    {
+      "key": "person_bowing_deeply_type_4",
+      "value": "🙇🏽"
+    },
+    {
+      "key": "person_bowing_deeply_type_5",
+      "value": "🙇🏾"
+    },
+    {
+      "key": "person_bowing_deeply_type_6",
+      "value": "🙇🏿"
+    },
+    {
+      "key": "information_desk_person",
+      "value": "💁"
+    },
+    {
+      "key": "information_desk_person_type_1_2",
+      "value": "💁🏻"
+    },
+    {
+      "key": "information_desk_person_type_3",
+      "value": "💁🏼"
+    },
+    {
+      "key": "information_desk_person_type_4",
+      "value": "💁🏽"
+    },
+    {
+      "key": "information_desk_person_type_5",
+      "value": "💁🏾"
+    },
+    {
+      "key": "information_desk_person_type_6",
+      "value": "💁🏿"
+    },
+    {
+      "key": "face_with_no_good_gesture",
+      "value": "🙅"
+    },
+    {
+      "key": "face_with_no_good_gesture_type_1_2",
+      "value": "🙅🏻"
+    },
+    {
+      "key": "face_with_no_good_gesture_type_3",
+      "value": "🙅🏼"
+    },
+    {
+      "key": "face_with_no_good_gesture_type_4",
+      "value": "🙅🏽"
+    },
+    {
+      "key": "face_with_no_good_gesture_type_5",
+      "value": "🙅🏾"
+    },
+    {
+      "key": "face_with_no_good_gesture_type_6",
+      "value": "🙅🏿"
+    },
+    {
+      "key": "face_with_ok_gesture",
+      "value": "🙆"
+    },
+    {
+      "key": "face_with_ok_gesture_type_1_2",
+      "value": "🙆🏻"
+    },
+    {
+      "key": "face_with_ok_gesture_type_3",
+      "value": "🙆🏼"
+    },
+    {
+      "key": "face_with_ok_gesture_type_4",
+      "value": "🙆🏽"
+    },
+    {
+      "key": "face_with_ok_gesture_type_5",
+      "value": "🙆🏾"
+    },
+    {
+      "key": "face_with_ok_gesture_type_6",
+      "value": "🙆🏿"
+    },
+    {
+      "key": "happy_person_raise_one_hand",
+      "value": "🙋"
+    },
+    {
+      "key": "happy_person_raise_one_hand_type_1_2",
+      "value": "🙋🏻"
+    },
+    {
+      "key": "happy_person_raise_one_hand_type_3",
+      "value": "🙋🏼"
+    },
+    {
+      "key": "happy_person_raise_one_hand_type_4",
+      "value": "🙋🏽"
+    },
+    {
+      "key": "happy_person_raise_one_hand_type_5",
+      "value": "🙋🏾"
+    },
+    {
+      "key": "happy_person_raise_one_hand_type_6",
+      "value": "🙋🏿"
+    },
+    {
+      "key": "person_with_pouting_face",
+      "value": "🙎"
+    },
+    {
+      "key": "person_with_pouting_face_type_1_2",
+      "value": "🙎🏻"
+    },
+    {
+      "key": "person_with_pouting_face_type_3",
+      "value": "🙎🏼"
+    },
+    {
+      "key": "person_with_pouting_face_type_4",
+      "value": "🙎🏽"
+    },
+    {
+      "key": "person_with_pouting_face_type_5",
+      "value": "🙎🏾"
+    },
+    {
+      "key": "person_with_pouting_face_type_6",
+      "value": "🙎🏿"
+    },
+    {
+      "key": "person_frowning",
+      "value": "🙍"
+    },
+    {
+      "key": "person_frowning_type_1_2",
+      "value": "🙍🏻"
+    },
+    {
+      "key": "person_frowning_type_3",
+      "value": "🙍🏼"
+    },
+    {
+      "key": "person_frowning_type_4",
+      "value": "🙍🏽"
+    },
+    {
+      "key": "person_frowning_type_5",
+      "value": "🙍🏾"
+    },
+    {
+      "key": "person_frowning_type_6",
+      "value": "🙍🏿"
+    },
+    {
+      "key": "haircut",
+      "value": "💇"
+    },
+    {
+      "key": "haircut_type_1_2",
+      "value": "💇🏻"
+    },
+    {
+      "key": "haircut_type_3",
+      "value": "💇🏼"
+    },
+    {
+      "key": "haircut_type_4",
+      "value": "💇🏽"
+    },
+    {
+      "key": "haircut_type_5",
+      "value": "💇🏾"
+    },
+    {
+      "key": "haircut_type_6",
+      "value": "💇🏿"
+    },
+    {
+      "key": "face_massage",
+      "value": "💆"
+    },
+    {
+      "key": "face_massage_type_1_2",
+      "value": "💆🏻"
+    },
+    {
+      "key": "face_massage_type_3",
+      "value": "💆🏻"
+    },
+    {
+      "key": "face_massage_type_4",
+      "value": "💆🏽"
+    },
+    {
+      "key": "face_massage_type_5",
+      "value": "💆🏾"
+    },
+    {
+      "key": "face_massage_type_6",
+      "value": "💆🏿"
+    },
+    {
+      "key": "couple_with_heart",
+      "value": "💑"
+    },
+    {
+      "key": "couple_with_heart_woman",
+      "value": "👩‍❤️‍👩"
+    },
+    {
+      "key": "couple_with_heart_man",
+      "value": "👨‍❤️‍👨"
+    },
+    {
+      "key": "kiss",
+      "value": "💏"
+    },
+    {
+      "key": "kiss_woman",
+      "value": "👩‍❤️‍💋‍👩"
+    },
+    {
+      "key": "kiss_man",
+      "value": "👨‍❤️‍💋‍👨"
+    },
+    {
+      "key": "family",
+      "value": "👪"
+    },
+    {
+      "key": "family_man_women_girl",
+      "value": "👨‍👩‍👧"
+    },
+    {
+      "key": "family_man_women_girl_boy",
+      "value": "👨‍👩‍👧‍👦"
+    },
+    {
+      "key": "family_man_women_boy_boy",
+      "value": "👨‍👩‍👦‍👦"
+    },
+    {
+      "key": "family_man_women_girl_girl",
+      "value": "👨‍👩‍👧‍👧"
+    },
+    {
+      "key": "family_woman_women_boy",
+      "value": "👩‍👩‍👦"
+    },
+    {
+      "key": "family_woman_women_girl",
+      "value": "👩‍👩‍👧"
+    },
+    {
+      "key": "family_woman_women_girl_boy",
+      "value": "👩‍👩‍👧‍👦"
+    },
+    {
+      "key": "family_woman_women_boy_boy",
+      "value": "👩‍👩‍👦‍👦"
+    },
+    {
+      "key": "family_woman_women_girl_girl",
+      "value": "👩‍👩‍👧‍👧"
+    },
+    {
+      "key": "family_man_man_boy",
+      "value": "👨‍👨‍👦"
+    },
+    {
+      "key": "family_man_man_girl",
+      "value": "👨‍👨‍👧"
+    },
+    {
+      "key": "family_man_man_girl_boy",
+      "value": "👨‍👨‍👧‍👦"
+    },
+    {
+      "key": "family_man_man_boy_boy",
+      "value": "👨‍👨‍👦‍👦"
+    },
+    {
+      "key": "family_man_man_girl_girl",
+      "value": "👨‍👨‍👧‍👧"
+    },
+    {
+      "key": "woman_clothes",
+      "value": "👚"
+    },
+    {
+      "key": "t_shirt",
+      "value": "👕"
+    },
+    {
+      "key": "jeans",
+      "value": "👖"
+    },
+    {
+      "key": "necktie",
+      "value": "👔"
+    },
+    {
+      "key": "dress",
+      "value": "👗"
+    },
+    {
+      "key": "bikini",
+      "value": "👙"
+    },
+    {
+      "key": "kimono",
+      "value": "👘"
+    },
+    {
+      "key": "lipstick",
+      "value": "💄"
+    },
+    {
+      "key": "kiss_mark",
+      "value": "💋"
+    },
+    {
+      "key": "footprints",
+      "value": "👣"
+    },
+    {
+      "key": "high_heeled_shoe",
+      "value": "👠"
+    },
+    {
+      "key": "woman_sandal",
+      "value": "👡"
+    },
+    {
+      "key": "woman_boots",
+      "value": "👢"
+    },
+    {
+      "key": "man_shoe",
+      "value": "👞"
+    },
+    {
+      "key": "athletic_shoe",
+      "value": "👟"
+    },
+    {
+      "key": "woman_hat",
+      "value": "👒"
+    },
+    {
+      "key": "top_hat",
+      "value": "🎩"
+    },
+    {
+      "key": "graduation_cap",
+      "value": "🎓"
+    },
+    {
+      "key": "crown",
+      "value": "👑"
+    },
+    {
+      "key": "helmet_with_white_cross",
+      "value": "⛑"
+    },
+    {
+      "key": "school_satchel",
+      "value": "🎒"
+    },
+    {
+      "key": "pouch",
+      "value": "👝"
+    },
+    {
+      "key": "purse",
+      "value": "👛"
+    },
+    {
+      "key": "handbag",
+      "value": "👜"
+    },
+    {
+      "key": "briefcase",
+      "value": "💼"
+    },
+    {
+      "key": "eye_glasses",
+      "value": "👓"
+    },
+    {
+      "key": "dark_sun_glasses",
+      "value": "🕶"
+    },
+    {
+      "key": "ring",
+      "value": "💍"
+    },
+    {
+      "key": "closed_umbrella",
+      "value": "🌂"
+    }
+  ]
+}

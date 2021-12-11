@@ -22,11 +22,11 @@ export class AppBarComponent {
   openThemeMenu(): void {
   }
 
-  onSwitchTheme($event: string) {
+  onSwitchTheme($event: string): void {
     this.switchThemeEvent.emit($event);
   }
 
-  onClickLogin() {
+  onClickLogin(): void {
     this.store.dispatch(new LoginAction({username: 'name', password: 'pw'}));
   }
 }

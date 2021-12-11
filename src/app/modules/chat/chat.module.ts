@@ -12,25 +12,35 @@ import {ChatUploadComponent} from './chat-upload/chat-upload.component';
 import {ChatMessagesComponent} from "@modules/chat/chat-messages/chat-messages.component";
 import {NgxScrollbarModule} from "@app/shared/ngx-scrollbar/ngx-scrollbar.module";
 import {MaterialModule} from "@app/shared/material/material.module";
+import {NgxsModule} from "@ngxs/store";
+import {ChatState} from "@modules/chat/store/chat.state";
+import {ChatService} from "@modules/chat/store/chat.service";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
-    declarations: [
-        ChatComponent,
-        ChatInputComponent,
-        ChatToolbarComponent,
-        ChatEmojiPickerComponent,
-        ChatEmojiItemComponent,
-        ChatImageItemComponent,
-        ChatMessagesComponent,
-        ChatUploadComponent
-    ],
-    imports: [
-        CommonModule,
-        ChatRoutingModule,
-        NgxScrollbarModule,
-        MaterialModule
-    ]
+  declarations: [
+    ChatComponent,
+    ChatInputComponent,
+    ChatToolbarComponent,
+    ChatEmojiPickerComponent,
+    ChatEmojiItemComponent,
+    ChatImageItemComponent,
+    ChatMessagesComponent,
+    ChatUploadComponent
+  ],
+  imports: [
+    CommonModule,
+    ChatRoutingModule,
+    NgxScrollbarModule,
+    MaterialModule,
+    NgxsModule.forFeature([ChatState]),
+    FormsModule,
+  ],
+  providers: [
+    ChatService
+  ]
+
 })
 export class ChatModule {
 }

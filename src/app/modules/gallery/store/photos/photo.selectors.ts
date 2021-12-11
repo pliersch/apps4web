@@ -15,7 +15,6 @@ export const allSelectedPhotos = createSelector(
   allPhotos,
   (selectedPhotos: Photo[]) => {
     if (selectedPhotos) {
-      const photos = selectedPhotos.filter((photo: Photo) => photo.isSelected);
       return selectedPhotos.filter((photo: Photo) => photo.isSelected);
     } else {
       return null;

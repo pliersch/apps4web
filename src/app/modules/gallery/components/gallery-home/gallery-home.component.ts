@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { loadPhotos } from '@gallery/store/photos/photo.actions';
-import { allPhotos } from '@gallery/store/photos/photo.selectors';
-import { Observable } from 'rxjs';
-import { PhotoState } from '@gallery/store/photos/photo.state';
-import { Photo } from '@gallery/store/photos/photo.model';
+import {Component, OnInit} from '@angular/core';
+import {Store} from '@ngxs/store';
+import {Observable} from 'rxjs';
+import {Photo} from '@gallery/store/photos/photo.model';
+import {LoadPhotosAction} from "@gallery/store/photos/photo-actions";
 
 @Component({
   selector: 'app-gallery-home',
@@ -13,12 +11,13 @@ import { Photo } from '@gallery/store/photos/photo.model';
 })
 export class GalleryHomeComponent implements OnInit {
 
-  images: Observable<Photo[]> = this.store.select(allPhotos);
+  images: Observable<Photo[]> = this.store.select(state => state.gallery.photos);
 
-  constructor(private store: Store<PhotoState>) {
+  // constructor(private store: Store<PhotoState>) {}
+  constructor(private store: Store) {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(loadPhotos());
-  }
+    this.store.dispatch(new LoadPhotosAction());
+  };
 }

@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
-import { environment } from '@environments/environment';
-import { Photo } from '@gallery/store/photos/photo.model';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {environment} from '@environments/environment';
+import {Photo} from '@gallery/store/photos/photo.model';
 
-const baseUrl = `${environment.apiUrl}/photos`;
+const BASE_URL = `${environment.apiUrl}/photos`;
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +15,11 @@ export class PhotoService {
   }
 
   getAll(): Observable<Photo[]> {
-    return this.http.get<Photo[]>(baseUrl);
+    return this.http.get<Photo[]>(BASE_URL);
   }
 
   getById(id: string): Observable<Photo> {
-    return this.http.get<Photo>(`${baseUrl}/${id}`);
+    return this.http.get<Photo>(`${BASE_URL}/${id}`);
   }
 
   create(file: File, tags: string[]): Observable<Photo> {
@@ -30,7 +29,7 @@ export class PhotoService {
     const formData = new FormData();
     formData.append('image', file);
     formData.append('tags', stringify);
-    return this.http.post<Photo>(baseUrl + '/file', formData);
+    return this.http.post<Photo>(BASE_URL + '/file', formData);
   }
 
   delete(id: string): Observable<any> {

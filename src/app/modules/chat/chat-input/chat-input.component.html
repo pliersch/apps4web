@@ -1,1 +1,32 @@
-<p>chat-input works!</p>
+<div id="chat-input">
+  <div class="flex-container">
+    <app-chat-emoji-picker [show]="emojiPanel" (close)="onClose()"
+                           (emojiSelectEvent)="addEmojiToMessage($event)"></app-chat-emoji-picker>
+    <button class="margin-10" (click)="toggleEmojiPanel()">
+      <mat-icon>emoji_emotions</mat-icon>
+    </button>
+    <button class="margin-10" (click)="appendFile()">
+      <mat-icon>upload_file</mat-icon>
+    </button>
+    <form (ngSubmit)="emitMessage()" novalidate>
+      <textarea matInput [(ngModel)]="content" name="what" placeholder="Textarea" required></textarea>
+      <button class="margin-10" [disabled]="content === &quot;&quot;">
+        <mat-icon>send</mat-icon>
+      </button>
+    </form>
+
+    <!--    <p>Form value: {{ f.value | json }}</p>-->
+    <!--    <p>Form valid: {{ f.valid }}</p>-->
+
+    <form ref="form">
+      <!--      <input ref="fileInput" name="chatimage" type="file" multiple="multiple" accept="image/*" style="display:none"-->
+      <!--             @change="onFileInputChange()"/>-->
+    </form>
+
+    <!--    <v-textarea class="margin-10" auto-grow="auto-grow" outlined="outlined" filled="filled" rows="1" maxlength="800"-->
+    <!--                clear-icon="mdi-close-circle" clearable="clearable" hide-details="hide-details" autofocus="autofocus"-->
+    <!--                background-color="background_primary" color="text_primary-base" rounded="rounded"-->
+    <!--                v-model="content"></v-textarea>-->
+
+  </div>
+</div>

@@ -1,18 +1,16 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Photo } from '@gallery/store/photos/photo.model';
-import { GalleryVerticalScrollerComponent } from '@gallery/components/gallery-vertical-scroller/gallery-vertical-scroller.component';
-import { EventBusService } from '@app/services/event-bus.service';
-import { GalleryHorizontalScrollerComponent } from '@gallery/components/gallery-horizontal-scroller/gallery-horizontal-scroller.component';
-import { AlertService } from '@app/services/alert.service';
-import { loadPhotos } from '@gallery/store/photos/photo.actions';
-import { Store } from '@ngrx/store';
-import { PhotoState } from '@gallery/store/photos/photo.state';
-import { Observable, of } from 'rxjs';
-import { allPhotos } from '@gallery/store/photos/photo.selectors';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Store} from '@ngxs/store';
+import {Observable} from 'rxjs';
+import {GalleryVerticalScrollerComponent} from '@gallery/components/gallery-vertical-scroller/gallery-vertical-scroller.component';
+import {GalleryHorizontalScrollerComponent} from '@gallery/components/gallery-horizontal-scroller/gallery-horizontal-scroller.component';
+import {EventBusService} from '@app/services/event-bus.service';
+import {AlertService} from '@app/services/alert.service';
+import {Photo} from '@gallery/store/photos/photo.model';
+import {LoadPhotosAction} from "@gallery/store/photos/photo-actions";
 
 enum View {
   Horizontal = 1,
-  Vertical
+  Vertical = 2
 }
 
 @Component({
@@ -22,11 +20,8 @@ enum View {
 })
 export class GalleryLightboxComponent implements OnInit {
 
-  // @ViewChild(CdkVirtualScrollViewport)
-  // private readonly scrollRef: CdkVirtualScrollViewport;
-
   viewEnum = View;
-  images: Observable<Photo[]> = this.store.select(allPhotos);
+  images: Observable<Photo[]> = this.store.select(state => state.gallery.photos);
   view = View.Horizontal;
   index = 0;
   @ViewChild(GalleryVerticalScrollerComponent)
@@ -37,14 +32,14 @@ export class GalleryLightboxComponent implements OnInit {
   constructor(
     private alertService: AlertService,
     private eventBus: EventBusService,
-    private store: Store<PhotoState>) {
+    private store: Store) {
   }
 
   ngOnInit(): void {
+    this.store.dispatch(new LoadPhotosAction());
     this.eventBus.on('switchView', () => {
       this.switchView();
     });
-    this.store.dispatch(loadPhotos());
   }
 
   switchView(): void {

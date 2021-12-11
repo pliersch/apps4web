@@ -38,10 +38,10 @@ import {LegalNoticeComponent} from "@modules/legal-notice/legal-notice.component
 import {AccountModule} from "@modules/account/account.module";
 import {MaterialModule} from "@app/shared/material/material.module";
 import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
-import {NgxsLoggerPluginModule} from "@ngxs/logger-plugin";
 import {AuthState} from "@app/stores/auth/auth-state";
 import {ThemeState} from "@modules/themes/stores/theme-state";
 import {initTheme} from "@app/core/helpers/theme.initializer";
+import {NgxsLoggerPluginModule} from "@ngxs/logger-plugin";
 
 @NgModule({
   declarations: [

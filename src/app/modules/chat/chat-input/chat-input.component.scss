@@ -1,0 +1,13 @@
+.margin-10 {
+  margin: 10px;
+}
+
+.flex-container {
+  align-items: flex-end;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  max-width: 100%;
+  position: relative;
+  z-index: 2;
+}

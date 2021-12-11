@@ -5,7 +5,7 @@
     </div>
     <ng-scrollbar ref="scroll">
       <!--      <div class="chat-container" id="scrolltest" ref="chatContainer" (scroll)="onScroll($event)">-->
-      <app-chat-messages (scroll)="onScroll($event)" :messages="filteredMessages"
+      <app-chat-messages (scroll)="onScroll($event)" [messages]="messages"
                          (imageLoadEvent)="scrollToEnd()"></app-chat-messages>
       <!--      </div>-->
     </ng-scrollbar>

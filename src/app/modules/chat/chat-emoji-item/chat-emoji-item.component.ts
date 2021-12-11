@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Emoji} from "@modules/chat/models/emoji";
 
 @Component({
   selector: 'app-chat-emoji-item',
   templateUrl: './chat-emoji-item.component.html',
   styleUrls: ['./chat-emoji-item.component.scss']
 })
-export class ChatEmojiItemComponent implements OnInit {
+export class ChatEmojiItemComponent {
 
-  constructor() { }
+  @Input() emoji!: Emoji;
+  @Output() clickEvent = new EventEmitter<Emoji>();
 
-  ngOnInit(): void {
+  constructor() {
   }
 
+  onEmojiClick() {
+    this.clickEvent.emit(this.emoji);
+  }
 }

@@ -3,13 +3,13 @@ import {Injectable} from "@angular/core";
 import {PhotoModel} from "@gallery/store/photos/photo-model";
 import {PhotoService} from "@gallery/store/photos/photo.service";
 import {catchError, map} from "rxjs/operators";
-import {asapScheduler, of} from "rxjs";
+import {asapScheduler, Observable, of, Subscription} from "rxjs";
 import * as photoAction from "@gallery/store/photos/photo-actions";
 
 export interface PhotoStateModel {
   photos: PhotoModel[];
-  allPhotosLoaded: boolean;
   selectedPhoto: PhotoModel | null;
+  allPhotosLoaded: boolean;
   loaded: boolean;
   loading: boolean;
 }
@@ -20,7 +20,7 @@ export interface PhotoStateModel {
     photos: [],
     selectedPhoto: null,
     allPhotosLoaded: false,
-    loaded: true,
+    loaded: false,
     loading: false
   }
 })
@@ -29,23 +29,32 @@ export interface PhotoStateModel {
 export class PhotoState {
 
   @Selector()
-  static getPhotos(state: PhotoStateModel) {
+  static getPhotos(state: PhotoStateModel): PhotoModel[] {
     return state.photos;
   }
 
   @Selector()
-  static selectedPhoto(state: PhotoStateModel): PhotoModel {
+  static selectedPhotos(state: PhotoStateModel): PhotoModel[] {
     // TODO <> untersuchen / verstehen
-    return <PhotoModel>state.selectedPhoto;
+    return <PhotoModel[]>state.photos;
   }
+
+  // @Selector()
+  // static selectedPhoto(state: PhotoStateModel): PhotoModel {
+  //   // TODO <> untersuchen / verstehen
+  //   return <PhotoModel>state.selectedPhoto;
+  // }
 
   constructor(private photoService: PhotoService) {
   }
 
+  //////////////////////////////////////////////////////////
+  //          load
+  //////////////////////////////////////////////////////////
+
   @Action(photoAction.LoadPhotosAction)
-  loadPhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosAction) {
-    // TODO implement!
-    // ctx.patchState({loading: true});
+  loadPhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosAction): Observable<Subscription> {
+    ctx.patchState({loading: true});
     return this.photoService.getAll()
       .pipe(
         map((photos: PhotoModel[]) =>
@@ -65,24 +74,56 @@ export class PhotoState {
   }
 
   @Action(photoAction.LoadPhotosSuccessAction)
-  loadPizzasSuccess(
-    {patchState}: StateContext<PhotoStateModel>,
-    {payload}: photoAction.LoadPhotosSuccessAction
-  ) {
+  loadPhotosSuccess({patchState}: StateContext<PhotoStateModel>, {payload}: photoAction.LoadPhotosSuccessAction): void {
     patchState({photos: payload.photos, loaded: true, loading: false});
   }
 
   @Action(photoAction.LoadPhotosFailAction)
-  loadPizzasFail(
-    {dispatch}: StateContext<PhotoStateModel>,
-    {payload}: photoAction.LoadPhotosFailAction
-  ) {
+  loadPhotosFail({dispatch}: StateContext<PhotoStateModel>, {payload}: photoAction.LoadPhotosFailAction): void {
     dispatch({loaded: false, loading: false});
   }
 
-  @Action(photoAction.AddPhotoAction)
-  addPhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoAction) {
+  //////////////////////////////////////////////////////////
+  //          add
+  //////////////////////////////////////////////////////////
 
+  // FIXME wrong actions!!! LoadPhotosSuccessAction LoadPhotosFailAction
+
+  @Action(photoAction.AddPhotoAction)
+  addPhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoAction): Observable<Subscription> {
+    return this.photoService.getAll()
+      .pipe(
+        map((photos: PhotoModel[]) =>
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new photoAction.LoadPhotosSuccessAction({photos}))
+          )
+        ),
+        catchError(error =>
+          of(
+            asapScheduler.schedule(() =>
+              ctx.dispatch(new photoAction.LoadPhotosFailAction(error))
+            )
+          )
+        )
+      )
+      ;
   }
 
+  @Action(photoAction.AddPhotoSuccessAction)
+  addPhotoSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoSuccessAction): void {
+    const state = ctx.getState();
+    ctx.patchState({
+      photos: [
+        ...state.photos,
+        action.payload.photo,
+      ], loaded: true, loading: false
+    });
+  }
+
+  @Action(photoAction.AddPhotoFailAction)
+  addPhotoFail(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoFailAction): void {
+    // TODO handle error!
+    console.log(action.payload.error)
+    ctx.dispatch({loaded: false, loading: false});
+  }
 }
