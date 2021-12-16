@@ -48,7 +48,6 @@ export class ChatState {
         map((messages: Message[]) =>
           asapScheduler.schedule(() => {
               ctx.dispatch(new chatAction.LoadChatSuccess(messages))
-              console.log(messages)
             }
           )
         ),

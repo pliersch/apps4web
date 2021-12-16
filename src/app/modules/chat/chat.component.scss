@@ -33,7 +33,7 @@
 
 .input {
   /*margin: 6px;*/
-  background-color: var(--v-background_primary-lighten2);
+  //background-color: var(--v-background_primary-lighten2);
   grid-area: input;
 }
 
@@ -49,10 +49,10 @@
 .preview-container {
   position: absolute;
   /*height: 60vh;*/
-  width: 100%;
+  //max-width: 60vw;
   bottom: 0;
-  background-color: #8ca0ff;
-  z-index: 2;
+  //background-color: #8ca0ff;
+  //z-index: 2;
 }
 
 .fade-enter-active,

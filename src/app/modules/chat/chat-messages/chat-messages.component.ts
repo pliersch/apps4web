@@ -14,13 +14,10 @@ export class ChatMessagesComponent implements OnInit {
   @Input()
   messages: Observable<Message[]>;
 
-  userName: string;
-
-  constructor() {
-  }
+  userName = 'User 16';
 
   ngOnInit(): void {
-    console.log('init');
+    console.log('init', this.userName);
   }
 
   onImageLoad($event: string): void {

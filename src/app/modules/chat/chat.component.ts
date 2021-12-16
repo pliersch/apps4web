@@ -22,6 +22,8 @@ export class ChatComponent implements OnInit {
   private content = '';
   userFilter = '';
   filteredMessages: Observable<Message[]>;
+  showPreview = false;
+  fileList: FileList;
 
   @ViewChild(ChatToolbarComponent)
   toolbar!: ChatToolbarComponent;
@@ -131,13 +133,25 @@ export class ChatComponent implements OnInit {
     this.store.dispatch(new SendMessage(msg))
   }
 
-  onFileInputChange($event: string[]): void {
-    // this.showPreview = true
-    // this.fileList = fileList
+  onFileInputChange(fileList: FileList): void {
+    this.showPreview = true
+    console.log('ChatComponent onFileInputChange: ')
+    this.fileList = fileList;
+
+    // let file = e.target.files[0];
+    //   if (file) {
+    //     console.log(file)
+    //     this.fileName = file.name;
+    //     const formData = new FormData();
+    //     formData.append("thumbnail", file);
+    //     this.fileChangeEvent.emit(e.target.files);
+    //     // const upload$ = this.http.post("/api/thumbnail-upload", formData);
+    //     // upload$.subscribe();
+    //   }
   }
 
   onUploadClose(): void {
-    // this.showPreview = false
+    this.showPreview = false
     // this.$refs.input.reset()
   }
 

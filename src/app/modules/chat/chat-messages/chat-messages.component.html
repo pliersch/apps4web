@@ -1,7 +1,6 @@
 <div class="message" *ngFor="let message of messages | async; let i=index"
-     [class.own]="message.userName === userName">
-  <!--  fixme ngif problem-->
-  <!--  <div class="username" *ngif="message.userName !== userName">{{ message.userName }}</div>-->
+     [class.own]="message.userId === userName">
+  <div class="username" *ngIf="message.userId !== userName">{{ message.userId }}</div>
   <div class="content">
     <div>{{ message.text }}</div>
     <!--    <app-chat-image-item *ngIf="message.image" [src]="message.image"-->

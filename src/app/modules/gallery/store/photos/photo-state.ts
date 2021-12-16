@@ -1,7 +1,7 @@
 import {Action, Selector, State, StateContext} from "@ngxs/store";
 import {Injectable} from "@angular/core";
 import {PhotoModel} from "@gallery/store/photos/photo-model";
-import {PhotoService} from "@gallery/store/photos/photo.service";
+import {PhotoService} from "@app/core/services/photo.service";
 import {catchError, map} from "rxjs/operators";
 import {asapScheduler, Observable, of, Subscription} from "rxjs";
 import * as photoAction from "@gallery/store/photos/photo-actions";

@@ -1,27 +1,31 @@
 <div id="chat-input">
-  <div class="flex-container">
+
+  <div class="flex-container bg-primary-dark">
+
     <app-chat-emoji-picker [show]="emojiPanel" (close)="onClose()"
                            (emojiSelectEvent)="addEmojiToMessage($event)"></app-chat-emoji-picker>
-    <button class="margin-10" (click)="toggleEmojiPanel()">
+    <button mat-mini-fab color="primary" class="margin-10" (click)="toggleEmojiPanel()">
       <mat-icon>emoji_emotions</mat-icon>
     </button>
-    <button class="margin-10" (click)="appendFile()">
-      <mat-icon>upload_file</mat-icon>
+
+    <input type="file" class="file-input" (change)="appendFile($event)" #fileUpload accept="image/*">
+
+    <button mat-mini-fab color="primary" class="upload-btn margin-10"
+            (click)="fileUpload.click()">
+      <mat-icon>attach_file</mat-icon>
     </button>
-    <form (ngSubmit)="emitMessage()" novalidate>
-      <textarea matInput [(ngModel)]="content" name="what" placeholder="Textarea" required></textarea>
-      <button class="margin-10" [disabled]="content === &quot;&quot;">
-        <mat-icon>send</mat-icon>
-      </button>
-    </form>
 
-    <!--    <p>Form value: {{ f.value | json }}</p>-->
-    <!--    <p>Form valid: {{ f.valid }}</p>-->
+    <textarea class="flex-full-space margin-10" matInput [(ngModel)]="content" name="what"
+              placeholder="Schreib eine Nachricht" required></textarea>
+    <button mat-mini-fab color="primary" class="margin-10" (click)="emitMessage()"
+            [disabled]="content === &quot;&quot;">
+      <mat-icon>send</mat-icon>
+    </button>
 
-    <form ref="form">
-      <!--      <input ref="fileInput" name="chatimage" type="file" multiple="multiple" accept="image/*" style="display:none"-->
-      <!--             @change="onFileInputChange()"/>-->
-    </form>
+    <!--    <form ref="form">-->
+    <!--      &lt;!&ndash;      <input ref="fileInput" name="chatimage" type="file" multiple="multiple" accept="image/*" style="display:none"&ndash;&gt;-->
+    <!--      &lt;!&ndash;             @change="onFileInputChange()"/>&ndash;&gt;-->
+    <!--    </form>-->
 
     <!--    <v-textarea class="margin-10" auto-grow="auto-grow" outlined="outlined" filled="filled" rows="1" maxlength="800"-->
     <!--                clear-icon="mdi-close-circle" clearable="clearable" hide-details="hide-details" autofocus="autofocus"-->
@@ -29,4 +33,5 @@
     <!--                v-model="content"></v-textarea>-->
 
   </div>
+
 </div>

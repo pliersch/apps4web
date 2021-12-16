@@ -2,14 +2,18 @@
 </ng-container>
 
 <ng-template #avatar>
-    <button mat-mini-fab disableRipple [matMenuTriggerFor]="accountMenu">
-      <img class="avatar" [src]="user.photoUrl" >
-    </button>
+  <!--    <button mat-mini-fab disableRipple [matMenuTriggerFor]="accountMenu">-->
+  <!--      <img class="avatar" [src]="user.photoUrl" >-->
+  <!--    </button>-->
+  <button mat-icon-button class="margin-10" [matMenuTriggerFor]="accountMenu">
+    <!--    <mat-icon>send</mat-icon>-->
+    <img class="avatar" [src]="user.photoUrl">
+  </button>
 </ng-template>
 
 <ng-template #svgIcon>
   <button *ngIf="user" mat-icon-button [matMenuTriggerFor]="accountMenu"
-    aria-label="Example icon-button with share icon">
+          aria-label="Example icon-button with share icon">
     <mat-icon>account_circle</mat-icon>
   </button>
 </ng-template>

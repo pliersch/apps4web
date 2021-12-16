@@ -1,7 +1,7 @@
-import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
-import { PhotoService } from '@gallery/store/photos/photo.service';
-import { AlertService } from '@app/services/alert.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import {Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
+import {PhotoService} from '@app/core/services/photo.service';
+import {AlertService} from '@app/services/alert.service';
+import {FormBuilder, Validators} from '@angular/forms';
 
 const PLACEHOLDER_URL = 'assets/svg/image-placeholder.svg';
 
@@ -36,11 +36,12 @@ export class GalleryUploadComponent {
   // TODO alles mal mit debug durchschauen
   onChange(event: Event): void {
     let inputElement = event.target as HTMLInputElement;
+
     const reader = new FileReader();
-    reader.onload = (e: any) => {
+    reader.onload = (e: any): void => {
       this.imgUrl = e.target.result;
     };
-    reader.onerror = (e: any) => {
+    reader.onerror = (e: any): void => {
       console.log('File could not be read: ' + reader.error!.code);
     };
     if (inputElement.files) {

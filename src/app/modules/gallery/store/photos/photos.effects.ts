@@ -4,7 +4,7 @@ import {of} from 'rxjs';
 import {catchError, map, mergeMap, tap} from 'rxjs/operators';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {AlertService} from '@app/services/alert.service';
-import {PhotoService} from './photo.service';
+import {PhotoService} from '../../../../core/services/photo.service';
 import * as photoActions from './photo.actions';
 
 

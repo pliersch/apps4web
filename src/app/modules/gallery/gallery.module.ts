@@ -17,28 +17,50 @@ import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {photoReducer} from './store/photos/photo.reducer';
 import {PhotosEffects} from '@gallery/store/photos/photos.effects';
-import {PhotoService} from '@gallery/store/photos/photo.service';
+import {PhotoService} from '@app/core/services/photo.service';
 import {PhotosResolver} from '@gallery/store/photos/photos.resolver';
 import {GalleryLightboxComponent} from '@gallery/components/gallery-lightbox/gallery-lightbox.component';
-import {GalleryVerticalScrollerComponent} from '@gallery/components/gallery-vertical-scroller/gallery-vertical-scroller.component';
-import {GalleryHorizontalScrollerComponent} from '@gallery/components/gallery-horizontal-scroller/gallery-horizontal-scroller.component';
-import {GalleryImageGridComponent} from '@gallery/components/gallery-lightbox/gallery-image-grid/gallery-image-grid.component';
-import {GalleryTagSelectorComponent} from './components/gallery-explorer/gallery-tag-selector/gallery-tag-selector.component';
-import {GalleryPhotoFilterComponent} from './components/gallery-explorer/gallery-photo-filter/gallery-photo-filter.component';
+import {
+  GalleryVerticalScrollerComponent
+} from '@gallery/components/gallery-vertical-scroller/gallery-vertical-scroller.component';
+import {
+  GalleryHorizontalScrollerComponent
+} from '@gallery/components/gallery-horizontal-scroller/gallery-horizontal-scroller.component';
+import {
+  GalleryImageGridComponent
+} from '@gallery/components/gallery-lightbox/gallery-image-grid/gallery-image-grid.component';
+import {
+  GalleryTagSelectorComponent
+} from './components/gallery-explorer/gallery-tag-selector/gallery-tag-selector.component';
+import {
+  GalleryPhotoFilterComponent
+} from './components/gallery-explorer/gallery-photo-filter/gallery-photo-filter.component';
 import {TagService} from '@gallery/store/tags/tag.service';
 import {EditTagsComponent} from './components/gallery-explorer/gallery-photo-filter/edit-tags/edit-tags.component';
 import {TabNoHeaderDirective} from './components/gallery-explorer/gallery-photo-filter/tab-no-header.directive';
 import {ShareModule} from '@app/modules/share/share.module';
 import {TagEffects} from '@gallery/store/tags/tag.effects';
 import {tagReducer} from './store/tags/tag.reducer';
-import {GalleryFilterExpansionPanelComponent} from './components/gallery-explorer/gallery-filter-expansion-panel/gallery-filter-expansion-panel.component';
-import {GalleryImageDetailComponent} from './components/gallery-explorer/gallery-image-detail/gallery-image-detail.component';
-import {GalleryImagePlaceholderComponent} from './components/share/gallery-image-placeholder/gallery-image-placeholder.component';
+import {
+  GalleryFilterExpansionPanelComponent
+} from './components/gallery-explorer/gallery-filter-expansion-panel/gallery-filter-expansion-panel.component';
+import {
+  GalleryImageDetailComponent
+} from './components/gallery-explorer/gallery-image-detail/gallery-image-detail.component';
+import {
+  GalleryImagePlaceholderComponent
+} from './components/share/gallery-image-placeholder/gallery-image-placeholder.component';
 import {GalleryStarRatingComponent} from '@gallery/components/share/gallery-star-rating/gallery-star-rating.component';
-import {GalleryEditTagDetailComponent} from './components/gallery-explorer/gallery-edit-tags/gallery-edit-tag-detail/gallery-edit-tag-detail.component';
+import {
+  GalleryEditTagDetailComponent
+} from './components/gallery-explorer/gallery-edit-tags/gallery-edit-tag-detail/gallery-edit-tag-detail.component';
 import {GalleryEditTagsComponent} from './components/gallery-explorer/gallery-edit-tags/gallery-edit-tags.component';
-import {MatListRemovePaddingDirective} from './components/gallery-explorer/gallery-edit-tags/mat-list-remove-padding.directive';
-import {GalleryEditTagListComponent} from './components/gallery-explorer/gallery-edit-tags/gallery-edit-tag-list/gallery-edit-tag-list.component';
+import {
+  MatListRemovePaddingDirective
+} from './components/gallery-explorer/gallery-edit-tags/mat-list-remove-padding.directive';
+import {
+  GalleryEditTagListComponent
+} from './components/gallery-explorer/gallery-edit-tags/gallery-edit-tag-list/gallery-edit-tag-list.component';
 import {NgxsModule} from "@ngxs/store";
 import {PhotoState} from "@gallery/store/photos/photo-state";
 

@@ -9,7 +9,7 @@ span.emoji {
 
   .content {
     padding: 8px;
-    background-color: lightgreen;
+    background-color: #46a246;
     border-radius: 10px;
     display: inline-block;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
@@ -19,15 +19,15 @@ span.emoji {
   }
 
   .username {
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 0.75rem;
+    //font-weight: bold;
   }
 
   &.own {
     text-align: right;
 
     .content {
-      background-color: lightskyblue;
+      background-color: #3274a1;
     }
   }
 }

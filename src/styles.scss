@@ -6,7 +6,7 @@
 @import 'styles/themes';
 @import 'styles/scrollbar';
 //@import 'styles/copy';
-//@import 'styles/colors';
+@import 'styles/colors';
 @import 'styles/app-layout';
 
 @include mat.core();
@@ -24,6 +24,7 @@
 
 html, body {
   height: 100%;
+  background-color: #222222;
 }
 
 body {

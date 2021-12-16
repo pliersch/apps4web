@@ -1,1 +1,52 @@
-<p>chat-upload works!</p>
+<mat-card class="upload-preview">
+  <!--  <mat-toolbar>-->
+  <!--    <span>Vorschau</span>-->
+  <!--    <span class="spacer"></span>-->
+  <!--    <button mat-icon-button (click)="closePreview()">-->
+  <!--      <mat-icon>close</mat-icon>-->
+  <!--    </button>-->
+  <!--  </mat-toolbar>-->
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>Shiba Inu</mat-card-title>
+    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+  </mat-card-header>
+  <!--  <div>-->
+  <!--    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">-->
+  <!--  </div>-->
+  <div *ngFor="let image of imageUrls">
+    <img mat-card-image [src]="image">
+  </div>
+  <mat-card-content>
+          <textarea class="margin-10" auto-grow="auto-grow" outlined="outlined" filled="filled" rows="1" maxlength="800"
+                    clear-icon="mdi-close-circle" clearable="clearable" hide-details="hide-details"
+                    autofocus="autofocus"
+                    background-color="white" rounded="rounded" v-model="content"></textarea>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-icon-button (click)="onUploadClicked()"
+            aria-label="Example icon-button with menu icon">
+      <mat-icon>send</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
+
+<!--<mat-card class="example-card">-->
+<!--  <mat-card-header>-->
+<!--    <div mat-card-avatar class="example-header-image"></div>-->
+<!--    <mat-card-title>Shiba Inu</mat-card-title>-->
+<!--    <mat-card-subtitle>Dog Breed</mat-card-subtitle>-->
+<!--  </mat-card-header>-->
+<!--  <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">-->
+<!--  <mat-card-content>-->
+<!--    <p>-->
+<!--      The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.-->
+<!--      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally-->
+<!--      bred for hunting.-->
+<!--    </p>-->
+<!--  </mat-card-content>-->
+<!--  <mat-card-actions>-->
+<!--    <button mat-button>LIKE</button>-->
+<!--    <button mat-button>SHARE</button>-->
+<!--  </mat-card-actions>-->
+<!--</mat-card>-->

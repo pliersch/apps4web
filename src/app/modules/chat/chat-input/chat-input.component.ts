@@ -1,23 +1,28 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {Emoji} from "@modules/chat/models/emoji";
 
+export interface HTMLInputEvent extends Event {
+  target: HTMLInputElement & EventTarget;
+}
+
 @Component({
   selector: 'app-chat-input',
   templateUrl: './chat-input.component.html',
   styleUrls: ['./chat-input.component.scss']
 })
+
 export class ChatInputComponent {
 
   @Output()
   messageEvent = new EventEmitter<string>();
   @Output()
-  fileChangeEvent = new EventEmitter<string[]>();
+  fileChangeEvent = new EventEmitter<FileList>();
 
-  content = 'foo';
+  content = '';
   emojiPanel = false;
+  fileName: string;
 
   emitMessage(): void {
-    console.log('ChatInputComponent onSubmit: ', this.content)
     this.messageEvent.emit(this.content);
     this.content = ''
   }
@@ -34,8 +39,11 @@ export class ChatInputComponent {
     this.emojiPanel = !this.emojiPanel
   }
 
-  appendFile(): void {
-    // this.$refs.fileInput.click()
+  appendFile($event: Event): void {
+    const e = <HTMLInputEvent>$event;
+    if (e.target && e.target.files) {
+      this.fileChangeEvent.emit(e.target.files);
+    }
   }
 
   onFileInputChange(): void {

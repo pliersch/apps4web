@@ -1,1 +1,2 @@
 - impl ngxs router state! (app/stores/router.state)
+- chat und gallery nutzen denselben service (photoservice)

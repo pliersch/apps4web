@@ -11,3 +11,49 @@
   position: relative;
   z-index: 2;
 }
+
+.flex-full-space {
+  flex: 1 1 auto;
+}
+
+.flex {
+  display: flex;
+  width: 100%;
+}
+
+textarea {
+  flex: 1 1 auto;
+}
+
+.outer-container {
+  width: 300px;
+  border: 1px solid gray;
+  padding: 10px;
+}
+
+.container {
+  display: inline-flex;
+  align-items: center;
+}
+
+.item {
+  height: 2rem;
+  width: 2rem;
+  font-size: 2rem;
+  line-height: 2rem;
+  border: 1px solid black;
+  border-radius: 50%;
+  text-align: center;
+}
+
+input {
+  font-size: 2rem;
+  margin: 0 10px;
+  min-width: 0; /* Remove the automatic minimum size set so the element can shrink*/
+  width: 87%; /* Set any value of width here as reference*/
+  flex: 1; /* make the item grow to fill the remaining space */
+}
+
+.file-input {
+  display: none;
+}

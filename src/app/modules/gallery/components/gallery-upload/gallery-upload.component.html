@@ -8,29 +8,31 @@
         <div class="col">
           <mat-form-field>
             <input matInput formControlName="category"
-              placeholder="Category Name like: Persons" autocomplete="off">
+                   placeholder="Category Name like: Persons" autocomplete="off">
             <mat-error *ngIf="addressForm.controls['category'].hasError('required')">
               Category Name is <strong>required</strong>
             </mat-error>
           </mat-form-field>
           <mat-form-field>
             <input matInput formControlName="tagList"
-              placeholder="Tag Names like: Peter, Paul, Mary" autocomplete="off">
+                   placeholder="Tag Names like: Peter, Paul, Mary" autocomplete="off">
             <mat-error *ngIf="addressForm.controls['tagList'].hasError('required')">
               Tag name is <strong>required</strong>
             </mat-error>
           </mat-form-field>
         </div>
         <div class="col">
-          <img class="example-header-image" [src]="imgUrl"/>
+          <img class="example-header-image" [src]="imgUrl">
         </div>
       </div>
     </mat-card-content>
     <mat-card-actions>
       <button *ngIf="imgFile === undefined" mat-raised-button color="primary"
-        type="button" (click)="openFile()">Open</button>
+              type="button" (click)="openFile()">Open
+      </button>
       <button *ngIf="imgFile !== undefined" mat-raised-button color="primary"
-        (click)="uploadImage()">Upload</button>
+              (click)="uploadImage()">Upload
+      </button>
     </mat-card-actions>
   </mat-card>
   <input #fileInput style="display: none" type="file" (change)="onChange($event)" accept="image/*">

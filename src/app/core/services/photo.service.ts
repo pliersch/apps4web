@@ -23,9 +23,7 @@ export class PhotoService {
   }
 
   create(file: File, tags: string[]): Observable<Photo> {
-    console.log('tags array', tags);
     const stringify = JSON.stringify(tags);
-    console.log('tags stringify', stringify);
     const formData = new FormData();
     formData.append('image', file);
     formData.append('tags', stringify);
