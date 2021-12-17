@@ -14,6 +14,8 @@ export interface HTMLInputEvent extends Event {
 export class ChatInputComponent {
 
   @Output()
+  toggleTmpEvent = new EventEmitter<boolean>();
+  @Output()
   messageEvent = new EventEmitter<string>();
   @Output()
   fileChangeEvent = new EventEmitter<FileList>();
@@ -52,5 +54,12 @@ export class ChatInputComponent {
 
   reset(): void {
     // this.$refs.form.reset()
+  }
+
+  visible = false;
+
+  toggleUpload(): void {
+    this.toggleTmpEvent.emit(this.visible);
+    this.visible = !this.visible;
   }
 }

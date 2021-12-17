@@ -3,20 +3,18 @@
     <div class="toolbar">
       <app-chat-toolbar (filterUserEvent)="filterByUser($event)"></app-chat-toolbar>
     </div>
-    <div class="scrollbar-container chat-container">
-      <ng-scrollbar>
-        <app-chat-messages (scroll)="onScroll($event)" [messages]="messages"
-                           (imageLoadEvent)="scrollToEnd()"></app-chat-messages>
-      </ng-scrollbar>
-      <!--    <transition name="fade">-->
-      <app-chat-upload class="preview-container" *ngIf="showPreview" (closeUploadEvent)="onUploadClose()"
-                       (previewMountedEvent)="onPreviewMounted($event)" [fileList]="fileList"
-                       (uploadEvent)="onUploadFile($event)"></app-chat-upload>
-      <!--    </transition>-->
+    <div class="chat-container">
+      <div class="flex-column height100">
+        <ng-scrollbar>
+          <app-chat-messages (scroll)="onScroll($event)" [messages]="messages"
+                             (imageLoadEvent)="scrollToEnd()"></app-chat-messages>
+        </ng-scrollbar>
+        <app-chat-upload class="preview-container" *ngIf="showPreview" @show (closeUploadEvent)="onUploadClose()"
+                         (previewMountedEvent)="onPreviewMounted($event)" [fileList]="fileList"
+                         (uploadEvent)="onUploadFile($event)"></app-chat-upload>
+      </div>
     </div>
-
-    <app-chat-input class="input" (messageEvent)="sendMessage($event)"
+    <app-chat-input class="input" (messageEvent)="sendMessage($event)" (toggleTmpEvent)="toggleTmp($event)"
                     (fileChangeEvent)="onFileInputChange($event)"></app-chat-input>
-
   </div>
 </div>

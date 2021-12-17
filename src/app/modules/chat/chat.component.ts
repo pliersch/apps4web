@@ -1,35 +1,59 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {ChatToolbarComponent} from "@modules/chat/chat-toolbar/chat-toolbar.component";
 import {EventBusService} from "@app/services";
 import {Select, Store} from "@ngxs/store";
-import {LoadChat, SendMessage} from "@modules/chat/store/chat.actions";
+import {LoadChat, MessagesFilter, SendMessage} from "@modules/chat/store/chat.actions";
 import {Message} from "@modules/chat/models/message";
 import {randomIntFromInterval} from "@app/util/math.utils";
 import {Observable} from "rxjs";
 import {ChatState} from "@modules/chat/store/chat.state";
 import {ChatService} from "@modules/chat/store/chat.service";
+// TODO extract to animation module?!
+import {animate, style, transition, trigger} from "@angular/animations";
+import {ViewportScroller} from "@angular/common";
+import {NgScrollbar} from "ngx-scrollbar";
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss']
+  styleUrls: ['./chat.component.scss'],
+  animations: [
+    trigger('show', [
+      transition(':enter', [
+        style({opacity: 0}),
+        animate(200, style({opacity: 1}))
+      ]),
+      transition(':leave', [
+        style({opacity: 1}),
+        animate(200, style({opacity: 0}))
+      ])
+    ])
+  ]
 })
-export class ChatComponent implements OnInit {
+
+export class ChatComponent implements OnInit, AfterViewInit {
 
   @Select(ChatState.getMessages)
   messages: Observable<Message[]>;
 
+  @Select(ChatState.getMessages)
+  filteredMessages: Observable<Message[]>;
+
   private content = '';
   userFilter = '';
-  filteredMessages: Observable<Message[]>;
-  showPreview = false;
+
+  showPreview = true;
   fileList: FileList;
 
   @ViewChild(ChatToolbarComponent)
-  toolbar!: ChatToolbarComponent;
+  toolbar: ChatToolbarComponent;
+
+  @ViewChild(NgScrollbar)
+  scrollbarRef: NgScrollbar;
 
   constructor(private eventBus: EventBusService,
               private chatService: ChatService,
+              private scroller: ViewportScroller,
               private store: Store) {
   }
 
@@ -48,9 +72,16 @@ export class ChatComponent implements OnInit {
     })
   }
 
-  filterByUser($event: string): void {
-    console.log("filter user clicked", $event);
-    this.userFilter = $event;
+  ngAfterViewInit(): void {
+    this.messages.subscribe(messages => {
+      this.scrollToEnd();
+    })
+  }
+
+  filterByUser(filter: string): void {
+    this.userFilter = filter;
+    this.store.dispatch(new MessagesFilter(filter))
+    this.scrollToEnd()
   }
 
   filterMessages(): Observable<Message[]> {
@@ -65,7 +96,7 @@ export class ChatComponent implements OnInit {
   }
 
   scrollToEnd(): void {
-    console.log('to end')
+    void this.scrollbarRef.scrollTo({bottom: 0, end: 0, duration: 300});
     // this.$nextTick(() => {
     //   this.$refs.scroll.$el.scrollTop = this.$refs.chatContainer.scrollHeight
     //   // const options = {
@@ -183,4 +214,9 @@ export class ChatComponent implements OnInit {
     // }
     return message
   }
+
+  toggleTmp($event: boolean): void {
+    this.showPreview = $event;
+  }
+
 }

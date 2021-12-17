@@ -8,6 +8,7 @@ import {ChatService} from "@modules/chat/store/chat.service";
 
 export interface ChatStateModel {
   messages: Message[];
+  filter: string | undefined;
   loading: boolean;
   loaded: boolean;
   sending: boolean;
@@ -18,6 +19,7 @@ export interface ChatStateModel {
   name: 'chat',
   defaults: {
     messages: [],
+    filter: undefined,
     loaded: false,
     loading: false,
     sending: false,
@@ -30,7 +32,10 @@ export class ChatState {
 
   @Selector()
   static getMessages(state: ChatStateModel): Message[] {
-    return state.messages;
+    if (state.filter !== undefined) {
+      return state.messages.filter(msg => msg.userId == state.filter);
+    }
+    return state.messages
   }
 
   constructor(private service: ChatService) {
@@ -115,5 +120,14 @@ export class ChatState {
     // TODO handle error!
     console.log(action.error)
     dispatch({loaded: false, loading: false});
+  }
+
+  //////////////////////////////////////////////////////////
+  //          send message
+  //////////////////////////////////////////////////////////
+
+  @Action(chatAction.MessagesFilter)
+  setFilter(ctx: StateContext<ChatStateModel>, action: chatAction.MessagesFilter): void {
+    ctx.patchState({filter: action.filter});
   }
 }

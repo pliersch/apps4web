@@ -42,3 +42,12 @@ export class SendMessageFail {
   constructor(public error: any) {
   }
 }
+
+// filter messages
+
+export class MessagesFilter {
+  static readonly type = '[Chat] Filter Messages';
+
+  constructor(public filter: string) {
+  }
+}
