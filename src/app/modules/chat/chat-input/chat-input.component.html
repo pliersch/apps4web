@@ -8,16 +8,9 @@
       <mat-icon>emoji_emotions</mat-icon>
     </button>
 
-    <input type="file" class="file-input" (change)="appendFile($event)" #fileUpload accept="image/*">
-
-    <button mat-mini-fab color="primary" class="upload-btn margin-10"
-            (click)="fileUpload.click()">
-      <mat-icon>attach_file</mat-icon>
-    </button>
-
     <button mat-mini-fab color="primary" class="upload-btn margin-10"
             (click)="toggleUpload()">
-      <mat-icon>home</mat-icon>
+      <mat-icon>attach_file</mat-icon>
     </button>
 
     <textarea class="flex-full-space margin-10" matInput [(ngModel)]="content" name="what"
@@ -27,16 +20,10 @@
       <mat-icon>send</mat-icon>
     </button>
 
-    <!--    <form ref="form">-->
-    <!--      &lt;!&ndash;      <input ref="fileInput" name="chatimage" type="file" multiple="multiple" accept="image/*" style="display:none"&ndash;&gt;-->
-    <!--      &lt;!&ndash;             @change="onFileInputChange()"/>&ndash;&gt;-->
-    <!--    </form>-->
-
     <!--    <v-textarea class="margin-10" auto-grow="auto-grow" outlined="outlined" filled="filled" rows="1" maxlength="800"-->
     <!--                clear-icon="mdi-close-circle" clearable="clearable" hide-details="hide-details" autofocus="autofocus"-->
     <!--                background-color="background_primary" color="text_primary-base" rounded="rounded"-->
     <!--                v-model="content"></v-textarea>-->
 
   </div>
-
 </div>

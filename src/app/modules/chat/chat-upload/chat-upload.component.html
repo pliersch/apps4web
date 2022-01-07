@@ -11,12 +11,20 @@
     <mat-card-title>Shiba Inu</mat-card-title>
     <mat-card-subtitle>Dog Breed</mat-card-subtitle>
   </mat-card-header>
-  <!--  <div>-->
-  <!--    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">-->
+
+  <!--  <div *ngFor="let image of images">-->
+  <!--    <img mat-card-image [src]="image">-->
   <!--  </div>-->
-  <div *ngFor="let image of imageUrls">
-    <img mat-card-image [src]="image">
+
+  <div class="thumbnail-list">
+    <div class="thumbnail-item item" *ngFor="let image of images; let i = index"
+         [style.background-image]="'url(' + image + ')'"
+         (click)="onSelectImage($event, i)">
+    </div>
   </div>
+
+  <app-drag-drop-input (fileChangeEvent)="onFilesChange($event)"></app-drag-drop-input>
+
   <mat-card-content>
           <textarea class="margin-10" auto-grow="auto-grow" outlined="outlined" filled="filled" rows="1" maxlength="800"
                     clear-icon="mdi-close-circle" clearable="clearable" hide-details="hide-details"

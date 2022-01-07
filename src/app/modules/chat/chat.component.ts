@@ -12,6 +12,7 @@ import {ChatService} from "@modules/chat/store/chat.service";
 import {animate, style, transition, trigger} from "@angular/animations";
 import {ViewportScroller} from "@angular/common";
 import {NgScrollbar} from "ngx-scrollbar";
+import {ChatImage} from "@modules/chat/models/chat-image";
 
 @Component({
   selector: 'app-chat',
@@ -144,13 +145,14 @@ export class ChatComponent implements OnInit, AfterViewInit {
     // this.scrollToEnd()
   }
 
-  sendMessage(content: string): void {
+  sendMessage(content: string, imageFiles?: File[]): void {
     let user = 'User ' + randomIntFromInterval(1, 20);
     const msg = {
       userId: /*this.username*/ user,
       userName: /*this.username*/ user,
       text: content,
-      image: undefined,
+      images: [],
+      files: imageFiles || [],
       date: new Date().toString(),
       chatID: /*this.name*/ 'chat'
     }
@@ -190,16 +192,12 @@ export class ChatComponent implements OnInit, AfterViewInit {
     // this.$refs.preview.handleFiles(this.fileList);
   }
 
-  onUploadFile($event: string): void {
-    // this.showPreview = false
-    // const formData = new FormData()
-    // formData.append('chatimage', event.files[0])
-    // const result = await routes.sendFile(formData)
-    // if (result === -1) {
-    //   console.error('image upload fails')
-    // } else {
-    //   this.sendMessage(event.msg, result)
-    // }
+  onUploadFile(chatImage: ChatImage): void {
+    this.showPreview = false
+    const formData = new FormData()
+    // @ts-ignore
+    formData.append('chatimage', chatImage.images[0])
+    this.sendMessage(chatImage.comment, chatImage.images)
   }
 
   processMessage(message: Message): Message {

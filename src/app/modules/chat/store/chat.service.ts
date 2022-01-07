@@ -15,9 +15,16 @@ export class ChatService {
   }
 
   sendMessage(msg: Message): Observable<Message> {
-    // return this.http.post<Message>(BASE_URL + '/file', msg);
+    if (msg.files) {
+      this.sendImages(msg.files)
+    }
     return this.http.post<Message>(BASE_URL, msg);
-    // return this.http.get<Message>(BASE_URL);
+  }
+
+  sendImages(images: File[]): Observable<Message> {
+    const formData = new FormData();
+    formData.append('image', images[0]);
+    return this.http.post<Message>(BASE_URL + '/file', formData);
   }
 
   loadChat(chatName?: string): Observable<Message[]> {

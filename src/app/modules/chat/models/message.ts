@@ -4,6 +4,7 @@ export interface Message {
   userId: string;
   userName: string;
   text: string;
-  image?: string;
+  files: File[];
+  images: string[];
   date: string;
 }

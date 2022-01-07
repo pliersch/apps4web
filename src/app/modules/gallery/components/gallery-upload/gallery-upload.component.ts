@@ -13,7 +13,8 @@ const PLACEHOLDER_URL = 'assets/svg/image-placeholder.svg';
 
 export class GalleryUploadComponent {
 
-  @ViewChild('fileInput') input!: ElementRef;
+  @ViewChild('fileInput')
+  input!: ElementRef;
 
   imgUrl = PLACEHOLDER_URL;
   imgFile: File | undefined;
@@ -30,10 +31,10 @@ export class GalleryUploadComponent {
   }
 
   openFile(): void {
+    // TODO look in chat upload. there is a better solution
     this.renderer.selectRootElement(this.input.nativeElement).click();
   }
 
-  // TODO alles mal mit debug durchschauen
   onChange(event: Event): void {
     let inputElement = event.target as HTMLInputElement;
 
@@ -42,7 +43,7 @@ export class GalleryUploadComponent {
       this.imgUrl = e.target.result;
     };
     reader.onerror = (e: any): void => {
-      console.log('File could not be read: ' + reader.error!.code);
+      console.log('File could not be read: ' + reader.error?.code);
     };
     if (inputElement.files) {
       this.imgFile = inputElement.files[0];
@@ -52,15 +53,12 @@ export class GalleryUploadComponent {
 
   uploadImage(): void {
     if (this.imgFile) {
-      const tagsAsString: string = this.addressForm.get('tagList')!.value;
+      // const tagsAsString: string = this.addressForm.get('tagList')!.value;
       this.photoService.create(this.imgFile, this.createTagArray()).subscribe({
         next: (photo) => {
-          console.log('photo upload success', photo);
           this.alertService.success('Upload ok');
-          // this.photoService.create(this.createPhotoDto(photo));
         },
         error: (error) => {
-          console.log('photo upload failed', error);
           this.alertService.error('Upload fehlgeschlagen');
         }
       });

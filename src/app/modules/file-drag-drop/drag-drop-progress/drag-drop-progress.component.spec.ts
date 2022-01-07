@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChatUploadComponent } from './chat-upload.component';
+import { DragDropProgressComponent } from './drag-drop-progress.component';
 
-describe('ChatUploadComponent', () => {
-  let component: ChatUploadComponent;
-  let fixture: ComponentFixture<ChatUploadComponent>;
+describe('DragDropProgressComponent', () => {
+  let component: DragDropProgressComponent;
+  let fixture: ComponentFixture<DragDropProgressComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChatUploadComponent ]
+      declarations: [ DragDropProgressComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChatUploadComponent);
+    fixture = TestBed.createComponent(DragDropProgressComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

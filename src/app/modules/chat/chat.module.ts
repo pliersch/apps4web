@@ -16,6 +16,7 @@ import {NgxsModule} from "@ngxs/store";
 import {ChatState} from "@modules/chat/store/chat.state";
 import {ChatService} from "@modules/chat/store/chat.service";
 import {FormsModule} from "@angular/forms";
+import {FileDragDropModule} from "@modules/file-drag-drop/file-drag-drop.module";
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import {FormsModule} from "@angular/forms";
     MaterialModule,
     NgxsModule.forFeature([ChatState]),
     FormsModule,
+    FileDragDropModule,
   ],
   providers: [
     ChatService

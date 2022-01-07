@@ -69,6 +69,11 @@ export class ChatState {
 
   @Action(chatAction.LoadChatSuccess)
   loadChatSuccess(ctx: StateContext<ChatStateModel>, action: chatAction.LoadChatSuccess): void {
+    for (const message of action.messages) {
+      if (message.images === undefined) {
+        message.images = [];
+      }
+    }
     ctx.patchState({messages: action.messages, loaded: true, loading: false});
   }
 

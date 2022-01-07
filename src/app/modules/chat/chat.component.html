@@ -10,7 +10,7 @@
                              (imageLoadEvent)="scrollToEnd()"></app-chat-messages>
         </ng-scrollbar>
         <app-chat-upload class="preview-container" *ngIf="showPreview" @show (closeUploadEvent)="onUploadClose()"
-                         (previewMountedEvent)="onPreviewMounted($event)" [fileList]="fileList"
+                         (previewMountedEvent)="onPreviewMounted($event)"
                          (uploadEvent)="onUploadFile($event)"></app-chat-upload>
       </div>
     </div>

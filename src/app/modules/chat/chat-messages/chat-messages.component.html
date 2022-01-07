@@ -3,7 +3,7 @@
   <div class="username" *ngIf="message.userId !== userName">{{ message.userId }}</div>
   <div class="content">
     <div>{{ message.text }}</div>
-    <app-chat-image-item *ngIf="message.image" [src]="message.image"
+    <app-chat-image-item *ngIf="message.images[0]" [src]="message.images[0]"
                          (imageLoadEvent)="onImageLoad($event)"></app-chat-image-item>
   </div>
 </div>
