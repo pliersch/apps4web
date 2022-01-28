@@ -1,5 +1,4 @@
-import {PhotoModel} from "@gallery/store/photos/photo-model";
-
+import {Photo} from "@gallery/store/photos/photo.model";
 
 // loading photos
 
@@ -10,7 +9,7 @@ export class LoadPhotosAction {
 export class LoadPhotosSuccessAction {
   static readonly type = '[Gallery] Load Photos success';
 
-  constructor(public photos: PhotoModel[]) {
+  constructor(public photos: Photo[]) {
   }
 }
 
@@ -33,7 +32,7 @@ export class AddPhotoAction {
 export class AddPhotoSuccessAction {
   static readonly type = '[Gallery] Add Photo success';
 
-  constructor(public photo: PhotoModel) {
+  constructor(public photo: Photo) {
   }
 }
 

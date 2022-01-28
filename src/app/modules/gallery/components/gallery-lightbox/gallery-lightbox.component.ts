@@ -12,7 +12,6 @@ import {AlertService} from '@app/services/alert.service';
 import {Photo} from '@gallery/store/photos/photo.model';
 import {LoadPhotosAction} from "@gallery/store/photos/photo-actions";
 import {PhotoState} from "@gallery/store/photos/photo-state";
-import {PhotoModel} from "@gallery/store/photos/photo-model";
 
 enum View {
   Horizontal = 1,
@@ -33,10 +32,10 @@ export class GalleryLightboxComponent implements OnInit {
   horizontalScrollbarRef!: GalleryHorizontalScrollerComponent;
 
   @Select(PhotoState.getPhotos)
-  images: Observable<PhotoModel>
+  images: Observable<Photo>
 
   @Select(PhotoState.getSelectedPhotos)
-  selectedPhotos: Observable<PhotoModel>
+  selectedPhotos: Observable<Photo>
 
   viewEnum = View;
   // images: Observable<Photo[]> = this.store.select(state => state.gallery.photos);

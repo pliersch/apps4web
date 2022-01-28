@@ -1,14 +1,14 @@
 import {Action, Selector, State, StateContext} from "@ngxs/store";
 import {Injectable} from "@angular/core";
-import {PhotoModel} from "@gallery/store/photos/photo-model";
 import {PhotoService} from "@app/core/services/photo.service";
 import {catchError, map} from "rxjs/operators";
 import {asapScheduler, Observable, of, Subscription} from "rxjs";
 import * as photoAction from "@gallery/store/photos/photo-actions";
+import {Photo} from "@gallery/store/photos/photo.model";
 
 export interface PhotoStateModel {
-  photos: PhotoModel[];
-  selectedPhoto: PhotoModel | null;
+  photos: Photo[];
+  selectedPhoto: Photo | null;
   allPhotosLoaded: boolean;
   loaded: boolean;
   loading: boolean;
@@ -29,18 +29,18 @@ export interface PhotoStateModel {
 export class PhotoState {
 
   @Selector()
-  static getPhotos(state: PhotoStateModel): PhotoModel[] {
+  static getPhotos(state: PhotoStateModel): Photo[] {
     return state.photos;
   }
 
   @Selector()
-  static getSelectedPhotos(state: PhotoStateModel): PhotoModel[] {
+  static getSelectedPhotos(state: PhotoStateModel): Photo[] {
     return state.photos.filter(photo => photo.isSelected);
   }
 
   // @Selector()
-  // static selectedPhoto(state: PhotoStateModel): PhotoModel {
-  //   return <PhotoModel>state.selectedPhoto;
+  // static selectedPhoto(state: PhotoStateModel): Photo {
+  //   return <Photo>state.selectedPhoto;
   // }
 
   constructor(private photoService: PhotoService) {
@@ -55,7 +55,7 @@ export class PhotoState {
     ctx.patchState({loading: true});
     return this.photoService.getAll()
       .pipe(
-        map((photos: PhotoModel[]) =>
+        map((photos: Photo[]) =>
           asapScheduler.schedule(() =>
             ctx.dispatch(new photoAction.LoadPhotosSuccessAction(photos))
           )
@@ -93,7 +93,7 @@ export class PhotoState {
   addPhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoAction): Observable<Subscription> {
     return this.photoService.getAll()
       .pipe(
-        map((photos: PhotoModel[]) =>
+        map((photos: Photo[]) =>
           asapScheduler.schedule(() =>
             ctx.dispatch(new photoAction.LoadPhotosSuccessAction(photos))
           )
