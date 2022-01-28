@@ -34,14 +34,12 @@ export class PhotoState {
   }
 
   @Selector()
-  static selectedPhotos(state: PhotoStateModel): PhotoModel[] {
-    // TODO <> untersuchen / verstehen
-    return <PhotoModel[]>state.photos;
+  static getSelectedPhotos(state: PhotoStateModel): PhotoModel[] {
+    return state.photos.filter(photo => photo.isSelected);
   }
 
   // @Selector()
   // static selectedPhoto(state: PhotoStateModel): PhotoModel {
-  //   // TODO <> untersuchen / verstehen
   //   return <PhotoModel>state.selectedPhoto;
   // }
 
@@ -128,4 +126,9 @@ export class PhotoState {
     console.log(action.error)
     ctx.dispatch({loaded: false, loading: false});
   }
+
+  //////////////////////////////////////////////////////////
+  //          selected photos
+  //////////////////////////////////////////////////////////
+
 }

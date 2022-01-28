@@ -34,9 +34,11 @@ import {ChatImage} from "@modules/chat/models/chat-image";
 
 export class ChatComponent implements OnInit, AfterViewInit {
 
+  // TODO same selector, why?
   @Select(ChatState.getMessages)
   messages: Observable<Message[]>;
 
+  // TODO same selector, why?
   @Select(ChatState.getMessages)
   filteredMessages: Observable<Message[]>;
 
