@@ -43,7 +43,15 @@ export class AddPhotoFailAction {
   }
 }
 
-//
+// selected photos
+
+
+export class TogglePhotoSelectionAction {
+  static readonly type = '[Gallery] Toggle Photo Selection';
+
+  constructor(public photo: Photo) {
+  }
+}
 
 export class ClearPhotoSelectionAction {
   static readonly type = '[Gallery] Clear Photo Selection';
@@ -58,18 +66,9 @@ export class DeletePhotoAction {
   }
 }
 
-//
-
-export class TogglePhotoSelectionAction {
-  static readonly type = '[Gallery] Toggle Photo Selection';
-
-  constructor(public photo: string) {
-  }
-}
-
 export class UpdatePhotoAction {
   static readonly type = '[Gallery] Update Photo';
 
-  constructor(public photo: string) {
+  constructor(public photo: Photo) {
   }
 }

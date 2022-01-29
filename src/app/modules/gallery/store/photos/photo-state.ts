@@ -8,7 +8,9 @@ import {Photo} from "@gallery/store/photos/photo.model";
 
 export interface PhotoStateModel {
   photos: Photo[];
-  selectedPhoto: Photo | null;
+  comparePhotos: Photo[];
+  exportPhotos: Photo[];
+  // selectedPhoto: Photo | null;
   allPhotosLoaded: boolean;
   loaded: boolean;
   loading: boolean;
@@ -18,7 +20,9 @@ export interface PhotoStateModel {
   name: 'gallery',
   defaults: {
     photos: [],
-    selectedPhoto: null,
+    comparePhotos: [],
+    exportPhotos: [],
+    // selectedPhoto: null,
     allPhotosLoaded: false,
     loaded: false,
     loading: false
@@ -30,12 +34,14 @@ export class PhotoState {
 
   @Selector()
   static getPhotos(state: PhotoStateModel): Photo[] {
+    console.log('PhotoState getPhotos: ')
     return state.photos;
   }
 
   @Selector()
-  static getSelectedPhotos(state: PhotoStateModel): Photo[] {
-    return state.photos.filter(photo => photo.isSelected);
+  static getComparePhotos(state: PhotoStateModel): Photo[] {
+    console.log('PhotoState getComparePhotos: ')
+    return state.comparePhotos;
   }
 
   // @Selector()
@@ -128,7 +134,17 @@ export class PhotoState {
   }
 
   //////////////////////////////////////////////////////////
-  //          selected photos
+  //          photos to compare
   //////////////////////////////////////////////////////////
 
+  @Action(photoAction.TogglePhotoSelectionAction)
+  addToComparedPhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.TogglePhotoSelectionAction): void {
+    const state = ctx.getState();
+    ctx.patchState({
+      comparePhotos: [
+        ...state.comparePhotos,
+        action.photo,
+      ]
+    });
+  }
 }

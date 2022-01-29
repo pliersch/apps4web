@@ -16,9 +16,7 @@ import {GalleryUploadComponent} from './components/gallery-upload/gallery-upload
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {photoReducer} from './store/photos/photo.reducer';
-import {PhotosEffects} from '@gallery/store/photos/photos.effects';
 import {PhotoService} from '@app/core/services/photo.service';
-import {PhotosResolver} from '@gallery/store/photos/photos.resolver';
 import {GalleryLightboxComponent} from '@gallery/components/gallery-lightbox/gallery-lightbox.component';
 import {
   GalleryVerticalScrollerComponent
@@ -102,14 +100,13 @@ import {PhotoState} from "@gallery/store/photos/photo-state";
     // RouterModule.forChild(ROUTES),
     NgxsModule.forFeature([PhotoState]),
     // StoreRouterConnectingModule.forRoot(),
-    EffectsModule.forFeature([PhotosEffects, TagEffects]),
+    EffectsModule.forFeature([TagEffects]),
     StoreModule.forFeature('photos', photoReducer),
     StoreModule.forFeature('tags', tagReducer),
 
   ],
   providers: [
     PhotoService,
-    PhotosResolver,
     TagService
   ]
 })

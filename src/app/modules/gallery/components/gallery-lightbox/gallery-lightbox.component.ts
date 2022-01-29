@@ -1,6 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Select, Store} from '@ngxs/store';
-import {Observable} from 'rxjs';
+import {Store} from '@ngxs/store';
 import {
   GalleryVerticalScrollerComponent
 } from '@gallery/components/gallery-vertical-scroller/gallery-vertical-scroller.component';
@@ -11,7 +10,6 @@ import {EventBusService} from '@app/services/event-bus.service';
 import {AlertService} from '@app/services/alert.service';
 import {Photo} from '@gallery/store/photos/photo.model';
 import {LoadPhotosAction} from "@gallery/store/photos/photo-actions";
-import {PhotoState} from "@gallery/store/photos/photo-state";
 
 enum View {
   Horizontal = 1,
@@ -31,14 +29,13 @@ export class GalleryLightboxComponent implements OnInit {
   @ViewChild(GalleryHorizontalScrollerComponent)
   horizontalScrollbarRef!: GalleryHorizontalScrollerComponent;
 
-  @Select(PhotoState.getPhotos)
-  images: Observable<Photo>
+  // @Select(PhotoState.getPhotos)
+  // images: Observable<Photo>
 
-  @Select(PhotoState.getSelectedPhotos)
-  selectedPhotos: Observable<Photo>
+  // @Select(PhotoState.getComparePhotos)
+  // selectedPhotos: Observable<Photo>
 
   viewEnum = View;
-  // images: Observable<Photo[]> = this.store.select(state => state.gallery.photos);
   view = View.Horizontal;
   index = 0;
 

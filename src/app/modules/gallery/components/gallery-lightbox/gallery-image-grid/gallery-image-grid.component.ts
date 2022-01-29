@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Photo } from '@gallery/store/photos/photo.model';
-import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { PhotoState } from '@gallery/store/photos/photo.state';
-import { allSelectedPhotos } from '@gallery/store/photos/photo.selectors';
+import {Component, OnInit} from '@angular/core';
+import {Photo} from '@gallery/store/photos/photo.model';
+import {Observable} from 'rxjs';
+import {PhotoState} from '@gallery/store/photos/photo-state';
+import {Select, Store} from "@ngxs/store";
 
 @Component({
   selector: 'app-gallery-image-grid',
@@ -12,8 +11,11 @@ import { allSelectedPhotos } from '@gallery/store/photos/photo.selectors';
 })
 export class GalleryImageGridComponent implements OnInit {
 
+  @Select(PhotoState.getComparePhotos)
+  selection: Observable<Photo[]>
+
   // @ts-ignore
-  selection: Observable<Photo[]> = this.store.select(allSelectedPhotos);
+  // selection: Observable<Photo[]> = this.store.select(allSelectedPhotos);
 
   layoutTiles = 0;
   colsAvailable = 1;
@@ -21,7 +23,7 @@ export class GalleryImageGridComponent implements OnInit {
   cols = 1;
   rows = 1;
 
-  constructor(private store: Store<PhotoState>) {
+  constructor(private store: Store) {
   }
 
   ngOnInit(): void {

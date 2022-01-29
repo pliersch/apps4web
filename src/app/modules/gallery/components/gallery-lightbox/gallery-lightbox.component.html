@@ -1,16 +1,16 @@
 <div class="grid"
-  [class.horizontal]="view === viewEnum.Horizontal"
-  [class.vertical]="view === viewEnum.Vertical">
+     [class.horizontal]="view === viewEnum.Horizontal"
+     [class.vertical]="view === viewEnum.Vertical">
 
   <div class="grid-detail">
-    <ng-container *ngIf="images">
+    <ng-container>
       <app-gallery-image-grid></app-gallery-image-grid>
     </ng-container>
   </div>
 
   <div class="grid-thumbs">
     <app-gallery-vertical-scroller *ngIf="view === viewEnum.Vertical"
-      [currentIndex]="index" (selectEvent)="onSelectImage($event)">
+                                   [currentIndex]="index" (selectEvent)="onSelectImage($event)">
     </app-gallery-vertical-scroller>
     <app-gallery-horizontal-scroller *ngIf="view === viewEnum.Horizontal">
     </app-gallery-horizontal-scroller>
