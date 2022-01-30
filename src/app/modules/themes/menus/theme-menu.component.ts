@@ -24,32 +24,21 @@ export class ThemeMenuComponent implements OnInit {
 
   ngOnInit(): void {
     let theme = this.detectTheme();
-    this.changeTheme(theme);
-  }
-
-  changeTheme(theme: string): void {
-    // if (theme === Themes.Dark) {
-    //   this.overlayContainer.getContainerElement().classList.add(Themes.Dark);
-    // } else {
-    //   this.overlayContainer.getContainerElement().classList.remove(Themes.Light);
-    // }
     localStorage.setItem('theme', theme);
-    // this.themeService.setTheme(theme);
   }
 
   toggleTheme(): void {
-    const current = this.detectTheme();
-    if (current === Themes.Light) {
+    let theme;
+    if (this.detectTheme() === Themes.Light) {
+      theme = Themes.Dark;
       this.overlayContainer.getContainerElement().classList.add(Themes.Dark);
-      this.switchThemeEvent.emit(Themes.Dark);
-      localStorage.setItem('theme', Themes.Dark);
-      this.themeService.toggleTheme(Themes.Dark);
     } else {
+      theme = Themes.Light;
       this.overlayContainer.getContainerElement().classList.remove(Themes.Dark);
-      this.switchThemeEvent.emit(Themes.Light);
-      localStorage.setItem('theme', Themes.Light);
-      this.themeService.toggleTheme(Themes.Light);
     }
+    this.switchThemeEvent.emit(theme);
+    localStorage.setItem('theme', theme);
+    this.themeService.toggleTheme(theme);
   }
 
   detectTheme(): string {
