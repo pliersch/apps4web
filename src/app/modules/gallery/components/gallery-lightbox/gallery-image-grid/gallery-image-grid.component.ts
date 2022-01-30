@@ -14,9 +14,6 @@ export class GalleryImageGridComponent implements OnInit {
   @Select(PhotoState.getComparePhotos)
   selection: Observable<Photo[]>
 
-  // @ts-ignore
-  // selection: Observable<Photo[]> = this.store.select(allSelectedPhotos);
-
   layoutTiles = 0;
   colsAvailable = 1;
   rowHeight = '2:1';

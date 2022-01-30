@@ -3,9 +3,8 @@ import {Photo} from '@gallery/store/photos/photo.model';
 import {NgScrollbar} from 'ngx-scrollbar';
 import {Observable} from 'rxjs';
 import {Select, Store} from '@ngxs/store';
-import {clearSelection} from '@gallery/store/photos/photo.actions';
 import {PhotoState} from "@gallery/store/photos/photo-state";
-import {TogglePhotoSelectionAction} from "@gallery/store/photos/photo-actions";
+import {ClearPhotoSelectionAction, TogglePhotoSelectionAction} from "@gallery/store/photos/photo-actions";
 
 @Component({
   selector: 'app-gallery-horizontal-scroller',
@@ -20,14 +19,11 @@ export class GalleryHorizontalScrollerComponent {
   @Select(PhotoState.getPhotos)
   images: Observable<Photo[]>
 
-  // images: Observable<Photo[]> = this.store.select(state => state.gallery.photos);
-
   constructor(private store: Store) {
   }
 
   onSelectImage($event: MouseEvent, photo: Photo): void {
     if ($event.shiftKey) {
-      // photo.isSelected = true;
       this.updateSelection(photo);
     } else {
       this.reInitializeSelection(photo);
@@ -55,7 +51,7 @@ export class GalleryHorizontalScrollerComponent {
   }
 
   private reInitializeSelection(photo: Photo): void {
-    this.store.dispatch(clearSelection());
+    this.store.dispatch(new ClearPhotoSelectionAction());
     this.store.dispatch(new TogglePhotoSelectionAction(photo));
   }
 }

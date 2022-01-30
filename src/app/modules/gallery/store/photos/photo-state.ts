@@ -147,4 +147,11 @@ export class PhotoState {
       ]
     });
   }
+
+  @Action(photoAction.ClearPhotoSelectionAction)
+  clearComparedPhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.ClearPhotoSelectionAction): void {
+    ctx.patchState({
+      comparePhotos: []
+    });
+  }
 }
