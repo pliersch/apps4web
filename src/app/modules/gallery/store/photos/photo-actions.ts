@@ -20,6 +20,7 @@ export class LoadPhotosFailAction {
   }
 }
 
+
 // adding photo
 
 export class AddPhotoAction {
@@ -43,8 +44,8 @@ export class AddPhotoFailAction {
   }
 }
 
-// selected photos
 
+// selected photos
 
 export class TogglePhotoSelectionAction {
   static readonly type = '[Gallery] Toggle Photo Selection';

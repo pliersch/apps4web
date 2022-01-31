@@ -9,7 +9,7 @@ import {
 import {EventBusService} from '@app/services/event-bus.service';
 import {AlertService} from '@app/services/alert.service';
 import {Photo} from '@gallery/store/photos/photo.model';
-import {LoadPhotosAction} from "@gallery/store/photos/photo-actions";
+import {ClearPhotoSelectionAction, LoadPhotosAction} from "@gallery/store/photos/photo-actions";
 
 enum View {
   Horizontal = 1,
@@ -41,7 +41,7 @@ export class GalleryLightboxComponent implements OnInit {
 
   constructor(
     private alertService: AlertService,
-    private eventBus: EventBusService,
+    private eventBus: EventBusService, // TODO replace by service
     private store: Store) {
   }
 
@@ -49,6 +49,9 @@ export class GalleryLightboxComponent implements OnInit {
     this.store.dispatch(new LoadPhotosAction());
     this.eventBus.on('switchView', () => {
       this.switchView();
+    });
+    this.eventBus.on('ClearComparePhotos', () => {
+      this.store.dispatch(new ClearPhotoSelectionAction());
     });
   }
 

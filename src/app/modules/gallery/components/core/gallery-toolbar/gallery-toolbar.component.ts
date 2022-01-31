@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { EventBusService, EventData } from '@app/services/event-bus.service';
-import { NavigationEnd, Router } from '@angular/router';
+import {Component, Input, OnInit} from '@angular/core';
+import {EventBusService, EventData} from '@app/services/event-bus.service';
+import {NavigationEnd, Router} from '@angular/router';
 
 enum View {
   Home = 1,
@@ -57,5 +57,9 @@ export class GalleryToolbarComponent implements OnInit {
 
   openFilterMenu(): void {
     this.eventBus.emit(new EventData('filterPhotos'));
+  }
+
+  emitClearComparePhotos(): void {
+    this.eventBus.emit(new EventData('ClearComparePhotos'));
   }
 }
