@@ -29,12 +29,6 @@ export class GalleryLightboxComponent implements OnInit {
   @ViewChild(GalleryHorizontalScrollerComponent)
   horizontalScrollbarRef!: GalleryHorizontalScrollerComponent;
 
-  // @Select(PhotoState.getPhotos)
-  // images: Observable<Photo>
-
-  // @Select(PhotoState.getComparePhotos)
-  // selectedPhotos: Observable<Photo>
-
   viewEnum = View;
   view = View.Horizontal;
   index = 0;

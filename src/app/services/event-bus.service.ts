@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { filter, map } from 'rxjs/operators';
-import { Subject, Subscription } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {filter, map} from 'rxjs/operators';
+import {Subject, Subscription} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class EventData {
   name: string;
   value: any;
 
-  constructor(name: string, value?: undefined) {
+  constructor(name: string, value?: any) {
     this.name = name;
     this.value = value;
   }

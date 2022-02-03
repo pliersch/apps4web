@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {ChatToolbarComponent} from "@modules/chat/chat-toolbar/chat-toolbar.component";
-import {EventBusService} from "@app/services";
+import {EventBusService, EventData} from "@app/services";
 import {Select, Store} from "@ngxs/store";
 import {LoadChat, MessagesFilter, SendMessage} from "@modules/chat/store/chat.actions";
 import {Message} from "@modules/chat/models/message";
@@ -62,6 +62,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.store.dispatch(new LoadChat());
+    this.eventBus.emit(new EventData('current-module', ChatToolbarComponent));
     // this.totalChatHeight = this.$refs.chatContainer.scrollHeight
     // this.loading = false
 

@@ -1,4 +1,4 @@
-import {ElementRef, NgModule, ViewChild} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {CommonModule} from '@angular/common';
 
@@ -110,7 +110,6 @@ import {PhotoState} from "@gallery/store/photos/photo-state";
     TagService
   ]
 })
-export class GalleryModule {
 
-  @ViewChild('fileInput') input: ElementRef | undefined;
+export class GalleryModule {
 }

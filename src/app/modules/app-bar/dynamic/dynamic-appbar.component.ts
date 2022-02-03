@@ -1,7 +1,8 @@
-import {Component, ComponentFactoryResolver, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, Type, ViewChild} from '@angular/core';
 import {DynamicAppbarDirective} from "./dynamic-appbar.directive";
 import {DynamicAppbar} from "@modules/share/dynamic-appbar";
-import {GalleryToolbarComponent} from "@gallery/components/core/gallery-toolbar/gallery-toolbar.component";
+import {DynamicAppbarHost} from "@modules/app-bar/dynamic-appbar-host";
+import {DynamicAppbarService} from "@modules/app-bar/dynamic-appbar.service";
 
 @Component({
   selector: 'app-dynamic-appbar',
@@ -10,33 +11,32 @@ import {GalleryToolbarComponent} from "@gallery/components/core/gallery-toolbar/
   `,
 })
 
-export class DynamicAppbarComponent implements OnInit {
+export class DynamicAppbarComponent implements OnInit, DynamicAppbarHost {
+
   @ViewChild(DynamicAppbarDirective, {static: true})
   host: DynamicAppbarDirective;
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) {
+  constructor(private appbarService: DynamicAppbarService) {
   }
 
   ngOnInit(): void {
-    this.loadComponent();
+    this.appbarService.setAppbarHost(this);
   }
 
-  // loadComponent(): void {
-  //   const viewContainerRef = this.host.viewContainerRef;
-  //   viewContainerRef.clear();
-  //   const dynamicAppbar = new DynamicAppbar(GalleryToolbarComponent);
-  //   viewContainerRef.createComponent<DynamicAppbar>(dynamicAppbar.component);
-  //   // const componentRef = viewContainerRef.createComponent<DynamicAppbar>(componentFactory);
-  // }
-
-  loadComponent(): void {
-    const dynamicAppbar = new DynamicAppbar(GalleryToolbarComponent);
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(dynamicAppbar.component);
-
-    const viewContainerRef = this.host.viewContainerRef;
-    viewContainerRef.clear();
-    viewContainerRef.createComponent<DynamicAppbar>(componentFactory);
-    // const componentRef = viewContainerRef.createComponent<DynamicAppbar>(componentFactory);
+  loadComponent(toolbar: Type<any>): void {
+    const viewContainerRef2 = this.host.viewContainerRef;
+    viewContainerRef2.clear();
+    const componentRef = viewContainerRef2.createComponent<DynamicAppbar>(toolbar);
+    // componentRef.instance.data = adItem.data;
   }
 
+  switchAppbar(appbar: Type<any>): void {
+    console.log('DynamicAppbarComponent switchAppbar: ', appbar.name)
+    this.loadComponent(appbar)
+  }
+
+  removeAppbar(): void {
+    const viewContainerRef2 = this.host.viewContainerRef;
+    viewContainerRef2.clear();
+  }
 }
