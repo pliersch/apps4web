@@ -28,7 +28,7 @@ import {NgScrollbarModule} from "ngx-scrollbar";
 import {GlobalErrorHandler} from "@app/core/helpers/global-error-handler";
 import {environment} from "@environments/environment";
 import {AppBarComponent} from "@modules/app-bar/app-bar.component";
-import {AppFooterComponent} from "@modules/app-footer/app-footer.component";
+// import {AppFooterComponent} from "@modules/app-footer/app-footer.component";
 import {ThemeMenuComponent} from "@modules/themes/menus/theme-menu.component";
 import {DashboardComponent} from "@modules/dashboard/dashboard.component";
 import {DynamicAppbarComponent} from "@modules/app-bar/dynamic/dynamic-appbar.component";
@@ -41,13 +41,12 @@ import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
 import {AuthState} from "@app/stores/auth/auth-state";
 import {ThemeState} from "@modules/themes/stores/theme-state";
 import {initTheme} from "@app/core/helpers/theme.initializer";
-import {NgxsLoggerPluginModule} from "@ngxs/logger-plugin";
 
 @NgModule({
   declarations: [
     AppComponent,
     AppBarComponent,
-    AppFooterComponent,
+    // AppFooterComponent,
     AuthLayoutComponent,
     DefaultLayoutComponent,
     ThemeMenuComponent,
@@ -69,7 +68,7 @@ import {NgxsLoggerPluginModule} from "@ngxs/logger-plugin";
     MaterialModule,
     NgxsModule.forRoot([AuthState, ThemeState], {developmentMode: !environment.production}),
     NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxsLoggerPluginModule.forRoot(),
+    // NgxsLoggerPluginModule.forRoot(),
     // @ts-ignore
     StoreModule.forRoot({appState: appStateReducer}),
     // StoreModule.forRoot(reducers, {metaReducers}),

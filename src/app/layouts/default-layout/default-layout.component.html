@@ -13,7 +13,7 @@
           <a routerLink="/dashboard" routerLinkActive="active-link" class="mat-menu-item">Home</a>
         </nav>
         <nav>
-          <a routerLink="/gallery" routerLinkActive="active-link" class="mat-menu-item">Galerie</a>
+          <a routerLink="/gallery/home" [routerLinkActive]="['active-route']" class="mat-menu-item">Galerie</a>
         </nav>
         <nav>
           <a routerLink="/admin" routerLinkActive="active-link" class="mat-menu-item">Admin</a>
@@ -50,5 +50,5 @@
       <!--      </ng-scrollbar>-->
     </mat-sidenav-content>
   </mat-sidenav-container>
-  <app-app-footer class="footer mat-toolbar mat-toolbar-single-row"></app-app-footer>
+  <!--  <app-app-footer class="footer mat-toolbar mat-toolbar-single-row"></app-app-footer>-->
 </div>

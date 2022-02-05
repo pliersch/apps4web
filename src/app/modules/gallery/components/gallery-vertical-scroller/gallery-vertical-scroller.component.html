@@ -1,9 +1,9 @@
-<ng-scrollbar class="dark-scrollbar" track="vertical" visibility="hover">
+<ng-scrollbar class="dark-scrollbar" track="vertical" visibility="always">
   <div class="thumbnail-list">
     <div class="thumbnail-item item" *ngFor="let image of (images | async); let i = index"
-      [style.background-image]="'url(' + image.fileName + ')'"
-      [class.active]="currentIndex === i"
-      (click)="onSelectCurrentImage($event, i)">
+         [style.background-image]="'url(' + image.fileName + ')'"
+         [class.active]="currentIndex === i"
+         (click)="onSelectCurrentImage($event, i)">
     </div>
   </div>
 </ng-scrollbar>

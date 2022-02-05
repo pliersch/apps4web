@@ -19,9 +19,6 @@ export class AppBarComponent {
     this.toggleNavEvent.emit('toggle');
   }
 
-  openThemeMenu(): void {
-  }
-
   onSwitchTheme($event: string): void {
     this.switchThemeEvent.emit($event);
   }

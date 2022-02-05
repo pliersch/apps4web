@@ -1,5 +1,7 @@
-<div class="gallery">
-  <div class="gallery-panel" *ngFor="let image of (images | async)">
-    <img [src]="image.fileName">
+<ng-scrollbar class="dark-scrollbar" track="vertical" visibility="always">
+  <div class="gallery">
+    <div class="gallery-panel" *ngFor="let image of (images | async)">
+      <img [src]="image.fileName" alt="preview">
+    </div>
   </div>
-</div>
+</ng-scrollbar>

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {GalleryToolbarComponent} from "@gallery/components/core/gallery-toolbar/gallery-toolbar.component";
-import {DynamicAppbarService} from "@modules/app-bar/dynamic-appbar.service";
+import {DynamicAppbarService} from "@modules/app-bar/dynamic/dynamic-appbar.service";
 
 @Component({
   selector: 'app-gallery-container',

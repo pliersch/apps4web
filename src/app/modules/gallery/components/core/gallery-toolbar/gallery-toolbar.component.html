@@ -1,17 +1,9 @@
 <mat-toolbar>
   <mat-nav-list class="list-horizontal">
-    <mat-list-item>
-      <a [routerLink]="['/gallery/home']" [class.active-route]="view === viewType.Home">Home</a>
-    </mat-list-item>
-    <mat-list-item>
-      <a [routerLink]="['/gallery/explorer']" [class.active-route]="view === viewType.Explorer">Explorer</a>
-    </mat-list-item>
-    <mat-list-item>
-      <a [routerLink]="['/gallery/lightbox']" [class.active-route]="view === viewType.Lightbox">Lightbox</a>
-    </mat-list-item>
-    <mat-list-item>
-      <a [routerLink]="['/gallery/upload']" [class.active-route]="view === viewType.Upload">Upload</a>
-    </mat-list-item>
+    <a mat-list-item [routerLink]="['/gallery/home']" [routerLinkActive]="['active-route']">Home</a>
+    <a mat-list-item [routerLink]="['/gallery/explorer']" [routerLinkActive]="['active-route']">Explorer</a>
+    <a mat-list-item [routerLink]="['/gallery/lightbox']" [routerLinkActive]="['active-route']">Lightbox</a>
+    <a mat-list-item [routerLink]="['/gallery/upload']" [class.active-route]="view === viewType.Upload">Upload</a>
   </mat-nav-list>
   <span class="spacer"></span>
   <button mat-icon-button aria-label="Example icon-button with heart icon"

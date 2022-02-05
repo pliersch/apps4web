@@ -23,5 +23,13 @@ mat-nav-list.list-horizontal {
 }
 
 .active-route {
-  color: var(--primary-color)
+  color: var(--secondary-color);
+  background: rgba(255, 255, 255, 0.04);
+  //background: green;
+}
+
+mat-list-item {
+  //background: green;
+  //background: var(--primary-color-light);
+  //background: rgba(0, 0, 0, .4);
 }

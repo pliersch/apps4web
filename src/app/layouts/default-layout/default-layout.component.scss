@@ -31,3 +31,15 @@
 .sidenav-container {
   height: 100%;
 }
+
+.active-link {
+  color: var(--secondary-color);
+  background: rgba(255, 255, 255, 0.04);
+  //background: green;
+}
+
+.active-route {
+  color: var(--secondary-color);
+  background: rgba(255, 255, 255, 0.04);
+  //background: green;
+}
