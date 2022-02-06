@@ -3,7 +3,6 @@ import {Photo} from '@gallery/store/photos/photo.model';
 import {Select, Store} from '@ngxs/store';
 import {Observable} from 'rxjs';
 import {EventBusService} from '@app/services/event-bus.service';
-import {LoadPhotosAction} from "@gallery/store/photos/photo-actions";
 import {PhotoState} from "@gallery/store/photos/photo-state";
 
 @Component({
@@ -24,7 +23,6 @@ export class GalleryExplorerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new LoadPhotosAction());
     this.eventBus.on('filterPhotos', () => {
       this.showFilter = !this.showFilter;
     });

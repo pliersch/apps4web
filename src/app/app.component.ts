@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,9 +6,16 @@ import {Component} from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   constructor() {
+  }
+
+  ngOnInit(): void {
+    const eventSource = new EventSource('http://localhost:3000/sse');
+    eventSource.onmessage = ({data}): void => {
+      console.log('AppComponent SSE msg: ', data)
+    }
   }
 
 }

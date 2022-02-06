@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {GalleryToolbarComponent} from "@gallery/components/core/gallery-toolbar/gallery-toolbar.component";
 import {DynamicAppbarService} from "@modules/app-bar/dynamic/dynamic-appbar.service";
 import {Location} from "@angular/common";
+import {Store} from "@ngxs/store";
+import {LoadPhotosAction} from "@gallery/store/photos/photo-actions";
 
 @Component({
   selector: 'app-gallery-container',
@@ -11,10 +13,12 @@ import {Location} from "@angular/common";
 export class GalleryContainerComponent implements OnInit {
 
   constructor(private appbarService: DynamicAppbarService,
+              private store: Store,
               private location: Location) {
   }
 
   ngOnInit(): void {
+    this.store.dispatch(new LoadPhotosAction());
     this.appbarService.registerAppbar({
       appbar: GalleryToolbarComponent,
       moduleName: 'gallery'

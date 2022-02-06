@@ -9,7 +9,7 @@ import {
 import {EventBusService} from '@app/services/event-bus.service';
 import {AlertService} from '@app/services/alert.service';
 import {Photo} from '@gallery/store/photos/photo.model';
-import {ClearPhotoSelectionAction, LoadPhotosAction} from "@gallery/store/photos/photo-actions";
+import {ClearPhotoSelectionAction} from "@gallery/store/photos/photo-actions";
 
 enum View {
   Horizontal = 1,
@@ -40,7 +40,6 @@ export class GalleryLightboxComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new LoadPhotosAction());
     this.eventBus.on('switchView', () => {
       this.switchView();
     });
