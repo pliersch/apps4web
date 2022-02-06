@@ -23,8 +23,7 @@ export class ThemeMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let theme = this.detectTheme();
-    localStorage.setItem('theme', theme);
+    localStorage.setItem('theme', this.detectTheme());
   }
 
   toggleTheme(): void {

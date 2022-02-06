@@ -61,6 +61,7 @@ import {
 } from './components/gallery-explorer/gallery-edit-tags/gallery-edit-tag-list/gallery-edit-tag-list.component';
 import {NgxsModule} from "@ngxs/store";
 import {PhotoState} from "@gallery/store/photos/photo-state";
+import { ImageControlComponent } from './components/share/image-control/image-control.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import {PhotoState} from "@gallery/store/photos/photo-state";
     GalleryEditTagsComponent,
     MatListRemovePaddingDirective,
     GalleryEditTagListComponent,
+    ImageControlComponent,
   ],
   imports: [
     CommonModule,

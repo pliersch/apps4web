@@ -13,7 +13,6 @@ export class GalleryHomeComponent implements OnInit {
 
   images: Observable<Photo[]> = this.store.select(state => state.gallery.photos);
 
-  // constructor(private store: Store<PhotoState>) {}
   constructor(private store: Store) {
   }
 
