@@ -1,6 +1,4 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Store} from "@ngxs/store";
-import {LoginAction} from "@app/stores/auth/login-action";
 
 @Component({
   selector: 'app-appbar',
@@ -12,7 +10,7 @@ export class AppBarComponent {
   @Output() toggleNavEvent = new EventEmitter<string>();
   @Output() switchThemeEvent = new EventEmitter<string>();
 
-  constructor(private store: Store) {
+  constructor() {
   }
 
   emitNavToggle(): void {
@@ -21,9 +19,5 @@ export class AppBarComponent {
 
   onSwitchTheme($event: string): void {
     this.switchThemeEvent.emit($event);
-  }
-
-  onClickLogin(): void {
-    this.store.dispatch(new LoginAction({username: 'name', password: 'pw'}));
   }
 }

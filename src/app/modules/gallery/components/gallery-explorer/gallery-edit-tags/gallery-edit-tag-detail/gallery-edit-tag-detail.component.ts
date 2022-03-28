@@ -1,9 +1,9 @@
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { MatChipInputEvent } from '@angular/material/chips';
-import { Observable, of } from 'rxjs';
-import { Tag } from '@gallery/store/tags/tag.model';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
+import {FormControl} from '@angular/forms';
+import {MatChipInputEvent} from '@angular/material/chips';
+import {Observable, of} from 'rxjs';
+import {Tag} from '@gallery/store/tags/tag.model';
 
 @Component({
   selector: 'app-gallery-edit-tag-detail',

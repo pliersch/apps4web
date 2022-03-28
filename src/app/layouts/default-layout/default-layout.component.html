@@ -6,40 +6,14 @@
     <mat-sidenav #drawer fixedInViewport="false" mode="side" opened class="example-sidenav"
                  [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
                  [mode]="(isHandset$ | async) ? 'over' : 'side'"
-                 [opened]="(isHandset$ | async) === false"
-    >
-      <mat-nav-list>
-        <nav>
-          <a routerLink="/dashboard" routerLinkActive="active-link" class="mat-menu-item">Home</a>
-        </nav>
-        <nav>
-          <a routerLink="/gallery/home" [routerLinkActive]="['active-route']" class="mat-menu-item">Galerie</a>
-        </nav>
-        <nav>
-          <a routerLink="/admin" routerLinkActive="active-link" class="mat-menu-item">Admin</a>
-        </nav>
-        <nav>
-          <a routerLink="/recipes" routerLinkActive="active-link" class="mat-menu-item">Rezepte</a>
-        </nav>
-        <nav>
-          <a routerLink="/account/login" routerLinkActive="active-link" class="mat-menu-item">Login</a>
-        </nav>
-        <nav>
-          <a routerLink="/samples/address" routerLinkActive="active-link" class="mat-menu-item">Address</a>
-        </nav>
-        <nav>
-          <a routerLink="/account" routerLinkActive="active-link" class="mat-menu-item">Account</a>
-        </nav>
-        <nav>
-          <a routerLink="/profile" routerLinkActive="active-link" class="mat-menu-item">Profil</a>
-        </nav>
-        <nav>
-          <a routerLink="/doctor" routerLinkActive="active-link" class="mat-menu-item">Arzt</a>
-        </nav>
-        <nav>
-          <a routerLink="/chat" routerLinkActive="active-link" class="mat-menu-item">Chat</a>
-        </nav>
-      </mat-nav-list>
+                 [opened]="(isHandset$ | async) === false">
+
+      <mat-selection-list #shoes [multiple]="false">
+        <mat-list-option *ngFor="let shoe of typesOfShoes" [value]="shoe">
+          {{shoe}}
+        </mat-list-option>
+      </mat-selection-list>
+
     </mat-sidenav>
     <mat-sidenav-content>
       <!--      <ng-scrollbar class="dark-scrollbar" track="vertical" visibility="hover">-->

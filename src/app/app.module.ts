@@ -41,6 +41,7 @@ import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
 import {AuthState} from "@app/stores/auth/auth-state";
 import {ThemeState} from "@modules/themes/stores/theme-state";
 import {initTheme} from "@app/core/helpers/theme.initializer";
+import { ModuleComponent } from './core/base-components/module/module.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import {initTheme} from "@app/core/helpers/theme.initializer";
     DynamicAppbarDirective,
     DynamicAppbarComponent,
     LegalNoticeComponent,
+    ModuleComponent,
   ],
   imports: [
     BrowserModule,

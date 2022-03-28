@@ -16,11 +16,11 @@ export class DefaultLayoutComponent implements OnInit {
   @ViewChild(MatSidenav) drawer!: MatSidenav;
 
   theme: string = 'dark-theme';
+  typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
 
   constructor(private breakpointObserver: BreakpointObserver,
               private store: Store) {
   }
-
 
   ngOnInit(): void {
     this.store.select(ThemeState.theme).subscribe((theme) => {
@@ -37,7 +37,7 @@ export class DefaultLayoutComponent implements OnInit {
     void this.drawer.toggle();
   }
 
-  onSwitchTheme($event: string) {
+  onSwitchTheme($event: string): void {
     this.theme = $event;
   }
 }

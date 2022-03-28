@@ -1,0 +1,16 @@
+mat-nav-list.list-horizontal {
+  padding: 0;
+
+  a {
+    display: inline-block;
+    height: auto;
+    width: auto;
+  }
+}
+
+.active-route {
+  color: red;
+  //color: var(--secondary-color);
+  background: rgba(255, 255, 255, 0.04);
+  //background: green;
+}

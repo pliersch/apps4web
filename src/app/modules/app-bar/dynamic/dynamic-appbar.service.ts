@@ -28,19 +28,19 @@ export class DynamicAppbarService {
   }
 
   switchAppbar(url: string): void {
-    console.log('DynamicAppbarService switchAppbar: ')
-    let moduleName = url.split('/')[1];
-    let appbarModel = this.appbars.find((appbar) => appbar.moduleName === moduleName);
-
-    if (!appbarModel) {
-      console.log('no')
-      this.currentAppbarModel = null;
-      this.host.removeAppbar();
-    }
-    if (appbarModel && appbarModel !== this.currentAppbarModel) {
-      this.currentAppbarModel = appbarModel;
-      console.log(appbarModel.moduleName)
-      this.host.switchAppbar(appbarModel.appbar);
-    }
+    // console.log('DynamicAppbarService switchAppbar: ')
+    // let moduleName = url.split('/')[1];
+    // let appbarModel = this.appbars.find((appbar) => appbar.moduleName === moduleName);
+    //
+    // if (!appbarModel) {
+    //   console.log('no')
+    //   this.currentAppbarModel = null;
+    //   this.host.removeAppbar();
+    // }
+    // if (appbarModel && appbarModel !== this.currentAppbarModel) {
+    //   this.currentAppbarModel = appbarModel;
+    //   console.log(appbarModel.moduleName)
+    //   this.host.switchAppbar(appbarModel.appbar);
+    // }
   }
 }
