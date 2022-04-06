@@ -1,27 +1,44 @@
 import {Component, OnInit} from '@angular/core';
-import {GalleryToolbarComponent} from "@gallery/components/core/gallery-toolbar/gallery-toolbar.component";
-import {DynamicAppbarService} from "@modules/app-bar/dynamic/dynamic-appbar.service";
 import {Store} from "@ngxs/store";
 import {LoadPhotosAction} from "@gallery/store/photos/photo-actions";
-import {ModuleComponent} from "@app/core/base-components/module/module.component";
+import {Router} from "@angular/router";
+import {Location} from "@angular/common";
+
+// TODO ugly naming
+interface LinkAndName {
+  link: string;
+  name: string;
+}
 
 @Component({
   selector: 'app-gallery-container',
   templateUrl: './gallery-container.component.html',
   styleUrls: ['./gallery-container.component.scss'],
 })
-export class GalleryContainerComponent extends ModuleComponent implements OnInit {
+export class GalleryContainerComponent implements OnInit {
 
-  constructor(private appbarService: DynamicAppbarService,
-              private store: Store) {
-    super()
+  linksAndNames: LinkAndName[] = [
+    {name: 'Home', link: '/gallery/home'},
+    {name: 'Explorer', link: '/gallery/explorer'},
+    {name: 'Lightbox', link: '/gallery/lightbox'},
+    {name: 'Upload', link: '/gallery/upload'},
+  ];
+
+  activeLink = this.linksAndNames[0].link;
+
+  constructor(private router: Router,
+              private location: Location,
+              private store: Store,
+  ) {
   }
 
   ngOnInit(): void {
     this.store.dispatch(new LoadPhotosAction());
-    this.appbarService.registerAppbar({
-      appbar: GalleryToolbarComponent,
-      moduleName: 'gallery'
-    });
+    this.activeLink = this.location.path();
+    this.location.onUrlChange(url => this.activeLink = url);
+  }
+
+  navigateUrl(link: string): void {
+    void this.router.navigateByUrl(link);
   }
 }

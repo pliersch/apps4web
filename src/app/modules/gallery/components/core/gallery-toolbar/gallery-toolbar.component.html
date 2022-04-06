@@ -1,21 +1,13 @@
 <mat-toolbar>
-  <mat-nav-list class="list-horizontal">
-    <a mat-list-item [routerLink]="['/gallery/home']" [routerLinkActive]="['active-route']">Home</a>
-    <a mat-list-item [routerLink]="['/gallery/explorer']" [routerLinkActive]="['active-route']">Explorer</a>
-    <a mat-list-item [routerLink]="['/gallery/lightbox']" [routerLinkActive]="['active-route']">Lightbox</a>
-    <a mat-list-item [routerLink]="['/gallery/upload']" [class.active-route]="view === viewType.Upload">Upload</a>
-  </mat-nav-list>
   <span class="spacer"></span>
-  <button mat-icon-button aria-label="Example icon-button with heart icon"
+  <button mat-icon-button
           [class.hidden]="view !== viewType.Lightbox" (click)="emitSwitchView()">
     <mat-icon>{{ icon }}</mat-icon>
   </button>
-  <button mat-icon-button (click)="openFilterMenu()"
-          aria-label="Example icon-button with share icon">
+  <button mat-icon-button (click)="openFilterMenu()">
     <mat-icon>filter_alt</mat-icon>
   </button>
-  <button mat-icon-button (click)="emitClearComparePhotos()"
-          aria-label="Example icon-button with share icon">
+  <button mat-icon-button (click)="emitClearComparePhotos()">
     <mat-icon>clear</mat-icon>
   </button>
 </mat-toolbar>

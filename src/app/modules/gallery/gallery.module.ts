@@ -61,7 +61,9 @@ import {
 } from './components/gallery-explorer/gallery-edit-tags/gallery-edit-tag-list/gallery-edit-tag-list.component';
 import {NgxsModule} from "@ngxs/store";
 import {PhotoState} from "@gallery/store/photos/photo-state";
-import { ImageControlComponent } from './components/share/image-control/image-control.component';
+import {ImageControlComponent} from './components/share/image-control/image-control.component';
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {ActionBarModule} from "@modules/action-bar/action-bar.module";
 
 @NgModule({
   declarations: [
@@ -105,7 +107,8 @@ import { ImageControlComponent } from './components/share/image-control/image-co
     EffectsModule.forFeature([TagEffects]),
     StoreModule.forFeature('photos', photoReducer),
     StoreModule.forFeature('tags', tagReducer),
-
+    MatButtonToggleModule,
+    ActionBarModule,
   ],
   providers: [
     PhotoService,

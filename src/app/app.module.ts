@@ -23,7 +23,6 @@ import {
 } from "angularx-social-login";
 import {UserService} from "@app/services";
 import {ErrorInterceptor, initApplication, JwtInterceptor} from "@app/core/helpers";
-// import {NgxScrollbarModule} from "@app/shared/ngx-scrollbar/ngx-scrollbar.module";
 import {NgScrollbarModule} from "ngx-scrollbar";
 import {GlobalErrorHandler} from "@app/core/helpers/global-error-handler";
 import {environment} from "@environments/environment";
@@ -41,7 +40,7 @@ import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
 import {AuthState} from "@app/stores/auth/auth-state";
 import {ThemeState} from "@modules/themes/stores/theme-state";
 import {initTheme} from "@app/core/helpers/theme.initializer";
-import { ModuleComponent } from './core/base-components/module/module.component';
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 @NgModule({
   declarations: [
@@ -56,7 +55,6 @@ import { ModuleComponent } from './core/base-components/module/module.component'
     DynamicAppbarDirective,
     DynamicAppbarComponent,
     LegalNoticeComponent,
-    ModuleComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,7 +63,6 @@ import { ModuleComponent } from './core/base-components/module/module.component'
     BrowserAnimationsModule,
     SocialLoginModule,
     AccountModule,
-    // NgxScrollbarModule,
     NgScrollbarModule,
     MaterialModule,
     NgxsModule.forRoot([AuthState, ThemeState], {developmentMode: !environment.production}),
@@ -76,11 +73,10 @@ import { ModuleComponent } from './core/base-components/module/module.component'
     // StoreModule.forRoot(reducers, {metaReducers}),
     EffectsModule.forRoot([LoaderEffect]),
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
-    !environment.production ? StoreDevtoolsModule.instrument() : []
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    MatButtonToggleModule
   ],
-  // exports: [
-  //   NgScrollbarModule,
-  // ],
+  exports: [],
   providers: [
     {
       provide: 'SocialAuthServiceConfig',

@@ -3,12 +3,12 @@
               (toggleNavEvent)="toggleNav()"></app-appbar>
 
   <mat-sidenav-container class="main" autosize>
-    <mat-sidenav #drawer fixedInViewport="false" mode="side" opened class="example-sidenav"
+    <mat-sidenav fixedInViewport="false" mode="side" class="example-sidenav"
                  [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
                  [mode]="(isHandset$ | async) ? 'over' : 'side'"
-                 [opened]="(isHandset$ | async) === false">
+                 [opened]="(isHandset$ | async)">
 
-      <mat-selection-list #shoes [multiple]="false">
+      <mat-selection-list [multiple]="false">
         <mat-list-option *ngFor="let shoe of typesOfShoes" [value]="shoe">
           {{shoe}}
         </mat-list-option>
@@ -16,12 +16,7 @@
 
     </mat-sidenav>
     <mat-sidenav-content>
-      <!--      <ng-scrollbar class="dark-scrollbar" track="vertical" visibility="hover">-->
       <router-outlet></router-outlet>
-      <!--      <div class="main">-->
-      <!--        <router-outlet></router-outlet>-->
-      <!--      </div>-->
-      <!--      </ng-scrollbar>-->
     </mat-sidenav-content>
   </mat-sidenav-container>
   <!--  <app-app-footer class="footer mat-toolbar mat-toolbar-single-row"></app-app-footer>-->

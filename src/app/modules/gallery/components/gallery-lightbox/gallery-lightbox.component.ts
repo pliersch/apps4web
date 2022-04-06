@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Store} from '@ngxs/store';
 import {
   GalleryVerticalScrollerComponent
@@ -6,14 +6,21 @@ import {
 import {
   GalleryHorizontalScrollerComponent
 } from '@gallery/components/gallery-horizontal-scroller/gallery-horizontal-scroller.component';
-import {EventBusService} from '@app/services/event-bus.service';
 import {AlertService} from '@app/services/alert.service';
 import {Photo} from '@gallery/store/photos/photo.model';
 import {ClearPhotoSelectionAction} from "@gallery/store/photos/photo-actions";
+import {ActionBarService} from "@app/services/action-bar.service";
+import {Action, ActionProvider} from "@app/models/actions";
 
 enum View {
-  Horizontal = 1,
-  Vertical = 2
+  Horizontal,
+  Vertical
+}
+
+enum ActionTypes {
+  SwitchView,
+  Filter,
+  ClearComparison
 }
 
 @Component({
@@ -21,7 +28,7 @@ enum View {
   templateUrl: './gallery-lightbox.component.html',
   styleUrls: ['./gallery-lightbox.component.scss']
 })
-export class GalleryLightboxComponent implements OnInit {
+export class GalleryLightboxComponent implements OnInit, OnDestroy, ActionProvider {
 
   @ViewChild(GalleryVerticalScrollerComponent)
   verticalScrollbarRef!: GalleryVerticalScrollerComponent;
@@ -33,19 +40,37 @@ export class GalleryLightboxComponent implements OnInit {
   view = View.Horizontal;
   index = 0;
 
-  constructor(
-    private alertService: AlertService,
-    private eventBus: EventBusService, // TODO replace by service
-    private store: Store) {
+  private actions: Action[] = [
+    {name: ActionTypes.SwitchView, icon: 'arrow_downward', tooltip: 'toggle the thumbnail list', handler: this},
+    {name: ActionTypes.Filter, icon: 'filter_alt', tooltip: 'open the filter menu', handler: this},
+    {name: ActionTypes.ClearComparison, icon: 'clear', tooltip: 'clear comparison images', handler: this},
+  ]
+
+  constructor(private alertService: AlertService,
+              private actionBarService: ActionBarService,
+              private store: Store) {
   }
 
   ngOnInit(): void {
-    this.eventBus.on('switchView', () => {
-      this.switchView();
-    });
-    this.eventBus.on('ClearComparePhotos', () => {
-      this.store.dispatch(new ClearPhotoSelectionAction());
-    });
+    this.actionBarService.setActions(this.actions);
+  }
+
+  ngOnDestroy(): void {
+    this.actionBarService.removeActions();
+  }
+
+  onAction(action: Action): void {
+    switch (action.name) {
+      case ActionTypes.Filter:
+        // TODO implement
+        break;
+      case ActionTypes.SwitchView:
+        this.switchView();
+        break;
+      case ActionTypes.ClearComparison:
+        this.store.dispatch(new ClearPhotoSelectionAction());
+        break;
+    }
   }
 
   switchView(): void {

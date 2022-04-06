@@ -1,27 +1,25 @@
-.grid {
+.page {
   display: grid;
   width: 100%;
   height: 100%;
-  grid-template:
-    'toolbar' auto
-    'main' 1fr
-    'footer' auto
-    / 1fr;
+  grid-template: [header-left] "nav     nav" auto [header-right]
+                 [main-left]   "actions main" 1fr  [main-right]
+                 //[footer-left] "actions foot" 30px [footer-right]
+                 / auto 1fr;
 }
 
-.toolbar {
-  grid-area: toolbar;
+.nav-bar {
+  grid-area: nav;
 }
 
-.main {
+.action-bar {
+  grid-area: actions;
+}
+
+main {
   grid-area: main;
-  overflow: hidden;
 }
 
-.footer {
-  position: relative;
-  box-sizing: border-box;
-  //padding: 10px;
-  overflow-y: auto;
-  grid-area: footer;
-}
+//footer {
+//  grid-area: foot;
+//}
