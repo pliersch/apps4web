@@ -9,6 +9,7 @@ import {
 } from '@gallery/components/gallery-explorer/gallery-edit-tags/gallery-edit-tags.component';
 import {TagState} from "@gallery/store/tags/tag-state";
 import {LoadTags} from "@gallery/store/tags/tag-action";
+import {TagFilter} from "@gallery/store/photos/photo-actions";
 
 @Component({
   selector: 'app-gallery-filter-expansion-panel',
@@ -61,5 +62,10 @@ export class GalleryFilterExpansionPanelComponent implements OnInit {
     const categories: string[] = [];
     this.tagArray.forEach(tag => categories.push(tag.tagName));
     return categories;
+  }
+
+  onClickEntry(entry: string): void {
+    this.store.dispatch(new TagFilter(entry));
+    console.log('GalleryFilterExpansionPanelComponent onClickEntry: ', entry)
   }
 }

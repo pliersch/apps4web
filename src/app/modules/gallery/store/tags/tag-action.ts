@@ -17,3 +17,21 @@ export class LoadTagsFail {
   constructor(public error: any) {
   }
 }
+
+export class AddTag {
+  static readonly type = '[Gallery] Add Tag';
+}
+
+export class AddTagSuccess {
+  static readonly type = '[Gallery] Add Tag success';
+
+  constructor(public tags: Tag[]) {
+  }
+}
+
+export class AddTagFail {
+  static readonly type = '[Gallery] Add Tag Fail';
+
+  constructor(public error: any) {
+  }
+}

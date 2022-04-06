@@ -73,3 +73,12 @@ export class UpdatePhotoAction {
   constructor(public photo: Photo) {
   }
 }
+
+// filter photos
+
+export class TagFilter {
+  static readonly type = '[Gallery] Filter Photos';
+
+  constructor(public filter: string) {
+  }
+}

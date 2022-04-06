@@ -9,6 +9,7 @@ import {patch, updateItem} from "@ngxs/store/operators";
 
 export interface PhotoStateModel {
   photos: Photo[];
+  tagFilter: string[];
   // comparePhotos: Photo[];
   // exportPhotos: Photo[];
   // selectedPhoto: Photo | null;
@@ -21,6 +22,7 @@ export interface PhotoStateModel {
   name: 'gallery',
   defaults: {
     photos: [],
+    tagFilter: [],
     // comparePhotos: [],
     // exportPhotos: [],
     // selectedPhoto: null,
@@ -35,12 +37,29 @@ export class PhotoState {
 
   @Selector()
   static getPhotos(state: PhotoStateModel): Photo[] {
+    if (state.tagFilter.length > 0) {
+      for (const photo of state.photos) {
+        const found = photo.tags.some(tag => state.tagFilter.includes(tag));
+        console.log('PhotoState getPhotosByTags: ', found)
+      }
+    }
     return state.photos;
   }
 
   @Selector()
   static getComparePhotos(state: PhotoStateModel): Photo[] {
     return state.photos.filter(photo => photo.isSelected);
+  }
+
+  @Selector()
+  static getPhotosByTags(state: PhotoStateModel): Photo[] {
+    if (state.tagFilter.length > 0) {
+      for (const photo of state.photos) {
+        const found = photo.tags.some(tag => state.tagFilter.includes(tag));
+        console.log('PhotoState getPhotosByTags: ', found)
+      }
+    }
+    return state.photos;
   }
 
   // @Selector()
@@ -165,5 +184,16 @@ export class PhotoState {
         })
       );
     }
+  }
+
+  //////////////////////////////////////////////////////////
+  //          filter photos
+  //////////////////////////////////////////////////////////
+
+  @Action(photoAction.TagFilter)
+  setFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.TagFilter): void {
+    let filters = [];
+    filters.push(action.filter);
+    ctx.patchState({tagFilter: filters});
   }
 }

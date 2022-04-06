@@ -35,7 +35,7 @@ export class ChatState {
     if (state.filter !== undefined) {
       return state.messages.filter(msg => msg.userId == state.filter);
     }
-    return state.messages
+    return state.messages;
   }
 
   constructor(private service: ChatService) {
@@ -63,8 +63,7 @@ export class ChatState {
             )
           )
         )
-      )
-      ;
+      );
   }
 
   @Action(chatAction.LoadChatSuccess)
