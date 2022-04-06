@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Tag } from '@gallery/store/tags/tag.model';
-import { allTags, TagState } from '@gallery/store/tags/tag.selectors';
-import { Store } from '@ngrx/store';
-import { addTag, loadTags } from '@gallery/store/tags/tag.actions';
-import { MatDialog } from '@angular/material/dialog';
-import { GalleryEditTagsComponent } from '@gallery/components/gallery-explorer/gallery-edit-tags/gallery-edit-tags.component';
+import {Component, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
+import {Tag} from '@gallery/store/tags/tag.model';
+import {Select, Store} from '@ngxs/store';
+import {addTag} from '@gallery/store/tags/tag.actions';
+import {MatDialog} from '@angular/material/dialog';
+import {
+  GalleryEditTagsComponent
+} from '@gallery/components/gallery-explorer/gallery-edit-tags/gallery-edit-tags.component';
+import {TagState} from "@gallery/store/tags/tag-state";
+import {LoadTags} from "@gallery/store/tags/tag-action";
 
 @Component({
   selector: 'app-gallery-filter-expansion-panel',
@@ -14,19 +17,22 @@ import { GalleryEditTagsComponent } from '@gallery/components/gallery-explorer/g
 })
 export class GalleryFilterExpansionPanelComponent implements OnInit {
 
+  @Select(TagState.getTags)
+  tags: Observable<Tag[]>;
+
   step = 0;
-  tags: Observable<Tag[]> = this.store.select(allTags);
   tagArray: Tag[] = [];
 
-  constructor(private store: Store<TagState>,
+  constructor(private store: Store,
               public dialog: MatDialog) {
     this.tags.subscribe(tags => {
+      console.log('GalleryFilterExpansionPanelComponent : ', tags)
       this.tagArray = tags;
     });
   }
 
   ngOnInit(): void {
-    this.store.dispatch(loadTags());
+    this.store.dispatch(new LoadTags());
   }
 
   setStep(index: number): void {
@@ -37,7 +43,7 @@ export class GalleryFilterExpansionPanelComponent implements OnInit {
     const tag = {} as Tag;
     tag.tagName = 'Fuck2';
     tag.entries = ['you2', 'to2'];
-    this.store.dispatch(addTag({ tag: tag }));
+    this.store.dispatch(addTag({tag: tag}));
   }
 
   openEditTagDialog(): void {

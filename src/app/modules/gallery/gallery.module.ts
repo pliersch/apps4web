@@ -64,6 +64,7 @@ import {PhotoState} from "@gallery/store/photos/photo-state";
 import {ImageControlComponent} from './components/share/image-control/image-control.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {ActionBarModule} from "@modules/action-bar/action-bar.module";
+import {TagState} from "@gallery/store/tags/tag-state";
 
 @NgModule({
   declarations: [
@@ -102,7 +103,7 @@ import {ActionBarModule} from "@modules/action-bar/action-bar.module";
     ShareModule,
     // TODO enable, impl?
     // RouterModule.forChild(ROUTES),
-    NgxsModule.forFeature([PhotoState]),
+    NgxsModule.forFeature([PhotoState, TagState]),
     // StoreRouterConnectingModule.forRoot(),
     EffectsModule.forFeature([TagEffects]),
     StoreModule.forFeature('photos', photoReducer),
