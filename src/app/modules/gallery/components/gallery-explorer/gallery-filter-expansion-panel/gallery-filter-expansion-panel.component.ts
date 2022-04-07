@@ -9,7 +9,8 @@ import {
 } from '@gallery/components/gallery-explorer/gallery-edit-tags/gallery-edit-tags.component';
 import {TagState} from "@gallery/store/tags/tag-state";
 import {LoadTags} from "@gallery/store/tags/tag-action";
-import {TagFilter} from "@gallery/store/photos/photo-actions";
+import {AddTagFilter, RemoveTagFilter, SetStrictFilterMode} from "@gallery/store/photos/photo-actions";
+import {MatSlideToggleChange} from "@angular/material/slide-toggle";
 
 @Component({
   selector: 'app-gallery-filter-expansion-panel',
@@ -27,7 +28,6 @@ export class GalleryFilterExpansionPanelComponent implements OnInit {
   constructor(private store: Store,
               public dialog: MatDialog) {
     this.tags.subscribe(tags => {
-      console.log('GalleryFilterExpansionPanelComponent : ', tags)
       this.tagArray = tags;
     });
   }
@@ -64,8 +64,15 @@ export class GalleryFilterExpansionPanelComponent implements OnInit {
     return categories;
   }
 
-  onClickEntry(entry: string): void {
-    this.store.dispatch(new TagFilter(entry));
-    console.log('GalleryFilterExpansionPanelComponent onClickEntry: ', entry)
+  onSelectionChange(selected: boolean, entry: string): void {
+    if (selected) {
+      this.store.dispatch(new AddTagFilter(entry));
+    } else {
+      this.store.dispatch(new RemoveTagFilter(entry));
+    }
+  }
+
+  setStrictMode($event: MatSlideToggleChange): void {
+    this.store.dispatch(new SetStrictFilterMode($event.checked));
   }
 }

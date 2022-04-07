@@ -1,14 +1,15 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {allTags, TagState} from '@gallery/store/tags/tag.selectors';
 import {Observable} from 'rxjs';
 import {Tag} from '@gallery/store/tags/tag.model';
 import {MatDialogRef} from '@angular/material/dialog';
-import {GalleryEditTagDetailComponent} from '@gallery/components/gallery-explorer/gallery-edit-tags/gallery-edit-tag-detail/gallery-edit-tag-detail.component';
-import {Update} from '@ngrx/entity';
+import {
+  GalleryEditTagDetailComponent
+} from '@gallery/components/gallery-explorer/gallery-edit-tags/gallery-edit-tag-detail/gallery-edit-tag-detail.component';
 import {MatSelectionList} from '@angular/material/list';
 import {arrayUtil} from '@app/util/array-utils';
-import {deleteTag, updateTag} from '@gallery/store/tags/tag.actions';
+import {Select, Store} from "@ngxs/store";
+import {TagState} from "@gallery/store/tags/tag-state";
+import {DeleteTag, UpdateTag} from "@gallery/store/tags/tag-action";
 
 @Component({
   selector: 'app-gallery-edit-tags',
@@ -25,19 +26,20 @@ export class GalleryEditTagsComponent implements OnInit {
   @ViewChild(MatSelectionList)
   selectionList!: MatSelectionList;
 
-  tagsObserver: Observable<Tag[]> = this.store.select(allTags);
+  @Select(TagState.getTags)
+  tags$: Observable<Tag[]>;
   tags: Tag[] = [];
   copies: Tag[] = [];
   currentTag: Tag;
   currentIndex = 0;
   hasChanges: boolean = false;
 
-  constructor(private store: Store<TagState>,
+  constructor(private store: Store,
               public dialogRef: MatDialogRef<GalleryEditTagsComponent>) {
   }
 
   ngOnInit(): void {
-    this.tagsObserver.subscribe(tagArray => {
+    this.tags$.subscribe(tagArray => {
       this.tags = tagArray;
       this.copies = JSON.parse(JSON.stringify(tagArray)) as Tag[];
       this.hasChanges = false;
@@ -90,8 +92,7 @@ export class GalleryEditTagsComponent implements OnInit {
   }
 
   onDeleteCategory($event: Tag): void {
-    // @ts-ignore
-    this.store.dispatch(deleteTag({id: $event.id}));
+    this.store.dispatch(new DeleteTag($event.id!));
   }
 
   onNewTag(): void {
@@ -102,21 +103,22 @@ export class GalleryEditTagsComponent implements OnInit {
     if (this.hasChanges) {
       for (let i = 0; i < this.copies.length; i++) {
         if (!arrayUtil.sameElements(this.tags[i].entries, this.copies[i].entries)) {
-          const tagUpdate: Update<Tag> = this.createTagUpdate(this.copies[i]);
+          // const tagUpdate: Update<Tag> = this.createTagUpdate(this.copies[i]);
           // todo use "updateTags" (many) !!!
-          this.store.dispatch(updateTag({tagUpdate: tagUpdate}));
+          this.store.dispatch(new UpdateTag(this.copies[i]));
+          // this.store.dispatch(updateTag({tagUpdate: tagUpdate}));
         }
       }
     }
   }
 
-  private createTagUpdate(tag: Tag): Update<Tag> {
-    return {
-      // @ts-ignore
-      id: tag.id,
-      changes: {
-        entries: tag.entries
-      }
-    };
-  }
+  // private createTagUpdate(tag: Tag): Update<Tag> {
+  //   return {
+  //     // @ts-ignore
+  //     id: tag.id,
+  //     changes: {
+  //       entries: tag.entries
+  //     }
+  //   };
+  // }
 }

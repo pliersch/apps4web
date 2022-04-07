@@ -6,7 +6,7 @@
         <ng-scrollbar class="dark-scrollbar" [autoWidthDisabled]="false"
                       track="vertical" visibility="always">
           <mat-selection-list appNoPaddingTop multiple="false">
-            <mat-list-option *ngFor="let tag of tagsObserver | async; let i = index"
+            <mat-list-option *ngFor="let tag of tags$ | async; let i = index"
                              [selected]="currentTag.id === tag.id"
                              [value]="tag" (click)="onSelectCategory(tag)">
               {{tag.tagName}}

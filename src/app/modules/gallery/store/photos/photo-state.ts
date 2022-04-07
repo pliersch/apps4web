@@ -5,7 +5,8 @@ import {catchError, map} from "rxjs/operators";
 import {asapScheduler, Observable, of, Subscription} from "rxjs";
 import * as photoAction from "@gallery/store/photos/photo-actions";
 import {Photo} from "@gallery/store/photos/photo.model";
-import {patch, updateItem} from "@ngxs/store/operators";
+import {append, patch, removeItem, updateItem} from "@ngxs/store/operators";
+import {filterAllTags, filterSomeTags} from "@gallery/store/photos/photo.tools";
 
 export interface PhotoStateModel {
   photos: Photo[];
@@ -16,6 +17,7 @@ export interface PhotoStateModel {
   allPhotosLoaded: boolean;
   loaded: boolean;
   loading: boolean;
+  isStrict: boolean;
 }
 
 @State<PhotoStateModel>({
@@ -23,12 +25,10 @@ export interface PhotoStateModel {
   defaults: {
     photos: [],
     tagFilter: [],
-    // comparePhotos: [],
-    // exportPhotos: [],
-    // selectedPhoto: null,
     allPhotosLoaded: false,
     loaded: false,
-    loading: false
+    loading: false,
+    isStrict: false
   }
 })
 
@@ -37,35 +37,19 @@ export class PhotoState {
 
   @Selector()
   static getPhotos(state: PhotoStateModel): Photo[] {
-    if (state.tagFilter.length > 0) {
-      for (const photo of state.photos) {
-        const found = photo.tags.some(tag => state.tagFilter.includes(tag));
-        console.log('PhotoState getPhotosByTags: ', found)
-      }
+    if (state.tagFilter.length == 0) {
+      return state.photos;
     }
-    return state.photos;
+    if (state.isStrict) {
+      return filterAllTags(state.photos, state.tagFilter);
+    }
+    return filterSomeTags(state.photos, state.tagFilter);
   }
 
   @Selector()
   static getComparePhotos(state: PhotoStateModel): Photo[] {
     return state.photos.filter(photo => photo.isSelected);
   }
-
-  @Selector()
-  static getPhotosByTags(state: PhotoStateModel): Photo[] {
-    if (state.tagFilter.length > 0) {
-      for (const photo of state.photos) {
-        const found = photo.tags.some(tag => state.tagFilter.includes(tag));
-        console.log('PhotoState getPhotosByTags: ', found)
-      }
-    }
-    return state.photos;
-  }
-
-  // @Selector()
-  // static selectedPhoto(state: PhotoStateModel): Photo {
-  //   return <Photo>state.selectedPhoto;
-  // }
 
   constructor(private photoService: PhotoService) {
   }
@@ -190,10 +174,39 @@ export class PhotoState {
   //          filter photos
   //////////////////////////////////////////////////////////
 
-  @Action(photoAction.TagFilter)
-  setFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.TagFilter): void {
-    let filters = [];
-    filters.push(action.filter);
-    ctx.patchState({tagFilter: filters});
+  @Action(photoAction.AddTagFilter)
+  addFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.AddTagFilter): void {
+    console.log('PhotoState addFilter: ', action)
+    ctx.setState(
+      patch({
+        tagFilter: append([action.filter])
+      })
+    );
+    // let filters = [];
+    // filters.push(action.filter);
+    // ctx.patchState({tagFilter: filters});
+  }
+
+  @Action(photoAction.RemoveTagFilter)
+  removeFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.RemoveTagFilter): void {
+    ctx.setState(
+      patch({
+        tagFilter: removeItem<string>(name => name === action.filter)
+      })
+    );
+    console.log('PhotoState removeFilter: ', action)
+    // let filters = [];
+    // filters.push(action.filter);
+    // ctx.patchState({tagFilter: filters});
+  }
+
+  @Action(photoAction.ClearTagFilter)
+  clearFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.ClearTagFilter): void {
+    ctx.patchState({tagFilter: []});
+  }
+
+  @Action(photoAction.SetStrictFilterMode)
+  setStrictFilterMode(ctx: StateContext<PhotoStateModel>, action: photoAction.SetStrictFilterMode): void {
+    ctx.patchState({isStrict: action.strict});
   }
 }

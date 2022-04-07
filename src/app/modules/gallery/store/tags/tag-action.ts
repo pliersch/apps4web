@@ -1,5 +1,6 @@
 import {Tag} from "@gallery/store/tags/tag.model";
 
+// load tags
 export class LoadTags {
   static readonly type = '[Gallery] Load Tags';
 }
@@ -12,25 +13,76 @@ export class LoadTagsSuccess {
 }
 
 export class LoadTagsFail {
-  static readonly type = '[Gallery] Load Tags Fail';
+  static readonly type = '[Gallery] Load Tags fail';
 
   constructor(public error: any) {
   }
 }
 
+// add tag
+
 export class AddTag {
   static readonly type = '[Gallery] Add Tag';
+
+  constructor(public tag: Tag) {
+  }
 }
 
 export class AddTagSuccess {
   static readonly type = '[Gallery] Add Tag success';
 
-  constructor(public tags: Tag[]) {
+  constructor(public tag: Tag) {
   }
 }
 
 export class AddTagFail {
-  static readonly type = '[Gallery] Add Tag Fail';
+  static readonly type = '[Gallery] Add Tag fail';
+
+  constructor(public error: any) {
+  }
+}
+
+// update tag
+
+export class UpdateTag {
+  static readonly type = '[Gallery] Update Tag';
+
+  constructor(public tag: Tag) {
+  }
+}
+
+export class UpdateTagSuccess {
+  static readonly type = '[Gallery] Update Tag success';
+
+  constructor(public tag: Tag) {
+  }
+}
+
+export class UpdateTagFail {
+  static readonly type = '[Gallery] Update Tag fail';
+
+  constructor(public error: any) {
+  }
+}
+
+// delete tag
+
+export class DeleteTag {
+  static readonly type = '[Gallery] Delete Tag';
+
+  constructor(public id: string) {
+  }
+}
+
+export class DeleteTagSuccess {
+  static readonly type = '[Gallery] Delete Tag success';
+
+  constructor(public tag: Tag) {
+  }
+}
+
+export class DeleteTagFail {
+  static readonly type = '[Gallery] Delete Tag fail';
 
   constructor(public error: any) {
   }

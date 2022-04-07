@@ -65,6 +65,7 @@ import {ImageControlComponent} from './components/share/image-control/image-cont
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {ActionBarModule} from "@modules/action-bar/action-bar.module";
 import {TagState} from "@gallery/store/tags/tag-state";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 
 @NgModule({
   declarations: [
@@ -110,6 +111,7 @@ import {TagState} from "@gallery/store/tags/tag-state";
     StoreModule.forFeature('tags', tagReducer),
     MatButtonToggleModule,
     ActionBarModule,
+    MatSlideToggleModule,
   ],
   providers: [
     PhotoService,

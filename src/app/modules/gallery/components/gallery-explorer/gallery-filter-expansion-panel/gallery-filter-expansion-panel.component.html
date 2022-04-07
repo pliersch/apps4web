@@ -8,13 +8,16 @@
     </mat-expansion-panel-header>
 
     <mat-selection-list>
-      <mat-list-option *ngFor="let entry of tag.entries" (click)="onClickEntry(entry)">
+      <mat-list-option *ngFor="let entry of tag.entries" [value]="entry"
+                       (selectedChange)="onSelectionChange($event, entry)">
         {{entry}}
       </mat-list-option>
     </mat-selection-list>
   </mat-expansion-panel>
   <div style="display: flex">
     <span class="spacer"></span>
+    <mat-slide-toggle (change)="setStrictMode($event)">Slide me!</mat-slide-toggle>
+
     <button mat-raised-button class="new-tag-btn-align"
             (click)="openNewTagDialog()">New Tag
     </button>

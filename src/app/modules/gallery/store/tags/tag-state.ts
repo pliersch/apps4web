@@ -71,4 +71,78 @@ export class TagState {
     dispatch({loaded: false, loading: false});
   }
 
+  //////////////////////////////////////////////////////////
+  //          add
+  //////////////////////////////////////////////////////////
+
+  @Action(tagActions.AddTag)
+  addTag(ctx: StateContext<TagStateModel>, action: tagActions.AddTag): Observable<Subscription> {
+    ctx.patchState({loading: true});
+    return this.tagService.create(action.tag)
+      .pipe(
+        map((tag: Tag) =>
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new tagActions.AddTagSuccess(tag))
+          )
+        ),
+        catchError(error =>
+          of(
+            asapScheduler.schedule(() =>
+              ctx.dispatch(new tagActions.AddTagFail(error))
+            )
+          )
+        )
+      );
+  }
+
+  @Action(tagActions.DeleteTagSuccess)
+  addTagSuccess({patchState}: StateContext<TagStateModel>, action: tagActions.DeleteTagSuccess): void {
+    console.log('TagState loadTagsSuccess: BUT NOT IMPL !!!', action.tag)
+    // patchState({tags: action.tags, loaded: true, loading: false});
+  }
+
+  @Action(tagActions.LoadTagsFail)
+  addTagFail({dispatch}: StateContext<TagStateModel>, action: tagActions.LoadTagsFail): void {
+    // TODO handle error!
+    console.log(action.error)
+    dispatch({loaded: false, loading: false});
+  }
+
+  //////////////////////////////////////////////////////////
+  //          delete
+  //////////////////////////////////////////////////////////
+
+  @Action(tagActions.DeleteTag)
+  deleteTags(ctx: StateContext<TagStateModel>, action: tagActions.DeleteTag): Observable<Subscription> {
+    ctx.patchState({loading: true});
+    return this.tagService.delete(action.id)
+      .pipe(
+        map((tag: Tag) =>
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new tagActions.DeleteTagSuccess(tag))
+          )
+        ),
+        catchError(error =>
+          of(
+            asapScheduler.schedule(() =>
+              ctx.dispatch(new tagActions.DeleteTagFail(error))
+            )
+          )
+        )
+      );
+  }
+
+  @Action(tagActions.DeleteTagSuccess)
+  deleteTagsSuccess({patchState}: StateContext<TagStateModel>, action: tagActions.DeleteTagSuccess): void {
+    console.log('TagState loadTagsSuccess: BUT NOT IMPL !!!', action.tag)
+    // patchState({tags: action.tags, loaded: true, loading: false});
+  }
+
+  @Action(tagActions.LoadTagsFail)
+  deleteTagsFail({dispatch}: StateContext<TagStateModel>, action: tagActions.LoadTagsFail): void {
+    // TODO handle error!
+    console.log(action.error)
+    dispatch({loaded: false, loading: false});
+  }
+
 }
