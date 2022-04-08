@@ -189,10 +189,6 @@ export class PhotoState {
         tagFilter: removeItem<string>(name => name === action.filter)
       })
     );
-    console.log('PhotoState removeFilter: ', action)
-    // let filters = [];
-    // filters.push(action.filter);
-    // ctx.patchState({tagFilter: filters});
   }
 
   @Action(photoAction.ClearTagFilter)

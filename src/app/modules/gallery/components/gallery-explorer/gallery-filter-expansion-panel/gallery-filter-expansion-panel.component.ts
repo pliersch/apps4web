@@ -19,16 +19,15 @@ import {AddTagFilter, RemoveTagFilter} from "@gallery/store/photos/photo-actions
 export class GalleryFilterExpansionPanelComponent implements OnInit {
 
   @Select(TagState.getTags)
-  tags: Observable<Tag[]>;
+  tags$: Observable<Tag[]>;
 
+  tags: Tag[] = [];
   step = 0;
-  tagArray: Tag[] = [];
 
   constructor(private store: Store,
               public dialog: MatDialog) {
-    this.tags.subscribe(tags => {
-      console.log('GalleryFilterExpansionPanelComponent : ', tags)
-      this.tagArray = tags;
+    this.tags$.subscribe(tags => {
+      this.tags = tags;
     });
   }
 
@@ -60,7 +59,7 @@ export class GalleryFilterExpansionPanelComponent implements OnInit {
 
   collectCategories(): string[] {
     const categories: string[] = [];
-    this.tagArray.forEach(tag => categories.push(tag.tagName));
+    this.tags.forEach(tag => categories.push(tag.tagName));
     return categories;
   }
 
@@ -73,9 +72,12 @@ export class GalleryFilterExpansionPanelComponent implements OnInit {
   }
 
   isTagSelected(entry: string): boolean {
-    this.tags.pipe(
-
-    )
-    return true;
+    for (const tag of this.tags) {
+      if (tag.entries.includes(entry)) {
+        console.log('GalleryFilterExpansionPanelComponent isTagSelected: yes',)
+        return true;
+      }
+    }
+    return false;
   }
 }
