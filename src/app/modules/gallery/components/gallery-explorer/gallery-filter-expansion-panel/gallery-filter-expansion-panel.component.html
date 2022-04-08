@@ -8,8 +8,8 @@
     </mat-expansion-panel-header>
 
     <mat-selection-list>
-      <mat-list-option *ngFor="let entry of tag.entries" [selected]="isTagSelected(entry)"
-                       [value]="entry" (selectedChange)="onSelectionChange($event, entry)">
+      <mat-list-option *ngFor="let entry of tag.entries" [selected]="isTagActivated(entry)"
+                       [value]="entry" (click)="onSelectionChange(entry)">
         {{entry}}
       </mat-list-option>
     </mat-selection-list>

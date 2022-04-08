@@ -5,9 +5,11 @@ import {TagService} from "@gallery/store/tags/tag.service";
 import * as tagActions from "@gallery/store/tags/tag-action";
 import {asapScheduler, Observable, of, Subscription} from "rxjs";
 import {catchError, map} from "rxjs/operators";
+import {append, patch, removeItem} from "@ngxs/store/operators";
 
 export interface TagStateModel {
   tags: Tag[];
+  activeTags: string[];
   allTagsLoaded: boolean;
   loaded: boolean;
   loading: boolean;
@@ -17,6 +19,7 @@ export interface TagStateModel {
   name: 'tags',
   defaults: {
     tags: [],
+    activeTags: ['Fuck'],
     allTagsLoaded: false,
     loaded: false,
     loading: false
@@ -29,6 +32,11 @@ export class TagState {
   @Selector()
   static getTags(state: TagStateModel): Tag[] {
     return state.tags;
+  }
+
+  @Selector()
+  static getActiveTags(state: TagStateModel): string[] {
+    return state.activeTags;
   }
 
   constructor(private tagService: TagService) {
@@ -60,7 +68,6 @@ export class TagState {
 
   @Action(tagActions.LoadTagsSuccess)
   loadTagsSuccess({patchState}: StateContext<TagStateModel>, action: tagActions.LoadTagsSuccess): void {
-    console.log('TagState loadTagsSuccess: ', action.tags)
     patchState({tags: action.tags, loaded: true, loading: false});
   }
 
@@ -143,6 +150,36 @@ export class TagState {
     // TODO handle error!
     console.log(action.error)
     dispatch({loaded: false, loading: false});
+  }
+
+  //////////////////////////////////////////////////////////
+  //          filter photos
+  //////////////////////////////////////////////////////////
+
+  @Action(tagActions.AddTagFilter)
+  addFilter(ctx: StateContext<TagStateModel>, action: tagActions.AddTagFilter): void {
+    ctx.setState(
+      patch({
+        activeTags: append([action.filter])
+      })
+    );
+    // let filters = [];
+    // filters.push(action.filter);
+    // ctx.patchState({tagFilter: filters});
+  }
+
+  @Action(tagActions.RemoveTagFilter)
+  removeFilter(ctx: StateContext<TagStateModel>, action: tagActions.RemoveTagFilter): void {
+    ctx.setState(
+      patch({
+        activeTags: removeItem<string>(name => name === action.filter)
+      })
+    );
+  }
+
+  @Action(tagActions.ClearTagFilter)
+  clearFilter(ctx: StateContext<TagStateModel>, action: tagActions.ClearTagFilter): void {
+    ctx.patchState({activeTags: []});
   }
 
 }

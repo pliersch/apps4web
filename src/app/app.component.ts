@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     const eventSource = new EventSource('http://localhost:3000/sse');
     eventSource.onmessage = ({data}): void => {
-      console.log('AppComponent SSE msg: ', data)
+      // console.log('AppComponent SSE msg: ', data)
     }
   }
 

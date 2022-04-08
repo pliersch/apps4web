@@ -1,8 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Photo} from '@gallery/store/photos/photo.model';
-import {Select, Store} from '@ngxs/store';
+import {Select} from '@ngxs/store';
 import {Observable} from 'rxjs';
-import {EventBusService} from '@app/services/event-bus.service';
 import {PhotoState} from "@gallery/store/photos/photo-state";
 
 @Component({
@@ -10,7 +9,7 @@ import {PhotoState} from "@gallery/store/photos/photo-state";
   templateUrl: './gallery-explorer.component.html',
   styleUrls: ['./gallery-explorer.component.scss']
 })
-export class GalleryExplorerComponent implements OnInit {
+export class GalleryExplorerComponent {
 
   @Select(PhotoState.getPhotos)
   images: Observable<Photo[]>;
@@ -18,13 +17,12 @@ export class GalleryExplorerComponent implements OnInit {
   currentImage!: Photo;
   showFilter = true;
 
-  constructor(private store: Store,
-              private eventBus: EventBusService) {
+  constructor() {
   }
 
-  ngOnInit(): void {
-    this.eventBus.on('filterPhotos', () => {
-      this.showFilter = !this.showFilter;
-    });
-  }
+  // ngOnInit(): void {
+  //   // this.eventBus.on('filterPhotos', () => {
+  //   //   this.showFilter = !this.showFilter;
+  //   // });
+  // }
 }

@@ -13,7 +13,7 @@ export class ThemeService {
   ) {
   }
 
-  toggleTheme(theme: string) {
+  toggleTheme(theme: string): void {
     console.log('ThemeService', theme)
   }
 

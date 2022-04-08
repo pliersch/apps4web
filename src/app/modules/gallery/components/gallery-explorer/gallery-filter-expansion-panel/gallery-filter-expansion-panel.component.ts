@@ -8,8 +8,7 @@ import {
   GalleryEditTagsComponent
 } from '@gallery/components/gallery-explorer/gallery-edit-tags/gallery-edit-tags.component';
 import {TagState} from "@gallery/store/tags/tag-state";
-import {LoadTags} from "@gallery/store/tags/tag-action";
-import {AddTagFilter, RemoveTagFilter} from "@gallery/store/photos/photo-actions";
+import {AddTagFilter, LoadTags, RemoveTagFilter} from "@gallery/store/tags/tag-action";
 
 @Component({
   selector: 'app-gallery-filter-expansion-panel',
@@ -21,13 +20,20 @@ export class GalleryFilterExpansionPanelComponent implements OnInit {
   @Select(TagState.getTags)
   tags$: Observable<Tag[]>;
 
+  @Select(TagState.getActiveTags)
+  activeTags$: Observable<string[]>;
+
   tags: Tag[] = [];
+  activeTags: string[] = [];
   step = 0;
 
   constructor(private store: Store,
               public dialog: MatDialog) {
     this.tags$.subscribe(tags => {
       this.tags = tags;
+    });
+    this.activeTags$.subscribe(tags => {
+      this.activeTags = tags;
     });
   }
 
@@ -63,21 +69,16 @@ export class GalleryFilterExpansionPanelComponent implements OnInit {
     return categories;
   }
 
-  onSelectionChange(selected: boolean, entry: string): void {
-    if (selected) {
-      this.store.dispatch(new AddTagFilter(entry));
-    } else {
+  onSelectionChange(entry: string): void {
+    if (this.isTagActivated(entry)) {
       this.store.dispatch(new RemoveTagFilter(entry));
+    } else {
+      this.store.dispatch(new AddTagFilter(entry));
     }
   }
 
-  isTagSelected(entry: string): boolean {
-    for (const tag of this.tags) {
-      if (tag.entries.includes(entry)) {
-        console.log('GalleryFilterExpansionPanelComponent isTagSelected: yes',)
-        return true;
-      }
-    }
-    return false;
+  isTagActivated(entry: string): boolean {
+    return this.activeTags.includes(entry);
   }
+
 }

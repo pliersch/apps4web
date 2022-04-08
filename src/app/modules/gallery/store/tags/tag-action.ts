@@ -87,3 +87,23 @@ export class DeleteTagFail {
   constructor(public error: any) {
   }
 }
+
+// active tags
+
+export class AddTagFilter {
+  static readonly type = '[Gallery] Add Filter';
+
+  constructor(public filter: string) {
+  }
+}
+
+export class RemoveTagFilter {
+  static readonly type = '[Gallery] Remove Filter';
+
+  constructor(public filter: string) { }
+}
+
+export class ClearTagFilter {
+  static readonly type = '[Gallery] Clear Filter';
+
+}

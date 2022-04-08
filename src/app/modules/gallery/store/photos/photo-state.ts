@@ -1,12 +1,13 @@
-import {Action, Selector, State, StateContext} from "@ngxs/store";
+import {Action, Selector, State, StateContext, Store} from "@ngxs/store";
 import {Injectable} from "@angular/core";
 import {PhotoService} from "@app/core/services/photo.service";
 import {catchError, map} from "rxjs/operators";
 import {asapScheduler, Observable, of, Subscription} from "rxjs";
 import * as photoAction from "@gallery/store/photos/photo-actions";
 import {Photo} from "@gallery/store/photos/photo.model";
-import {append, patch, removeItem, updateItem} from "@ngxs/store/operators";
+import {patch, updateItem} from "@ngxs/store/operators";
 import {filterAllTags} from "@gallery/store/photos/photo.tools";
+import {TagState} from "@gallery/store/tags/tag-state";
 
 export interface PhotoStateModel {
   photos: Photo[];
@@ -33,12 +34,12 @@ export interface PhotoStateModel {
 @Injectable()
 export class PhotoState {
 
-  @Selector()
-  static getPhotos(state: PhotoStateModel): Photo[] {
-    if (state.tagFilter.length == 0) {
+  @Selector([TagState.getActiveTags])
+  static getPhotos(state: PhotoStateModel, activeTags: string[]): Photo[] {
+    if (activeTags.length == 0) {
       return state.photos;
     }
-    return filterAllTags(state.photos, state.tagFilter);
+    return filterAllTags(state.photos, activeTags);
   }
 
   @Selector()
@@ -46,7 +47,8 @@ export class PhotoState {
     return state.photos.filter(photo => photo.isSelected);
   }
 
-  constructor(private photoService: PhotoService) {
+  constructor(private photoService: PhotoService,
+              private store: Store) {
   }
 
   //////////////////////////////////////////////////////////
@@ -70,8 +72,7 @@ export class PhotoState {
             )
           )
         )
-      )
-      ;
+      );
   }
 
   @Action(photoAction.LoadPhotosSuccessAction)
@@ -108,8 +109,7 @@ export class PhotoState {
             )
           )
         )
-      )
-      ;
+      );
   }
 
   @Action(photoAction.AddPhotoSuccessAction)
@@ -163,37 +163,6 @@ export class PhotoState {
         })
       );
     }
-  }
-
-  //////////////////////////////////////////////////////////
-  //          filter photos
-  //////////////////////////////////////////////////////////
-
-  @Action(photoAction.AddTagFilter)
-  addFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.AddTagFilter): void {
-    console.log('PhotoState addFilter: ', action)
-    ctx.setState(
-      patch({
-        tagFilter: append([action.filter])
-      })
-    );
-    // let filters = [];
-    // filters.push(action.filter);
-    // ctx.patchState({tagFilter: filters});
-  }
-
-  @Action(photoAction.RemoveTagFilter)
-  removeFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.RemoveTagFilter): void {
-    ctx.setState(
-      patch({
-        tagFilter: removeItem<string>(name => name === action.filter)
-      })
-    );
-  }
-
-  @Action(photoAction.ClearTagFilter)
-  clearFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.ClearTagFilter): void {
-    ctx.patchState({tagFilter: []});
   }
 
 }
