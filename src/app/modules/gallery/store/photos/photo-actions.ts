@@ -86,10 +86,3 @@ export class ClearTagFilter {
   static readonly type = '[Gallery] Clear Filter';
 
 }
-
-export class SetStrictFilterMode {
-  static readonly type = '[Gallery] Set Strict Filter Mode';
-
-  constructor(public strict: boolean) { }
-}
-

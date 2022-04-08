@@ -6,7 +6,7 @@ import {asapScheduler, Observable, of, Subscription} from "rxjs";
 import * as photoAction from "@gallery/store/photos/photo-actions";
 import {Photo} from "@gallery/store/photos/photo.model";
 import {append, patch, removeItem, updateItem} from "@ngxs/store/operators";
-import {filterAllTags, filterSomeTags} from "@gallery/store/photos/photo.tools";
+import {filterAllTags} from "@gallery/store/photos/photo.tools";
 
 export interface PhotoStateModel {
   photos: Photo[];
@@ -17,7 +17,6 @@ export interface PhotoStateModel {
   allPhotosLoaded: boolean;
   loaded: boolean;
   loading: boolean;
-  isStrict: boolean;
 }
 
 @State<PhotoStateModel>({
@@ -28,7 +27,6 @@ export interface PhotoStateModel {
     allPhotosLoaded: false,
     loaded: false,
     loading: false,
-    isStrict: false
   }
 })
 
@@ -40,10 +38,7 @@ export class PhotoState {
     if (state.tagFilter.length == 0) {
       return state.photos;
     }
-    if (state.isStrict) {
-      return filterAllTags(state.photos, state.tagFilter);
-    }
-    return filterSomeTags(state.photos, state.tagFilter);
+    return filterAllTags(state.photos, state.tagFilter);
   }
 
   @Selector()
@@ -205,8 +200,4 @@ export class PhotoState {
     ctx.patchState({tagFilter: []});
   }
 
-  @Action(photoAction.SetStrictFilterMode)
-  setStrictFilterMode(ctx: StateContext<PhotoStateModel>, action: photoAction.SetStrictFilterMode): void {
-    ctx.patchState({isStrict: action.strict});
-  }
 }
