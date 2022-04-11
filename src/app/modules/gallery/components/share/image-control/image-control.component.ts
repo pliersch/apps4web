@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {Photo} from "@gallery/store/photos/photo.model";
 
 @Component({
   selector: 'app-image-control',
@@ -7,7 +8,16 @@ import {Component} from '@angular/core';
 })
 export class ImageControlComponent {
 
+  @Input()
+  photo: Photo;
+
+  @Input()
+  selected: boolean;
+
   constructor() {
   }
 
+  onClickDownload(): void {
+    console.log('ImageControlComponent onClickDownload: ', this.photo.fileName)
+  }
 }

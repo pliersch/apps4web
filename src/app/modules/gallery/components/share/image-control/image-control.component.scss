@@ -1,0 +1,22 @@
+.image-container {
+  display: flex;
+  padding: 14px;
+  border: 1px solid #00000000;
+
+  &.active {
+    border-color: darkgray;
+    //border-color: var(--primary-color);
+  }
+}
+
+img:hover {
+  cursor: pointer;
+  background-color: #777;
+}
+
+.responsive {
+  height: 100%;
+  max-height: 150px;
+  width: auto;
+}
+

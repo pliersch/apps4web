@@ -14,7 +14,7 @@ export class GalleryExplorerComponent {
   @Select(PhotoState.getPhotos)
   images: Observable<Photo[]>;
 
-  currentImage!: Photo;
+  currentImage: Photo;
   showFilter = true;
 
   constructor() {
@@ -25,4 +25,7 @@ export class GalleryExplorerComponent {
   //   //   this.showFilter = !this.showFilter;
   //   // });
   // }
+  setCurrent(image: Photo): void {
+    this.currentImage = image;
+  }
 }

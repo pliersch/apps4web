@@ -1,13 +1,13 @@
 <div class="gallery-explorer-grid">
   <app-gallery-filter-expansion-panel class="component gallery-explorer-grid-filter"
-    *ngIf=showFilter></app-gallery-filter-expansion-panel>
+                                      *ngIf=showFilter></app-gallery-filter-expansion-panel>
   <div class="gallery-explorer-grid-images">
-    <img class="responsive" alt="thumbnail"
-      *ngFor="let image of (images | async)"
-      [class.active]="currentImage === image"
-      [src]="image.fileName" (click)="currentImage = image">
+    <app-image-control *ngFor="let photo of (images | async)"
+                       [selected]="currentImage === photo"
+                       (click)="setCurrent(photo)" [photo]="photo">
+    </app-image-control>
   </div>
   <app-gallery-image-detail class="component gallery-explorer-grid-details"
-    [currentPhoto]="currentImage">
+                            [currentPhoto]="currentImage">
   </app-gallery-image-detail>
 </div>

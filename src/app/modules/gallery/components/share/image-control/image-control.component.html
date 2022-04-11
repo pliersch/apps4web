@@ -1,1 +1,17 @@
-<p>image-control works!</p>
+<div class="image-container" [class.active]="selected">
+  <img class="responsive" alt="thumbnail" [src]="photo.fileName">
+  <div class="flex-column">
+    <button mat-icon-button (click)="onClickDownload()"
+            aria-label="Example icon-button with menu icon">
+      <mat-icon>download</mat-icon>
+    </button>
+    <button mat-icon-button (click)="onClickDownload()"
+            aria-label="Example icon-button with menu icon">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button (click)="onClickDownload()"
+            aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+</div>
