@@ -27,7 +27,6 @@ import {NgScrollbarModule} from "ngx-scrollbar";
 import {GlobalErrorHandler} from "@app/core/helpers/global-error-handler";
 import {environment} from "@environments/environment";
 import {AppBarComponent} from "@modules/app-bar/app-bar.component";
-// import {AppFooterComponent} from "@modules/app-footer/app-footer.component";
 import {ThemeMenuComponent} from "@modules/themes/menus/theme-menu.component";
 import {DashboardComponent} from "@modules/dashboard/dashboard.component";
 import {DynamicAppbarComponent} from "@modules/app-bar/dynamic/dynamic-appbar.component";
