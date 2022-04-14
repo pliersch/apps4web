@@ -1,9 +1,12 @@
 import {formatDate} from "@angular/common";
-import {WasteDate, WasteEvent} from "@modules/waste-calendar/waste-dates";
+import {WasteDate} from "@modules/waste-calendar/waste-dates";
 
 export function format(date: string): string {
-  let date1 = new Date(date);
-  return formatDate(date1, 'longDate', 'en-US');
+  return formatDate(new Date(date), 'longDate', 'en-US');
+}
+
+export function formatEnglish(date: Date): string {
+  return formatDate(date, 'longDate', 'en-US');
 }
 
 export function formatGerman(date: Date): string {
@@ -22,15 +25,3 @@ export function formatDates(events: WasteDate[]): WasteDate[] {
   }
   return result;
 }
-
-export function generateWasteEvents(dates: WasteDate[]): WasteEvent[] {
-  let events: WasteEvent[] = [];
-  for (const event of dates) {
-    events.push({
-      date: new Date(event.date),
-      wasteType: event.type
-    });
-  }
-  return events;
-}
-

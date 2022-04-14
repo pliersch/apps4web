@@ -1,26 +1,4 @@
 {
-  "keys": [
-    {
-      "type": "Hausmüll",
-      "short": "h"
-    },
-    {
-      "type": "gelbe Tonne",
-      "short": "g"
-    },
-    {
-      "type": "Papier",
-      "short": "p"
-    },
-    {
-      "type": "Strauchwerk",
-      "short": "sw"
-    },
-    {
-      "type": "Schadstoff",
-      "short": "ss"
-    }
-  ],
   "events": [
     {
       "date": "04.11.2022",
