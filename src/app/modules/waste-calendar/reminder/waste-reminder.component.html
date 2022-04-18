@@ -7,8 +7,8 @@
 
 <mat-card class="demo-inline-calendar-card">
   <mat-list>
-    <mat-list-item *ngFor="let event of eventsOfSelectedMonth">
-      {{event.date | date:'medium'}}
+    <mat-list-item *ngFor="let event of nextEventsOfSelectedMonth">
+      {{getCountdown(event)}}
     </mat-list-item>
   </mat-list>
 </mat-card>

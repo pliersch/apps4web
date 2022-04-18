@@ -1,5 +1,6 @@
 <div class="grid-container">
   <h1 class="mat-h1">Dashboard</h1>
+  <app-reminder></app-reminder>
   <mat-grid-list cols="4">
     <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
       <app-dashboard-card [title]="card.title"

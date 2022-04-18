@@ -11,10 +11,12 @@ import {MaterialModule} from "@app/shared/material/material.module";
   declarations: [
     WasteReminderComponent
   ],
+  exports: [
+    WasteReminderComponent
+  ],
   imports: [
     CommonModule,
     MatNativeDateModule,
-    // MatMomentDateModule,
     MatDatepickerModule,
     WasteRoutingModule,
     MatCardModule,

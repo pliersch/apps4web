@@ -10,6 +10,7 @@ export function formatEnglish(date: Date): string {
 }
 
 export function formatGerman(date: Date): string {
+  // return de.formatLong.date({width:"short"});
   return formatDate(date, 'longDate', 'de-DE');
 }
 

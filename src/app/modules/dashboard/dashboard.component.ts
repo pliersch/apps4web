@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {map} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
-import {DashboardItem} from "./DashboardItem";
+import {DashboardItem} from "./dashboard-item";
 
 @Component({
   selector: 'app-dashboard',
@@ -13,8 +13,6 @@ export class DashboardComponent implements OnInit {
 
   defaultCards = [
     new DashboardItem("Card 1", "", 1, 1),
-    new DashboardItem("Card 2", "", 1, 1),
-    new DashboardItem("Card 3", "", 1, 1),
     new DashboardItem("Card 2", "", 1, 1),
     new DashboardItem("Card 3", "", 1, 1),
     new DashboardItem("Card 4", "", 1, 1)
@@ -100,11 +98,8 @@ export class DashboardComponent implements OnInit {
           return [
             new DashboardItem("Card 1", '"', 2, 1),
             new DashboardItem("Card 2", '"', 1, 1),
-            new DashboardItem("Card 3", '"', 1, 1),
             new DashboardItem("Card 1", '"', 2, 1),
-            new DashboardItem("Card 2", '"', 1, 1),
             new DashboardItem("Card 3", '"', 1, 1),
-            new DashboardItem("Card 4", '"', 1, 1)
           ];
         } else {
           return this.defaultCards;
@@ -119,14 +114,13 @@ export class DashboardComponent implements OnInit {
         if (matches) {
           return [
             new DashboardItem("Card 1", '"', 2, 1),
-            new DashboardItem("Card 2", '"', 1, 1),
             new DashboardItem("Card 3", '"', 1, 2),
             new DashboardItem("Card 1", '"', 2, 1),
-            new DashboardItem("Card 2", '"', 1, 1),
             new DashboardItem("Card 3", '"', 1, 2),
-            new DashboardItem("Card 4", '"', 1, 1)
           ];
-        } else return this.defaultCards;
+        } else {
+          return this.defaultCards;
+        }
       })
     );
   }

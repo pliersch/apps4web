@@ -40,6 +40,7 @@ import {AuthState} from "@app/stores/auth/auth-state";
 import {ThemeState} from "@modules/themes/stores/theme-state";
 import {initTheme} from "@app/core/helpers/theme.initializer";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {WasteCalendarModule} from "@modules/waste-calendar/waste-calendar.module";
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
     EffectsModule.forRoot([LoaderEffect]),
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    WasteCalendarModule
   ],
   exports: [],
   providers: [

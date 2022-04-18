@@ -13,7 +13,7 @@ const recipesModule = () => import('@app/modules/recipes/recipes.module').then((
 const samplesModule = () => import('@app/modules/samples/samples.module').then((x) => x.SamplesModule);
 const profileModule = () => import('@app/modules/profile/profile.module').then((x) => x.ProfileModule);
 const galleryModule = () => import('@app/modules/gallery/gallery.module').then((x) => x.GalleryModule);
-const wasteModule = () => import('@app/modules/waste-calendar/waste-calendar.module').then((x) => x.WasteCalendarModule);
+// const wasteModule = () => import('@app/modules/waste-calendar/waste-calendar.module').then((x) => x.WasteCalendarModule);
 
 const routes: Routes = [
   {
@@ -23,7 +23,7 @@ const routes: Routes = [
       {path: 'impressum', component: LegalNoticeComponent},
       {path: 'chat', loadChildren: chatModule},
       {path: 'admin', loadChildren: adminModule, canActivate: [AuthGuard]},
-      {path: 'waste', loadChildren: wasteModule},
+      // {path: 'waste', loadChildren: wasteModule},
       {path: 'doctor', loadChildren: doctorModule},
       {path: 'gallery', loadChildren: galleryModule},
       {path: 'account', loadChildren: accountModule},
