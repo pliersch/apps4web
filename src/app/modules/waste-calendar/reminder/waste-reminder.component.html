@@ -3,9 +3,6 @@
                 (monthSelected)="onMonthSelected($event)"
                 (viewChanged)="onViewChanged()"
                 (selectedChange)="onSelectionChange($event)"></mat-calendar>
-</mat-card>
-
-<mat-card class="demo-inline-calendar-card">
   <mat-list>
     <mat-list-item *ngFor="let event of nextEventsOfSelectedMonth">
       {{getCountdown(event)}}

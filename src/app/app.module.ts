@@ -41,6 +41,8 @@ import {ThemeState} from "@modules/themes/stores/theme-state";
 import {initTheme} from "@app/core/helpers/theme.initializer";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {WasteCalendarModule} from "@modules/waste-calendar/waste-calendar.module";
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
+import {DateFnsAdapter, MAT_DATE_FNS_FORMATS} from "@angular/material-date-fns-adapter";
 
 @NgModule({
   declarations: [
@@ -93,6 +95,13 @@ import {WasteCalendarModule} from "@modules/waste-calendar/waste-calendar.module
         ]
       } as SocialAuthServiceConfig
     },
+    // {provide: MAT_DATE_LOCALE, useValue: 'de'},
+    {
+      provide: DateAdapter,
+      useClass: DateFnsAdapter,
+      deps: [MAT_DATE_LOCALE],
+    },
+    {provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS},
     {
       provide: APP_INITIALIZER, useFactory: initApplication, multi: true, deps: [
         [new Inject(Store)],

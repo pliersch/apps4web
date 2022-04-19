@@ -2,10 +2,10 @@ import {AfterViewInit, Component, OnInit, Renderer2, ViewChild} from '@angular/c
 import wasteFile from "@assets/abfall.json";
 import {WasteDate, WasteEvent, WasteKey} from "@modules/waste-calendar/waste-dates";
 import {MatCalendar} from "@angular/material/datepicker";
-import {formatRelative} from 'date-fns'
-import {formatDates, formatEnglish} from "@app/util/date-util";
+import {formatDates, formatEnglish, formatGermanDayAndMonth, parseGerman} from "@app/util/date-util";
 import differenceInDays from 'date-fns/differenceInDays'
 import {de} from 'date-fns/locale'
+import {DateAdapter} from "@angular/material/core";
 
 @Component({
   selector: 'app-reminder',
@@ -30,7 +30,11 @@ export class WasteReminderComponent implements OnInit, AfterViewInit {
   eventsOfSelectedMonth: WasteEvent[] = [];
   nextEventsOfSelectedMonth: WasteEvent[] = [];
 
-  constructor(private renderer: Renderer2) { }
+  constructor(private renderer: Renderer2,
+              private _adapter: DateAdapter<any>) {
+    this._adapter.localeChanges.subscribe(evt => console.log('WasteReminderComponent : Fuck off google!!!! ', evt))
+    this._adapter.setLocale(de);
+  }
 
   ngOnInit(): void {
     this.events = this.processJson();
@@ -57,19 +61,21 @@ export class WasteReminderComponent implements OnInit, AfterViewInit {
     const dayElements: NodeListOf<Element> = document.querySelectorAll(
       'mat-calendar .mat-calendar-table .mat-calendar-body-cell'
     );
-
     for (const wasteEvent of this.nextEventsOfSelectedMonth) {
       Array.from(dayElements).forEach((element) => {
-        if (formatEnglish(wasteEvent.date) == element.getAttribute('aria-label')) {
-          this.renderer.addClass(element, this.computeColor(wasteEvent.wasteType));
-          this.renderer.setAttribute(element, 'title', this.computeHint(wasteEvent.wasteType));
+        let attribute = element.getAttribute('aria-label');
+        if (attribute) {
+
+          if (wasteEvent.date.getDate() == parseGerman(attribute).getDate()) {
+            this.renderer.addClass(element, this.computeColor(wasteEvent.wasteType));
+            this.renderer.setAttribute(element, 'title', this.computeHint(wasteEvent.wasteType));
+          }
         }
       });
     }
   }
 
   onSelectionChange($event: Date | null): void {
-    console.log('WasteReminderComponent onSelectionChange: ',)
     if ($event) {
       this.updateEventsOfMonth($event.getMonth());
     }
@@ -90,16 +96,12 @@ export class WasteReminderComponent implements OnInit, AfterViewInit {
   }
 
   getCountdown(event: WasteEvent): string {
-    console.log('WasteReminderComponent getLongDate: ', event.date)
     let actualDate = this.getDateWithoutHours(new Date());
     let difference = differenceInDays(event.date, actualDate);
-    let result = '';
-    if (difference > 6) {
-      result = formatEnglish(event.date) + ' in ' + difference + ' days';
-    } else {
-      result = formatRelative(event.date, actualDate, {locale: de});
-    }
-    return result + ' ' + this.computeHint(event.wasteType);
+    let days = difference > 1 ? 'Tage' : 'Tag';
+    let hint = this.computeHint(event.wasteType);
+    let result = formatGermanDayAndMonth(event.date) + ' in ' + difference + ' ' + days;
+    return result + ' ' + hint;
   }
 
   private getEventsOfMonth(month: number): WasteEvent[] {
