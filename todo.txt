@@ -3,3 +3,17 @@
 
 - fonts einbinden!!! https://t3n.de/news/google-fonts-illegal-urteil-dsgvo-1447698/
 
+What steps will reproduce the issue?
+1. start a node script (in my case angular and/or nestjs)
+2. try to close Webstorm
+3. german message in terminal will be shown: Batchvorgang abbrechen (J/N)?
+
+What is the expected result?
+
+Close IDE like before
+
+What happens instead?
+
+IDE freeze. Same message when use the "stop button" in the run-configurtion. Funny, when type "N" the script will stopped anyway.
+
+When killing the sub-process(Windows Powershell) inside the taskmanager Webstorm close immediately

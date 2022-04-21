@@ -5,6 +5,10 @@ export interface Photo {
   createDateTime: Date;
   baseUrl: string;
   isSelected: boolean;
+
+  getPhotoUrl(): string;
+
+  getThumbUrl(): string;
 }
 
 // export function comparePhotos(p1: Photo, p2: Photo): number {

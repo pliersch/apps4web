@@ -11,6 +11,7 @@ import {TagState} from "@gallery/store/tags/tag-state";
 
 export interface PhotoStateModel {
   photos: Photo[];
+  thumbs: Photo[];
   tagFilter: string[];
   // comparePhotos: Photo[];
   // exportPhotos: Photo[];
@@ -24,6 +25,7 @@ export interface PhotoStateModel {
   name: 'gallery',
   defaults: {
     photos: [],
+    thumbs: [],
     tagFilter: [],
     allPhotosLoaded: false,
     loaded: false,
@@ -77,6 +79,9 @@ export class PhotoState {
 
   @Action(photoAction.LoadPhotosSuccessAction)
   loadPhotosSuccess({patchState}: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosSuccessAction): void {
+    for (const photo of action.photos) {
+      photo.fileName = 'http://localhost:3000/images/gallery/thumbs/' + photo.fileName + '.webp'; // TODO extract const for fileName
+    }
     patchState({photos: action.photos, loaded: true, loading: false});
   }
 
