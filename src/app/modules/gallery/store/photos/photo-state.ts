@@ -4,7 +4,7 @@ import {PhotoService} from "@app/core/services/photo.service";
 import {catchError, map} from "rxjs/operators";
 import {asapScheduler, Observable, of, Subscription} from "rxjs";
 import * as photoAction from "@gallery/store/photos/photo-actions";
-import {Photo} from "@gallery/store/photos/photo.model";
+import {Photo, PhotoImpl} from "@gallery/store/photos/photo.model";
 import {patch, updateItem} from "@ngxs/store/operators";
 import {filterAllTags} from "@gallery/store/photos/photo.tools";
 import {TagState} from "@gallery/store/tags/tag-state";
@@ -79,10 +79,11 @@ export class PhotoState {
 
   @Action(photoAction.LoadPhotosSuccessAction)
   loadPhotosSuccess({patchState}: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosSuccessAction): void {
+    let photos: Photo[] = [];
     for (const photo of action.photos) {
-      photo.fileName = 'http://localhost:3000/images/gallery/thumbs/' + photo.fileName + '.webp'; // TODO extract const for fileName
+      photos.push(new PhotoImpl(photo))
     }
-    patchState({photos: action.photos, loaded: true, loading: false});
+    patchState({photos: photos, loaded: true, loading: false});
   }
 
   @Action(photoAction.LoadPhotosFailAction)

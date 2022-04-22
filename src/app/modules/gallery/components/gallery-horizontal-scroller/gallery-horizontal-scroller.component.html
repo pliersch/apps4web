@@ -2,7 +2,7 @@
   <div (wheel)="onScroll($event)">
     <div class="thumbnail-list">
       <div class="thumbnail-item item" *ngFor="let image of (images | async); let i = index"
-           [style.background-image]="'url(' + image.fileName + ')'"
+           [style.background-image]="'url(' + image.getThumbUrl() + ')'"
            [class.active]="image.isSelected"
            (click)="onSelectImage($event, image)">
       </div>

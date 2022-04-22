@@ -11,6 +11,33 @@ export interface Photo {
   getThumbUrl(): string;
 }
 
+export class PhotoImpl implements Photo {
+  baseUrl: string;
+  createDateTime: Date;
+  fileName: string;
+  id: string;
+  isSelected: boolean;
+  tags: string[];
+
+  constructor(obj: Photo) {
+    this.baseUrl = obj.baseUrl;
+    this.createDateTime = obj.createDateTime;
+    this.fileName = obj.fileName;
+    this.id = obj.id;
+    this.isSelected = obj.isSelected;
+    this.tags = obj.tags;
+  }
+
+  getPhotoUrl(): string {
+    return 'http://localhost:3000/images/gallery/full/' + this.fileName + '.jpg';
+  }
+
+  getThumbUrl(): string {
+    return 'http://localhost:3000/images/gallery/thumbs/' + this.fileName + '.webp';
+  }
+
+}
+
 // export function comparePhotos(p1: Photo, p2: Photo): number {
 //   const creationTime1 = new Date(p1.createDateTime).getTime();
 //   const creationTime2 = new Date(p2.createDateTime).getTime();

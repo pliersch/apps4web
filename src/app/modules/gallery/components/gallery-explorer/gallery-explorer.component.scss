@@ -13,14 +13,14 @@
 
   .gallery-explorer-grid-images {
     grid-area: images;
+    display: flex;
+    flex-wrap: wrap;
+    //align-items: flex-start;
+    align-content: flex-start;
+    //justify-content: flex-start;
   }
 
   .gallery-explorer-grid-details {
     grid-area: details;
   }
-}
-
-.gallery-explorer-grid-images {
-  display: flex;
-  flex-wrap: wrap;
 }
