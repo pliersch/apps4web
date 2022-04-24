@@ -8,10 +8,15 @@ export interface Photo {
 
   getPhotoUrl(): string;
 
+  getPreviewUrl(): string;
+
   getThumbUrl(): string;
 }
 
 export class PhotoImpl implements Photo {
+
+  private readonly API_URL: string = 'http://localhost:3000/images/gallery/';
+
   baseUrl: string;
   createDateTime: Date;
   fileName: string;
@@ -29,11 +34,15 @@ export class PhotoImpl implements Photo {
   }
 
   getPhotoUrl(): string {
-    return 'http://localhost:3000/images/gallery/full/' + this.fileName + '.jpg';
+    return this.API_URL + 'full/' + this.fileName + '.jpg';
+  }
+
+  getPreviewUrl(): string {
+    return this.API_URL + 'thumbs/' + this.fileName + '-600.webp';
   }
 
   getThumbUrl(): string {
-    return 'http://localhost:3000/images/gallery/thumbs/' + this.fileName + '.webp';
+    return this.API_URL + 'thumbs/' + this.fileName + '-300.webp';
   }
 
 }

@@ -19,7 +19,7 @@ export interface TagStateModel {
   name: 'tags',
   defaults: {
     tags: [],
-    activeTags: ['Fuck'],
+    activeTags: [/*'Fuck'*/],
     allTagsLoaded: false,
     loaded: false,
     loading: false

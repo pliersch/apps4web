@@ -1,7 +1,13 @@
 .image-container {
   display: flex;
-  padding: 14px;
+  margin: 14px;
   border: 1px solid #00000000;
+  //background: black;
+
+  &:hover {
+    //cursor: pointer;
+    border-color: darkgray;
+  }
 
   &.active {
     border-color: darkgray;
@@ -9,14 +15,13 @@
   }
 }
 
-img:hover {
-  cursor: pointer;
-  background-color: #777;
-}
+img {
+  width: 230px;
+  height: 150px;
+  object-fit: contain;
 
-.responsive {
-  height: 100%;
-  max-height: 150px;
-  width: auto;
+  &:hover {
+    cursor: pointer;
+  }
 }
 

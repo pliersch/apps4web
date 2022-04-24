@@ -1,5 +1,6 @@
 <div class="image-container" [class.active]="selected">
-  <img class="responsive" alt="thumbnail" [src]="photo.getThumbUrl()">
+
+  <img alt="thumbnail" [src]="photo.getThumbUrl()">
   <div class="flex-column">
     <button mat-icon-button (click)="onClickDownload()"
             aria-label="Example icon-button with menu icon">
