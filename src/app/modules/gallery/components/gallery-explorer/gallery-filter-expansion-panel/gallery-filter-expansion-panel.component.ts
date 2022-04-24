@@ -9,6 +9,9 @@ import {
 } from '@gallery/components/gallery-explorer/gallery-edit-tags/gallery-edit-tags.component';
 import {TagState} from "@gallery/store/tags/tag-state";
 import {AddTagFilter, LoadTags, RemoveTagFilter} from "@gallery/store/tags/tag-action";
+import {
+  GalleryNewTagCategoryComponent
+} from "@gallery/components/gallery-explorer/gallery-new-tag-category/gallery-new-tag-category.component";
 
 @Component({
   selector: 'app-gallery-filter-expansion-panel',
@@ -46,6 +49,14 @@ export class GalleryFilterExpansionPanelComponent implements OnInit {
   }
 
   openNewTagDialog(): void {
+    this.dialog.open(GalleryNewTagCategoryComponent, {
+      // minWidth: '600px',
+      width: '500px',
+      // minHeight: '400px',
+      // maxHeight: '600px',
+      restoreFocus: false,
+      autoFocus: false
+    });
     const tag = {} as Tag;
     tag.tagName = 'Fuck2';
     tag.entries = ['you2', 'to2'];

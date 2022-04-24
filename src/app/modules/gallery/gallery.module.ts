@@ -66,6 +66,9 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {ActionBarModule} from "@modules/action-bar/action-bar.module";
 import {TagState} from "@gallery/store/tags/tag-state";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {
+  GalleryNewTagCategoryComponent
+} from './components/gallery-explorer/gallery-new-tag-category/gallery-new-tag-category.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +95,7 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
     MatListRemovePaddingDirective,
     GalleryEditTagListComponent,
     ImageControlComponent,
+    GalleryNewTagCategoryComponent,
   ],
   imports: [
     CommonModule,

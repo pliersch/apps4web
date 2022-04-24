@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>New Tag Category</h1>
+<mat-dialog-content style="overflow: hidden;">
+  <form [formGroup]="form" novalidate (ngSubmit)="onSave()" class="example-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Category</mat-label>
+      <input matInput placeholder="Ex. people" formControlName="category"
+             autocomplete="off" (input)="detectChanges()">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Tags</mat-label>
+      <input matInput placeholder="Ex. Peter, Paul, Mary" formControlName="tags"
+             autocomplete="nope" (input)="detectChanges()">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <span class="spacer"></span>
+  <button mat-raised-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button class="mat-primary" type="submit" [disabled]="!isValid" (click)="onSave()">Ok</button>
+</mat-dialog-actions>
