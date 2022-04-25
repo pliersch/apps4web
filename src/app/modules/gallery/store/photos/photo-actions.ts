@@ -62,7 +62,7 @@ export class TogglePhotoDownloadAction {
 }
 
 export class SelectAllPhotosAction {
-  static readonly type = '[Gallery] Clear Photo Download';
+  static readonly type = '[Gallery] Select All Photos';
 }
 
 export class ClearPhotosDownloadAction {

@@ -192,10 +192,10 @@ export class PhotoState {
   selectAllPhotosAction(ctx: StateContext<PhotoStateModel>): void {
     console.log('PhotoState selectAllPhotosAction: ',)
     const state = ctx.getState();
-    for (const photo of state.photos) {
+    for (let i = 0; i < state.photos.length; i++) {
       ctx.setState(
         patch({
-          photos: updateItem<Photo>(photo => photo!.download, patch({download: true}))
+          photos: updateItem<Photo>(photo => true, patch({download: true}))
         })
       );
     }
