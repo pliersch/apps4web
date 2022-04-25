@@ -4,6 +4,7 @@ import {ActionBarComponent} from './action-bar.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MaterialModule} from "@app/shared/material/material.module";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {ShareModule} from "@modules/share/share.module";
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     CommonModule,
     MatButtonToggleModule,
     MaterialModule,
-    MatTooltipModule
+    MatTooltipModule,
+    ShareModule
   ]
 })
 export class ActionBarModule {

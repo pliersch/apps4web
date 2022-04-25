@@ -61,7 +61,11 @@ export class TogglePhotoDownloadAction {
   constructor(public photo: Photo) { }
 }
 
-export class ClearPhotoDownloadAction {
+export class SelectAllPhotosAction {
+  static readonly type = '[Gallery] Clear Photo Download';
+}
+
+export class ClearPhotosDownloadAction {
   static readonly type = '[Gallery] Clear Photo Download';
 }
 

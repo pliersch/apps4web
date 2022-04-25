@@ -8,6 +8,8 @@ import {Photo} from "@gallery/store/photos/photo.model";
 import {patch, updateItem} from "@ngxs/store/operators";
 import {filterAllTags} from "@gallery/store/photos/photo.tools";
 import {TagState} from "@gallery/store/tags/tag-state";
+import {SelectAllPhotosAction} from "@gallery/store/photos/photo-actions";
+import {state} from "@angular/animations";
 
 export interface PhotoStateModel {
   photos: Photo[];
@@ -186,8 +188,21 @@ export class PhotoState {
     );
   }
 
-  @Action(photoAction.ClearPhotoDownloadAction)
-  clearDownload(ctx: StateContext<PhotoStateModel>): void {
+  @Action(photoAction.SelectAllPhotosAction)
+  selectAllPhotosAction(ctx: StateContext<PhotoStateModel>): void {
+    console.log('PhotoState selectAllPhotosAction: ',)
+    const state = ctx.getState();
+    for (const photo of state.photos) {
+      ctx.setState(
+        patch({
+          photos: updateItem<Photo>(photo => photo!.download, patch({download: true}))
+        })
+      );
+    }
+  }
+
+  @Action(photoAction.ClearPhotosDownloadAction)
+  clearAllDownloads(ctx: StateContext<PhotoStateModel>): void {
     // TODO what a fucking solution!!! unfortunately there is no method like "updateMany"
     let comparePhotos = PhotoState.getDownloads(ctx.getState());
     for (let i = 0; i < comparePhotos.length; i++) {
