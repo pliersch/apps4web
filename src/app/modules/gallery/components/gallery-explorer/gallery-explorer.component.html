@@ -3,11 +3,10 @@
                                       *ngIf=showFilter></app-gallery-filter-expansion-panel>
   <div class="gallery-explorer-grid-images">
     <app-image-control *ngFor="let photo of (images | async)"
-                       [selected]="currentImage === photo"
-                       (click)="setCurrent(photo)" [photo]="photo">
-    </app-image-control>
+                       [selected]="currentImage === photo" [download]="photo.download"
+                       (click)="setCurrent(photo)" [photo]="photo"
+                       (downloadEvent)="onSelectForDownload($event)"></app-image-control>
   </div>
   <app-gallery-image-detail class="component gallery-explorer-grid-details"
-                            [currentPhoto]="currentImage">
-  </app-gallery-image-detail>
+                            [currentPhoto]="currentImage"></app-gallery-image-detail>
 </div>

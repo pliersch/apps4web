@@ -4,14 +4,15 @@ import {PhotoService} from "@app/core/services/photo.service";
 import {catchError, map} from "rxjs/operators";
 import {asapScheduler, Observable, of, Subscription} from "rxjs";
 import * as photoAction from "@gallery/store/photos/photo-actions";
-import {Photo, PhotoImpl} from "@gallery/store/photos/photo.model";
+import {Photo} from "@gallery/store/photos/photo.model";
 import {patch, updateItem} from "@ngxs/store/operators";
 import {filterAllTags} from "@gallery/store/photos/photo.tools";
 import {TagState} from "@gallery/store/tags/tag-state";
 
 export interface PhotoStateModel {
   photos: Photo[];
-  thumbs: Photo[];
+  // thumbs: Photo[];
+  // downloads: Photo[];
   tagFilter: string[];
   // comparePhotos: Photo[];
   // exportPhotos: Photo[];
@@ -25,7 +26,8 @@ export interface PhotoStateModel {
   name: 'gallery',
   defaults: {
     photos: [],
-    thumbs: [],
+    // thumbs: [],
+    // downloads: [],
     tagFilter: [],
     allPhotosLoaded: false,
     loaded: false,
@@ -47,6 +49,11 @@ export class PhotoState {
   @Selector()
   static getComparePhotos(state: PhotoStateModel): Photo[] {
     return state.photos.filter(photo => photo.isSelected);
+  }
+
+  @Selector(/*[PhotoState]*/)
+  static getDownloads(state: PhotoStateModel): Photo[] {
+    return state.photos.filter(photo => photo.download);
   }
 
   constructor(private photoService: PhotoService,
@@ -81,7 +88,7 @@ export class PhotoState {
   loadPhotosSuccess({patchState}: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosSuccessAction): void {
     let photos: Photo[] = [];
     for (const photo of action.photos) {
-      photos.push(new PhotoImpl(photo))
+      photos.push(photo)
     }
     patchState({photos: photos, loaded: true, loading: false});
   }
@@ -149,13 +156,6 @@ export class PhotoState {
         photos: updateItem<Photo>(photo => photo!.id === action.photo.id, patch({isSelected: isSelected}))
       })
     );
-
-    // ctx.patchState({
-    //   comparePhotos: [
-    //     ...state.comparePhotos,
-    //     action.photo
-    //   ]
-    // });
   }
 
   @Action(photoAction.ClearPhotoSelectionAction)
@@ -166,6 +166,34 @@ export class PhotoState {
       ctx.setState(
         patch({
           photos: updateItem<Photo>(photo => photo!.isSelected, patch({isSelected: false}))
+        })
+      );
+    }
+  }
+
+  //////////////////////////////////////////////////////////
+  //          download
+  //////////////////////////////////////////////////////////
+
+  @Action(photoAction.TogglePhotoDownloadAction)
+  toggleDownload(ctx: StateContext<PhotoStateModel>, action: photoAction.TogglePhotoDownloadAction): void {
+    console.log('PhotoState toggleDownload: ', action.photo)
+    let isDownload = !action.photo.download;
+    ctx.setState(
+      patch({
+        photos: updateItem<Photo>(photo => photo!.id === action.photo.id, patch({download: isDownload}))
+      })
+    );
+  }
+
+  @Action(photoAction.ClearPhotoDownloadAction)
+  clearDownload(ctx: StateContext<PhotoStateModel>): void {
+    // TODO what a fucking solution!!! unfortunately there is no method like "updateMany"
+    let comparePhotos = PhotoState.getDownloads(ctx.getState());
+    for (let i = 0; i < comparePhotos.length; i++) {
+      ctx.setState(
+        patch({
+          photos: updateItem<Photo>(photo => photo!.download, patch({download: false}))
         })
       );
     }

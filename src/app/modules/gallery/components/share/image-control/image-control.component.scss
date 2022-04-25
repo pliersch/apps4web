@@ -25,3 +25,9 @@ img {
   }
 }
 
+button {
+  &.active {
+    color: green;
+  }
+}
+

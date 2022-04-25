@@ -3,6 +3,7 @@ import {Photo} from '@gallery/store/photos/photo.model';
 import {NgScrollbar} from 'ngx-scrollbar';
 import {Observable} from 'rxjs';
 import {Store} from '@ngxs/store';
+import {getThumbUrl} from "@gallery/store/photos/photo.tools";
 
 @Component({
   selector: 'app-gallery-vertical-scroller',
@@ -35,5 +36,9 @@ export class GalleryVerticalScrollerComponent {
     void this.scrollbarRef.scrollTo({
       top: position
     });
+  }
+
+  getThumbUrl(fileName: string): string {
+    return getThumbUrl(fileName);
   }
 }

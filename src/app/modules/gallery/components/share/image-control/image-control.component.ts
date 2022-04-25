@@ -1,5 +1,6 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Photo} from "@gallery/store/photos/photo.model";
+import {getThumbUrl} from "@gallery/store/photos/photo.tools";
 
 @Component({
   selector: 'app-image-control',
@@ -14,10 +15,20 @@ export class ImageControlComponent {
   @Input()
   selected: boolean;
 
+  @Input()
+  download: boolean;
+
+  @Output()
+  downloadEvent = new EventEmitter<Photo>();
+
   constructor() {
   }
 
   onClickDownload(): void {
-    console.log('ImageControlComponent onClickDownload: ', this.photo.fileName)
+    this.downloadEvent.emit(this.photo);
+  }
+
+  getThumbUrl(fileName: string): string {
+    return getThumbUrl(fileName);
   }
 }

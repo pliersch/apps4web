@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {Select, Store} from '@ngxs/store';
 import {PhotoState} from "@gallery/store/photos/photo-state";
 import {TogglePhotoSelectionAction} from "@gallery/store/photos/photo-actions";
+import {getThumbUrl} from "@gallery/store/photos/photo.tools";
 
 @Component({
   selector: 'app-gallery-horizontal-scroller',
@@ -49,4 +50,7 @@ export class GalleryHorizontalScrollerComponent {
     this.store.dispatch(new TogglePhotoSelectionAction(photo));
   }
 
+  getThumbUrl(fileName: string): string {
+    return getThumbUrl(fileName);
+  }
 }

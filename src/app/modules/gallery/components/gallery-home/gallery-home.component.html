@@ -4,10 +4,10 @@
       <picture>
         <!--        <source media="(min-width: 1440px)" srcset="pic-920.jpg 1x, pic-1840.jpg 2x">-->
         <!--        <source media="(min-width: 680px) and (orientation:portrait)" srcset="http://localhost:3000/images/gallery/thumbs/image-1638090219815.jpg">-->
-        <source media="(min-width: 1900px)" [srcset]="image.getPhotoUrl()">
+        <source media="(min-width: 1900px)" [srcset]="getPhotoUrl(image.fileName)">
         <!--        <source media="(min-width: 300px) and (orientation:portrait)" srcset="http://localhost:3000/images/gallery/thumbs/image-1638090219815.jpg">-->
-        <source media="(min-width: 1200px)" [srcset]="image.getPreviewUrl()">
-        <source media="(min-width: 800px)" [srcset]="image.getThumbUrl()">
+        <source media="(min-width: 1200px)" [srcset]="getPreviewUrl(image.fileName)">
+        <source media="(min-width: 800px)" [srcset]="getThumbUrl(image.fileName)">
         <img loading="lazy" src="http://localhost:3000/images/test.jpg" alt="thumb">
       </picture>
     </div>

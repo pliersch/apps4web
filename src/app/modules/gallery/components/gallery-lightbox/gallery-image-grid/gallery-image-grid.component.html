@@ -3,6 +3,6 @@
                  *ngFor="let image of (selection | async); let i = index"
                  [colspan]="cols"
                  [rowspan]="rows"
-                 [style.background-image]="'url(' + image.getPhotoUrl() + ')'">
+                 [style.background-image]="'url(' + getPhotoUrl(image.fileName) + ')'">
   </mat-grid-tile>
 </mat-grid-list>
