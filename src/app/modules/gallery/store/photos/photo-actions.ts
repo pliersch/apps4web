@@ -41,7 +41,7 @@ export class AddPhotoFailAction {
 }
 
 
-// selected photos
+// compare
 
 export class TogglePhotoSelectionAction {
   static readonly type = '[Gallery] Toggle Photo Selection';
@@ -53,20 +53,24 @@ export class ClearPhotoSelectionAction {
   static readonly type = '[Gallery] Clear Photo Selection';
 }
 
-// download photos
+// selection download
+
+export class SelectAllPhotosAction {
+  static readonly type = '[Gallery] Select All Photos Download';
+}
+
+export class DeselectAllPhotosAction {
+  static readonly type = '[Gallery] Clear Photo Download';
+}
+
+export class TogglePhotosDownloadAction {
+  static readonly type = '[Gallery] Toggle Photos Download';
+}
 
 export class TogglePhotoDownloadAction {
   static readonly type = '[Gallery] Toggle Photo Download';
 
   constructor(public photo: Photo) { }
-}
-
-export class SelectAllPhotosAction {
-  static readonly type = '[Gallery] Select All Photos';
-}
-
-export class ClearPhotosDownloadAction {
-  static readonly type = '[Gallery] Clear Photo Download';
 }
 
 //

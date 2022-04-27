@@ -7,7 +7,7 @@
 
 <app-button-group class="margin5">
   <button mat-raised-button *ngFor="let item of actions" [value]="item" (click)="onClickAction(item)"
-          matTooltip="{{item.tooltip}}">
+          matTooltip="{{item.tooltip}}" matTooltipPosition="right">
     <mat-icon>{{item.icon}}</mat-icon>
   </button>
 </app-button-group>

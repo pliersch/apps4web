@@ -5,7 +5,12 @@ import {Observable} from 'rxjs';
 import {PhotoState} from "@gallery/store/photos/photo-state";
 import {Action, ActionProvider} from "@app/models/actions";
 import {ActionBarService} from "@app/services/action-bar.service";
-import {SelectAllPhotosAction, TogglePhotoDownloadAction} from "@gallery/store/photos/photo-actions";
+import {
+  DeselectAllPhotosAction,
+  SelectAllPhotosAction,
+  TogglePhotoDownloadAction, TogglePhotosDownloadAction, TogglePhotoSelectionAction
+} from "@gallery/store/photos/photo-actions";
+import {tap} from "rxjs/operators";
 
 enum ActionTypes {
   SelectAll,
@@ -23,8 +28,9 @@ export class GalleryExplorerComponent implements OnInit, OnDestroy, ActionProvid
   @Select(PhotoState.getPhotos)
   images: Observable<Photo[]>;
 
-  @Select(PhotoState.getDownloads)
-  downloads: Observable<Photo[]>;
+  @Select(PhotoState.downloads)
+  downloads$: Observable<Photo[]>;
+  downloads: Photo[];
 
   currentImage: Photo;
   showFilter = true;
@@ -41,6 +47,7 @@ export class GalleryExplorerComponent implements OnInit, OnDestroy, ActionProvid
 
   ngOnInit(): void {
     this.actionBarService.setActions(this.actions);
+    this.downloads$.subscribe(res => this.downloads = res);
   }
 
   ngOnDestroy(): void {
@@ -57,16 +64,19 @@ export class GalleryExplorerComponent implements OnInit, OnDestroy, ActionProvid
         this.store.dispatch(new SelectAllPhotosAction());
         break;
       case ActionTypes.DeselectAll:
-        console.log('GalleryExplorerComponent onAction: De-SelectAll')
+        this.store.dispatch(new DeselectAllPhotosAction());
         break;
       case ActionTypes.ToggleSelection:
-        console.log('GalleryExplorerComponent onAction: Toggle')
+        this.store.dispatch(new TogglePhotosDownloadAction());
         break;
     }
-
   }
 
   onSelectForDownload($event: Photo): void {
     this.store.dispatch(new TogglePhotoDownloadAction($event));
+  }
+
+  isSelected(photo: Photo): boolean {
+    return this.downloads.includes(photo);
   }
 }
