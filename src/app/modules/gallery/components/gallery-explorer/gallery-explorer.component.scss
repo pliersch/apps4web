@@ -18,9 +18,16 @@
     //align-items: flex-start;
     align-content: flex-start;
     //justify-content: flex-start;
+    user-select: none;
   }
 
   .gallery-explorer-grid-details {
     grid-area: details;
+  }
+
+  .selection-area {
+    background: rgba(46, 115, 252, 0.11);
+    border: 2px solid rgba(98, 155, 255, 0.81);
+    border-radius: 0.1em;
   }
 }

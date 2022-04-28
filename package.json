@@ -35,6 +35,7 @@
     "@ngxs/devtools-plugin": "^3.7.2",
     "@ngxs/logger-plugin": "^3.7.2",
     "@ngxs/store": "^3.7.2",
+    "@viselect/vanilla": "^3.0.0-beta.13",
     "angularx-social-login": "^4.0.1",
     "lodash-es": "^4.17.21",
     "ngx-scrollbar": "^7.6.1",

@@ -1,7 +1,7 @@
 <div class="gallery-explorer-grid">
   <app-gallery-filter-expansion-panel class="component gallery-explorer-grid-filter"
                                       *ngIf=showFilter></app-gallery-filter-expansion-panel>
-  <div class="gallery-explorer-grid-images">
+  <div class="gallery-explorer-grid-images selection-area-container">
     <app-image-control *ngFor="let photo of (images | async)"
                        [selected]="currentImage === photo" [download]="isSelected(photo)"
                        (click)="setCurrent(photo)" [photo]="photo"
