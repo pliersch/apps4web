@@ -8,8 +8,7 @@ import {Photo} from "@gallery/store/photos/photo.model";
 import {insertItem, patch, removeItem, updateItem} from "@ngxs/store/operators";
 import {filterAllTags} from "@gallery/store/photos/photo.tools";
 import {TagState} from "@gallery/store/tags/tag-state";
-import {SelectAllPhotosAction} from "@gallery/store/photos/photo-actions";
-import {state} from "@angular/animations";
+import {AddManyPhotosAction, SelectManyPhotosAction} from "@gallery/store/photos/photo-actions";
 
 export interface PhotoStateModel {
   photos: Photo[];
@@ -63,8 +62,18 @@ export class PhotoState {
     return state.photos.filter(photo => photo.download);
   }
 
-  constructor(private photoService: PhotoService,
-              private store: Store) {
+  // @Selector()
+  // static getFilteredUsersFn(photoStateModel: PhotoStateModel) {
+  //   return (filter: string) =>
+  //     photoStateModel.photos.filter((photo) => photo.id != filter);
+  // }
+  //
+  // @Selector([PhotoState])
+  // isDataSelected(state: PhotoStateModel): (photo: Photo) => boolean {
+  //   return (photo: Photo) => state.downloads.includes(photo);
+  // }
+
+  constructor(private photoService: PhotoService) {
   }
 
   //////////////////////////////////////////////////////////
@@ -185,18 +194,39 @@ export class PhotoState {
   @Action(photoAction.TogglePhotoDownloadAction)
   toggleDownload(ctx: StateContext<PhotoStateModel>, action: photoAction.TogglePhotoDownloadAction): void {
     console.log('PhotoState toggleDownload: ', action.photo)
-    let isDownload = ctx.getState().downloads.includes(action.photo);
+    let downloads = ctx.getState().downloads;
+    let isDownload = downloads.includes(action.photo);
     ctx.setState(
       patch({
-        downloads: isDownload
-          ? removeItem<Photo>(photo => photo!.id === action.photo.id)
-          : insertItem<Photo>(action.photo)
+        downloads:
+          isDownload
+            ? removeItem<Photo>(photo => photo!.id === action.photo.id)
+            : insertItem<Photo>(action.photo)
       })
     );
   }
 
   @Action(photoAction.SelectAllPhotosAction)
   selectAllPhotosAction(ctx: StateContext<PhotoStateModel>): void {
+    const state = ctx.getState();
+    ctx.setState(
+      patch({
+        downloads: state.photos
+      })
+    );
+  }
+
+  @Action(photoAction.SelectManyPhotosAction)
+  selectManyPhotosAction(ctx: StateContext<PhotoStateModel>, action: photoAction.SelectManyPhotosAction): void {
+    ctx.setState(
+      patch({
+        downloads: action.photos
+      })
+    );
+  }
+
+  @Action(photoAction.AddManyPhotosAction)
+  addManyPhotosAction(ctx: StateContext<PhotoStateModel>): void {
     const state = ctx.getState();
     ctx.setState(
       patch({
@@ -227,9 +257,4 @@ export class PhotoState {
       })
     );
   }
-
-  // @Selector([PhotoState])
-  // isDataSelected(state: PhotoStateModel): (photo: Photo) => boolean {
-  //   return (photo: Photo) => state.downloads.includes(photo);
-  // }
 }

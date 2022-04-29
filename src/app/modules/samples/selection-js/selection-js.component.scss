@@ -1,17 +1,17 @@
-::-webkit-scrollbar {
-  width: 0.5em;
-  height: 0.55em;
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #afafaf;
-  border-radius: 0.2em;
-}
-
-::-webkit-scrollbar-corner {
-  display: none;
-}
+//::-webkit-scrollbar {
+//  width: 0.5em;
+//  height: 0.55em;
+//  background: transparent;
+//}
+//
+//::-webkit-scrollbar-thumb {
+//  background: #afafaf;
+//  border-radius: 0.2em;
+//}
+//
+//::-webkit-scrollbar-corner {
+//  display: none;
+//}
 
 main {
   width: 100%;
@@ -24,17 +24,17 @@ section {
   background: #1c1b1b;
 }
 
-main .boxes {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  border: 2px solid rgba(66, 68, 90, 0.075);
-  border-radius: 0.15em;
-  padding: 1em 0;
-  user-select: none;
-}
+//main .boxes {
+//  display: -webkit-box;
+//  display: -ms-flexbox;
+//  display: flex;
+//  flex-wrap: wrap;
+//  justify-content: center;
+//  border: 2px solid rgba(66, 68, 90, 0.075);
+//  border-radius: 0.15em;
+//  padding: 1em 0;
+//  user-select: none;
+//}
 
 main .boxes {
   display: grid;
@@ -46,10 +46,8 @@ main .boxes {
   overflow: auto;
   padding: 0.5em;
   margin-bottom: 3em;
-}
-
-main .boxes > div {
-  margin: 0;
+  border: 2px solid rgba(66, 68, 90, 0.075);
+  border-radius: 0.15em;
 }
 
 main .boxes::after {
@@ -79,23 +77,3 @@ main .boxes div.selected {
   border-radius: 0.15em;
 }
 
-main section.demo .info p {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-}
-
-.key {
-  display: inline-block;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: var(--c-primary);
-  font-size: 10px;
-  line-height: 1em;
-  padding: 0.25em 0.4em 0.2em 0.4em;
-  margin: 0 0.5em -4px;
-  border: 1px solid var(--c-primary);
-  border-bottom: 3px solid var(--c-primary);
-  border-radius: 2px;
-}

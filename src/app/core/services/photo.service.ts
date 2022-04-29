@@ -37,4 +37,12 @@ export class PhotoService {
     //   })
     // );
   }
+
+  download(ids: Photo[]): void {
+    console.log('PhotoService download: ',)
+    // return this.http.delete(`${baseUrl}/${id}`).pipe(
+    //   finalize(() => {
+    //   })
+    // );
+  }
 }
