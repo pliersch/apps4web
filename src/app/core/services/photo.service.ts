@@ -4,7 +4,8 @@ import {Observable} from 'rxjs';
 import {environment} from '@environments/environment';
 import {Photo} from '@gallery/store/photos/photo.model';
 
-const BASE_URL = `${environment.apiUrl}/photos`;
+const PICTURE_BASE_URL = `${environment.apiUrl}/photos`;
+const DOWNLOAD_BASE_URL = `${environment.apiUrl}/download`;
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,11 @@ export class PhotoService {
   }
 
   getAll(): Observable<Photo[]> {
-    return this.http.get<Photo[]>(BASE_URL);
+    return this.http.get<Photo[]>(PICTURE_BASE_URL);
   }
 
   getById(id: string): Observable<Photo> {
-    return this.http.get<Photo>(`${BASE_URL}/${id}`);
+    return this.http.get<Photo>(`${PICTURE_BASE_URL}/${id}`);
   }
 
   create(file: File, tags: string[]): Observable<Photo> {
@@ -27,7 +28,7 @@ export class PhotoService {
     const formData = new FormData();
     formData.append('image', file);
     formData.append('tags', stringify);
-    return this.http.post<Photo>(BASE_URL + '/file', formData);
+    return this.http.post<Photo>(PICTURE_BASE_URL + '/file', formData);
   }
 
   delete(id: string): Observable<any> {
@@ -38,11 +39,11 @@ export class PhotoService {
     // );
   }
 
-  download(ids: Photo[]): void {
+  download(ids: Photo[]): Observable<any> {
     console.log('PhotoService download: ',)
-    // return this.http.delete(`${baseUrl}/${id}`).pipe(
-    //   finalize(() => {
-    //   })
-    // );
+    return this.http.get(DOWNLOAD_BASE_URL, {
+      responseType: 'blob',
+      headers: {'Accept': 'application/zip'}
+    });
   }
 }

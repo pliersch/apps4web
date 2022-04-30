@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 import {PhotoState} from "@gallery/store/photos/photo-state";
 import {Action, ActionProvider} from "@app/models/actions";
 import {ActionBarService} from "@app/services/action-bar.service";
-import SelectionArea from '@viselect/vanilla'
+import {saveAs} from 'file-saver';
 import {
   DeselectAllPhotosAction,
   SelectAllPhotosAction, SelectManyPhotosAction,
@@ -82,7 +82,7 @@ export class GalleryExplorerComponent implements OnInit, OnDestroy, ActionProvid
         this.store.dispatch(new TogglePhotosDownloadAction());
         break;
       case ActionTypes.Download:
-        this.photoService.download(this.downloads);
+        this.downloadPictures();
         break;
     }
   }
@@ -112,4 +112,8 @@ export class GalleryExplorerComponent implements OnInit, OnDestroy, ActionProvid
     this.store.dispatch(new SelectManyPhotosAction(photos));
   }
 
+  private downloadPictures(): void {
+    this.photoService.download(this.downloads)
+      .subscribe(blob => saveAs(blob, 'archive.zip'));
+  }
 }
