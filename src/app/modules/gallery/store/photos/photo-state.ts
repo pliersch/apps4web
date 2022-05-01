@@ -1,4 +1,4 @@
-import {Action, Selector, State, StateContext, Store} from "@ngxs/store";
+import {Action, Selector, State, StateContext} from "@ngxs/store";
 import {Injectable} from "@angular/core";
 import {PhotoService} from "@app/core/services/photo.service";
 import {catchError, map} from "rxjs/operators";
@@ -8,7 +8,6 @@ import {Photo} from "@gallery/store/photos/photo.model";
 import {insertItem, patch, removeItem, updateItem} from "@ngxs/store/operators";
 import {filterAllTags} from "@gallery/store/photos/photo.tools";
 import {TagState} from "@gallery/store/tags/tag-state";
-import {AddManyPhotosAction, SelectManyPhotosAction} from "@gallery/store/photos/photo-actions";
 
 export interface PhotoStateModel {
   photos: Photo[];
@@ -57,10 +56,10 @@ export class PhotoState {
     return state.downloads;
   }
 
-  @Selector(/*[PhotoState]*/)
-  static getDownloads(state: PhotoStateModel): Photo[] {
-    return state.photos.filter(photo => photo.download);
-  }
+  // @Selector(/*[PhotoState]*/)
+  // static getDownloads(state: PhotoStateModel): Photo[] {
+  //   return state.photos.filter(photo => photo.download);
+  // }
 
   // @Selector()
   // static getFilteredUsersFn(photoStateModel: PhotoStateModel) {
@@ -225,15 +224,15 @@ export class PhotoState {
     );
   }
 
-  @Action(photoAction.AddManyPhotosAction)
-  addManyPhotosAction(ctx: StateContext<PhotoStateModel>): void {
-    const state = ctx.getState();
-    ctx.setState(
-      patch({
-        downloads: state.photos
-      })
-    );
-  }
+  // @Action(photoAction.AddManyPhotosAction)
+  // addManyPhotosAction(ctx: StateContext<PhotoStateModel>): void {
+  //   const state = ctx.getState();
+  //   ctx.setState(
+  //     patch({
+  //       downloads: state.photos
+  //     })
+  //   );
+  // }
 
   @Action(photoAction.DeselectAllPhotosAction)
   deselectAllPhotosAction(ctx: StateContext<PhotoStateModel>): void {

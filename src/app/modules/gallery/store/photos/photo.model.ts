@@ -5,5 +5,4 @@ export interface Photo {
   createDateTime: Date;
   baseUrl: string;
   isSelected: boolean;
-  download: boolean;
 }

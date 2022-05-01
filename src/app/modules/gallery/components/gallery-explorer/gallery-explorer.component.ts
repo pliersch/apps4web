@@ -20,7 +20,8 @@ enum ActionTypes {
   SelectAll,
   DeselectAll,
   ToggleSelection,
-  Download
+  Download,
+  EditTags
 }
 
 @Component({
@@ -48,6 +49,7 @@ export class GalleryExplorerComponent implements OnInit, OnDestroy, ActionProvid
     {name: ActionTypes.DeselectAll, icon: 'remove_done', tooltip: 'deselect all', handler: this},
     {name: ActionTypes.ToggleSelection, icon: 'published_with_changes', tooltip: 'toggle selection', handler: this},
     {name: ActionTypes.Download, icon: 'download', tooltip: 'download', handler: this},
+    {name: ActionTypes.EditTags, icon: 'edit', tooltip: 'edit tags', handler: this},
   ]
 
   constructor(private actionBarService: ActionBarService,
@@ -84,6 +86,9 @@ export class GalleryExplorerComponent implements OnInit, OnDestroy, ActionProvid
       case ActionTypes.Download:
         this.downloadPictures();
         break;
+      case ActionTypes.EditTags:
+        this.editTags();
+        break;
     }
   }
 
@@ -114,6 +119,10 @@ export class GalleryExplorerComponent implements OnInit, OnDestroy, ActionProvid
 
   private downloadPictures(): void {
     this.photoService.download(this.downloads)
-      .subscribe(blob => saveAs(blob, 'archive.zip'));
+      .subscribe(blob => saveAs(blob, 'archive.zip')); // TODO
+  }
+
+  private editTags(): void {
+
   }
 }

@@ -39,11 +39,20 @@ export class PhotoService {
     // );
   }
 
-  download(ids: Photo[]): Observable<any> {
+  download(photos: Photo[]): Observable<any> {
+    let fileNames: string[] = [];
+    for (const photo of photos) {
+      fileNames.push(photo.fileName);
+    }
     console.log('PhotoService download: ',)
-    return this.http.get(DOWNLOAD_BASE_URL, {
+    const stringify = JSON.stringify(fileNames);
+    // const options = {headers: {'Content-Type': 'application/json'}};
+    return this.http.post(DOWNLOAD_BASE_URL, stringify, {
       responseType: 'blob',
-      headers: {'Accept': 'application/zip'}
+      headers: {
+        'Accept': 'application/zip',
+        'Content-Type': 'application/json'
+      }
     });
   }
 }

@@ -65,11 +65,11 @@ export class SelectManyPhotosAction {
   constructor(public photos: Photo[]) { }
 }
 
-export class AddManyPhotosAction {
-  static readonly type = '[Gallery] Add Many Photos Download';
-
-  constructor(public photos: Photo[]) { }
-}
+// export class AddManyPhotosAction {
+//   static readonly type = '[Gallery] Add Many Photos Download';
+//
+//   constructor(public photos: Photo[]) { }
+// }
 
 export class DeselectAllPhotosAction {
   static readonly type = '[Gallery] Clear Photo Download';
