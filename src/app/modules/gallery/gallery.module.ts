@@ -69,6 +69,7 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {
   GalleryNewTagCategoryComponent
 } from './components/gallery-explorer/gallery-new-tag-category/gallery-new-tag-category.component';
+import { GalleryEditImageTagsComponent } from './components/gallery-explorer/gallery-edit-image-tags/gallery-edit-image-tags.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import {
     GalleryEditTagListComponent,
     ImageControlComponent,
     GalleryNewTagCategoryComponent,
+    GalleryEditImageTagsComponent,
   ],
   imports: [
     CommonModule,

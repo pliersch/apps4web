@@ -12,7 +12,7 @@ import {TagState} from "@gallery/store/tags/tag-state";
 export interface PhotoStateModel {
   photos: Photo[];
   // thumbs: Photo[];
-  downloads: Photo[];
+  selectedPictures: Photo[];
   tagFilter: string[];
   // comparePhotos: Photo[];
   // exportPhotos: Photo[];
@@ -27,7 +27,7 @@ export interface PhotoStateModel {
   defaults: {
     photos: [],
     // thumbs: [],
-    downloads: [],
+    selectedPictures: [],
     tagFilter: [],
     allPhotosLoaded: false,
     loaded: false,
@@ -52,8 +52,8 @@ export class PhotoState {
   }
 
   @Selector(/*[PhotoState]*/)
-  static downloads(state: PhotoStateModel): Photo[] {
-    return state.downloads;
+  static getSelectedPictures(state: PhotoStateModel): Photo[] {
+    return state.selectedPictures;
   }
 
   // @Selector(/*[PhotoState]*/)
@@ -193,11 +193,11 @@ export class PhotoState {
   @Action(photoAction.TogglePhotoDownloadAction)
   toggleDownload(ctx: StateContext<PhotoStateModel>, action: photoAction.TogglePhotoDownloadAction): void {
     console.log('PhotoState toggleDownload: ', action.photo)
-    let downloads = ctx.getState().downloads;
+    let downloads = ctx.getState().selectedPictures;
     let isDownload = downloads.includes(action.photo);
     ctx.setState(
       patch({
-        downloads:
+        selectedPictures:
           isDownload
             ? removeItem<Photo>(photo => photo!.id === action.photo.id)
             : insertItem<Photo>(action.photo)
@@ -210,7 +210,7 @@ export class PhotoState {
     const state = ctx.getState();
     ctx.setState(
       patch({
-        downloads: state.photos
+        selectedPictures: state.photos
       })
     );
   }
@@ -219,7 +219,7 @@ export class PhotoState {
   selectManyPhotosAction(ctx: StateContext<PhotoStateModel>, action: photoAction.SelectManyPhotosAction): void {
     ctx.setState(
       patch({
-        downloads: action.photos
+        selectedPictures: action.photos
       })
     );
   }
@@ -239,7 +239,7 @@ export class PhotoState {
     const photos: Photo[] = [];
     ctx.setState(
       patch({
-        downloads: photos // WTF !!! empty array thrown an error
+        selectedPictures: photos // WTF !!! empty array thrown an error
       })
     );
   }
@@ -248,11 +248,11 @@ export class PhotoState {
   togglePhotosDownloadAction(ctx: StateContext<PhotoStateModel>): void {
     console.log('togglePhotosDownloadAction!')
     let photos = ctx.getState().photos;
-    let downloads = ctx.getState().downloads;
+    let downloads = ctx.getState().selectedPictures;
     let difference = photos.filter(x => !downloads.includes(x));
     ctx.setState(
       patch({
-        downloads: difference
+        selectedPictures: difference
       })
     );
   }

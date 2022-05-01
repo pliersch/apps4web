@@ -57,10 +57,10 @@ export class GalleryFilterExpansionPanelComponent implements OnInit {
       restoreFocus: false,
       autoFocus: false
     });
-    const tag = {} as Tag;
-    tag.tagName = 'Fuck2';
-    tag.entries = ['you2', 'to2'];
-    this.store.dispatch(addTag({tag: tag}));
+    // const tag = {} as Tag;
+    // tag.tagName = 'Fuck2';
+    // tag.entries = ['you2', 'to2'];
+    // this.store.dispatch(addTag({tag: tag}));
   }
 
   openEditTagDialog(): void {

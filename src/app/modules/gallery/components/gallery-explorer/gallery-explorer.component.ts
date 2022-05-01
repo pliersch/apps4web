@@ -15,6 +15,17 @@ import {
 import {map} from "rxjs/operators";
 import {AreaSelection, AreaSelectionHandler} from "@gallery/components/gallery-explorer/area-selection";
 import {PhotoService} from "@app/core/services/photo.service";
+import {
+  GalleryEditTagsComponent
+} from "@gallery/components/gallery-explorer/gallery-edit-tags/gallery-edit-tags.component";
+import {
+  GalleryEditImageTagsComponent
+} from "@gallery/components/gallery-explorer/gallery-edit-image-tags/gallery-edit-image-tags.component";
+import {MatDialog} from "@angular/material/dialog";
+
+export interface DialogData {
+  tags: string[];
+}
 
 enum ActionTypes {
   SelectAll,
@@ -32,12 +43,12 @@ enum ActionTypes {
 export class GalleryExplorerComponent implements OnInit, OnDestroy, ActionProvider, AreaSelectionHandler {
 
   @Select(PhotoState.getPhotos)
-  images$: Observable<Photo[]>;
-  images: Photo[];
+  pictures$: Observable<Photo[]>;
+  pictures: Photo[];
 
-  @Select(PhotoState.downloads)
-  downloads$: Observable<Photo[]>;
-  downloads: Photo[];
+  @Select(PhotoState.getSelectedPictures)
+  selection$: Observable<Photo[]>;
+  selection: Photo[];
 
   currentImage: Photo;
   showFilter = true;
@@ -54,13 +65,14 @@ export class GalleryExplorerComponent implements OnInit, OnDestroy, ActionProvid
 
   constructor(private actionBarService: ActionBarService,
               private photoService: PhotoService,
+              public dialog: MatDialog,
               private store: Store) {
   }
 
   ngOnInit(): void {
     this.actionBarService.setActions(this.actions);
-    this.downloads$.subscribe(res => this.downloads = res);
-    this.images$.subscribe(res => this.images = res);
+    this.selection$.subscribe(res => this.selection = res);
+    this.pictures$.subscribe(res => this.pictures = res);
     this.initializeSelectionArea();
   }
 
@@ -97,7 +109,7 @@ export class GalleryExplorerComponent implements OnInit, OnDestroy, ActionProvid
   }
 
   isSelected(photo: Photo): boolean {
-    return this.downloads.includes(photo);
+    return this.selection.includes(photo);
   }
 
   private initializeSelectionArea(): void {
@@ -107,7 +119,7 @@ export class GalleryExplorerComponent implements OnInit, OnDestroy, ActionProvid
   onSelectionFinish(photoFileNames: string[]): void {
     let photos: Photo[] = [];
     for (const fileName of photoFileNames) {
-      let photo = this.images.find(img => img.fileName == fileName);
+      let photo = this.pictures.find(img => img.fileName == fileName);
       if (photo) {
         photos.push(photo);
       } else {
@@ -118,11 +130,30 @@ export class GalleryExplorerComponent implements OnInit, OnDestroy, ActionProvid
   }
 
   private downloadPictures(): void {
-    this.photoService.download(this.downloads)
+    this.photoService.download(this.selection)
       .subscribe(blob => saveAs(blob, 'archive.zip')); // TODO
   }
 
   private editTags(): void {
+    let dialogRef = this.dialog.open(GalleryEditImageTagsComponent, {
+      // minWidth: '600px',
+      data: {tags: this.computeAvailableTagsOfPictures()},
+      width: '800px',
+      // minHeight: '400px',
+      // maxHeight: '600px',
+      restoreFocus: false,
+      autoFocus: false
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
+  }
 
+  private computeAvailableTagsOfPictures(): string[] {
+    let res: string[] = [];
+    for (const pic of this.selection) {
+      res.push(...pic.tags);
+    }
+    return Array.from(new Set(res));
   }
 }

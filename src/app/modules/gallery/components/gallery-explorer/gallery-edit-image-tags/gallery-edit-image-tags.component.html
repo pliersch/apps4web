@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>Add / Remove tags from selected pictures</h1>
+<mat-dialog-content style="overflow: hidden;">
+  <div>
+    <mat-chip-list #chipList>
+      <mat-chip
+        *ngFor="let tag of observable | async"
+        (removed)="remove(tag)">
+        {{tag}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+  <div>
+    <mat-form-field class="full-width">
+      <input matInput
+             placeholder="New tag..."
+             [formControl]="tagCtrl"
+             [matChipInputFor]="chipList"
+             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+             (matChipInputTokenEnd)="add($event)">
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <span class="spacer"></span>
+  <button mat-raised-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button type="submit" class="mat-primary"
+          (click)="onSave()" [mat-dialog-close]="addedTags">Ok
+  </button>
+</mat-dialog-actions>

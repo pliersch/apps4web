@@ -1,11 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Tag } from '@gallery/store/tags/tag.model';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
-import { map, startWith, tap } from 'rxjs/operators';
-import { TagState } from '@gallery/store/tags/tag.selectors';
-import { Store } from '@ngrx/store';
+import {Component, Inject, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {Tag} from '@gallery/store/tags/tag.model';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {Observable} from 'rxjs';
+import {map, startWith, tap} from 'rxjs/operators';
+import {TagState} from '@gallery/store/tags/tag.selectors';
+import {Store} from '@ngrx/store';
 
 export interface DialogData {
   tagCategories: string[];
@@ -72,6 +72,7 @@ export class EditTagsComponent implements OnInit {
 
   save(): void {
     if (this.categoryCtrl.valid && this.tagsCtrl.valid) {
+      // todo is this correct? or use "dialogRef.afterClosed()" like in explorer?
       this.dialogRef.close(this.createTag());
     }
   }
