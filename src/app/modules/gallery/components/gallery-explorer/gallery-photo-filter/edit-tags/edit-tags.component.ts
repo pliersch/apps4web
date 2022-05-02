@@ -72,7 +72,6 @@ export class EditTagsComponent implements OnInit {
 
   save(): void {
     if (this.categoryCtrl.valid && this.tagsCtrl.valid) {
-      // todo is this correct? or use "dialogRef.afterClosed()" like in explorer?
       this.dialogRef.close(this.createTag());
     }
   }

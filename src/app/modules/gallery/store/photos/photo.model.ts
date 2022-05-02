@@ -6,3 +6,8 @@ export interface Photo {
   baseUrl: string;
   isSelected: boolean;
 }
+
+export interface PhotoUpdate {
+  id: string;
+  tags?: string[];
+}

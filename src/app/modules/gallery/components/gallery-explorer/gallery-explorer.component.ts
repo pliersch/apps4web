@@ -7,6 +7,7 @@ import {Action, ActionProvider} from "@app/models/actions";
 import {ActionBarService} from "@app/services/action-bar.service";
 import {saveAs} from 'file-saver';
 import {
+  AddTagToPicture,
   DeselectAllPhotosAction,
   SelectAllPhotosAction, SelectManyPhotosAction,
   TogglePhotoDownloadAction,
@@ -25,6 +26,11 @@ import {MatDialog} from "@angular/material/dialog";
 
 export interface DialogData {
   tags: string[];
+}
+
+export interface DialogResult {
+  addedTags: string[];
+  removedTags: string[];
 }
 
 enum ActionTypes {
@@ -131,7 +137,8 @@ export class GalleryExplorerComponent implements OnInit, OnDestroy, ActionProvid
 
   private downloadPictures(): void {
     this.photoService.download(this.selection)
-      .subscribe(blob => saveAs(blob, 'archive.zip')); // TODO
+      // TODO use fileName of response
+      .subscribe(blob => saveAs(blob, 'archive.zip'));
   }
 
   private editTags(): void {
@@ -145,7 +152,7 @@ export class GalleryExplorerComponent implements OnInit, OnDestroy, ActionProvid
       autoFocus: false
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
+      this.updateTagsOfSelectedPictures(result);
     });
   }
 
@@ -155,5 +162,15 @@ export class GalleryExplorerComponent implements OnInit, OnDestroy, ActionProvid
       res.push(...pic.tags);
     }
     return Array.from(new Set(res));
+  }
+
+  private updateTagsOfSelectedPictures(res: DialogResult): void {
+    let newTags: AddTagToPicture[] = [];
+    for (const addedTag of res.addedTags) {
+      for (const photo of this.selection) {
+        newTags.push(new AddTagToPicture(photo, addedTag));
+      }
+    }
+    this.store.dispatch(newTags);
   }
 }

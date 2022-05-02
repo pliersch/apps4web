@@ -206,7 +206,7 @@ export class PhotoState {
   }
 
   @Action(photoAction.SelectAllPhotosAction)
-  selectAllPhotosAction(ctx: StateContext<PhotoStateModel>): void {
+  selectAllPhotos(ctx: StateContext<PhotoStateModel>): void {
     const state = ctx.getState();
     ctx.setState(
       patch({
@@ -216,7 +216,7 @@ export class PhotoState {
   }
 
   @Action(photoAction.SelectManyPhotosAction)
-  selectManyPhotosAction(ctx: StateContext<PhotoStateModel>, action: photoAction.SelectManyPhotosAction): void {
+  selectManyPhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.SelectManyPhotosAction): void {
     ctx.setState(
       patch({
         selectedPictures: action.photos
@@ -235,7 +235,7 @@ export class PhotoState {
   // }
 
   @Action(photoAction.DeselectAllPhotosAction)
-  deselectAllPhotosAction(ctx: StateContext<PhotoStateModel>): void {
+  deselectAllPhotos(ctx: StateContext<PhotoStateModel>): void {
     const photos: Photo[] = [];
     ctx.setState(
       patch({
@@ -245,15 +245,55 @@ export class PhotoState {
   }
 
   @Action(photoAction.TogglePhotosDownloadAction)
-  togglePhotosDownloadAction(ctx: StateContext<PhotoStateModel>): void {
+  togglePhotosDownload(ctx: StateContext<PhotoStateModel>): void {
     console.log('togglePhotosDownloadAction!')
     let photos = ctx.getState().photos;
     let downloads = ctx.getState().selectedPictures;
     let difference = photos.filter(x => !downloads.includes(x));
     ctx.setState(
+      patch({selectedPictures: difference})
+    );
+  }
+
+  //////////////////////////////////////////////////////////
+  //          add/remove tags
+  //////////////////////////////////////////////////////////
+
+  @Action(photoAction.AddTagToPicture)
+  addTagToPicture(ctx: StateContext<PhotoStateModel>, action: photoAction.AddTagToPicture): Observable<Subscription> {
+    let photo = ctx.getState().photos.find(photo => photo.id === action.photo.id);
+    const allTags: string[] = photo!.tags.concat(action.tag);
+    return this.photoService.updateTagsOfPicture(action.photo.id, allTags)
+      .pipe(
+        map((res: any) =>
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new photoAction.AddTagToPictureSuccess({id: action.photo.id, tags: allTags}))
+          )
+        ),
+        catchError(error =>
+          of(
+            asapScheduler.schedule(() =>
+              ctx.dispatch(new photoAction.AddTagToPictureFail(error))
+            )
+          )
+        )
+      );
+  }
+
+  @Action(photoAction.AddTagToPictureSuccess)
+  addTagToPictureSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.AddTagToPictureSuccess): void {
+    ctx.setState(
       patch({
-        selectedPictures: difference
+        photos: updateItem<Photo>(photo => photo!.id === action.update.id,
+          patch({tags: action.update.tags}))
       })
     );
+  }
+
+  @Action(photoAction.AddTagToPictureFail)
+  addTagToPictureFail({dispatch}: StateContext<PhotoStateModel>, action: photoAction.AddTagToPictureFail): void {
+    // TODO handle error!
+    console.log(action.error)
+    // dispatch({loaded: false, loading: false});
   }
 }

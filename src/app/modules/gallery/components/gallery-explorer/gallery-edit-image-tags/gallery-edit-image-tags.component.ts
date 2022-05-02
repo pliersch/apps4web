@@ -15,7 +15,6 @@ import {DialogData} from "@gallery/components/gallery-explorer/gallery-explorer.
 export class GalleryEditImageTagsComponent implements OnInit {
 
   observable: Observable<string[]>;
-  existingTags: string[] = [];
   addedTags: string[] = [];
   removedTags: string[] = [];
   tagCtrl = new FormControl();
@@ -24,17 +23,15 @@ export class GalleryEditImageTagsComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<GalleryEditImageTagsComponent>,
               @Inject(MAT_DIALOG_DATA) public data: DialogData,) { }
 
-
   ngOnInit(): void {
-    this.existingTags = this.data.tags;
-    this.observable = of(this.existingTags);
+    this.observable = of(this.data.tags);
   }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
     if (value) {
-      if (!this.existingTags.includes(value)) {
-        this.existingTags.push(value);
+      if (!this.data.tags.includes(value)) {
+        this.data.tags.push(value);
         this.addedTags.push(value);
         event.chipInput!.clear();
       }
@@ -42,37 +39,19 @@ export class GalleryEditImageTagsComponent implements OnInit {
   }
 
   remove(tag: string): void {
-    console.log('GalleryEditImageTagsComponent remove: ',)
-    this.existingTags = this.existingTags.filter(item => item !== tag)
-    // const index = this.existingTags.indexOf(tag);
-    // if (index >= 0) {
-    //   this.entries.splice(index, 1);
-    //   this.emitStateChange();
-    // }
-    console.log(this.existingTags)
+    const index = this.data.tags.indexOf(tag);
+    if (index >= 0) {
+      this.data.tags.splice(index, 1);
+      this.removedTags.push(tag);
+    }
   }
 
   onSave(): void {
-    this.dialogRef.close(this.addedTags);
+    this.dialogRef.close({addedTags: this.addedTags, removedTags: this.removedTags});
   }
 
   onCancel(): void {
     this.dialogRef.close();
   }
-
-  detectChanges(): void {
-    // const category: string = this.form.get('category')!.value;
-    // if (!(category && category.length > 2)) {
-    //   this.isValid = false;
-    //   return;
-    // }
-    // const tags: string = this.form.get('tags')!.value;
-    // if (!(tags && tags.length > 2)) {
-    //   this.isValid = false;
-    //   return;
-    // }
-    // this.isValid = true;
-  }
-
 
 }

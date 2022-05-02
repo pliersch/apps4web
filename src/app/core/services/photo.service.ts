@@ -3,6 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '@environments/environment';
 import {Photo} from '@gallery/store/photos/photo.model';
+import {Update} from "@ngrx/entity";
+import {Tag} from "@gallery/store/tags/tag.model";
 
 const PICTURE_BASE_URL = `${environment.apiUrl}/photos`;
 const DOWNLOAD_BASE_URL = `${environment.apiUrl}/download`;
@@ -29,6 +31,15 @@ export class PhotoService {
     formData.append('image', file);
     formData.append('tags', stringify);
     return this.http.post<Photo>(PICTURE_BASE_URL + '/file', formData);
+  }
+
+  /**
+   * @param id picture id
+   * @param tags all existing tags
+   */
+  updateTagsOfPicture(id: string, tags: string[]): Observable<string[]> {
+    const dto = {tags: tags}
+    return this.http.patch<string[]>(`${PICTURE_BASE_URL}/${id}`, dto);
   }
 
   delete(id: string): Observable<any> {

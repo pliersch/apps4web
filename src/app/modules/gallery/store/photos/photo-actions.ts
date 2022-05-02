@@ -1,4 +1,5 @@
-import {Photo} from "@gallery/store/photos/photo.model";
+import {Photo, PhotoUpdate} from "@gallery/store/photos/photo.model";
+import {Tag} from "@gallery/store/tags/tag.model";
 
 // loading photos
 
@@ -97,4 +98,28 @@ export class UpdatePhotoAction {
   static readonly type = '[Gallery] Update Photo';
 
   constructor(public photo: Photo) { }
+}
+
+// tags of picture
+
+export class AddTagToPicture {
+  static readonly type = '[Gallery] Add Tag To Picture';
+
+  constructor(public photo: Photo,
+              public tag: string) {
+  }
+}
+
+export class AddTagToPictureSuccess {
+  static readonly type = '[Gallery] Add Tag To Picture success';
+
+  constructor(public update: PhotoUpdate) {
+  }
+}
+
+export class AddTagToPictureFail {
+  static readonly type = '[Gallery] Add Tag To Picture fail';
+
+  constructor(public error: any) {
+  }
 }
