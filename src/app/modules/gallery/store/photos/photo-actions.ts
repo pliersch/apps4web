@@ -102,11 +102,31 @@ export class UpdatePhotoAction {
 
 // tags of picture
 
+export class SetTagsOfPicture {
+  static readonly type = '[Gallery] Set Tags Of Picture';
+
+  constructor(public photo: Photo, public tags: string[]) {
+  }
+}
+
+export class SetTagsOfPictureSuccess {
+  static readonly type = '[Gallery] Set Tags Of Picture success';
+
+  constructor(public update: PhotoUpdate) {
+  }
+}
+
+export class SetTagsOfPictureFail {
+  static readonly type = '[Gallery] Set Tags Of Picture fail';
+
+  constructor(public error: any) {
+  }
+}
+
 export class AddTagToPicture {
   static readonly type = '[Gallery] Add Tag To Picture';
 
-  constructor(public photo: Photo,
-              public tag: string) {
+  constructor(public photo: Photo, public tag: string) {
   }
 }
 
@@ -119,6 +139,28 @@ export class AddTagToPictureSuccess {
 
 export class AddTagToPictureFail {
   static readonly type = '[Gallery] Add Tag To Picture fail';
+
+  constructor(public error: any) {
+  }
+}
+
+export class RemoveTagFromPicture {
+  static readonly type = '[Gallery] Remove Tag From Picture';
+
+  constructor(public photo: Photo,
+              public tag: string) {
+  }
+}
+
+export class RemoveTagFromPictureSuccess {
+  static readonly type = '[Gallery] Remove Tag From Picture success';
+
+  constructor(public update: PhotoUpdate) {
+  }
+}
+
+export class RemoveTagFromPictureFail {
+  static readonly type = '[Gallery] Remove Tag From Picture fail';
 
   constructor(public error: any) {
   }

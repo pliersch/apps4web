@@ -7,18 +7,15 @@ import {Action, ActionProvider} from "@app/models/actions";
 import {ActionBarService} from "@app/services/action-bar.service";
 import {saveAs} from 'file-saver';
 import {
-  AddTagToPicture,
   DeselectAllPhotosAction,
-  SelectAllPhotosAction, SelectManyPhotosAction,
+  SelectAllPhotosAction,
+  SelectManyPhotosAction,
+  SetTagsOfPicture,
   TogglePhotoDownloadAction,
   TogglePhotosDownloadAction
 } from "@gallery/store/photos/photo-actions";
-import {map} from "rxjs/operators";
 import {AreaSelection, AreaSelectionHandler} from "@gallery/components/gallery-explorer/area-selection";
 import {PhotoService} from "@app/core/services/photo.service";
-import {
-  GalleryEditTagsComponent
-} from "@gallery/components/gallery-explorer/gallery-edit-tags/gallery-edit-tags.component";
 import {
   GalleryEditImageTagsComponent
 } from "@gallery/components/gallery-explorer/gallery-edit-image-tags/gallery-edit-image-tags.component";
@@ -165,12 +162,17 @@ export class GalleryExplorerComponent implements OnInit, OnDestroy, ActionProvid
   }
 
   private updateTagsOfSelectedPictures(res: DialogResult): void {
-    let newTags: AddTagToPicture[] = [];
-    for (const addedTag of res.addedTags) {
-      for (const photo of this.selection) {
-        newTags.push(new AddTagToPicture(photo, addedTag));
-      }
+    if (!res) {
+      return;
     }
-    this.store.dispatch(newTags);
+
+    let tags: string[] = [];
+    for (const photo of this.selection) {
+      tags = photo.tags.filter(x => !res.removedTags.includes(x));
+      tags = tags.filter(x => !res.addedTags.includes(x))
+        .concat(res.addedTags.filter(x => !tags.includes(x)));
+      this.store.dispatch(new SetTagsOfPicture(photo, tags));
+    }
   }
+
 }

@@ -256,8 +256,44 @@ export class PhotoState {
   }
 
   //////////////////////////////////////////////////////////
-  //          add/remove tags
+  //          tags
   //////////////////////////////////////////////////////////
+
+  @Action(photoAction.SetTagsOfPicture)
+  setTagsOfPicture(ctx: StateContext<PhotoStateModel>, action: photoAction.SetTagsOfPicture): Observable<Subscription> {
+    return this.photoService.updateTagsOfPicture(action.photo.id, action.tags)
+      .pipe(
+        map((res: any) =>
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new photoAction.AddTagToPictureSuccess({id: action.photo.id, tags: action.tags}))
+          )
+        ),
+        catchError(error =>
+          of(
+            asapScheduler.schedule(() =>
+              ctx.dispatch(new photoAction.AddTagToPictureFail(error))
+            )
+          )
+        )
+      );
+  }
+
+  @Action(photoAction.SetTagsOfPictureSuccess)
+  setTagsOfPictureSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.SetTagsOfPictureSuccess): void {
+    ctx.setState(
+      patch({
+        photos: updateItem<Photo>(photo => photo!.id === action.update.id,
+          patch({tags: action.update.tags}))
+      })
+    );
+  }
+
+  @Action(photoAction.SetTagsOfPictureFail)
+  setTagsOfPictureFail({dispatch}: StateContext<PhotoStateModel>, action: photoAction.SetTagsOfPictureFail): void {
+    // TODO handle error!
+    console.log(action.error)
+    // dispatch({loaded: false, loading: false});
+  }
 
   @Action(photoAction.AddTagToPicture)
   addTagToPicture(ctx: StateContext<PhotoStateModel>, action: photoAction.AddTagToPicture): Observable<Subscription> {
@@ -292,6 +328,44 @@ export class PhotoState {
 
   @Action(photoAction.AddTagToPictureFail)
   addTagToPictureFail({dispatch}: StateContext<PhotoStateModel>, action: photoAction.AddTagToPictureFail): void {
+    // TODO handle error!
+    console.log(action.error)
+    // dispatch({loaded: false, loading: false});
+  }
+
+  @Action(photoAction.RemoveTagFromPicture)
+  removeTagFromPicture(ctx: StateContext<PhotoStateModel>, action: photoAction.RemoveTagFromPicture): Observable<Subscription> {
+    let photo = ctx.getState().photos.find(photo => photo.id === action.photo.id);
+    let difference = photo!.tags.filter(item => item !== action.tag);
+    return this.photoService.updateTagsOfPicture(action.photo.id, difference)
+      .pipe(
+        map((res: any) =>
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new photoAction.AddTagToPictureSuccess({id: action.photo.id, tags: difference}))
+          )
+        ),
+        catchError(error =>
+          of(
+            asapScheduler.schedule(() =>
+              ctx.dispatch(new photoAction.AddTagToPictureFail(error))
+            )
+          )
+        )
+      );
+  }
+
+  @Action(photoAction.RemoveTagFromPictureSuccess)
+  removeTagFromPictureSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.RemoveTagFromPictureSuccess): void {
+    ctx.setState(
+      patch({
+        photos: updateItem<Photo>(photo => photo!.id === action.update.id,
+          patch({tags: action.update.tags}))
+      })
+    );
+  }
+
+  @Action(photoAction.RemoveTagFromPictureFail)
+  removeTagFromPictureFail({dispatch}: StateContext<PhotoStateModel>, action: photoAction.RemoveTagFromPictureFail): void {
     // TODO handle error!
     console.log(action.error)
     // dispatch({loaded: false, loading: false});
