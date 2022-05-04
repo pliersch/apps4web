@@ -116,6 +116,40 @@ export class TagState {
   }
 
   //////////////////////////////////////////////////////////
+  //          update
+  //////////////////////////////////////////////////////////
+
+  @Action(tagActions.UpdateTag)
+  updateTag(ctx: StateContext<TagStateModel>, action: tagActions.UpdateTag): Observable<Subscription> {
+    return this.tagService.update(action.tag.id!, {entries: action.tag.entries})
+      .pipe(
+        map((tag: Tag) =>
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new tagActions.UpdateTagSuccess(tag))
+          )
+        ),
+        catchError(error =>
+          of(
+            asapScheduler.schedule(() =>
+              ctx.dispatch(new tagActions.UpdateTagFail(error))
+            )
+          )
+        )
+      );
+  }
+
+  @Action(tagActions.UpdateTagSuccess)
+  updateTagSuccess({patchState}: StateContext<TagStateModel>, action: tagActions.UpdateTagSuccess): void {
+    console.log('TagState updateTagSuccess: ', action)
+  }
+
+  @Action(tagActions.UpdateTagFail)
+  updateTagFail({dispatch}: StateContext<TagStateModel>, action: tagActions.UpdateTagFail): void {
+    // TODO handle error!
+    console.log(action.error)
+  }
+
+  //////////////////////////////////////////////////////////
   //          delete
   //////////////////////////////////////////////////////////
 

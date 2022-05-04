@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '@environments/environment';
-import { Tag } from '@gallery/store/tags/tag.model';
-import { Update } from '@ngrx/entity';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {finalize} from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '@environments/environment';
+import {Tag, TagUpdate} from '@gallery/store/tags/tag.model';
+import {Update} from '@ngrx/entity';
 
 const baseUrl = `${environment.apiUrl}/tags`;
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class TagService {
 
   constructor(private http: HttpClient) {
@@ -22,8 +22,8 @@ export class TagService {
     return this.http.post<Tag>(baseUrl, tag);
   }
 
-  update(update: Update<Tag>): Observable<Update<Tag>> {
-    return this.http.patch<Update<Tag>>(`${baseUrl}/${update.id}`, update);
+  update(id: string, update: TagUpdate): Observable<Tag> {
+    return this.http.patch<Tag>(`${baseUrl}/${id}`, update);
   }
 
   delete(id: string): Observable<any> {

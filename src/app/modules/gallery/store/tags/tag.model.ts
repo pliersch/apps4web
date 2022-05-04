@@ -3,3 +3,7 @@ export interface Tag {
   tagName: string;
   entries: string[];
 }
+
+export interface TagUpdate {
+  entries: string[];
+}

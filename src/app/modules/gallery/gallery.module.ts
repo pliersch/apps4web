@@ -37,7 +37,6 @@ import {TagService} from '@gallery/store/tags/tag.service';
 import {EditTagsComponent} from './components/gallery-explorer/gallery-photo-filter/edit-tags/edit-tags.component';
 import {TabNoHeaderDirective} from './components/gallery-explorer/gallery-photo-filter/tab-no-header.directive';
 import {ShareModule} from '@app/modules/share/share.module';
-import {TagEffects} from '@gallery/store/tags/tag.effects';
 import {tagReducer} from './store/tags/tag.reducer';
 import {
   GalleryFilterExpansionPanelComponent
@@ -56,9 +55,6 @@ import {GalleryEditTagsComponent} from './components/gallery-explorer/gallery-ed
 import {
   MatListRemovePaddingDirective
 } from './components/gallery-explorer/gallery-edit-tags/mat-list-remove-padding.directive';
-import {
-  GalleryEditTagListComponent
-} from './components/gallery-explorer/gallery-edit-tags/gallery-edit-tag-list/gallery-edit-tag-list.component';
 import {NgxsModule} from "@ngxs/store";
 import {PhotoState} from "@gallery/store/photos/photo-state";
 import {ImageControlComponent} from './components/share/image-control/image-control.component';
@@ -69,7 +65,9 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {
   GalleryNewTagCategoryComponent
 } from './components/gallery-explorer/gallery-new-tag-category/gallery-new-tag-category.component';
-import { GalleryEditImageTagsComponent } from './components/gallery-explorer/gallery-edit-image-tags/gallery-edit-image-tags.component';
+import {
+  GalleryEditImageTagsComponent
+} from './components/gallery-explorer/gallery-edit-image-tags/gallery-edit-image-tags.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +92,6 @@ import { GalleryEditImageTagsComponent } from './components/gallery-explorer/gal
     GalleryEditTagDetailComponent,
     GalleryEditTagsComponent,
     MatListRemovePaddingDirective,
-    GalleryEditTagListComponent,
     ImageControlComponent,
     GalleryNewTagCategoryComponent,
     GalleryEditImageTagsComponent,
@@ -112,7 +109,6 @@ import { GalleryEditImageTagsComponent } from './components/gallery-explorer/gal
     // RouterModule.forChild(ROUTES),
     NgxsModule.forFeature([PhotoState, TagState]),
     // StoreRouterConnectingModule.forRoot(),
-    EffectsModule.forFeature([TagEffects]),
     StoreModule.forFeature('photos', photoReducer),
     StoreModule.forFeature('tags', tagReducer),
     MatButtonToggleModule,
