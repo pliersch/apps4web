@@ -30,12 +30,7 @@ import {
 import {
   GalleryTagSelectorComponent
 } from './components/gallery-explorer/gallery-tag-selector/gallery-tag-selector.component';
-import {
-  GalleryPhotoFilterComponent
-} from './components/gallery-explorer/gallery-photo-filter/gallery-photo-filter.component';
 import {TagService} from '@gallery/store/tags/tag.service';
-import {EditTagsComponent} from './components/gallery-explorer/gallery-photo-filter/edit-tags/edit-tags.component';
-import {TabNoHeaderDirective} from './components/gallery-explorer/gallery-photo-filter/tab-no-header.directive';
 import {ShareModule} from '@app/modules/share/share.module';
 import {tagReducer} from './store/tags/tag.reducer';
 import {
@@ -82,9 +77,6 @@ import {
     GalleryHorizontalScrollerComponent,
     GalleryImageGridComponent,
     GalleryTagSelectorComponent,
-    GalleryPhotoFilterComponent,
-    EditTagsComponent,
-    TabNoHeaderDirective,
     GalleryFilterExpansionPanelComponent,
     GalleryImageDetailComponent,
     GalleryImagePlaceholderComponent,
