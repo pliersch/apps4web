@@ -192,7 +192,6 @@ export class PhotoState {
 
   @Action(photoAction.TogglePhotoDownloadAction)
   toggleDownload(ctx: StateContext<PhotoStateModel>, action: photoAction.TogglePhotoDownloadAction): void {
-    console.log('PhotoState toggleDownload: ', action.photo)
     let downloads = ctx.getState().selectedPictures;
     let isDownload = downloads.includes(action.photo);
     ctx.setState(

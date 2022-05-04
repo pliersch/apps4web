@@ -16,9 +16,9 @@
         <app-gallery-star-rating></app-gallery-star-rating>
       </mat-list-item>
     </mat-list>
-    <mat-chip-list *ngIf="currentPhoto" aria-label="Fish selection">
-      <mat-chip [color]="tag === 'David' ? 'primary' : 'accent'" selected
-        *ngFor="let tag of currentPhoto.tags">
+    <mat-chip-list *ngIf="currentPhoto">
+      <mat-chip selected
+                *ngFor="let tag of currentPhoto.tags">
         {{tag}}
       </mat-chip>
     </mat-chip-list>
