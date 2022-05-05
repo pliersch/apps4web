@@ -1,5 +1,7 @@
 import {Photo} from "@gallery/store/photos/photo.model";
 
+const BASE_URL: string = 'http://localhost:3000/images/gallery/';
+
 // export function filterSomeTags(photos: Photo[], tags: string[]): Photo[] {
 //   let result = [];
 //   for (const photo of photos) {
@@ -9,8 +11,6 @@ import {Photo} from "@gallery/store/photos/photo.model";
 //   }
 //   return result;
 // }
-
-const API_URL: string = 'http://localhost:3000/images/gallery/';
 
 export function filterAllTags(photos: Photo[], tags: string[]): Photo[] {
   let result = [];
@@ -24,15 +24,20 @@ export function filterAllTags(photos: Photo[], tags: string[]): Photo[] {
 }
 
 export function getPhotoUrl(fileName: string): string {
-  return API_URL + 'full/' + fileName + '.jpg';
+  // fileName = fileName.slice(0, fileName.lastIndexOf('.') - 1);
+  return BASE_URL + 'full/' + fileName;
 }
 
 export function getPreviewUrl(fileName: string): string {
-  return API_URL + 'thumbs/' + fileName + '-600.webp';
+  return BASE_URL + 'thumbs/' + sliceExtension(fileName) + '-600.webp';
 }
 
 export function getThumbUrl(fileName: string): string {
-  return API_URL + 'thumbs/' + fileName + '-300.webp';
+  return BASE_URL + 'thumbs/' + sliceExtension(fileName) + '-300.webp';
+}
+
+function sliceExtension(fileName: string): string {
+  return fileName.slice(0, fileName.lastIndexOf('.'));
 }
 
 // export function comparePhotos(p1: Photo, p2: Photo): number {
