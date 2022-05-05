@@ -1,6 +1,6 @@
 <div class="image-container" [class.active]="selected">
-
-  <img alt="thumbnail" [id]="photo.fileName" draggable="false" [src]="getThumbUrl(photo.fileName)">
+  <img alt="thumbnail" [id]="photo.fileName" draggable="false" appImgFallback="foo"
+       [src]="getThumbUrl(photo.fileName)">
   <div class="flex-column">
     <button mat-icon-button (click)="onClickDownload()" [class.active]="download"
             aria-label="Example icon-button with menu icon">
