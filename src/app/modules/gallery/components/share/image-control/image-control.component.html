@@ -1,17 +1,14 @@
 <div class="image-container" [class.active]="selected">
-  <img alt="thumbnail" [id]="photo.fileName" draggable="false" appImgFallback="foo"
+  <img alt="thumbnail" [id]="photo.fileName" draggable="false" appImgFallback="bad-solution"
        [src]="getThumbUrl(photo.fileName)">
   <div class="flex-column">
-    <button mat-icon-button (click)="onClickDownload()" [class.active]="download"
-            aria-label="Example icon-button with menu icon">
+    <button mat-icon-button (click)="onClickDownload()" [class.active]="download">
       <mat-icon>download</mat-icon>
     </button>
-    <button mat-icon-button (click)="onClickDownload()"
-            aria-label="Example icon-button with menu icon">
+    <button mat-icon-button (click)="onClickDownload()">
       <mat-icon>edit</mat-icon>
     </button>
-    <button mat-icon-button (click)="onClickDownload()"
-            aria-label="Example icon-button with menu icon">
+    <button mat-icon-button (click)="onClickDownload()">
       <mat-icon>menu</mat-icon>
     </button>
   </div>

@@ -1,16 +1,12 @@
-import {Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {PhotoService} from '@app/core/services/photo.service';
-import {AlertService} from '@app/services/alert.service';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {TagService} from "@gallery/store/tags/tag.service";
-import {Select} from "@ngxs/store";
+import {Select, Store} from "@ngxs/store";
 import {TagState} from "@gallery/store/tags/tag-state";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 import {Tag} from "@gallery/store/tags/tag.model";
-import {COMMA, ENTER} from "@angular/cdk/keycodes";
-import {MatChipInputEvent} from "@angular/material/chips";
-import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
-import {map, startWith} from "rxjs/operators";
+import {LoadTags} from "@gallery/store/tags/tag-action";
+import {AddPhotoAction} from "@gallery/store/photos/photo-actions";
 
 const PLACEHOLDER_URL = 'assets/svg/image-placeholder.svg';
 
@@ -20,39 +16,37 @@ const PLACEHOLDER_URL = 'assets/svg/image-placeholder.svg';
   styleUrls: ['./gallery-upload.component.scss']
 })
 
-export class GalleryUploadComponent {
+export class GalleryUploadComponent implements OnInit {
 
   @ViewChild('fileInput')
   input!: ElementRef;
 
   @Select(TagState.getTags)
   tags$: Observable<Tag[]>;
+  tags: Tag[];
 
-  imgUrl = PLACEHOLDER_URL;
-  imgFile: File | undefined;
+  tagEntries$: Observable<string[]>;
+  selectedTags: string[] = [];
 
-  separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruitCtrl = new FormControl();
-  filteredFruits: Observable<string[]>;
-  fruits: string[] = ['Lemon'];
-  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
-
-  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
-
-  addressForm = this.fb.group({
-    category: [null, Validators.required],
-    tagList: [null, Validators.required]
-  });
+  imgUrls: string[] = [PLACEHOLDER_URL];
+  imgFiles: File[];
+  allCategories: string[] = [];
+  actions: AddPhotoAction[] = [];
 
   constructor(private renderer: Renderer2,
-              private fb: FormBuilder,
               private photoService: PhotoService,
               private tagService: TagService,
-              private alertService: AlertService) {
-    this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
-      startWith(null),
-      map((fruit: string | null) => (fruit ? this._filter(fruit) : this.allFruits.slice())),
-    );
+              private store: Store) {
+  }
+
+  ngOnInit(): void {
+    this.store.dispatch(new LoadTags());
+    this.tags$.subscribe(tags => {
+      this.tags = tags;
+      for (const tag of tags) {
+        this.allCategories.push(tag.tagName);
+      }
+    });
   }
 
   openFile(): void {
@@ -61,76 +55,42 @@ export class GalleryUploadComponent {
   }
 
   onChange(event: Event): void {
-    let inputElement = event.target as HTMLInputElement;
-
-    const reader = new FileReader();
-    reader.onload = (e: any): void => {
-      this.imgUrl = e.target.result;
-    };
-    reader.onerror = (e: any): void => {
-      console.log('File could not be read: ' + reader.error?.code);
-    };
-    if (inputElement.files) {
-      this.imgFile = inputElement.files[0];
-      reader.readAsDataURL(this.imgFile);
+    let files = (event.target as HTMLInputElement).files;
+    if (!files) {
+      return;
+    }
+    this.imgFiles = Array.from(files);
+    for (const file of this.imgFiles) {
+      this.actions.push(new AddPhotoAction(file, this.selectedTags));
+      const reader = new FileReader();
+      reader.onload = (e: any): void => {
+        this.imgUrls.push(e.target.result);
+      };
+      reader.onerror = (e: any): void => {
+        console.log('File could not be read: ' + reader.error?.code);
+      };
+      reader.readAsDataURL(file);
     }
   }
 
   uploadImage(): void {
-    if (this.imgFile) {
-      // const tagsAsString: string = this.addressForm.get('tagList')!.value;
-      this.photoService.create(this.imgFile, this.createTagArray()).subscribe({
-        next: (photo) => {
-          this.alertService.success('Upload ok');
-        },
-        error: (error) => {
-          this.alertService.error('Upload fehlgeschlagen');
-        }
-      });
+    if (this.imgFiles) {
+      this.store.dispatch(this.actions);
     }
   }
 
-  createTagArray(): string[] {
-    const txt: string = this.addressForm.get('tagList')!.value;
-    const entries: string[] = txt.split(',');
-    const result: string[] = [];
-    entries.forEach(entry => {
-      result.push(entry.trim());
-    });
-    return result;
+  onCategorySelect(tag: Tag): void {
+    this.tagEntries$ = of(tag.entries);
   }
 
-  add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
-
-    // Add our fruit
-    if (value) {
-      this.fruits.push(value);
-    }
-
-    // Clear the input value
-    event.chipInput!.clear();
-
-    this.fruitCtrl.setValue(null);
+  isSelected(tag: string): boolean {
+    return this.selectedTags.includes(tag);
   }
 
-  remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
-
-    if (index >= 0) {
-      this.fruits.splice(index, 1);
-    }
+  onSelectChip(tag: string): void {
+    this.selectedTags.includes(tag) ?
+      this.selectedTags = this.selectedTags.filter(item => item !== tag) :
+      this.selectedTags.push(tag);
   }
 
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push(event.option.viewValue);
-    this.fruitInput.nativeElement.value = '';
-    this.fruitCtrl.setValue(null);
-  }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.allFruits.filter(fruit => fruit.toLowerCase().includes(filterValue));
-  }
 }

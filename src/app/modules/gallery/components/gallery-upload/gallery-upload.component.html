@@ -1,65 +1,54 @@
-<form [formGroup]="addressForm" novalidate>
+<form novalidate>
   <mat-card class="card-size-l component">
     <mat-card-header class="card-no-avatar-margin-fix">
       <mat-card-title>Image Upload</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="example-chip-list" appearance="fill">
-            <mat-label>Favorite Fruits</mat-label>
-            <mat-chip-list #chipList aria-label="Fruit selection">
-              <mat-chip
-                *ngFor="let fruit of fruits"
-                (removed)="remove(fruit)">
-                {{fruit}}
-                <button matChipRemove>
-                  <mat-icon>cancel</mat-icon>
-                </button>
-              </mat-chip>
-              <input
-                placeholder="New category..."
-                #fruitInput
-                [formControl]="fruitCtrl"
-                [matAutocomplete]="auto"
-                [matChipInputFor]="chipList"
-                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                (matChipInputTokenEnd)="add($event)">
-            </mat-chip-list>
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-              <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
-                {{fruit}}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput formControlName="category"
-                   placeholder="Category Name like: Persons" autocomplete="off">
-            <mat-error *ngIf="addressForm.controls['category'].hasError('required')">
-              Category Name is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput formControlName="tagList"
-                   placeholder="Tag Names like: Peter, Paul, Mary" autocomplete="off">
-            <mat-error *ngIf="addressForm.controls['tagList'].hasError('required')">
-              Tag name is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
+      <div class="flex-row">
+        <div class="flex-column">
+          <div class="flex-row">
+            <div class="flex-column">
+              <div style="width: auto; height: 300px;">
+                <ng-scrollbar class="dark-scrollbar" [autoWidthDisabled]="false"
+                              track="vertical" visibility="always">
+                  <mat-selection-list appNoPaddingTop multiple="false">
+                    <mat-list-option *ngFor="let tag of tags$ | async; let i = index"
+                                     [value]="tag" (click)="onCategorySelect(tag)">
+                      {{tag.tagName}}
+                    </mat-list-option>
+                  </mat-selection-list>
+                </ng-scrollbar>
+              </div>
+            </div>
+            <mat-divider [vertical]="true"></mat-divider>
+            <div class="chiplist-container">
+              <mat-chip-list>
+                <mat-chip [class.active]="isSelected(tag)"
+                          *ngFor="let tag of tagEntries$ | async"
+                          (click)="onSelectChip(tag)">
+                  {{tag}}
+                  <mat-icon [class.active]="isSelected(tag)">check_circle</mat-icon>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </div>
         </div>
-        <div class="col">
-          <img class="example-header-image" [src]="imgUrl">
+        <div class="flex-column">
+          <div class="flex-row">
+            <img class="example-header-image" *ngFor="let url of imgUrls" [src]="url" alt="upload preview">
+          </div>
         </div>
       </div>
+
     </mat-card-content>
     <mat-card-actions>
-      <button *ngIf="imgFile === undefined" mat-raised-button color="primary"
+      <button *ngIf="imgFiles === undefined" mat-raised-button color="primary"
               type="button" (click)="openFile()">Open
       </button>
-      <button *ngIf="imgFile !== undefined" mat-raised-button color="primary"
-              (click)="uploadImage()">Upload
+      <button *ngIf="imgFiles !== undefined" mat-raised-button color="primary"
+              type="button" (click)="uploadImage()">Upload
       </button>
     </mat-card-actions>
   </mat-card>
-  <input #fileInput style="display: none" type="file" (change)="onChange($event)" accept="image/*">
+  <input #fileInput style="display: none" type="file" (change)="onChange($event)" multiple accept="image/*">
 </form>

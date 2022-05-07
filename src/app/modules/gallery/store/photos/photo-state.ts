@@ -8,6 +8,7 @@ import {Photo} from "@gallery/store/photos/photo.model";
 import {insertItem, patch, removeItem, updateItem} from "@ngxs/store/operators";
 import {filterAllTags} from "@gallery/store/photos/photo.tools";
 import {TagState} from "@gallery/store/tags/tag-state";
+import {AlertService} from "@app/services";
 
 export interface PhotoStateModel {
   photos: Photo[];
@@ -72,7 +73,8 @@ export class PhotoState {
   //   return (photo: Photo) => state.downloads.includes(photo);
   // }
 
-  constructor(private photoService: PhotoService) {
+  constructor(private photoService: PhotoService,
+              private alertService: AlertService) {
   }
 
   //////////////////////////////////////////////////////////
@@ -119,25 +121,22 @@ export class PhotoState {
   //          add
   //////////////////////////////////////////////////////////
 
-  // FIXME wrong actions!!! LoadPhotosSuccessAction LoadPhotosFailAction
-
   @Action(photoAction.AddPhotoAction)
   addPhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoAction): Observable<Subscription> {
-    return this.photoService.getAll()
-      .pipe(
-        map((photos: Photo[]) =>
+    return this.photoService.create(action.photo, action.tags).pipe(
+      map((photo: Photo) =>
+        asapScheduler.schedule(() =>
+          ctx.dispatch(new photoAction.AddPhotoSuccessAction(photo))
+        )
+      ),
+      catchError(error =>
+        of(
           asapScheduler.schedule(() =>
-            ctx.dispatch(new photoAction.LoadPhotosSuccessAction(photos))
-          )
-        ),
-        catchError(error =>
-          of(
-            asapScheduler.schedule(() =>
-              ctx.dispatch(new photoAction.LoadPhotosFailAction(error))
-            )
+            ctx.dispatch(new photoAction.AddPhotoFailAction(error))
           )
         )
-      );
+      )
+    );
   }
 
   @Action(photoAction.AddPhotoSuccessAction)
@@ -149,13 +148,13 @@ export class PhotoState {
         action.photo,
       ], loaded: true, loading: false
     });
+    this.alertService.success('Upload success');
   }
 
   @Action(photoAction.AddPhotoFailAction)
   addPhotoFail(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoFailAction): void {
-    // TODO handle error!
-    console.log(action.error)
     ctx.dispatch({loaded: false, loading: false});
+    this.alertService.error('Upload fail');
   }
 
   //////////////////////////////////////////////////////////

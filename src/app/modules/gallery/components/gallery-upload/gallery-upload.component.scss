@@ -12,11 +12,6 @@
   width: 100%;
 }
 
-.row {
-  display: flex;
-  flex-direction: row;
-}
-
 .col {
   //flex: 1;
   margin-right: 20px;
@@ -31,10 +26,36 @@ mat-form-field {
 }
 
 mat-card {
-  //width: fit-content;
-  width: 550px;
+  width: fit-content;
+  //width: 550px;
 }
 
 .example-chip-list {
   width: 100%;
+}
+
+.select svg {
+  fill: white;
+}
+
+.chiplist-container {
+  width: 400px;
+}
+
+mat-chip {
+  &.active {
+    background-color: green;
+  }
+}
+
+.mat-icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  margin-left: 8px;
+  margin-right: 0;
+
+  &.active {
+    opacity: 1;
+  }
 }

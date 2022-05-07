@@ -4,7 +4,7 @@
       <app-chat-toolbar (filterUserEvent)="filterByUser($event)"></app-chat-toolbar>
     </div>
     <div class="chat-container">
-      <div class="flex-column height100">
+      <div class="flex-column-max-height">
         <ng-scrollbar>
           <app-chat-messages (scroll)="onScroll($event)" [messages]="messages"
                              (imageLoadEvent)="scrollToEnd()"></app-chat-messages>

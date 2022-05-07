@@ -25,14 +25,13 @@ export class LoadPhotosFailAction {
 export class AddPhotoAction {
   static readonly type = '[Gallery] Add Photo';
 
-  constructor(public photo: string) { }
+  constructor(public photo: File, public tags: string[]) { }
 }
 
 export class AddPhotoSuccessAction {
   static readonly type = '[Gallery] Add Photo success';
 
-  constructor(public photo: Photo) {
-  }
+  constructor(public photo: Photo) { }
 }
 
 export class AddPhotoFailAction {
@@ -147,8 +146,7 @@ export class AddTagToPictureFail {
 export class RemoveTagFromPicture {
   static readonly type = '[Gallery] Remove Tag From Picture';
 
-  constructor(public photo: Photo,
-              public tag: string) {
+  constructor(public photo: Photo, public tag: string) {
   }
 }
 
