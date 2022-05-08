@@ -6,6 +6,7 @@ export function initTheme(store: Store): () => Promise<unknown> {
   return () => {
     return new Promise<void>((resolve, reject) => {
       let item = localStorage.getItem('theme') || Themes.Dark;
+      console.log('initTheme : ',)
       store.dispatch(new ToggleAction({theme: item}));
       resolve();
     });

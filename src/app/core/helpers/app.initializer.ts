@@ -10,6 +10,7 @@ export function initApplication(store: Store<AppState>,
                                 authService: SocialAuthService,
                                 userService: UserService): () => Promise<unknown> {
   return () => new Promise(resolve => {
+    console.log('initApplication : ',)
     authService.authState.subscribe((authUser) => {
         if (authUser) {
           userService.login(createUserByAuth(authUser)).subscribe((user) => {
