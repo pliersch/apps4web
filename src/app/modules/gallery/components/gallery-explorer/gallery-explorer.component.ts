@@ -7,6 +7,7 @@ import {Action, ActionProvider} from "@app/models/actions";
 import {ActionBarService} from "@app/services/action-bar.service";
 import {saveAs} from 'file-saver';
 import {
+  DeletePhotoAction,
   DeselectAllPhotosAction,
   SelectAllPhotosAction,
   SelectManyPhotosAction,
@@ -111,6 +112,10 @@ export class GalleryExplorerComponent implements OnInit, OnDestroy, ActionProvid
     this.store.dispatch(new TogglePhotoDownloadAction($event));
   }
 
+  onSelectForDelete($event: Photo): void {
+    this.store.dispatch(new DeletePhotoAction($event.id));
+  }
+
   isSelected(photo: Photo): boolean {
     return this.selection.includes(photo);
   }
@@ -140,9 +145,9 @@ export class GalleryExplorerComponent implements OnInit, OnDestroy, ActionProvid
 
   private editTags(): void {
     let dialogRef = this.dialog.open(GalleryEditImageTagsComponent, {
-      // minWidth: '600px',
       data: {tags: this.computeAvailableTagsOfPictures()},
       width: '800px',
+      // minWidth: '600px',
       // minHeight: '400px',
       // maxHeight: '600px',
       restoreFocus: false,

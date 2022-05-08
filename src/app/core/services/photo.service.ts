@@ -2,9 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '@environments/environment';
-import {Photo} from '@gallery/store/photos/photo.model';
-import {Update} from "@ngrx/entity";
-import {Tag} from "@gallery/store/tags/tag.model";
+import {Photo, PhotoUpdate} from '@gallery/store/photos/photo.model';
 
 const PICTURE_BASE_URL = `${environment.apiUrl}/photos`;
 const DOWNLOAD_BASE_URL = `${environment.apiUrl}/download`;
@@ -42,12 +40,8 @@ export class PhotoService {
     return this.http.patch<string[]>(`${PICTURE_BASE_URL}/${id}`, dto);
   }
 
-  delete(id: string): Observable<any> {
-    throw new Error('PhotoService#delete not implemented');
-    // return this.http.delete(`${baseUrl}/${id}`).pipe(
-    //   finalize(() => {
-    //   })
-    // );
+  delete(id: string): Observable<PhotoUpdate> {
+    return this.http.delete<PhotoUpdate>(`${PICTURE_BASE_URL}/${id}`);
   }
 
   download(photos: Photo[]): Observable<any> {
@@ -55,7 +49,6 @@ export class PhotoService {
     for (const photo of photos) {
       fileNames.push(photo.fileName);
     }
-    console.log('PhotoService download: ',)
     const stringify = JSON.stringify(fileNames);
     // const options = {headers: {'Content-Type': 'application/json'}};
     return this.http.post(DOWNLOAD_BASE_URL, stringify, {

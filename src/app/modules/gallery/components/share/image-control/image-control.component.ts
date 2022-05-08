@@ -21,6 +21,9 @@ export class ImageControlComponent {
   @Output()
   downloadEvent = new EventEmitter<Photo>();
 
+  @Output()
+  deleteEvent = new EventEmitter<Photo>();
+
   constructor() {
   }
 
@@ -30,5 +33,13 @@ export class ImageControlComponent {
 
   getThumbUrl(fileName: string): string {
     return getThumbUrl(fileName);
+  }
+
+  onClickEdit(): void {
+
+  }
+
+  onClickDelete(): void {
+    this.deleteEvent.emit(this.photo);
   }
 }

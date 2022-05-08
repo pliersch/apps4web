@@ -85,13 +85,27 @@ export class TogglePhotoDownloadAction {
   constructor(public photo: Photo) { }
 }
 
-//
+// delete
 
 export class DeletePhotoAction {
   static readonly type = '[Gallery] Delete Photo';
 
-  constructor(public photo: string) { }
+  constructor(public id: string) { }
 }
+
+export class DeletePhotoSuccessAction {
+  static readonly type = '[Gallery] Delete Photo success';
+
+  constructor(public photoUpdate: PhotoUpdate) { }
+}
+
+export class DeletePhotoFailAction {
+  static readonly type = '[Gallery] Delete Photo fail';
+
+  constructor(public error: any) { }
+}
+
+// update
 
 export class UpdatePhotoAction {
   static readonly type = '[Gallery] Update Photo';

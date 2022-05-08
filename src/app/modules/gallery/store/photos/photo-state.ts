@@ -1,10 +1,10 @@
 import {Action, Selector, State, StateContext} from "@ngxs/store";
 import {Injectable} from "@angular/core";
 import {PhotoService} from "@app/core/services/photo.service";
-import {catchError, map} from "rxjs/operators";
+import {catchError, map, tap} from "rxjs/operators";
 import {asapScheduler, Observable, of, Subscription} from "rxjs";
 import * as photoAction from "@gallery/store/photos/photo-actions";
-import {Photo} from "@gallery/store/photos/photo.model";
+import {Photo, PhotoUpdate} from "@gallery/store/photos/photo.model";
 import {insertItem, patch, removeItem, updateItem} from "@ngxs/store/operators";
 import {filterAllTags} from "@gallery/store/photos/photo.tools";
 import {TagState} from "@gallery/store/tags/tag-state";
@@ -155,6 +155,44 @@ export class PhotoState {
   addPhotoFail(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoFailAction): void {
     ctx.dispatch({loaded: false, loading: false});
     this.alertService.error('Upload fail');
+  }
+
+  //////////////////////////////////////////////////////////
+  //          delete
+  //////////////////////////////////////////////////////////
+
+  @Action(photoAction.DeletePhotoAction)
+  deletePhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhotoAction): Observable<Subscription> {
+    return this.photoService.delete(action.id).pipe(
+      // tap(console.log(action)),
+      map((update: PhotoUpdate) =>
+        asapScheduler.schedule(() =>
+          ctx.dispatch(new photoAction.DeletePhotoSuccessAction(update))
+        )
+      ),
+      catchError(error =>
+        of(
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new photoAction.DeletePhotoFailAction(error))
+          )
+        )
+      )
+    );
+  }
+
+  @Action(photoAction.DeletePhotoSuccessAction)
+  deletePhotoSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhotoSuccessAction): void {
+    ctx.setState(
+      patch({
+        photos: removeItem<Photo>(photo => photo!.id === action.photoUpdate.id)
+      })
+    );
+  }
+
+  @Action(photoAction.DeletePhotoFailAction)
+  deletePhotoFail(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhotoFailAction): void {
+    console.log(action.error)
+    this.alertService.error('Delete fail');
   }
 
   //////////////////////////////////////////////////////////
