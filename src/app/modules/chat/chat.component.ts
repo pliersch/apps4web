@@ -45,7 +45,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
   private content = '';
   userFilter = '';
 
-  showPreview = true;
+  showPreview = false;
   fileList: FileList;
 
   @ViewChild(ChatToolbarComponent)

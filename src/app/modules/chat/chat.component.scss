@@ -1,13 +1,3 @@
-.wrapper {
-  height: 100%;
-}
-
-@media (max-width: 480px) {
-  .chat-container .content {
-    max-width: 60%;
-  }
-}
-
 .grid {
   display: grid;
   width: 100%;
@@ -24,10 +14,10 @@
 }
 
 .chat-container {
-  position: relative;
-  box-sizing: border-box;
+  //position: relative;
+  //box-sizing: border-box;
   padding: 10px;
-  overflow-y: auto;
+  //overflow-y: auto;
   grid-area: messages;
 }
 
@@ -35,6 +25,12 @@
   /*margin: 6px;*/
   //background-color: var(--v-background_primary-lighten2);
   grid-area: input;
+}
+
+@media (max-width: 480px) {
+  .chat-container .content {
+    max-width: 60%;
+  }
 }
 
 .no-outline {
