@@ -7,7 +7,7 @@ import * as photoAction from "@gallery/store/photos/photo-actions";
 import {Photo, PhotoUpdate} from "@gallery/store/photos/photo.model";
 import {insertItem, patch, removeItem, updateItem} from "@ngxs/store/operators";
 import {filterAllTags} from "@gallery/store/photos/photo.tools";
-import {TagState} from "@gallery/store/tags/tag-state";
+import {TagState} from "@gallery/store/tags/tag.state";
 import {AlertService} from "@app/services";
 
 export interface PhotoStateModel {

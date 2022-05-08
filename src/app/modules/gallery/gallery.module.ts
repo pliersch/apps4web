@@ -32,7 +32,6 @@ import {
 } from './components/gallery-explorer/gallery-tag-selector/gallery-tag-selector.component';
 import {TagService} from '@gallery/store/tags/tag.service';
 import {ShareModule} from '@app/modules/share/share.module';
-import {tagReducer} from './store/tags/tag.reducer';
 import {
   GalleryFilterExpansionPanelComponent
 } from './components/gallery-explorer/gallery-filter-expansion-panel/gallery-filter-expansion-panel.component';
@@ -55,7 +54,7 @@ import {PhotoState} from "@gallery/store/photos/photo-state";
 import {ImageControlComponent} from './components/share/image-control/image-control.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {ActionBarModule} from "@modules/action-bar/action-bar.module";
-import {TagState} from "@gallery/store/tags/tag-state";
+import {TagState} from "@gallery/store/tags/tag.state";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {
   GalleryNewTagCategoryComponent
@@ -102,7 +101,6 @@ import {
     NgxsModule.forFeature([PhotoState, TagState]),
     // StoreRouterConnectingModule.forRoot(),
     StoreModule.forFeature('photos', photoReducer),
-    StoreModule.forFeature('tags', tagReducer),
     MatButtonToggleModule,
     ActionBarModule,
     MatSlideToggleModule,

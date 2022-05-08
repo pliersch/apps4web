@@ -2,13 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Tag} from '@gallery/store/tags/tag.model';
 import {Select, Store} from '@ngxs/store';
-import {addTag} from '@gallery/store/tags/tag.actions';
 import {MatDialog} from '@angular/material/dialog';
 import {
   GalleryEditTagsComponent
 } from '@gallery/components/gallery-explorer/gallery-edit-tags/gallery-edit-tags.component';
-import {TagState} from "@gallery/store/tags/tag-state";
-import {AddTagFilter, LoadTags, RemoveTagFilter} from "@gallery/store/tags/tag-action";
+import {TagState} from "@gallery/store/tags/tag.state";
+import {AddTagFilter, LoadTags, RemoveTagFilter} from "@gallery/store/tags/tag.action";
 import {
   GalleryNewTagCategoryComponent
 } from "@gallery/components/gallery-explorer/gallery-new-tag-category/gallery-new-tag-category.component";

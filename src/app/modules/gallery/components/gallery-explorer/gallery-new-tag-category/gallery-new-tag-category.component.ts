@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
 import {Store} from "@ngxs/store";
-import {AddTag} from "@gallery/store/tags/tag-action";
+import {AddTag} from "@gallery/store/tags/tag.action";
 import {Tag} from "@gallery/store/tags/tag.model";
 
 @Component({

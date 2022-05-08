@@ -8,8 +8,8 @@ import {
 import {MatSelectionList} from '@angular/material/list';
 import {arrayUtil} from '@app/util/array-utils';
 import {Select, Store} from "@ngxs/store";
-import {TagState} from "@gallery/store/tags/tag-state";
-import {DeleteTag, UpdateTag} from "@gallery/store/tags/tag-action";
+import {TagState} from "@gallery/store/tags/tag.state";
+import {DeleteTag, UpdateTag} from "@gallery/store/tags/tag.action";
 
 @Component({
   selector: 'app-gallery-edit-tags',
