@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Photo} from '@gallery/store/photos/photo.model';
 import {Select, Store} from '@ngxs/store';
 import {Observable} from 'rxjs';
-import {PhotoState} from "@gallery/store/photos/photo-state";
+import {PhotoState} from "@gallery/store/photos/photo.state";
 import {Action, ActionProvider} from "@app/models/actions";
 import {ActionBarService} from "@app/services/action-bar.service";
 import {saveAs} from 'file-saver';
@@ -14,7 +14,7 @@ import {
   SetTagsOfPicture,
   TogglePhotoDownloadAction,
   TogglePhotosDownloadAction
-} from "@gallery/store/photos/photo-actions";
+} from "@gallery/store/photos/photo.actions";
 import {AreaSelection, AreaSelectionHandler} from "@gallery/components/gallery-explorer/area-selection";
 import {PhotoService} from "@app/core/services/photo.service";
 import {

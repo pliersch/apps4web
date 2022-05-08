@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Photo} from '@gallery/store/photos/photo.model';
 import {Observable} from 'rxjs';
-import {PhotoState} from '@gallery/store/photos/photo-state';
+import {PhotoState} from '@gallery/store/photos/photo.state';
 import {Select, Store} from "@ngxs/store";
 import {getPhotoUrl} from "@gallery/store/photos/photo.tools";
 

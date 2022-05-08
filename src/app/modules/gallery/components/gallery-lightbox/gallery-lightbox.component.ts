@@ -8,7 +8,7 @@ import {
 } from '@gallery/components/gallery-horizontal-scroller/gallery-horizontal-scroller.component';
 import {AlertService} from '@app/services/alert.service';
 import {Photo} from '@gallery/store/photos/photo.model';
-import {ClearPhotoSelectionAction} from "@gallery/store/photos/photo-actions";
+import {ClearPhotoSelectionAction} from "@gallery/store/photos/photo.actions";
 import {ActionBarService} from "@app/services/action-bar.service";
 import {Action, ActionProvider} from "@app/models/actions";
 

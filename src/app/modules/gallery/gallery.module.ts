@@ -13,9 +13,6 @@ import {GalleryExplorerComponent} from './components/gallery-explorer/gallery-ex
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {GalleryHomeComponent} from './components/gallery-home/gallery-home.component';
 import {GalleryUploadComponent} from './components/gallery-upload/gallery-upload.component';
-import {StoreModule} from '@ngrx/store';
-import {EffectsModule} from '@ngrx/effects';
-import {photoReducer} from './store/photos/photo.reducer';
 import {PhotoService} from '@app/core/services/photo.service';
 import {GalleryLightboxComponent} from '@gallery/components/gallery-lightbox/gallery-lightbox.component';
 import {
@@ -50,7 +47,7 @@ import {
   MatListRemovePaddingDirective
 } from './components/gallery-explorer/gallery-edit-tags/mat-list-remove-padding.directive';
 import {NgxsModule} from "@ngxs/store";
-import {PhotoState} from "@gallery/store/photos/photo-state";
+import {PhotoState} from "@gallery/store/photos/photo.state";
 import {ImageControlComponent} from './components/share/image-control/image-control.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {ActionBarModule} from "@modules/action-bar/action-bar.module";
@@ -100,7 +97,6 @@ import {
     // RouterModule.forChild(ROUTES),
     NgxsModule.forFeature([PhotoState, TagState]),
     // StoreRouterConnectingModule.forRoot(),
-    StoreModule.forFeature('photos', photoReducer),
     MatButtonToggleModule,
     ActionBarModule,
     MatSlideToggleModule,

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Store} from "@ngxs/store";
-import {LoadPhotosAction} from "@gallery/store/photos/photo-actions";
+import {LoadPhotosAction} from "@gallery/store/photos/photo.actions";
 import {Router} from "@angular/router";
 import {Location} from "@angular/common";
 

@@ -6,7 +6,7 @@ import {TagState} from "@gallery/store/tags/tag.state";
 import {Observable, of} from "rxjs";
 import {Tag} from "@gallery/store/tags/tag.model";
 import {LoadTags} from "@gallery/store/tags/tag.action";
-import {AddPhotoAction} from "@gallery/store/photos/photo-actions";
+import {AddPhotoAction} from "@gallery/store/photos/photo.actions";
 
 const PLACEHOLDER_URL = 'assets/svg/image-placeholder.svg';
 
