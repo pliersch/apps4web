@@ -7,10 +7,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AuthLayoutComponent} from "./layouts/auth-layout/auth-layout.component";
 import {DefaultLayoutComponent} from "./layouts/default-layout/default-layout.component";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-
-import {Store} from '@ngrx/store';
-import {NgxsModule, Store as NgxsStore} from '@ngxs/store';
-import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {NgxsModule, Store} from '@ngxs/store';
 
 import {
   GoogleLoginProvider,
@@ -33,7 +30,6 @@ import {MaterialModule} from "@app/shared/material/material.module";
 import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
 import {AuthState} from "@app/modules/user-managaer/store/auth-state";
 import {ThemeState} from "@modules/themes/stores/theme-state";
-import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {WasteCalendarModule} from "@modules/waste-calendar/waste-calendar.module";
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
 import {DateFnsAdapter, MAT_DATE_FNS_FORMATS} from "@angular/material-date-fns-adapter";
@@ -69,10 +65,6 @@ import {UserService} from "@modules/user-managaer/services/user.service";
     NgxsModule.forRoot([AuthState, ThemeState], {developmentMode: !environment.production}),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     // NgxsLoggerPluginModule.forRoot(),
-    // @ts-ignore
-    StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
-    MatButtonToggleModule,
     WasteCalendarModule
   ],
   exports: [],
@@ -103,7 +95,7 @@ import {UserService} from "@modules/user-managaer/services/user.service";
     },
     {
       provide: APP_INITIALIZER, useFactory: initTheme, multi: true, deps: [
-        NgxsStore
+        Store
       ]
     },
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

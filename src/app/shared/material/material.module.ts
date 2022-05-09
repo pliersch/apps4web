@@ -21,6 +21,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 @NgModule({
   declarations: [],
@@ -29,6 +30,7 @@ import {MatDialogModule} from "@angular/material/dialog";
   ],
   exports: [
     MatAutocompleteModule,
+    MatButtonToggleModule,
     MatChipsModule,
     MatDialogModule,
     MatExpansionModule,

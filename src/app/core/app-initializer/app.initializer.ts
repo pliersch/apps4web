@@ -1,6 +1,4 @@
 import {SocialAuthService, SocialUser} from '@abacritt/angularx-social-login';
-import {Store} from '@ngrx/store';
-import {FinishAppInitializer, StartAppInitializer} from '@app/stores/app/app.store.actions';
 import {filter, take} from 'rxjs/operators';
 
 
