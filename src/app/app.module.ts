@@ -8,12 +8,9 @@ import {AuthLayoutComponent} from "./layouts/auth-layout/auth-layout.component";
 import {DefaultLayoutComponent} from "./layouts/default-layout/default-layout.component";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 
-import {Store, StoreModule} from '@ngrx/store';
+import {Store} from '@ngrx/store';
 import {NgxsModule, Store as NgxsStore} from '@ngxs/store';
-import {LoaderEffect} from '@app/stores/app/app.store.loader.effect';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {EffectsModule} from '@ngrx/effects';
-import {appStateReducer} from '@app/stores/app/app.store.reducer';
 
 import {
   GoogleLoginProvider,
@@ -21,7 +18,6 @@ import {
   SocialAuthServiceConfig,
   SocialLoginModule
 } from "@abacritt/angularx-social-login";
-import {UserService} from "@app/services";
 import {NgScrollbarModule} from "ngx-scrollbar";
 import {GlobalErrorHandler} from "@app/core/helpers/global-error-handler";
 import {environment} from "@environments/environment";
@@ -35,7 +31,7 @@ import {LegalNoticeComponent} from "@modules/legal-notice/legal-notice.component
 import {AccountModule} from "@modules/account/account.module";
 import {MaterialModule} from "@app/shared/material/material.module";
 import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
-import {AuthState} from "@app/stores/auth/auth-state";
+import {AuthState} from "@app/modules/user-managaer/store/auth-state";
 import {ThemeState} from "@modules/themes/stores/theme-state";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {WasteCalendarModule} from "@modules/waste-calendar/waste-calendar.module";
@@ -45,6 +41,7 @@ import {initTheme} from "@app/core/app-initializer/theme.initializer";
 import {initApplication} from "@app/core/app-initializer/app.initializer";
 import {JwtInterceptor} from "@app/core/helpers/jwt.interceptor";
 import {ErrorInterceptor} from "@app/core/helpers/error.interceptor";
+import {UserService} from "@modules/user-managaer/services/user.service";
 
 @NgModule({
   declarations: [
@@ -73,8 +70,6 @@ import {ErrorInterceptor} from "@app/core/helpers/error.interceptor";
     NgxsReduxDevtoolsPluginModule.forRoot(),
     // NgxsLoggerPluginModule.forRoot(),
     // @ts-ignore
-    StoreModule.forRoot({appState: appStateReducer}),
-    EffectsModule.forRoot([LoaderEffect]),
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     MatButtonToggleModule,
@@ -104,10 +99,7 @@ import {ErrorInterceptor} from "@app/core/helpers/error.interceptor";
     },
     {provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS},
     {
-      provide: APP_INITIALIZER, useFactory: initApplication, multi: true, deps: [
-        [new Inject(Store)],
-        SocialAuthService,
-        UserService]
+      provide: APP_INITIALIZER, useFactory: initApplication, multi: true
     },
     {
       provide: APP_INITIALIZER, useFactory: initTheme, multi: true, deps: [

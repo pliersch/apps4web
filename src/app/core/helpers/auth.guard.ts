@@ -3,9 +3,9 @@ import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '
 
 import {SocialAuthService} from '@abacritt/angularx-social-login';
 import {AccountService} from "@modules/account/services/account.service";
-import {AuthService} from "@app/stores/auth/auth-service";
 import {Store} from "@ngxs/store";
-import {AuthState} from "@app/stores/auth/auth-state";
+import {AuthService} from "@modules/user-managaer/services/auth.service";
+import {AuthState} from "@modules/user-managaer/store/auth-state";
 
 @Injectable({providedIn: 'root'})
 export class AuthGuard implements CanActivate {

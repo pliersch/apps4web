@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { environment } from '@environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
-import {User} from "@app/models/user";
+import {Injectable} from '@angular/core';
+import {environment} from '@environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {finalize} from 'rxjs/operators';
+import {User} from "@modules/user-managaer/store/user";
 
 const baseUrl = `${environment.apiUrl}/users`;
 

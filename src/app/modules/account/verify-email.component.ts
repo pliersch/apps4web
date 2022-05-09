@@ -1,8 +1,8 @@
-﻿import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { first } from 'rxjs/operators';
+﻿import {Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
+import {first} from 'rxjs/operators';
 
-import { AlertService } from '@app/services';
+import {AlertService} from "@app/services/alert.service";
 import {AccountService} from "@modules/account/services/account.service";
 
 enum EmailStatus {
@@ -10,7 +10,7 @@ enum EmailStatus {
   Failed
 }
 
-@Component({ templateUrl: 'verify-email.component.html' })
+@Component({templateUrl: 'verify-email.component.html'})
 export class VerifyEmailComponent implements OnInit {
   EmailStatus = EmailStatus;
   emailStatus = EmailStatus.Verifying;
@@ -26,7 +26,7 @@ export class VerifyEmailComponent implements OnInit {
     const token = this.route.snapshot.queryParams.token;
 
     // remove token from url to prevent http referer leakage
-    this.router.navigate([], { relativeTo: this.route, replaceUrl: true });
+    this.router.navigate([], {relativeTo: this.route, replaceUrl: true});
 
     this.accountService
       .verifyEmail(token)
@@ -34,7 +34,7 @@ export class VerifyEmailComponent implements OnInit {
       .subscribe({
         next: () => {
           this.alertService.success('Verification successful, you can now login');
-          this.router.navigate(['../login'], { relativeTo: this.route });
+          this.router.navigate(['../login'], {relativeTo: this.route});
         },
         error: () => {
           this.emailStatus = EmailStatus.Failed;

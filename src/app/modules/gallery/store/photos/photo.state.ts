@@ -8,7 +8,7 @@ import {Photo, PhotoUpdate} from "@gallery/store/photos/photo.model";
 import {insertItem, patch, removeItem, updateItem} from "@ngxs/store/operators";
 import {filterAllTags} from "@gallery/store/photos/photo.tools";
 import {TagState} from "@gallery/store/tags/tag.state";
-import {AlertService} from "@app/services";
+import {AlertService} from "@app/services/alert.service";
 
 export interface PhotoStateModel {
   photos: Photo[];
@@ -23,7 +23,7 @@ export interface PhotoStateModel {
 }
 
 @State<PhotoStateModel>({
-  name: 'gallery',
+  name: 'gallery', // todo maybe photos?
   defaults: {
     photos: [],
     selectedPictures: [],
@@ -50,12 +50,12 @@ export class PhotoState {
     return state.photos.filter(photo => photo.isSelected);
   }
 
-  @Selector(/*[PhotoState]*/)
+  @Selector()
   static getSelectedPictures(state: PhotoStateModel): Photo[] {
     return state.selectedPictures;
   }
 
-  // @Selector(/*[PhotoState]*/)
+  // @Selector()
   // static getDownloads(state: PhotoStateModel): Photo[] {
   //   return state.photos.filter(photo => photo.download);
   // }

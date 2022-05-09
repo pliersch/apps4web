@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {ChatToolbarComponent} from "@modules/chat/chat-toolbar/chat-toolbar.component";
-import {EventBusService, EventData} from "@app/services";
 import {Select, Store} from "@ngxs/store";
 import {LoadChat, MessagesFilter, SendMessage} from "@modules/chat/store/chat.actions";
 import {Message} from "@modules/chat/models/message";
@@ -13,6 +12,7 @@ import {animate, style, transition, trigger} from "@angular/animations";
 import {ViewportScroller} from "@angular/common";
 import {NgScrollbar} from "ngx-scrollbar";
 import {ChatImage} from "@modules/chat/models/chat-image";
+import {EventBusService, EventData} from "@app/services/event-bus.service";
 
 @Component({
   selector: 'app-chat',
