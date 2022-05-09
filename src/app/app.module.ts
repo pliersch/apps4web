@@ -22,7 +22,6 @@ import {
   SocialLoginModule
 } from "@abacritt/angularx-social-login";
 import {UserService} from "@app/services";
-import {ErrorInterceptor, initApplication, JwtInterceptor} from "@app/core/helpers";
 import {NgScrollbarModule} from "ngx-scrollbar";
 import {GlobalErrorHandler} from "@app/core/helpers/global-error-handler";
 import {environment} from "@environments/environment";
@@ -38,11 +37,14 @@ import {MaterialModule} from "@app/shared/material/material.module";
 import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
 import {AuthState} from "@app/stores/auth/auth-state";
 import {ThemeState} from "@modules/themes/stores/theme-state";
-import {initTheme} from "@app/core/helpers/theme.initializer";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {WasteCalendarModule} from "@modules/waste-calendar/waste-calendar.module";
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
 import {DateFnsAdapter, MAT_DATE_FNS_FORMATS} from "@angular/material-date-fns-adapter";
+import {initTheme} from "@app/core/app-initializer/theme.initializer";
+import {initApplication} from "@app/core/app-initializer/app.initializer";
+import {JwtInterceptor} from "@app/core/helpers/jwt.interceptor";
+import {ErrorInterceptor} from "@app/core/helpers/error.interceptor";
 
 @NgModule({
   declarations: [
@@ -72,7 +74,6 @@ import {DateFnsAdapter, MAT_DATE_FNS_FORMATS} from "@angular/material-date-fns-a
     // NgxsLoggerPluginModule.forRoot(),
     // @ts-ignore
     StoreModule.forRoot({appState: appStateReducer}),
-    // StoreModule.forRoot(reducers, {metaReducers}),
     EffectsModule.forRoot([LoaderEffect]),
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
     !environment.production ? StoreDevtoolsModule.instrument() : [],

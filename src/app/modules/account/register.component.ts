@@ -1,13 +1,13 @@
-﻿import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
+﻿import {Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {first} from 'rxjs/operators';
 
-import { AlertService } from '@app/services';
-import { mustMatch } from '@app/core/helpers';
+import {AlertService} from '@app/services';
 import {AccountService} from "@modules/account/services/account.service";
+import {mustMatch} from "@app/core/helpers/must-match.validator";
 
-@Component({ templateUrl: 'register.component.html' })
+@Component({templateUrl: 'register.component.html'})
 export class RegisterComponent implements OnInit {
   form: FormGroup;
   loading = false;
@@ -58,7 +58,7 @@ export class RegisterComponent implements OnInit {
       .subscribe({
         next: () => {
           this.alertService.success('Registration successful, please check your email');
-          this.router.navigate(['../login'], { relativeTo: this.route });
+          this.router.navigate(['../login'], {relativeTo: this.route});
         },
         error: (error) => {
           this.alertService.error(error);
