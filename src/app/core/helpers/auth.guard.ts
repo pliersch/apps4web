@@ -1,7 +1,7 @@
 ﻿import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 
-import {SocialAuthService} from 'angularx-social-login';
+import {SocialAuthService} from '@abacritt/angularx-social-login';
 import {AccountService} from "@modules/account/services/account.service";
 import {AuthService} from "@app/stores/auth/auth-service";
 import {Store} from "@ngxs/store";

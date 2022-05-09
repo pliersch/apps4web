@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Actions, Effect, EffectNotification, ofType, OnRunEffects } from '@ngrx/effects';
-import { Observable, of } from 'rxjs';
-import { concatMap, exhaustMap, map, takeUntil } from 'rxjs/operators';
-import { AppActionTypes, UsersLoaded } from '@app/stores/app/app.store.actions';
-import { SocialAuthService, SocialUser } from 'angularx-social-login';
+import {Injectable} from '@angular/core';
+import {Actions, Effect, EffectNotification, ofType, OnRunEffects} from '@ngrx/effects';
+import {Observable, of} from 'rxjs';
+import {concatMap, exhaustMap, map, takeUntil} from 'rxjs/operators';
+import {AppActionTypes, UsersLoaded} from '@app/stores/app/app.store.actions';
+import {SocialAuthService, SocialUser} from '@abacritt/angularx-social-login';
 import {User} from "@app/models/user";
 
 @Injectable()
@@ -31,7 +31,7 @@ export class LoaderEffect implements OnRunEffects {
 
   constructor(public actions$: Actions,
               authService: SocialAuthService,
-              ) {
+  ) {
     // @ts-ignore
     authService.authState.subscribe((user: User) => {
       this.user = user;

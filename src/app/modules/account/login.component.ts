@@ -6,7 +6,7 @@ import {first} from 'rxjs/operators';
 import {AlertService} from '@app/services';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
-import {GoogleLoginProvider, SocialAuthService, SocialUser} from 'angularx-social-login';
+import {GoogleLoginProvider, SocialAuthService, SocialUser} from '@abacritt/angularx-social-login';
 import {AccountService} from "@modules/account/services/account.service";
 
 @Component({

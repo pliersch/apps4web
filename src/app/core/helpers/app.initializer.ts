@@ -1,4 +1,4 @@
-import {SocialAuthService, SocialUser} from 'angularx-social-login';
+import {SocialAuthService, SocialUser} from '@abacritt/angularx-social-login';
 import {Store} from '@ngrx/store';
 import {FinishAppInitializer, LoadUsers, StartAppInitializer} from '@app/stores/app/app.store.actions';
 import {AppState} from '@app/stores/app/app.store.state';

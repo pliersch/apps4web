@@ -20,7 +20,7 @@ import {
   SocialAuthService,
   SocialAuthServiceConfig,
   SocialLoginModule
-} from "angularx-social-login";
+} from "@abacritt/angularx-social-login";
 import {UserService} from "@app/services";
 import {ErrorInterceptor, initApplication, JwtInterceptor} from "@app/core/helpers";
 import {NgScrollbarModule} from "ngx-scrollbar";
