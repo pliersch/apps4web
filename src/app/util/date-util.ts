@@ -12,6 +12,14 @@ export function parseGerman(date: string): Date {
   return parse(date, "do MMM yyyy", new Date(), {locale: de});
 }
 
+/**
+ *
+ * @param date like '04.14.2022'
+ */
+export function parseGerman2(date: string): Date {
+  return parse(date, "MM.dd.yyyy", new Date(), {locale: de});
+}
+
 export function formatEnglish(date: Date): string {
   return formatDate(date, 'longDate', 'en-US');
 }

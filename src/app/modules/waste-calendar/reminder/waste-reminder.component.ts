@@ -2,7 +2,7 @@ import {AfterViewInit, Component, OnInit, Renderer2, ViewChild} from '@angular/c
 import wasteFile from "@assets/abfall.json";
 import {WasteDate, WasteEvent, WasteKey} from "@modules/waste-calendar/waste-dates";
 import {MatCalendar} from "@angular/material/datepicker";
-import {formatDates, formatEnglish, formatGermanDayAndMonth, parseGerman} from "@app/util/date-util";
+import {formatGermanDayAndMonth, parseGerman, parseGerman2} from "@app/util/date-util";
 import differenceInDays from 'date-fns/differenceInDays'
 import {de} from 'date-fns/locale'
 import {DateAdapter} from "@angular/material/core";
@@ -24,21 +24,21 @@ export class WasteReminderComponent implements OnInit, AfterViewInit {
   calendar: MatCalendar<Date>;
 
   selected: Date | null;
-  wasteDates: WasteDate[] = [];
   keys: WasteKey[] = [];
-  events: WasteEvent[][];
+  eventsOfAllMonths: WasteEvent[][];
   eventsOfSelectedMonth: WasteEvent[] = [];
   nextEventsOfSelectedMonth: WasteEvent[] = [];
+  private rawEvents: { date: string, type: string }[];
 
   constructor(private renderer: Renderer2,
               private _adapter: DateAdapter<any>) {
-    this._adapter.localeChanges.subscribe(evt => console.log('WasteReminderComponent : Fuck off google!!!! ', evt))
+    this._adapter.localeChanges.subscribe(evt => console.log('WasteReminderComponent : local changes muhaha ', evt))
     this._adapter.setLocale(de);
   }
 
   ngOnInit(): void {
-    this.events = this.processJson();
-    this.wasteDates = formatDates(wasteFile.events);
+    this.rawEvents = wasteFile.events;
+    this.eventsOfAllMonths = this.processJson();
     this.updateEventsOfMonth(new Date().getMonth());
   }
 
@@ -105,7 +105,7 @@ export class WasteReminderComponent implements OnInit, AfterViewInit {
   }
 
   private getEventsOfMonth(month: number): WasteEvent[] {
-    return this.events[month];
+    return this.eventsOfAllMonths[month];
   }
 
   private processJson(): WasteEvent[][] {
@@ -113,7 +113,7 @@ export class WasteReminderComponent implements OnInit, AfterViewInit {
     for (let i = 0; i < 12; i++) {
       events[i] = [];
     }
-    this.generateWasteEvents(wasteFile.events).forEach(event => {
+    this.generateWasteEvents(this.rawEvents).forEach(event => {
         let month = event.date.getMonth();
         events[month].push(event);
       }
@@ -124,8 +124,9 @@ export class WasteReminderComponent implements OnInit, AfterViewInit {
   private generateWasteEvents(dates: WasteDate[]): WasteEvent[] {
     let events: WasteEvent[] = [];
     for (const event of dates) {
+      let date = parseGerman2(event.date);
       events.push({
-        date: new Date(event.date),
+        date: new Date(date),
         wasteType: event.type
       });
     }
