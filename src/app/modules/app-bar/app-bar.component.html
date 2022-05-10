@@ -4,6 +4,7 @@
     <mat-icon>menu</mat-icon>
   </button>
   <span>{{appName}}</span>
+
   <mat-toolbar>
     <mat-nav-list class="list-horizontal">
       <a mat-list-item [routerLink]="['/dashboard']" [routerLinkActive]="['active-route']">Home</a>
@@ -17,10 +18,20 @@
       <a mat-list-item [routerLink]="['/account']" [routerLinkActive]="['active-route']">Account</a>
       <a mat-list-item [routerLink]="['/profile']" [routerLinkActive]="['active-route']">Profile</a>
       <a mat-list-item [routerLink]="['/doctor']" [routerLinkActive]="['active-route']">Doc</a>
-      <!--      <a mat-list-item [routerLink]="['/waste']" [routerLinkActive]="['active-route']">Abfall</a>-->
     </mat-nav-list>
   </mat-toolbar>
 
   <app-theme-menu (switchThemeEvent)="onSwitchTheme($event)"></app-theme-menu>
   <app-account-menu></app-account-menu>
+  <button #menuBtn mat-icon-button (click)="toggle()">
+    <mat-icon>account_circle</mat-icon>
+  </button>
 </mat-toolbar>
+
+<div #background [@childAnimation]="isOpen ? 'open' : 'closed'" class="open-close-container">
+  <mat-nav-list role="list">
+    <mat-list-item disableRipple=true (click)="onClickGoogle()" role="listitem">Google Login</mat-list-item>
+    <mat-list-item disableRipple=true role="listitem">Item 2</mat-list-item>
+    <mat-list-item disableRipple=true role="listitem">Item 3</mat-list-item>
+  </mat-nav-list>
+</div>

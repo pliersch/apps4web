@@ -14,3 +14,29 @@ mat-nav-list.list-horizontal {
   background: rgba(255, 255, 255, 0.04);
   //background: green;
 }
+
+.open-close-container {
+  background: darkslategray;
+  border: 1px solid #666666;
+  //padding: 20px 20px 0px 20px;
+  position: fixed;
+  z-index: 1000;
+  //left: 0;
+  width: 100%;
+  height: 250px;
+  display: flex;
+  flex-direction: row-reverse;
+  margin-right: 30px;
+
+  mat-nav-list {
+    margin-right: 12px;
+  }
+
+  .mat-list-item:hover {
+    background: rgba(0, 0, 0, 0);
+  }
+}
+
+
+
+
