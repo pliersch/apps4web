@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
-import {Router} from '@angular/router';
-import {SocialAuthService, SocialUser} from '@abacritt/angularx-social-login';
+import {GoogleLoginProvider, SocialAuthService, SocialUser} from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-account-menu',
@@ -11,24 +10,36 @@ export class AccountMenuComponent {
   // account: Account;
 
   user: SocialUser;
+  loggedIn = false;
 
-  constructor(private router: Router,
-              /*private accountService: AccountService,*/
+  constructor(/*private accountService: AccountService,*/
               private authService: SocialAuthService) {
     // this.accountService.account.subscribe((account) => {
     //   this.account = account;
     //   this.loggedIn = account != null;
     // });
     this.authService.authState.subscribe((user) => {
+      console.log('AccountMenuComponent : ',)
       this.user = user;
+      this.loggedIn = !user;
     });
+  }
+
+  loginWithGoogle(): void {
+    const googleLoginOptions = {
+      scope: 'profile email'
+    };
+    void this.authService.signIn(GoogleLoginProvider.PROVIDER_ID, googleLoginOptions)
+    // .then((account) => {
+    //   this.loggedIn = account != null;
+    // });
   }
 
   logout(): void {
     // this.accountService.logout();
-    this.authService.signOut(true).then(r => {
-      // TODO find a way to detect result ('r' is undefined)
-      this.router.navigate(['']);
+    this.authService.signOut(true).then(res => {
+      // TODO find a way to detect result ('res' is undefined)
+      console.log('AccountMenuComponent : ', res)
     });
   }
 }

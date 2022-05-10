@@ -10,7 +10,6 @@ import {GoogleLoginProvider, SocialAuthService, SocialUser} from '@abacritt/angu
 import {AccountService} from "@modules/account/services/account.service";
 
 @Component({
-  // selector: 'app-appbar',
   templateUrl: 'login.component.html',
   styleUrls: ['./login.component.scss'],
 })
@@ -73,7 +72,7 @@ export class LoginComponent implements OnInit {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID, googleLoginOptions).then((account) => {
       this.loggedIn = account != null;
       if (this.loggedIn) {
-        this.router.navigateByUrl('/');
+        void this.router.navigateByUrl('/');
       }
     });
   }
@@ -91,7 +90,7 @@ export class LoginComponent implements OnInit {
         next: () => {
           // get return url from query parameters or default to home page
           const returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
-          this.router.navigateByUrl(returnUrl);
+          void this.router.navigateByUrl(returnUrl);
         },
         error: (error) => {
           this.alertService.error(error);
