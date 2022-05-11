@@ -38,8 +38,7 @@ export class AccountMenuComponent {
   logout(): void {
     // this.accountService.logout();
     this.authService.signOut(true).then(res => {
-      // TODO find a way to detect result ('res' is undefined)
-      console.log('AccountMenuComponent : ', res)
+      console.log('AccountMenuComponent sign out: ', res)
     });
   }
 }

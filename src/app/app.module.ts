@@ -1,4 +1,4 @@
-import {APP_INITIALIZER, ErrorHandler, Inject, NgModule} from '@angular/core';
+import {APP_INITIALIZER, ErrorHandler, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -9,12 +9,7 @@ import {DefaultLayoutComponent} from "./layouts/default-layout/default-layout.co
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {NgxsModule, Store} from '@ngxs/store';
 
-import {
-  GoogleLoginProvider,
-  SocialAuthService,
-  SocialAuthServiceConfig,
-  SocialLoginModule
-} from "@abacritt/angularx-social-login";
+import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from "@abacritt/angularx-social-login";
 import {NgScrollbarModule} from "ngx-scrollbar";
 import {GlobalErrorHandler} from "@app/core/helpers/global-error-handler";
 import {environment} from "@environments/environment";
@@ -28,7 +23,6 @@ import {LegalNoticeComponent} from "@modules/legal-notice/legal-notice.component
 import {AccountModule} from "@modules/account/account.module";
 import {MaterialModule} from "@app/shared/material/material.module";
 import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
-import {AuthState} from "@app/modules/user-managaer/store/auth-state";
 import {ThemeState} from "@modules/themes/stores/theme-state";
 import {WasteCalendarModule} from "@modules/waste-calendar/waste-calendar.module";
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
@@ -37,7 +31,6 @@ import {initTheme} from "@app/core/app-initializer/theme.initializer";
 import {initApplication} from "@app/core/app-initializer/app.initializer";
 import {JwtInterceptor} from "@app/core/helpers/jwt.interceptor";
 import {ErrorInterceptor} from "@app/core/helpers/error.interceptor";
-import {UserService} from "@modules/user-managaer/services/user.service";
 
 @NgModule({
   declarations: [
@@ -62,7 +55,7 @@ import {UserService} from "@modules/user-managaer/services/user.service";
     AccountModule,
     NgScrollbarModule,
     MaterialModule,
-    NgxsModule.forRoot([AuthState, ThemeState], {developmentMode: !environment.production}),
+    NgxsModule.forRoot([ThemeState], {developmentMode: !environment.production}),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     // NgxsLoggerPluginModule.forRoot(),
     WasteCalendarModule

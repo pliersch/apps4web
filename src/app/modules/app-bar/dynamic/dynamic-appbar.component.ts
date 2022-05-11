@@ -36,7 +36,6 @@ export class DynamicAppbarComponent implements OnInit, DynamicAppbarHost {
   }
 
   removeAppbar(): void {
-    const viewContainerRef2 = this.host.viewContainerRef;
-    viewContainerRef2.clear();
+    this.host.viewContainerRef.clear();
   }
 }

@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {EventBusService, EventData} from '@app/services/event-bus.service';
 import {NavigationEnd, Router} from '@angular/router';
 
 enum View {
@@ -22,8 +21,7 @@ export class GalleryToolbarComponent implements OnInit {
   view = View.Home;
   icon = 'arrow_downward';
 
-  constructor(private eventBus: EventBusService,
-              private router: Router) {
+  constructor(private router: Router) {
   }
 
   ngOnInit(): void {
@@ -51,15 +49,15 @@ export class GalleryToolbarComponent implements OnInit {
   }
 
   emitSwitchView(): void {
-    this.eventBus.emit(new EventData('switchView'));
+    // this.eventBus.emit(new EventData('switchView')); // write service!
     this.icon = this.icon === 'arrow_downward' ? 'arrow_forward' : 'arrow_downward';
   }
 
   openFilterMenu(): void {
-    this.eventBus.emit(new EventData('filterPhotos'));
+    // this.eventBus.emit(new EventData('filterPhotos')); // write service!
   }
 
   emitClearComparePhotos(): void {
-    this.eventBus.emit(new EventData('ClearComparePhotos'));
+    // this.eventBus.emit(new EventData('ClearComparePhotos')); // write service!
   }
 }

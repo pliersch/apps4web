@@ -13,12 +13,15 @@ import {MatButtonLoadingDirective} from "@app/directives/mat-button-loading.dire
 import {SocialLoginComponent} from '@app/modules/account/social-login/social-login.component';
 import {EmailLoginComponent} from './email-login/email-login.component';
 import {AccountMenuComponent} from "@modules/account/account-menu/account-menu.component";
+import {NgxsModule} from "@ngxs/store";
+import {AuthState} from "@modules/account/store/auth-state";
 
 @NgModule({
   imports: [
     CommonModule,
     MaterialModule,
     AccountRoutingModule,
+    NgxsModule.forFeature([AuthState]),
   ],
   declarations: [
     LayoutComponent,

@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {DefaultLayoutComponent} from "./layouts/default-layout/default-layout.component";
 import {DashboardComponent} from "@modules/dashboard/dashboard.component";
 import {LegalNoticeComponent} from "@modules/legal-notice/legal-notice.component";
-import {AuthGuard} from "@app/core/helpers/auth.guard";
+import {AuthGuard} from "@modules/account/helpers/auth.guard";
 
 const chatModule = () => import('@app/modules/chat/chat.module').then((x) => x.ChatModule);
 const adminModule = () => import('@app/modules/admin/admin.module').then((x) => x.AdminModule);

@@ -12,6 +12,10 @@ const baseUrl = `${environment.apiUrl}/accounts`;
 @Injectable({providedIn: 'root'})
 export class AccountService {
 
+  private accountSubject: BehaviorSubject<Account>;
+  public account: Observable<Account>;
+  private refreshTokenTimeout: number;
+
   constructor(private router: Router, private http: HttpClient) {
     // @ts-ignore fixme
     this.accountSubject = new BehaviorSubject<Account>(null);
@@ -21,13 +25,6 @@ export class AccountService {
   public get accountValue(): Account {
     return this.accountSubject.value;
   }
-
-  private accountSubject: BehaviorSubject<Account>;
-  public account: Observable<Account>;
-
-  // helper methods
-
-  private refreshTokenTimeout: number;
 
   login(email: string, password: string): Observable<any> {
     return this.http.post<any>(`${baseUrl}/authenticate`, {email, password}, {withCredentials: true}).pipe(
