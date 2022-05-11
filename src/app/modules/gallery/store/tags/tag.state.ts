@@ -1,11 +1,11 @@
 import {Action, Selector, State, StateContext} from "@ngxs/store";
 import {Tag} from "@gallery/store/tags/tag.model";
 import {Injectable} from "@angular/core";
-import {TagService} from "@gallery/store/tags/tag.service";
 import * as tagActions from "@gallery/store/tags/tag.action";
 import {asapScheduler, Observable, of, Subscription} from "rxjs";
 import {catchError, map} from "rxjs/operators";
 import {append, patch, removeItem} from "@ngxs/store/operators";
+import {TagService} from "@gallery/services/tag.service";
 
 export interface TagStateModel {
   tags: Tag[];

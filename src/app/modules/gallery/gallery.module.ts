@@ -27,7 +27,6 @@ import {
 import {
   GalleryTagSelectorComponent
 } from './components/gallery-explorer/gallery-tag-selector/gallery-tag-selector.component';
-import {TagService} from '@gallery/store/tags/tag.service';
 import {ShareModule} from '@app/modules/share/share.module';
 import {
   GalleryFilterExpansionPanelComponent
@@ -59,6 +58,7 @@ import {
 import {
   GalleryEditImageTagsComponent
 } from './components/gallery-explorer/gallery-edit-image-tags/gallery-edit-image-tags.component';
+import {TagService} from "@gallery/services/tag.service";
 
 @NgModule({
   declarations: [

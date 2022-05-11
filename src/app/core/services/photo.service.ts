@@ -50,7 +50,6 @@ export class PhotoService {
       fileNames.push(photo.fileName);
     }
     const stringify = JSON.stringify(fileNames);
-    // const options = {headers: {'Content-Type': 'application/json'}};
     return this.http.post(DOWNLOAD_BASE_URL, stringify, {
       responseType: 'blob',
       headers: {

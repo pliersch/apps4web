@@ -4,6 +4,7 @@ import {CardNoHeaderImgMarginFixDirective} from '@app/modules/share/directives/c
 import {ButtonGroupComponent} from './components/button-group/button-group.component';
 import {TabNoHeaderDirective} from "@modules/share/directives/tab-no-header.directive";
 import {ImageFallbackDirective} from "@modules/share/directives/image-fallback-directive";
+import {MatButtonLoadingDirective} from "@modules/share/directives/mat-button-loading.directive";
 
 
 @NgModule({
@@ -12,12 +13,14 @@ import {ImageFallbackDirective} from "@modules/share/directives/image-fallback-d
     TabNoHeaderDirective,
     ButtonGroupComponent,
     ImageFallbackDirective,
+    MatButtonLoadingDirective
   ],
   exports: [
     CardNoHeaderImgMarginFixDirective,
     TabNoHeaderDirective,
     ButtonGroupComponent,
     ImageFallbackDirective,
+    MatButtonLoadingDirective
   ],
   imports: [
     CommonModule
