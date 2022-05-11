@@ -1,10 +1,10 @@
-﻿import { Component, OnInit } from '@angular/core';
-import { first } from 'rxjs/operators';
+﻿import {Component, OnInit} from '@angular/core';
+import {first} from 'rxjs/operators';
 
-import {Account} from "@app/models";
 import {AccountService} from "@modules/account/services/account.service";
+import {Account} from "@modules/account/models/account";
 
-@Component({ templateUrl: 'list.component.html' })
+@Component({templateUrl: 'list.component.html'})
 export class ListComponent implements OnInit {
   accounts: Account[];
 

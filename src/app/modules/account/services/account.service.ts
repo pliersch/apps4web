@@ -5,7 +5,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {finalize, map} from 'rxjs/operators';
 
 import {environment} from '@environments/environment';
-import {Account} from "@app/models";
+import {Account} from "@modules/account/models/account";
 
 const baseUrl = `${environment.apiUrl}/accounts`;
 

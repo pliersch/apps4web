@@ -3,6 +3,7 @@ import {Injectable} from "@angular/core";
 import {tap} from "rxjs/operators";
 import {AuthService} from "@modules/account/services/auth.service";
 import {LoginAction, LogoutAction} from "@modules/account/store/auth.actions";
+import {Observable} from "rxjs";
 
 export interface AuthStateModel {
   token: string | null;
@@ -34,7 +35,7 @@ export class AuthState {
   }
 
   @Action(LoginAction)
-  login(ctx: StateContext<AuthStateModel>, action: LoginAction) {
+  login(ctx: StateContext<AuthStateModel>, action: LoginAction): Observable<{ token: string }> {
     return this.authService.login(action.payload).pipe(
       tap((result: { token: string }) => {
         ctx.patchState({
@@ -46,7 +47,7 @@ export class AuthState {
   }
 
   @Action(LogoutAction)
-  logout(ctx: StateContext<AuthStateModel>) {
+  logout(ctx: StateContext<AuthStateModel>): Observable<any> {
     const state = ctx.getState();
     return this.authService.logout(state.token!).pipe(
       tap(() => {
