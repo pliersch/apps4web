@@ -16,11 +16,11 @@ import {
   TogglePhotosDownloadAction
 } from "@gallery/store/photos/photo.actions";
 import {AreaSelection, AreaSelectionHandler} from "@gallery/components/gallery-explorer/area-selection";
-import {PhotoService} from "@app/core/services/photo.service";
 import {
   GalleryEditImageTagsComponent
 } from "@gallery/components/gallery-explorer/gallery-edit-image-tags/gallery-edit-image-tags.component";
 import {MatDialog} from "@angular/material/dialog";
+import {PhotoService} from "@gallery/services/photo.service";
 
 export interface DialogData {
   tags: string[];

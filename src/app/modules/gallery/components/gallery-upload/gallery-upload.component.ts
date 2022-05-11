@@ -1,5 +1,4 @@
 import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {PhotoService} from '@app/core/services/photo.service';
 import {Select, Store} from "@ngxs/store";
 import {TagState} from "@gallery/store/tags/tag.state";
 import {Observable, of} from "rxjs";
@@ -7,6 +6,7 @@ import {Tag} from "@gallery/store/tags/tag.model";
 import {LoadTags} from "@gallery/store/tags/tag.action";
 import {AddPhotoAction} from "@gallery/store/photos/photo.actions";
 import {TagService} from "@gallery/services/tag.service";
+import {PhotoService} from "@gallery/services/photo.service";
 
 const PLACEHOLDER_URL = 'assets/svg/image-placeholder.svg';
 

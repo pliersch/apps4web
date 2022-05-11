@@ -13,7 +13,6 @@ import {GalleryExplorerComponent} from './components/gallery-explorer/gallery-ex
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {GalleryHomeComponent} from './components/gallery-home/gallery-home.component';
 import {GalleryUploadComponent} from './components/gallery-upload/gallery-upload.component';
-import {PhotoService} from '@app/core/services/photo.service';
 import {GalleryLightboxComponent} from '@gallery/components/gallery-lightbox/gallery-lightbox.component';
 import {
   GalleryVerticalScrollerComponent
@@ -59,6 +58,7 @@ import {
   GalleryEditImageTagsComponent
 } from './components/gallery-explorer/gallery-edit-image-tags/gallery-edit-image-tags.component';
 import {TagService} from "@gallery/services/tag.service";
+import {PhotoService} from "@gallery/services/photo.service";
 
 @NgModule({
   declarations: [
@@ -67,7 +67,6 @@ import {TagService} from "@gallery/services/tag.service";
     GalleryExplorerComponent,
     GalleryHomeComponent,
     GalleryUploadComponent,
-    GalleryLightboxComponent,
     GalleryLightboxComponent,
     GalleryVerticalScrollerComponent,
     GalleryHorizontalScrollerComponent,

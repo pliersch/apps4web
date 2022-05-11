@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {PhotoService} from "@app/core/services/photo.service";
 import {ChatImage} from "@modules/chat/models/chat-image";
 
 @Component({
@@ -21,7 +20,7 @@ export class ChatUploadComponent {
   files: File[] = [];
   images: string[] = [];
 
-  constructor(private photoService: PhotoService) {
+  constructor() {
   }
 
   closePreview(): void {

@@ -1,6 +1,5 @@
 import {Action, Selector, State, StateContext} from "@ngxs/store";
 import {Injectable} from "@angular/core";
-import {PhotoService} from "@app/core/services/photo.service";
 import {catchError, map, tap} from "rxjs/operators";
 import {asapScheduler, Observable, of, Subscription} from "rxjs";
 import * as photoAction from "@gallery/store/photos/photo.actions";
@@ -9,6 +8,7 @@ import {insertItem, patch, removeItem, updateItem} from "@ngxs/store/operators";
 import {filterAllTags} from "@gallery/store/photos/photo.tools";
 import {TagState} from "@gallery/store/tags/tag.state";
 import {AlertService} from "@app/services/alert.service";
+import {PhotoService} from "@gallery/services/photo.service";
 
 export interface PhotoStateModel {
   photos: Photo[];
