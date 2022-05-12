@@ -1,8 +1,10 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {environment} from '@environments/environment';
-import {Photo, PhotoUpdate} from '@gallery/store/photos/photo.model';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '@environments/environment';
+import { Photo, PhotoUpdate } from '@gallery/store/photos/photo.model';
+import { PageDto } from "@app/common/dto/page.dto";
+import { Order } from "@app/common/constants/order.constant";
 
 const PICTURE_BASE_URL = `${environment.apiUrl}/photos`;
 const DOWNLOAD_BASE_URL = `${environment.apiUrl}/download`;
@@ -15,8 +17,14 @@ export class PhotoService {
   constructor(private http: HttpClient) {
   }
 
-  getAll(): Observable<Photo[]> {
-    return this.http.get<Photo[]>(PICTURE_BASE_URL);
+  getAll(): Observable<PageDto<Photo>> {
+    return this.http.get<PageDto<Photo>>(PICTURE_BASE_URL, {
+      params: {
+        order: Order.ASC,
+        page: 1,
+        take: 10
+      }
+    });
   }
 
   getById(id: string): Observable<Photo> {

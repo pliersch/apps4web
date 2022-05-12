@@ -1,18 +1,21 @@
-import {Action, Selector, State, StateContext} from "@ngxs/store";
-import {Injectable} from "@angular/core";
-import {catchError, map, tap} from "rxjs/operators";
-import {asapScheduler, Observable, of, Subscription} from "rxjs";
+import { Action, Selector, State, StateContext } from "@ngxs/store";
+import { Injectable } from "@angular/core";
+import { catchError, map } from "rxjs/operators";
+import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import * as photoAction from "@gallery/store/photos/photo.actions";
-import {Photo, PhotoUpdate} from "@gallery/store/photos/photo.model";
-import {insertItem, patch, removeItem, updateItem} from "@ngxs/store/operators";
-import {filterAllTags} from "@gallery/store/photos/photo.tools";
-import {TagState} from "@gallery/store/tags/tag.state";
-import {AlertService} from "@app/services/alert.service";
-import {PhotoService} from "@gallery/services/photo.service";
+import { Photo, PhotoUpdate } from "@gallery/store/photos/photo.model";
+import { insertItem, patch, removeItem, updateItem } from "@ngxs/store/operators";
+import { filterAllTags } from "@gallery/store/photos/photo.tools";
+import { TagState } from "@gallery/store/tags/tag.state";
+import { AlertService } from "@app/services/alert.service";
+import { PhotoService } from "@gallery/services/photo.service";
+import { PageDto } from "@app/common/dto/page.dto";
+import { PageMetaDto } from "@app/common/dto/page-meta.dto";
 
 export interface PhotoStateModel {
   photos: Photo[];
   selectedPictures: Photo[];
+  pageMeta: PageMetaDto | null;
   tagFilter: string[];
   // comparePhotos: Photo[];
   // exportPhotos: Photo[];
@@ -26,6 +29,7 @@ export interface PhotoStateModel {
   name: 'gallery', // todo maybe photos?
   defaults: {
     photos: [],
+    pageMeta: null,
     selectedPictures: [],
     tagFilter: [],
     allPhotosLoaded: false,
@@ -84,9 +88,11 @@ export class PhotoState {
     ctx.patchState({loading: true});
     return this.photoService.getAll()
       .pipe(
-        map((photos: Photo[]) =>
-          asapScheduler.schedule(() =>
-            ctx.dispatch(new photoAction.LoadPhotosSuccessAction(photos))
+        map((dto: PageDto<Photo>) =>
+          asapScheduler.schedule(() => {
+              console.log(dto.meta)
+              ctx.dispatch(new photoAction.LoadPhotosSuccessAction(dto.data))
+            }
           )
         ),
         catchError(error =>
@@ -110,8 +116,8 @@ export class PhotoState {
 
   @Action(photoAction.LoadPhotosFailAction)
   loadPhotosFail({dispatch}: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosFailAction): void {
-    // TODO handle error!
-    console.log(action.error)
+    console.log(action.error);
+    this.alertService.error('Load photos fail');
     dispatch({loaded: false, loading: false});
   }
 
