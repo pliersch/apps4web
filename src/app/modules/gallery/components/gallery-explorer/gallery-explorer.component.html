@@ -5,7 +5,7 @@
   <div class="gallery-explorer-grid-images">
     <div class="scrollbar-wrapper">
       <ng-scrollbar>
-        <div class="images-wrapper selection-area-container">
+        <div #pageContent class="images-wrapper selection-area-container">
           <app-image-control *ngFor="let photo of (pictures$ | async)" class="selection-item"
                              [selected]="currentImage === photo" [download]="isSelected(photo)"
                              (click)="setCurrent(photo)" [photo]="photo"

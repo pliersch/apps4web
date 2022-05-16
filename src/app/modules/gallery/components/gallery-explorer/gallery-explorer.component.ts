@@ -1,26 +1,31 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Photo} from '@gallery/store/photos/photo.model';
-import {Select, Store} from '@ngxs/store';
-import {Observable} from 'rxjs';
-import {PhotoState} from "@gallery/store/photos/photo.state";
-import {Action, ActionProvider} from "@app/models/actions";
-import {ActionBarService} from "@app/services/action-bar.service";
-import {saveAs} from 'file-saver';
+import { AfterViewInit, Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Photo } from '@gallery/store/photos/photo.model';
+import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { PhotoState } from "@gallery/store/photos/photo.state";
+import { Action, ActionProvider } from "@app/models/actions";
+import { ActionBarService } from "@app/services/action-bar.service";
+import { saveAs } from 'file-saver';
 import {
   DeletePhotoAction,
-  DeselectAllPhotosAction,
+  DeselectAllPhotosAction, LoadMetaDataAction, LoadPhotosAction,
   SelectAllPhotosAction,
   SelectManyPhotosAction,
   SetTagsOfPicture,
   TogglePhotoDownloadAction,
   TogglePhotosDownloadAction
 } from "@gallery/store/photos/photo.actions";
-import {AreaSelection, AreaSelectionHandler} from "@gallery/components/gallery-explorer/area-selection";
+import { AreaSelection, AreaSelectionHandler } from "@gallery/components/gallery-explorer/area-selection";
 import {
   GalleryEditImageTagsComponent
 } from "@gallery/components/gallery-explorer/gallery-edit-image-tags/gallery-edit-image-tags.component";
-import {MatDialog} from "@angular/material/dialog";
-import {PhotoService} from "@gallery/services/photo.service";
+import { MatDialog } from "@angular/material/dialog";
+import { PhotoService } from "@gallery/services/photo.service";
+import { NgScrollbar } from "ngx-scrollbar";
+import { map, tap } from "rxjs/operators";
+import { PageOptionsDto } from "@app/common/dto/page-options.dto";
+import { PageMetaDto } from "@app/common/dto/page-meta.dto";
+import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
 
 export interface DialogData {
   tags: string[];
@@ -44,7 +49,14 @@ enum ActionTypes {
   templateUrl: './gallery-explorer.component.html',
   styleUrls: ['./gallery-explorer.component.scss']
 })
-export class GalleryExplorerComponent implements OnInit, OnDestroy, ActionProvider, AreaSelectionHandler {
+export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestroy, ActionProvider, AreaSelectionHandler {
+
+  @ViewChild(NgScrollbar)
+  scrollbarRef: NgScrollbar;
+
+  @Select(PhotoState.getPageMetaData)
+  pageMeta$: Observable<PhotoMetaDataDto>;
+  pageMeta: PhotoMetaDataDto;
 
   @Select(PhotoState.getPhotos)
   pictures$: Observable<Photo[]>;
@@ -56,9 +68,12 @@ export class GalleryExplorerComponent implements OnInit, OnDestroy, ActionProvid
 
   currentImage: Photo;
   showFilter = true;
+  page = 1;
+  absoluteHeight = 0;
+  private isRequesting: boolean;
+  private resizeObserver: ResizeObserver;
 
   private areaSelection: AreaSelection;
-
   private actions: Action[] = [
     {name: ActionTypes.SelectAll, icon: 'done_all', tooltip: 'select all', handler: this},
     {name: ActionTypes.DeselectAll, icon: 'remove_done', tooltip: 'deselect all', handler: this},
@@ -70,22 +85,72 @@ export class GalleryExplorerComponent implements OnInit, OnDestroy, ActionProvid
   constructor(private actionBarService: ActionBarService,
               private photoService: PhotoService,
               public dialog: MatDialog,
+              private ngZone: NgZone,
               private store: Store) {
   }
 
   ngOnInit(): void {
+    this.store.dispatch(new LoadMetaDataAction());
+    this.store.dispatch(new LoadPhotosAction(new PageOptionsDto(this.page++, 30)));
     this.actionBarService.setActions(this.actions);
     this.selection$.subscribe(res => this.selection = res);
-    this.pictures$.subscribe(res => this.pictures = res);
+    this.pictures$.subscribe(res => {
+      this.pictures = res;
+      console.log('check receive res -> requesting is false')
+      this.isRequesting = false;
+    });
+    this.pageMeta$.subscribe(meta => {
+      this.pageMeta = meta;
+      console.log('GalleryExplorerComponent : ', meta)
+      // if (!meta.hasNextPage) {
+      //   this.resizeObserver.unobserve(this.scrollbarRef.nativeElement.querySelector('.ng-scroll-content')!)
+      // }
+    });
     this.initializeSelectionArea();
+  }
+
+  ngAfterViewInit(): void {
+    this.observeScrollContent();
+    this.scrollbarRef.verticalScrolled.pipe(
+      tap((e: Event) => {
+        this.detectAndFetch(e.target as Element);
+      })
+    ).subscribe();
   }
 
   ngOnDestroy(): void {
     this.actionBarService.removeActions();
   }
 
+  observeScrollContent(): void {
+    let element = this.scrollbarRef.nativeElement.querySelector('.ng-scroll-content');
+    this.resizeObserver = new ResizeObserver(res => {
+      console.log(' check absolute height change: ', res[0].contentRect.height);
+      this.absoluteHeight = res[0].contentRect.height;
+    });
+    this.resizeObserver.observe(element!);
+  }
+
   setCurrent(image: Photo): void {
     this.currentImage = image;
+  }
+
+  // todo: find a better name
+  detectAndFetch(element: Element): void {
+    const currentHeight = element.clientHeight + element.scrollTop /* + element.scrollTop*/;
+    // console.log('element.scrollTop', element.scrollTop)
+    // console.log('currentHeight', currentHeight)
+    // console.log('maxHeight', this.absoluteHeight)
+    // console.log('scrollHeight', element.scrollHeight)
+    if (currentHeight + 180 > this.absoluteHeight && !this.isRequesting) {
+      // if (this.absoluteHeight != element.scrollHeight) {
+      // console.log('check height: ' + (currentHeight + 180) +
+      //   ' is larger then abs height: ' + this.absoluteHeight + ' is requesting true')
+      this.isRequesting = true;
+      console.log('XX Store dispatch')
+      this.store.dispatch(new LoadPhotosAction(new PageOptionsDto(this.page++, 30)));
+      // }
+    }
   }
 
   onAction(action: Action): void {

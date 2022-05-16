@@ -1,16 +1,41 @@
-import {Photo, PhotoUpdate} from "@gallery/store/photos/photo.model";
-import {Tag} from "@gallery/store/tags/tag.model";
+import { Photo, PhotoUpdate } from "@gallery/store/photos/photo.model";
+import { Tag } from "@gallery/store/tags/tag.model";
+import { PageDto } from "@app/common/dto/page.dto";
+import { PageOptionsDto } from "@app/common/dto/page-options.dto";
+import { PageMetaDto } from "@app/common/dto/page-meta.dto";
+import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
+
+// meta data
+
+export class LoadMetaDataAction {
+  static readonly type = '[Gallery] Load MetaData';
+
+}
+
+export class LoadMetaDataSuccessAction {
+  static readonly type = '[Gallery] Load MetaData success';
+
+  constructor(public dto: PhotoMetaDataDto) { }
+}
+
+export class LoadMetaDataFailAction {
+  static readonly type = '[Gallery] Load MetaData Fail';
+
+  constructor(public error: any) { }
+}
 
 // loading photos
 
 export class LoadPhotosAction {
   static readonly type = '[Gallery] Load Photos';
+
+  constructor(public dto: PageOptionsDto) { }
 }
 
 export class LoadPhotosSuccessAction {
   static readonly type = '[Gallery] Load Photos success';
 
-  constructor(public photos: Photo[]) { }
+  constructor(public dto: PageDto<Photo>) { }
 }
 
 export class LoadPhotosFailAction {

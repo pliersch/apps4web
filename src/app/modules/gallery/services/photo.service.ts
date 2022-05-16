@@ -5,6 +5,9 @@ import { environment } from '@environments/environment';
 import { Photo, PhotoUpdate } from '@gallery/store/photos/photo.model';
 import { PageDto } from "@app/common/dto/page.dto";
 import { Order } from "@app/common/constants/order.constant";
+import { PageOptionsDto } from "@app/common/dto/page-options.dto";
+import { PageMetaDto } from "@app/common/dto/page-meta.dto";
+import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
 
 const PICTURE_BASE_URL = `${environment.apiUrl}/photos`;
 const DOWNLOAD_BASE_URL = `${environment.apiUrl}/download`;
@@ -17,12 +20,27 @@ export class PhotoService {
   constructor(private http: HttpClient) {
   }
 
+  loadMetaData(): Observable<PhotoMetaDataDto> {
+    return this.http.get<PhotoMetaDataDto>(PICTURE_BASE_URL + '/meta');
+  }
+
   getAll(): Observable<PageDto<Photo>> {
     return this.http.get<PageDto<Photo>>(PICTURE_BASE_URL, {
       params: {
         order: Order.ASC,
         page: 1,
-        take: 10
+        take: 30
+      }
+    });
+  }
+
+  getPage(dto: PageOptionsDto): Observable<PageDto<Photo>> {
+    console.log('PhotoService getPage: ', dto.page)
+    return this.http.get<PageDto<Photo>>(PICTURE_BASE_URL, {
+      params: {
+        order: Order.ASC,
+        page: dto.page,
+        take: dto.take
       }
     });
   }

@@ -1,10 +1,13 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {CardNoHeaderImgMarginFixDirective} from '@app/modules/share/directives/card-no-header-img-margin-fix.directive';
-import {ButtonGroupComponent} from './components/button-group/button-group.component';
-import {TabNoHeaderDirective} from "@modules/share/directives/tab-no-header.directive";
-import {ImageFallbackDirective} from "@modules/share/directives/image-fallback-directive";
-import {MatButtonLoadingDirective} from "@modules/share/directives/mat-button-loading.directive";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  CardNoHeaderImgMarginFixDirective
+} from '@app/modules/share/directives/card-no-header-img-margin-fix.directive';
+import { ButtonGroupComponent } from './components/button-group/button-group.component';
+import { TabNoHeaderDirective } from "@modules/share/directives/tab-no-header.directive";
+import { ImageFallbackDirective } from "@modules/share/directives/image-fallback-directive";
+import { MatButtonLoadingDirective } from "@modules/share/directives/mat-button-loading.directive";
+import { LazyImageDirective } from './directives/lazy-image.directive';
 
 
 @NgModule({
@@ -13,14 +16,16 @@ import {MatButtonLoadingDirective} from "@modules/share/directives/mat-button-lo
     TabNoHeaderDirective,
     ButtonGroupComponent,
     ImageFallbackDirective,
-    MatButtonLoadingDirective
+    MatButtonLoadingDirective,
+    LazyImageDirective
   ],
   exports: [
     CardNoHeaderImgMarginFixDirective,
     TabNoHeaderDirective,
     ButtonGroupComponent,
     ImageFallbackDirective,
-    MatButtonLoadingDirective
+    MatButtonLoadingDirective,
+    LazyImageDirective
   ],
   imports: [
     CommonModule

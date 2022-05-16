@@ -1,11 +1,11 @@
 import { PageOptionsDto } from "@app/common/dto/page-options.dto";
 
-export interface PageMetaDtoParameters {
-  pageOptionsDto: PageOptionsDto;
-  itemCount: number;
-}
+// export interface PageMetaDtoParameters {
+//   pageOptionsDto: PageOptionsDto;
+//   itemCount: number;
+// }
 
-export class PageMetaDto {
+export interface PageMetaDto {
   readonly page: number;
 
   readonly take: number;
@@ -18,12 +18,13 @@ export class PageMetaDto {
 
   readonly hasNextPage: boolean;
 
-  constructor({pageOptionsDto, itemCount}: PageMetaDtoParameters) {
-    this.page = pageOptionsDto.page;
-    this.take = pageOptionsDto.take;
-    this.itemCount = itemCount;
-    this.pageCount = Math.ceil(this.itemCount / this.take);
-    this.hasPreviousPage = this.page > 1;
-    this.hasNextPage = this.page < this.pageCount;
-  }
+  // constructor({pageOptionsDto, itemCount}: PageMetaDtoParameters) {
+  //   console.log('PageMetaDto constructor: ',)
+  //   this.page = pageOptionsDto.page;
+  //   this.take = pageOptionsDto.take;
+  //   this.itemCount = itemCount;
+  //   this.pageCount = Math.ceil(this.itemCount / this.take);
+  //   this.hasPreviousPage = this.page > 1;
+  //   this.hasNextPage = this.page < this.pageCount;
+  // }
 }

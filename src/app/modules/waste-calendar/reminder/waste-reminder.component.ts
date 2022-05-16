@@ -1,11 +1,11 @@
-import {AfterViewInit, Component, OnInit, Renderer2, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, OnInit, Renderer2, ViewChild } from '@angular/core';
 import wasteFile from "@assets/abfall.json";
-import {WasteDate, WasteEvent, WasteKey} from "@modules/waste-calendar/waste-dates";
-import {MatCalendar} from "@angular/material/datepicker";
-import {formatGermanDayAndMonth, parseGerman, parseGerman2} from "@app/util/date-util";
+import { WasteDate, WasteEvent, WasteKey } from "@modules/waste-calendar/waste-dates";
+import { MatCalendar } from "@angular/material/datepicker";
+import { formatGermanDayAndMonth, parseGerman, parseGerman2 } from "@app/util/date-util";
 import differenceInDays from 'date-fns/differenceInDays'
-import {de} from 'date-fns/locale'
-import {DateAdapter} from "@angular/material/core";
+import { de } from 'date-fns/locale'
+import { DateAdapter } from "@angular/material/core";
 
 @Component({
   selector: 'app-reminder',

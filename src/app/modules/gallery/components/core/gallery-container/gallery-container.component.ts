@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {Store} from "@ngxs/store";
-import {LoadPhotosAction} from "@gallery/store/photos/photo.actions";
-import {Router} from "@angular/router";
-import {Location} from "@angular/common";
+import { Component, OnInit } from '@angular/core';
+import { Store } from "@ngxs/store";
+import { LoadPhotosAction } from "@gallery/store/photos/photo.actions";
+import { Router } from "@angular/router";
+import { Location } from "@angular/common";
+import { PageOptionsDto } from "@app/common/dto/page-options.dto";
 
 // TODO ugly naming
 interface LinkAndName {
@@ -33,7 +34,6 @@ export class GalleryContainerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new LoadPhotosAction());
     this.activeLink = this.location.path();
     this.location.onUrlChange(url => this.activeLink = url);
   }

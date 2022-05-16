@@ -11,11 +11,12 @@ import { AlertService } from "@app/services/alert.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { PageDto } from "@app/common/dto/page.dto";
 import { PageMetaDto } from "@app/common/dto/page-meta.dto";
+import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
 
 export interface PhotoStateModel {
   photos: Photo[];
   selectedPictures: Photo[];
-  pageMeta: PageMetaDto | null;
+  pageMeta: PhotoMetaDataDto | null;
   tagFilter: string[];
   // comparePhotos: Photo[];
   // exportPhotos: Photo[];
@@ -59,6 +60,11 @@ export class PhotoState {
     return state.selectedPictures;
   }
 
+  @Selector()
+  static getPageMetaData(state: PhotoStateModel): PhotoMetaDataDto | null {
+    return state.pageMeta;
+  }
+
   // @Selector()
   // static getDownloads(state: PhotoStateModel): Photo[] {
   //   return state.photos.filter(photo => photo.download);
@@ -80,18 +86,59 @@ export class PhotoState {
   }
 
   //////////////////////////////////////////////////////////
-  //          load
+  //          meta data
+  //////////////////////////////////////////////////////////
+
+  @Action(photoAction.LoadMetaDataAction)
+  loadMetaData(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataAction): Observable<Subscription> {
+    return this.photoService.loadMetaData().pipe(
+      map((metaDto: PhotoMetaDataDto) =>
+        asapScheduler.schedule(() =>
+          ctx.dispatch(new photoAction.LoadMetaDataSuccessAction(metaDto))
+        )
+      ),
+      catchError(error =>
+        of(
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new photoAction.LoadMetaDataFailAction(error))
+          )
+        )
+      )
+    );
+  }
+
+  @Action(photoAction.LoadMetaDataSuccessAction)
+  loadMetaDataSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataSuccessAction): void {
+    ctx.patchState({
+      pageMeta: action.dto, loading: false
+    });
+    this.alertService.success('load meta data success: ' + action.dto.count);
+  }
+
+  @Action(photoAction.LoadMetaDataFailAction)
+  loadMetaDataFail(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataFailAction): void {
+    ctx.dispatch({loaded: false, loading: false});
+    this.alertService.error('load meta data fail');
+  }
+
+  //////////////////////////////////////////////////////////
+  //          load photos
   //////////////////////////////////////////////////////////
 
   @Action(photoAction.LoadPhotosAction)
   loadPhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosAction): Observable<Subscription> {
-    ctx.patchState({loading: true});
-    return this.photoService.getAll()
+    console.log('meta', ctx.getState().pageMeta)
+    const state = ctx.getState();
+    if (state.loading) {
+      return of(Subscription.EMPTY);
+    }
+    ctx.patchState({loading: true, loaded: false});
+    return this.photoService.getPage(action.dto)
       .pipe(
         map((dto: PageDto<Photo>) =>
           asapScheduler.schedule(() => {
-              console.log(dto.meta)
-              ctx.dispatch(new photoAction.LoadPhotosSuccessAction(dto.data))
+              console.log('dto!!! ', dto)
+              ctx.dispatch(new photoAction.LoadPhotosSuccessAction(dto))
             }
           )
         ),
@@ -106,12 +153,12 @@ export class PhotoState {
   }
 
   @Action(photoAction.LoadPhotosSuccessAction)
-  loadPhotosSuccess({patchState}: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosSuccessAction): void {
-    let photos: Photo[] = [];
-    for (const photo of action.photos) {
-      photos.push(photo)
-    }
-    patchState({photos: photos, loaded: true, loading: false});
+  loadPhotosSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosSuccessAction): void {
+    const state = ctx.getState();
+    let photos: Photo[] = [...state.photos, ...action.dto.data]
+    ctx.patchState({
+      photos: photos, loaded: true, loading: false
+    });
   }
 
   @Action(photoAction.LoadPhotosFailAction)
