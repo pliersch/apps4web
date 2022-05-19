@@ -1,22 +1,28 @@
-import { Action, Selector, State, StateContext } from "@ngxs/store";
+import { Action, NgxsOnInit, Selector, State, StateContext } from "@ngxs/store";
 import { Injectable } from "@angular/core";
 import { catchError, map } from "rxjs/operators";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import * as photoAction from "@gallery/store/photos/photo.actions";
+import { LoadMetaDataAction } from "@gallery/store/photos/photo.actions";
 import { Photo, PhotoUpdate } from "@gallery/store/photos/photo.model";
 import { insertItem, patch, removeItem, updateItem } from "@ngxs/store/operators";
 import { filterAllTags } from "@gallery/store/photos/photo.tools";
 import { TagState } from "@gallery/store/tags/tag.state";
 import { AlertService } from "@app/services/alert.service";
 import { PhotoService } from "@gallery/services/photo.service";
-import { PageDto } from "@app/common/dto/page.dto";
-import { PageMetaDto } from "@app/common/dto/page-meta.dto";
 import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
+import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
+
+export interface PhotoStateMetaData {
+  allPhotosCount: number;
+  selectedPhotosCount: number;
+  filteredPhotosCount: number;
+}
 
 export interface PhotoStateModel {
   photos: Photo[];
   selectedPictures: Photo[];
-  pageMeta: PhotoMetaDataDto | null;
+  metaData: PhotoStateMetaData;
   tagFilter: string[];
   // comparePhotos: Photo[];
   // exportPhotos: Photo[];
@@ -30,7 +36,7 @@ export interface PhotoStateModel {
   name: 'gallery', // todo maybe photos?
   defaults: {
     photos: [],
-    pageMeta: null,
+    metaData: {allPhotosCount: 0, selectedPhotosCount: 0, filteredPhotosCount: 0},
     selectedPictures: [],
     tagFilter: [],
     allPhotosLoaded: false,
@@ -40,7 +46,11 @@ export interface PhotoStateModel {
 })
 
 @Injectable()
-export class PhotoState {
+export class PhotoState implements NgxsOnInit {
+
+  ngxsOnInit(ctx?: StateContext<any>): any {
+    ctx?.dispatch(new LoadMetaDataAction())
+  }
 
   @Selector([TagState.getActiveTags])
   static getPhotos(state: PhotoStateModel, activeTags: string[]): Photo[] {
@@ -48,6 +58,13 @@ export class PhotoState {
       return state.photos;
     }
     return filterAllTags(state.photos, activeTags);
+  }
+
+  @Selector()
+  static pandas(state: string[]) {
+    return (type: string) => {
+      return state.filter(s => s.indexOf('panda') > -1).filter(s => s.indexOf(type) > -1);
+    };
   }
 
   @Selector()
@@ -61,8 +78,8 @@ export class PhotoState {
   }
 
   @Selector()
-  static getPageMetaData(state: PhotoStateModel): PhotoMetaDataDto | null {
-    return state.pageMeta;
+  static getPageMetaData(state: PhotoStateModel): PhotoStateMetaData | null {
+    return state.metaData;
   }
 
   // @Selector()
@@ -85,6 +102,7 @@ export class PhotoState {
               private alertService: AlertService) {
   }
 
+  //region meta data
   //////////////////////////////////////////////////////////
   //          meta data
   //////////////////////////////////////////////////////////
@@ -109,10 +127,15 @@ export class PhotoState {
 
   @Action(photoAction.LoadMetaDataSuccessAction)
   loadMetaDataSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataSuccessAction): void {
+    let current: PhotoStateMetaData = ctx.getState().metaData;
+    let next: PhotoStateMetaData = {
+      allPhotosCount: action.dto.count,
+      selectedPhotosCount: current.selectedPhotosCount,
+      filteredPhotosCount: current.filteredPhotosCount,
+    }
     ctx.patchState({
-      pageMeta: action.dto, loading: false
+      metaData: next, loading: false
     });
-    this.alertService.success('load meta data success: ' + action.dto.count);
   }
 
   @Action(photoAction.LoadMetaDataFailAction)
@@ -121,23 +144,30 @@ export class PhotoState {
     this.alertService.error('load meta data fail');
   }
 
+  //endregion
+
+  // region loading
   //////////////////////////////////////////////////////////
   //          load photos
   //////////////////////////////////////////////////////////
 
   @Action(photoAction.LoadPhotosAction)
   loadPhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosAction): Observable<Subscription> {
-    console.log('meta', ctx.getState().pageMeta)
     const state = ctx.getState();
     if (state.loading) {
       return of(Subscription.EMPTY);
     }
     ctx.patchState({loading: true, loaded: false});
-    return this.photoService.getPage(action.dto)
+    const from: number = action.from ? action.from : state.photos.length;
+    const availablePhotos: number = state.metaData.allPhotosCount - state.photos.length;
+    const count: number = availablePhotos < action.count ? availablePhotos : action.count;
+    if (count == 0) {
+      return of(Subscription.EMPTY);
+    }
+    return this.photoService.getPhotos(count, from)
       .pipe(
-        map((dto: PageDto<Photo>) =>
+        map((dto: PhotoDto) =>
           asapScheduler.schedule(() => {
-              console.log('dto!!! ', dto)
               ctx.dispatch(new photoAction.LoadPhotosSuccessAction(dto))
             }
           )
@@ -155,7 +185,7 @@ export class PhotoState {
   @Action(photoAction.LoadPhotosSuccessAction)
   loadPhotosSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosSuccessAction): void {
     const state = ctx.getState();
-    let photos: Photo[] = [...state.photos, ...action.dto.data]
+    let photos: Photo[] = [...state.photos, ...action.dto.photos]
     ctx.patchState({
       photos: photos, loaded: true, loading: false
     });
@@ -167,6 +197,8 @@ export class PhotoState {
     this.alertService.error('Load photos fail');
     dispatch({loaded: false, loading: false});
   }
+
+  // endregion
 
   //////////////////////////////////////////////////////////
   //          add
@@ -342,6 +374,7 @@ export class PhotoState {
     );
   }
 
+  //region tags
   //////////////////////////////////////////////////////////
   //          tags
   //////////////////////////////////////////////////////////
@@ -457,4 +490,6 @@ export class PhotoState {
     console.log(action.error)
     // dispatch({loaded: false, loading: false});
   }
+
+  //endregion
 }

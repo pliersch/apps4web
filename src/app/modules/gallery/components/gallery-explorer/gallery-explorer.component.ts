@@ -2,13 +2,14 @@ import { AfterViewInit, Component, NgZone, OnDestroy, OnInit, ViewChild } from '
 import { Photo } from '@gallery/store/photos/photo.model';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { PhotoState } from "@gallery/store/photos/photo.state";
+import { PhotoState, PhotoStateMetaData } from "@gallery/store/photos/photo.state";
 import { Action, ActionProvider } from "@app/models/actions";
 import { ActionBarService } from "@app/services/action-bar.service";
 import { saveAs } from 'file-saver';
 import {
   DeletePhotoAction,
-  DeselectAllPhotosAction, LoadMetaDataAction, LoadPhotosAction,
+  DeselectAllPhotosAction,
+  LoadPhotosAction,
   SelectAllPhotosAction,
   SelectManyPhotosAction,
   SetTagsOfPicture,
@@ -22,10 +23,7 @@ import {
 import { MatDialog } from "@angular/material/dialog";
 import { PhotoService } from "@gallery/services/photo.service";
 import { NgScrollbar } from "ngx-scrollbar";
-import { map, tap } from "rxjs/operators";
-import { PageOptionsDto } from "@app/common/dto/page-options.dto";
-import { PageMetaDto } from "@app/common/dto/page-meta.dto";
-import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
+import { tap } from "rxjs/operators";
 
 export interface DialogData {
   tags: string[];
@@ -55,8 +53,8 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   scrollbarRef: NgScrollbar;
 
   @Select(PhotoState.getPageMetaData)
-  pageMeta$: Observable<PhotoMetaDataDto>;
-  pageMeta: PhotoMetaDataDto;
+  pageMeta$: Observable<PhotoStateMetaData>;
+  pageMeta: PhotoStateMetaData;
 
   @Select(PhotoState.getPhotos)
   pictures$: Observable<Photo[]>;
@@ -68,7 +66,6 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
 
   currentImage: Photo;
   showFilter = true;
-  page = 1;
   absoluteHeight = 0;
   private isRequesting: boolean;
   private resizeObserver: ResizeObserver;
@@ -90,21 +87,18 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new LoadMetaDataAction());
-    this.store.dispatch(new LoadPhotosAction(new PageOptionsDto(this.page++, 30)));
     this.actionBarService.setActions(this.actions);
     this.selection$.subscribe(res => this.selection = res);
     this.pictures$.subscribe(res => {
+      this.currentImage = res[0];
       this.pictures = res;
-      console.log('check receive res -> requesting is false')
       this.isRequesting = false;
     });
     this.pageMeta$.subscribe(meta => {
       this.pageMeta = meta;
-      console.log('GalleryExplorerComponent : ', meta)
-      // if (!meta.hasNextPage) {
-      //   this.resizeObserver.unobserve(this.scrollbarRef.nativeElement.querySelector('.ng-scroll-content')!)
-      // }
+      if (meta.allPhotosCount > 0) {
+        this.store.dispatch(new LoadPhotosAction(60));
+      }
     });
     this.initializeSelectionArea();
   }
@@ -113,7 +107,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     this.observeScrollContent();
     this.scrollbarRef.verticalScrolled.pipe(
       tap((e: Event) => {
-        this.detectAndFetch(e.target as Element);
+        this.requestNextPhotos(e.target as Element);
       })
     ).subscribe();
   }
@@ -125,7 +119,6 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   observeScrollContent(): void {
     let element = this.scrollbarRef.nativeElement.querySelector('.ng-scroll-content');
     this.resizeObserver = new ResizeObserver(res => {
-      console.log(' check absolute height change: ', res[0].contentRect.height);
       this.absoluteHeight = res[0].contentRect.height;
     });
     this.resizeObserver.observe(element!);
@@ -136,20 +129,11 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   // todo: find a better name
-  detectAndFetch(element: Element): void {
+  requestNextPhotos(element: Element): void {
     const currentHeight = element.clientHeight + element.scrollTop /* + element.scrollTop*/;
-    // console.log('element.scrollTop', element.scrollTop)
-    // console.log('currentHeight', currentHeight)
-    // console.log('maxHeight', this.absoluteHeight)
-    // console.log('scrollHeight', element.scrollHeight)
     if (currentHeight + 180 > this.absoluteHeight && !this.isRequesting) {
-      // if (this.absoluteHeight != element.scrollHeight) {
-      // console.log('check height: ' + (currentHeight + 180) +
-      //   ' is larger then abs height: ' + this.absoluteHeight + ' is requesting true')
       this.isRequesting = true;
-      console.log('XX Store dispatch')
-      this.store.dispatch(new LoadPhotosAction(new PageOptionsDto(this.page++, 30)));
-      // }
+      this.store.dispatch(new LoadPhotosAction(60));
     }
   }
 

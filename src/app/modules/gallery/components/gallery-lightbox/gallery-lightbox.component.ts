@@ -11,7 +11,6 @@ import { Photo } from '@gallery/store/photos/photo.model';
 import { ClearPhotoSelectionAction, LoadPhotosAction } from "@gallery/store/photos/photo.actions";
 import { ActionBarService } from "@app/services/action-bar.service";
 import { Action, ActionProvider } from "@app/models/actions";
-import { PageOptionsDto } from "@app/common/dto/page-options.dto";
 
 enum View {
   Horizontal,
@@ -53,7 +52,7 @@ export class GalleryLightboxComponent implements OnInit, OnDestroy, ActionProvid
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new LoadPhotosAction(new PageOptionsDto(1, 30)));
+    this.store.dispatch(new LoadPhotosAction(60));
     this.actionBarService.setActions(this.actions);
   }
 

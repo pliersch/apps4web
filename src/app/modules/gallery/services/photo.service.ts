@@ -8,6 +8,7 @@ import { Order } from "@app/common/constants/order.constant";
 import { PageOptionsDto } from "@app/common/dto/page-options.dto";
 import { PageMetaDto } from "@app/common/dto/page-meta.dto";
 import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
+import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
 
 const PICTURE_BASE_URL = `${environment.apiUrl}/photos`;
 const DOWNLOAD_BASE_URL = `${environment.apiUrl}/download`;
@@ -24,8 +25,8 @@ export class PhotoService {
     return this.http.get<PhotoMetaDataDto>(PICTURE_BASE_URL + '/meta');
   }
 
-  getAll(): Observable<PageDto<Photo>> {
-    return this.http.get<PageDto<Photo>>(PICTURE_BASE_URL, {
+  getAll(): Observable<PhotoDto> {
+    return this.http.get<PhotoDto>(PICTURE_BASE_URL, {
       params: {
         order: Order.ASC,
         page: 1,
@@ -34,13 +35,13 @@ export class PhotoService {
     });
   }
 
-  getPage(dto: PageOptionsDto): Observable<PageDto<Photo>> {
-    console.log('PhotoService getPage: ', dto.page)
-    return this.http.get<PageDto<Photo>>(PICTURE_BASE_URL, {
+  getPhotos(take: number, from: number): Observable<PhotoDto> {
+    console.log('PhotoService getPhotos: ', take, from)
+    return this.http.get<PhotoDto>(PICTURE_BASE_URL, {
       params: {
         order: Order.ASC,
-        page: dto.page,
-        take: dto.take
+        from: from,
+        take: take
       }
     });
   }

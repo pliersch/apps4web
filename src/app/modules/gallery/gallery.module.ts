@@ -59,6 +59,7 @@ import {
 } from './components/gallery-explorer/gallery-edit-image-tags/gallery-edit-image-tags.component';
 import {TagService} from "@gallery/services/tag.service";
 import {PhotoService} from "@gallery/services/photo.service";
+import { GalleryMetaPanelComponent } from './components/gallery-explorer/gallery-meta-panel/gallery-meta-panel.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import {PhotoService} from "@gallery/services/photo.service";
     ImageControlComponent,
     GalleryNewTagCategoryComponent,
     GalleryEditImageTagsComponent,
+    GalleryMetaPanelComponent,
   ],
   imports: [
     CommonModule,
