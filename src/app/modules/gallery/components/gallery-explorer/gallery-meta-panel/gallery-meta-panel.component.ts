@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
 import { Observable } from "rxjs";
 import { PhotoStateMetaData } from "@gallery/store/photos/photo.state";
 

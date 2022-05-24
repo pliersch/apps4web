@@ -54,7 +54,7 @@ export class LoadPhotosFailAction {
 export class AddPhotoAction {
   static readonly type = '[Gallery] Add Photo';
 
-  constructor(public photo: File, public tags: string[]) { }
+  constructor(public photo: File, public tags: string[], public created: number) { }
 }
 
 export class AddPhotoSuccessAction {
@@ -67,6 +67,14 @@ export class AddPhotoFailAction {
   static readonly type = '[Gallery] Add Photo fail';
 
   constructor(public error: any) { }
+}
+
+// current photo
+
+export class SetCurrentPhotoAction {
+  static readonly type = '[Gallery] Set Current Photo';
+
+  constructor(public photo: Photo) { }
 }
 
 

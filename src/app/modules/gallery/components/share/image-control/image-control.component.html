@@ -2,6 +2,9 @@
   <img alt="thumbnail" [id]="photo.fileName" draggable="false" appImgFallback="bad-solution"
        [src]="getThumbUrl(photo.fileName)" appImgLazyLoad loading="lazy">
   <div class="flex-column">
+    <button mat-icon-button (click)="onClickPreview()">
+      <mat-icon>visibility</mat-icon>
+    </button>
     <button mat-icon-button (click)="onClickDownload()" [class.active]="download">
       <mat-icon>download</mat-icon>
     </button>

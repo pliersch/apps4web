@@ -9,17 +9,11 @@ export class LazyImageDirective {
   constructor(private injector: Injector,
               private ref: ElementRef<HTMLImageElement>) {
     const supports = 'loading' in HTMLImageElement.prototype;
-    console.log('LazyImageDirective constructor: ', supports)
 
     if (!supports) {
       const lazyService = this.injector.get(LazyImageService);
       lazyService.observe(this.ref.nativeElement);
     }
-
-    // makes no sense
-    // if (supports) {
-    //   nativeElement.setAttribute('loading', 'lazy');
-    // }
   }
 
 }

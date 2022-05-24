@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Photo } from '@gallery/store/photos/photo.model';
 
 @Component({
@@ -7,20 +7,9 @@ import { Photo } from '@gallery/store/photos/photo.model';
   styleUrls: ['./gallery-image-detail.component.scss']
 })
 
-export class GalleryImageDetailComponent implements OnInit {
+export class GalleryImageDetailComponent {
 
   @Input()
   currentPhoto: Photo;
 
-  constructor() {
-  }
-
-  ngOnInit(): void {
-    //   const data = of('[{"id":1},{"id":2},{"id":3},{"id":4}]');
-    //
-    //   data.pipe(
-    //     map((value) => JSON.parse(value)),
-    //     // startWith(false),
-    //   ).subscribe(console.log);
-  }
 }

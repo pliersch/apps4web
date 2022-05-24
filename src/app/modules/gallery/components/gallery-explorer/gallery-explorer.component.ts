@@ -11,7 +11,7 @@ import {
   DeselectAllPhotosAction,
   LoadPhotosAction,
   SelectAllPhotosAction,
-  SelectManyPhotosAction,
+  SelectManyPhotosAction, SetCurrentPhotoAction,
   SetTagsOfPicture,
   TogglePhotoDownloadAction,
   TogglePhotosDownloadAction
@@ -24,6 +24,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { PhotoService } from "@gallery/services/photo.service";
 import { NgScrollbar } from "ngx-scrollbar";
 import { tap } from "rxjs/operators";
+import { Router } from "@angular/router";
 
 export interface DialogData {
   tags: string[];
@@ -57,14 +58,17 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   pageMeta: PhotoStateMetaData;
 
   @Select(PhotoState.getPhotos)
-  pictures$: Observable<Photo[]>;
-  pictures: Photo[];
+  photos$: Observable<Photo[]>;
+  photos: Photo[];
+
+  @Select(PhotoState.getCurrentPhoto)
+  currentPhoto$: Observable<Photo>;
+  currentPhoto: Photo;
 
   @Select(PhotoState.getSelectedPictures)
   selection$: Observable<Photo[]>;
-  selection: Photo[];
 
-  currentImage: Photo;
+  selection: Photo[];
   showFilter = true;
   absoluteHeight = 0;
   private isRequesting: boolean;
@@ -81,6 +85,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
 
   constructor(private actionBarService: ActionBarService,
               private photoService: PhotoService,
+              private router: Router,
               public dialog: MatDialog,
               private ngZone: NgZone,
               private store: Store) {
@@ -89,17 +94,19 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   ngOnInit(): void {
     this.actionBarService.setActions(this.actions);
     this.selection$.subscribe(res => this.selection = res);
-    this.pictures$.subscribe(res => {
-      this.currentImage = res[0];
-      this.pictures = res;
+
+    this.photos$.subscribe(res => {
+      this.photos = res;
       this.isRequesting = false;
+    });
+
+    this.currentPhoto$.subscribe(res => {
+      this.currentPhoto = res;
     });
     this.pageMeta$.subscribe(meta => {
       this.pageMeta = meta;
-      if (meta.allPhotosCount > 0) {
-        this.store.dispatch(new LoadPhotosAction(60));
-      }
     });
+    this.store.dispatch(new LoadPhotosAction(60));
     this.initializeSelectionArea();
   }
 
@@ -124,8 +131,9 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     this.resizeObserver.observe(element!);
   }
 
-  setCurrent(image: Photo): void {
-    this.currentImage = image;
+  setCurrent(photo: Photo): void {
+    this.store.dispatch(new SetCurrentPhotoAction(photo))
+    this.currentPhoto = photo;
   }
 
   // todo: find a better name
@@ -161,6 +169,11 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     this.store.dispatch(new TogglePhotoDownloadAction($event));
   }
 
+  onSelectForPreview($event: Photo): void {
+    this.setCurrent($event);
+    void this.router.navigate(['gallery/lightbox']);
+  }
+
   onSelectForDelete($event: Photo): void {
     this.store.dispatch(new DeletePhotoAction($event.id));
   }
@@ -176,7 +189,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   onSelectionFinish(photoFileNames: string[]): void {
     let photos: Photo[] = [];
     for (const fileName of photoFileNames) {
-      let photo = this.pictures.find(img => img.fileName == fileName);
+      let photo = this.photos.find(img => img.fileName == fileName);
       if (photo) {
         photos.push(photo);
       } else {

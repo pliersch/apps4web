@@ -1,9 +1,8 @@
-import { Action, NgxsOnInit, Selector, State, StateContext } from "@ngxs/store";
+import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { Injectable } from "@angular/core";
 import { catchError, map } from "rxjs/operators";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import * as photoAction from "@gallery/store/photos/photo.actions";
-import { LoadMetaDataAction } from "@gallery/store/photos/photo.actions";
 import { Photo, PhotoUpdate } from "@gallery/store/photos/photo.model";
 import { insertItem, patch, removeItem, updateItem } from "@ngxs/store/operators";
 import { filterAllTags } from "@gallery/store/photos/photo.tools";
@@ -26,7 +25,7 @@ export interface PhotoStateModel {
   tagFilter: string[];
   // comparePhotos: Photo[];
   // exportPhotos: Photo[];
-  // selectedPhoto: Photo | null;
+  currentPhoto: Photo | undefined;
   allPhotosLoaded: boolean;
   loaded: boolean;
   loading: boolean;
@@ -36,6 +35,7 @@ export interface PhotoStateModel {
   name: 'gallery', // todo maybe photos?
   defaults: {
     photos: [],
+    currentPhoto: undefined,
     metaData: {allPhotosCount: 0, selectedPhotosCount: 0, filteredPhotosCount: 0},
     selectedPictures: [],
     tagFilter: [],
@@ -46,11 +46,7 @@ export interface PhotoStateModel {
 })
 
 @Injectable()
-export class PhotoState implements NgxsOnInit {
-
-  ngxsOnInit(ctx?: StateContext<any>): any {
-    ctx?.dispatch(new LoadMetaDataAction())
-  }
+export class PhotoState {
 
   @Selector([TagState.getActiveTags])
   static getPhotos(state: PhotoStateModel, activeTags: string[]): Photo[] {
@@ -61,10 +57,17 @@ export class PhotoState implements NgxsOnInit {
   }
 
   @Selector()
-  static pandas(state: string[]) {
-    return (type: string) => {
-      return state.filter(s => s.indexOf('panda') > -1).filter(s => s.indexOf(type) > -1);
-    };
+  static getCurrentPhoto(state: PhotoStateModel): Photo {
+    return <Photo>state.currentPhoto;
+  }
+
+  @Selector()
+  static getCurrentIndex(state: PhotoStateModel): number {
+    console.log('PhotoState getCurrentIndex: ',)
+    if (state.currentPhoto) {
+      return state.photos.indexOf(state.currentPhoto);
+    }
+    return 0;
   }
 
   @Selector()
@@ -187,7 +190,7 @@ export class PhotoState implements NgxsOnInit {
     const state = ctx.getState();
     let photos: Photo[] = [...state.photos, ...action.dto.photos]
     ctx.patchState({
-      photos: photos, loaded: true, loading: false
+      photos: photos, loaded: true, loading: false, currentPhoto: photos[0]
     });
   }
 
@@ -201,12 +204,23 @@ export class PhotoState implements NgxsOnInit {
   // endregion
 
   //////////////////////////////////////////////////////////
+  //          set current
+  //////////////////////////////////////////////////////////
+
+  @Action(photoAction.SetCurrentPhotoAction)
+  setCurrentPhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.SetCurrentPhotoAction): void {
+    ctx.patchState({
+      currentPhoto: action.photo
+    });
+  }
+
+  //////////////////////////////////////////////////////////
   //          add
   //////////////////////////////////////////////////////////
 
   @Action(photoAction.AddPhotoAction)
   addPhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoAction): Observable<Subscription> {
-    return this.photoService.create(action.photo, action.tags).pipe(
+    return this.photoService.create(action.photo, action.tags, action.created).pipe(
       map((photo: Photo) =>
         asapScheduler.schedule(() =>
           ctx.dispatch(new photoAction.AddPhotoSuccessAction(photo))

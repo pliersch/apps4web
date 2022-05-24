@@ -1,12 +1,12 @@
-import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {Select, Store} from "@ngxs/store";
-import {TagState} from "@gallery/store/tags/tag.state";
-import {Observable, of} from "rxjs";
-import {Tag} from "@gallery/store/tags/tag.model";
-import {LoadTags} from "@gallery/store/tags/tag.action";
-import {AddPhotoAction} from "@gallery/store/photos/photo.actions";
-import {TagService} from "@gallery/services/tag.service";
-import {PhotoService} from "@gallery/services/photo.service";
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Select, Store } from "@ngxs/store";
+import { TagState } from "@gallery/store/tags/tag.state";
+import { Observable, of } from "rxjs";
+import { Tag } from "@gallery/store/tags/tag.model";
+import { LoadTags } from "@gallery/store/tags/tag.action";
+import { AddPhotoAction } from "@gallery/store/photos/photo.actions";
+import { TagService } from "@gallery/services/tag.service";
+import { PhotoService } from "@gallery/services/photo.service";
 
 const PLACEHOLDER_URL = 'assets/svg/image-placeholder.svg';
 
@@ -61,7 +61,8 @@ export class GalleryUploadComponent implements OnInit {
     }
     this.imgFiles = Array.from(files);
     for (const file of this.imgFiles) {
-      this.actions.push(new AddPhotoAction(file, this.selectedTags));
+      console.log('GalleryUploadComponent onChange: ', file)
+      this.actions.push(new AddPhotoAction(file, this.selectedTags, file.lastModified));
       const reader = new FileReader();
       reader.onload = (e: any): void => {
         this.imgUrls.push(e.target.result);

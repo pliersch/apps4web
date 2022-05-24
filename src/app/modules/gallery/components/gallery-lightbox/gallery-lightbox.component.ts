@@ -1,11 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngxs/store';
-import {
-  GalleryVerticalScrollerComponent
-} from '@gallery/components/gallery-vertical-scroller/gallery-vertical-scroller.component';
-import {
-  GalleryHorizontalScrollerComponent
-} from '@gallery/components/gallery-horizontal-scroller/gallery-horizontal-scroller.component';
+import { GalleryVerticalScrollerComponent }
+  from '@gallery/components/gallery-vertical-scroller/gallery-vertical-scroller.component';
+import { GalleryHorizontalScrollerComponent }
+  from '@gallery/components/gallery-horizontal-scroller/gallery-horizontal-scroller.component';
 import { AlertService } from '@app/services/alert.service';
 import { Photo } from '@gallery/store/photos/photo.model';
 import { ClearPhotoSelectionAction, LoadPhotosAction } from "@gallery/store/photos/photo.actions";
@@ -78,8 +76,8 @@ export class GalleryLightboxComponent implements OnInit, OnDestroy, ActionProvid
     this.view = this.view === View.Horizontal ? View.Vertical : View.Horizontal;
   }
 
-  onSelectImage(event: { index: number, selection: Photo[] }): void {
-    this.index = event.index;
+  onSelectImage(event: number): void {
+    this.index = event;
   }
 
   nextSlide(): void {

@@ -6,10 +6,11 @@
     <div class="scrollbar-wrapper">
       <ng-scrollbar>
         <div class="images-wrapper selection-area-container">
-          <app-image-control *ngFor="let photo of (pictures$ | async)" class="selection-item"
-                             [selected]="currentImage === photo" [download]="isSelected(photo)"
+          <app-image-control *ngFor="let photo of (photos$ | async)" class="selection-item"
+                             [selected]="currentPhoto === photo" [download]="isSelected(photo)"
                              (click)="setCurrent(photo)" [photo]="photo"
                              (deleteEvent)="onSelectForDelete($event)"
+                             (previewEvent)="onSelectForPreview($event)"
                              (downloadEvent)="onSelectForDownload($event)"></app-image-control>
         </div>
       </ng-scrollbar>
@@ -20,5 +21,5 @@
                           [metaData]="pageMeta$"></app-gallery-meta-panel>
 
   <app-gallery-image-detail class="component gallery-explorer-grid-details"
-                            [currentPhoto]="currentImage"></app-gallery-image-detail>
+                            [currentPhoto]="currentPhoto"></app-gallery-image-detail>
 </div>

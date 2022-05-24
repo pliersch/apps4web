@@ -10,7 +10,7 @@
 
   <div class="grid-thumbs">
     <app-gallery-vertical-scroller *ngIf="view === viewEnum.Vertical"
-                                   [currentIndex]="index" (selectEvent)="onSelectImage($event)">
+                                   (selectEvent)="onSelectImage($event)">
     </app-gallery-vertical-scroller>
     <app-gallery-horizontal-scroller *ngIf="view === viewEnum.Horizontal">
     </app-gallery-horizontal-scroller>

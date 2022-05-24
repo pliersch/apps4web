@@ -10,7 +10,7 @@
       </mat-list-item>
       <mat-list-item>
         <span matLine style="font-size:10px"> Date </span>
-        <h2 *ngIf="currentPhoto" matLine style="font-size:16px"> {{currentPhoto.createDateTime | date}} </h2>
+        <h2 *ngIf="currentPhoto" matLine style="font-size:16px"> {{currentPhoto.recordDate | date}} </h2>
       </mat-list-item>
       <mat-list-item>
         <app-gallery-star-rating></app-gallery-star-rating>

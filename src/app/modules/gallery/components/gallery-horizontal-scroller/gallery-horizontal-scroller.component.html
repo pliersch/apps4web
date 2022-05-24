@@ -3,8 +3,8 @@
     <div class="thumbnail-list">
       <div class="thumbnail-item item" *ngFor="let image of (images | async); let i = index"
            [style.background-image]="'url(' + getThumbUrl(image.fileName) + ')'"
-           [class.active]="image.isSelected"
-           (click)="onSelectImage($event, image)">
+           [class.active]="currentIndex === i"
+           (click)="onSelectImage(image)">
       </div>
     </div>
   </div>
