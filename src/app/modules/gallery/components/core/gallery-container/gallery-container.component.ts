@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from "@ngxs/store";
-import { LoadPhotosAction } from "@gallery/store/photos/photo.actions";
 import { Router } from "@angular/router";
 import { Location } from "@angular/common";
-import { PageOptionsDto } from "@app/common/dto/page-options.dto";
 
 // TODO ugly naming
 interface LinkAndName {
@@ -21,6 +18,7 @@ export class GalleryContainerComponent implements OnInit {
   linksAndNames: LinkAndName[] = [
     {name: 'Home', link: '/gallery/home'},
     {name: 'Explorer', link: '/gallery/explorer'},
+    {name: 'Slideshow', link: '/gallery/slideshow'},
     {name: 'Lightbox', link: '/gallery/lightbox'},
     {name: 'Upload', link: '/gallery/upload'},
   ];
@@ -29,7 +27,6 @@ export class GalleryContainerComponent implements OnInit {
 
   constructor(private router: Router,
               private location: Location,
-              private store: Store,
   ) {
   }
 

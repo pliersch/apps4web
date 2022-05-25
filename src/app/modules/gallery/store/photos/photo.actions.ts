@@ -77,6 +77,13 @@ export class SetCurrentPhotoAction {
   constructor(public photo: Photo) { }
 }
 
+export class SetNextPhotoAction {
+  static readonly type = '[Gallery] Set Next Photo';
+}
+
+export class SetPreviousPhotoAction {
+  static readonly type = '[Gallery] Set Previous Photo';
+}
 
 // compare
 

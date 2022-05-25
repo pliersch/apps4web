@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Photo } from '@gallery/store/photos/photo.model';
 import { NgScrollbar } from 'ngx-scrollbar';
 import { Observable } from 'rxjs';
@@ -38,7 +38,7 @@ export class GalleryVerticalScrollerComponent implements OnInit {
     });
   }
 
-  onSelectCurrentImage($event: MouseEvent, index: number): void {
+  onSelectCurrentImage(index: number): void {
     this.selectEvent.emit(index);
   }
 

@@ -214,6 +214,24 @@ export class PhotoState {
     });
   }
 
+  @Action(photoAction.SetNextPhotoAction)
+  setNextPhotoAction(ctx: StateContext<PhotoStateModel>, action: photoAction.SetNextPhotoAction): void {
+    let photos = ctx.getState().photos;
+    let index = photos.indexOf(ctx.getState().currentPhoto!);
+    ctx.patchState({
+      currentPhoto: photos[++index]
+    });
+  }
+
+  @Action(photoAction.SetPreviousPhotoAction)
+  setPreviousPhotoAction(ctx: StateContext<PhotoStateModel>, action: photoAction.SetPreviousPhotoAction): void {
+    let photos = ctx.getState().photos;
+    let index = photos.indexOf(ctx.getState().currentPhoto!);
+    ctx.patchState({
+      currentPhoto: photos[--index]
+    });
+  }
+
   //////////////////////////////////////////////////////////
   //          add
   //////////////////////////////////////////////////////////

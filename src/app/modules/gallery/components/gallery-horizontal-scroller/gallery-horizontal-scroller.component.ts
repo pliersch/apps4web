@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Photo } from '@gallery/store/photos/photo.model';
 import { NgScrollbar } from 'ngx-scrollbar';
 import { Observable } from 'rxjs';
-import { Select, Store } from '@ngxs/store';
+import { Select } from '@ngxs/store';
 import { PhotoState } from "@gallery/store/photos/photo.state";
-import { TogglePhotoSelectionAction } from "@gallery/store/photos/photo.actions";
 import { getThumbUrl } from "@gallery/store/photos/photo.tools";
 
 @Component({
@@ -18,7 +17,7 @@ export class GalleryHorizontalScrollerComponent implements OnInit {
   scrollbar!: NgScrollbar;
 
   @Select(PhotoState.getPhotos)
-  images: Observable<Photo[]>
+  photos$: Observable<Photo[]>
 
   @Select(PhotoState.getComparePhotos)
   images2: Observable<Photo[]>
@@ -27,8 +26,8 @@ export class GalleryHorizontalScrollerComponent implements OnInit {
   currentIndex$: Observable<number>;
   currentIndex: number;
 
-  constructor(private store: Store) {
-  }
+  @Output()
+  selectEvent = new EventEmitter<Photo>();
 
   ngOnInit(): void {
     this.currentIndex$.subscribe(res => {
@@ -37,7 +36,8 @@ export class GalleryHorizontalScrollerComponent implements OnInit {
   }
 
   onSelectImage(photo: Photo): void {
-    this.updateSelection(photo);
+    this.selectEvent.emit(photo);
+    // this.updateSelection(photo);
   }
 
   onScroll($event: WheelEvent): void {
@@ -56,9 +56,9 @@ export class GalleryHorizontalScrollerComponent implements OnInit {
     });
   }
 
-  private updateSelection(photo: Photo): void {
-    this.store.dispatch(new TogglePhotoSelectionAction(photo));
-  }
+  // private updateSelection(photo: Photo): void {
+  //   this.store.dispatch(new TogglePhotoSelectionAction(photo));
+  // }
 
   getThumbUrl(fileName: string): string {
     return getThumbUrl(fileName);

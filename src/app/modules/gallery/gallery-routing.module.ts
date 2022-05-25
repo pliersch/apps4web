@@ -8,6 +8,7 @@ import { GalleryHomeComponent } from '@app/modules/gallery/components/gallery-ho
 import { GalleryLightboxComponent } from '@app/modules/gallery/components/gallery-lightbox/gallery-lightbox.component';
 import { GalleryUploadComponent } from '@app/modules/gallery/components/gallery-upload/gallery-upload.component';
 import { GalleryResolverService } from "@gallery/services/gallery-resolver.service";
+import { GallerySlideshowComponent } from "@gallery/components/gallery-slideshow/gallery-slideshow.component";
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
       {path: 'home', component: GalleryHomeComponent},
       {path: 'explorer', component: GalleryExplorerComponent/*, resolve: {photos: PhotosResolver}*/},
       {path: 'lightbox', component: GalleryLightboxComponent},
+      {path: 'slideshow', component: GallerySlideshowComponent},
       {path: 'upload', component: GalleryUploadComponent},
     ]
   }
