@@ -12,17 +12,13 @@ import { PhotoService } from "@gallery/services/photo.service";
 import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
 import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
 
-export interface PhotoStateMetaData {
-  allPhotosCount: number;
-  selectedPhotosCount: number;
-  filteredPhotosCount: number;
-}
-
 export interface PhotoStateModel {
   photos: Photo[];
   selectedPictures: Photo[];
-  metaData: PhotoStateMetaData;
   tagFilter: string[];
+  allPhotosCount: number;
+  selectedPhotosCount: number;
+  filteredPhotosCount: number;
   // comparePhotos: Photo[];
   // exportPhotos: Photo[];
   currentPhoto: Photo | undefined;
@@ -36,7 +32,9 @@ export interface PhotoStateModel {
   defaults: {
     photos: [],
     currentPhoto: undefined,
-    metaData: {allPhotosCount: 0, selectedPhotosCount: 0, filteredPhotosCount: 0},
+    allPhotosCount: 0,
+    selectedPhotosCount: 0,
+    filteredPhotosCount: 0,
     selectedPictures: [],
     tagFilter: [],
     allPhotosLoaded: false,
@@ -81,8 +79,8 @@ export class PhotoState {
   }
 
   @Selector()
-  static getPageMetaData(state: PhotoStateModel): PhotoStateMetaData | null {
-    return state.metaData;
+  static getAllPhotosCount(state: PhotoStateModel): number {
+    return state.allPhotosCount;
   }
 
   // @Selector()
@@ -130,14 +128,8 @@ export class PhotoState {
 
   @Action(photoAction.LoadMetaDataSuccessAction)
   loadMetaDataSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataSuccessAction): void {
-    let current: PhotoStateMetaData = ctx.getState().metaData;
-    let next: PhotoStateMetaData = {
-      allPhotosCount: action.dto.count,
-      selectedPhotosCount: current.selectedPhotosCount,
-      filteredPhotosCount: current.filteredPhotosCount,
-    }
     ctx.patchState({
-      metaData: next, loading: false
+      allPhotosCount: action.dto.count, loading: false
     });
   }
 
@@ -162,7 +154,7 @@ export class PhotoState {
     }
     ctx.patchState({loading: true, loaded: false});
     const from: number = action.from ? action.from : state.photos.length;
-    const availablePhotos: number = state.metaData.allPhotosCount - state.photos.length;
+    const availablePhotos: number = state.allPhotosCount - state.photos.length;
     const count: number = availablePhotos < action.count ? availablePhotos : action.count;
     if (count == 0) {
       return of(Subscription.EMPTY);

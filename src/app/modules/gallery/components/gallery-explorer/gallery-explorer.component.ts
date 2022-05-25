@@ -2,7 +2,7 @@ import { AfterViewInit, Component, NgZone, OnDestroy, OnInit, ViewChild } from '
 import { Photo } from '@gallery/store/photos/photo.model';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { PhotoState, PhotoStateMetaData } from "@gallery/store/photos/photo.state";
+import { PhotoState } from "@gallery/store/photos/photo.state";
 import { Action, ActionProvider } from "@app/models/actions";
 import { ActionBarService } from "@app/services/action-bar.service";
 import { saveAs } from 'file-saver';
@@ -53,9 +53,9 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   @ViewChild(NgScrollbar)
   scrollbarRef: NgScrollbar;
 
-  @Select(PhotoState.getPageMetaData)
-  pageMeta$: Observable<PhotoStateMetaData>;
-  pageMeta: PhotoStateMetaData;
+  @Select(PhotoState.getAllPhotosCount)
+  allPhotosCount$: Observable<number>;
+  allPhotosCount: number;
 
   @Select(PhotoState.getPhotos)
   photos$: Observable<Photo[]>;
@@ -103,8 +103,8 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     this.currentPhoto$.subscribe(res => {
       this.currentPhoto = res;
     });
-    this.pageMeta$.subscribe(meta => {
-      this.pageMeta = meta;
+    this.allPhotosCount$.subscribe(count => {
+      this.allPhotosCount = count;
     });
     this.store.dispatch(new LoadPhotosAction(60));
     this.initializeSelectionArea();

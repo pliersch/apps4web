@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  GalleryVerticalScrollerComponent
-} from "@gallery/components/gallery-vertical-scroller/gallery-vertical-scroller.component";
+import { GalleryVerticalScrollerComponent }
+  from "@gallery/components/gallery-vertical-scroller/gallery-vertical-scroller.component";
 import { Select, Store } from "@ngxs/store";
 import {
   LoadPhotosAction,
@@ -9,9 +8,8 @@ import {
   SetNextPhotoAction,
   SetPreviousPhotoAction
 } from "@gallery/store/photos/photo.actions";
-import {
-  GalleryHorizontalScrollerComponent
-} from "@gallery/components/gallery-horizontal-scroller/gallery-horizontal-scroller.component";
+import { GalleryHorizontalScrollerComponent }
+  from "@gallery/components/gallery-horizontal-scroller/gallery-horizontal-scroller.component";
 import { getPhotoUrl } from "@gallery/store/photos/photo.tools";
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { Observable } from "rxjs";
@@ -38,6 +36,10 @@ export class GallerySlideshowComponent implements OnInit {
   @Select(PhotoState.getCurrentPhoto)
   currentPhoto$: Observable<Photo>;
 
+  @Select(PhotoState.getCurrentIndex)
+  currentIndex$: Observable<number>;
+  currentIndex: number;
+
   imgUrl = '';
 
   viewEnum = View;
@@ -47,9 +49,12 @@ export class GallerySlideshowComponent implements OnInit {
   constructor(private store: Store) { }
 
   ngOnInit(): void {
+    // this.store.select(state => state.gallery);
     this.store.dispatch(new LoadPhotosAction(60));
+    this.currentIndex$.subscribe(res => {
+      this.currentIndex = res;
+    });
     this.currentPhoto$.subscribe(res => {
-      console.log('GallerySlideshowComponent : ', res)
       if (res) {
         this.imgUrl = getPhotoUrl(res.fileName);
       }

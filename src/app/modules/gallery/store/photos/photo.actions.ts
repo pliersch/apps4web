@@ -1,7 +1,6 @@
 import { Photo, PhotoUpdate } from "@gallery/store/photos/photo.model";
 import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
 import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
-import { PhotoStateMetaData } from "@gallery/store/photos/photo.state";
 
 // meta data
 
@@ -23,9 +22,9 @@ export class LoadMetaDataFailAction {
 }
 
 export class UpdateMetaDataAction {
-  static readonly type = '[Gallery] Update MetaData';
+  static readonly type = '[Gallery] Update AllPhotos Count';
 
-  constructor(public data: PhotoStateMetaData) { }
+  constructor(public count: number) { }
 }
 
 // loading photos

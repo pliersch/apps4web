@@ -1,6 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { Observable } from "rxjs";
-import { PhotoStateMetaData } from "@gallery/store/photos/photo.state";
 
 @Component({
   selector: 'app-gallery-meta-panel',
@@ -10,7 +8,7 @@ import { PhotoStateMetaData } from "@gallery/store/photos/photo.state";
 export class GalleryMetaPanelComponent {
 
   @Input()
-  metaData: Observable<PhotoStateMetaData>;
+  allPhotosCount: number;
 
   constructor() { }
 
