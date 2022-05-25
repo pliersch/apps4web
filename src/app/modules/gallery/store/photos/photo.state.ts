@@ -61,7 +61,6 @@ export class PhotoState {
 
   @Selector()
   static getCurrentIndex(state: PhotoStateModel): number {
-    console.log('PhotoState getCurrentIndex: ',)
     if (state.currentPhoto) {
       return state.photos.indexOf(state.currentPhoto);
     }

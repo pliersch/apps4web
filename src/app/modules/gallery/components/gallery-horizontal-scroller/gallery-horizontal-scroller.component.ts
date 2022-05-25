@@ -52,7 +52,7 @@ export class GalleryHorizontalScrollerComponent implements OnInit {
 
   scrollToPosition(position: number): void {
     void this.scrollbar.scrollTo({
-      left: position
+      left: position * 200
     });
   }
 

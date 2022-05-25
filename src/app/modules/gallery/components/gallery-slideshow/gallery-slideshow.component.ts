@@ -82,7 +82,7 @@ export class GallerySlideshowComponent implements OnInit {
 
   private scrollToActiveItem(): void {
     if (this.view === View.Horizontal) {
-      // this.horizontalScrollbarRef.scrollTo(this.index);
+      this.horizontalScrollbarRef.scrollToPosition(this.index);
     } else {
       this.verticalScrollbarRef.scrollTo(this.index);
     }
