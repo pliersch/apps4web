@@ -18,6 +18,9 @@ export class ImageControlComponent {
   @Input()
   download: boolean;
 
+  @Input()
+  hasRights: boolean;
+
   @Output()
   downloadEvent = new EventEmitter<Photo>();
 

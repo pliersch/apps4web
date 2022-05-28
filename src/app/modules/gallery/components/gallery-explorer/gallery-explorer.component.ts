@@ -17,14 +17,14 @@ import {
   TogglePhotosDownloadAction
 } from "@gallery/store/photos/photo.actions";
 import { AreaSelection, AreaSelectionHandler } from "@gallery/components/gallery-explorer/area-selection";
-import {
-  GalleryEditImageTagsComponent
-} from "@gallery/components/gallery-explorer/gallery-edit-image-tags/gallery-edit-image-tags.component";
+import { GalleryEditImageTagsComponent }
+  from "@gallery/components/gallery-explorer/gallery-edit-image-tags/gallery-edit-image-tags.component";
 import { MatDialog } from "@angular/material/dialog";
 import { PhotoService } from "@gallery/services/photo.service";
 import { NgScrollbar } from "ngx-scrollbar";
 import { tap } from "rxjs/operators";
 import { Router } from "@angular/router";
+import { AuthState } from "@modules/account/store/auth.state";
 
 export interface DialogData {
   tags: string[];
@@ -52,6 +52,10 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
 
   @ViewChild(NgScrollbar)
   scrollbarRef: NgScrollbar;
+
+  @Select(AuthState.isAuthenticated)
+  isAuthenticated$: Observable<boolean>;
+  isAuthenticated: boolean;
 
   @Select(PhotoState.getAllPhotosCount)
   allPhotosCount$: Observable<number>;
@@ -95,13 +99,14 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   ngOnInit(): void {
     this.actionBarService.setActions(this.actions);
     this.subscription = this.selection$.subscribe(res => this.selection = res);
-    this.currentPhoto$.subscribe(res => this.currentPhoto = res);
-    this.allPhotosCount$.subscribe(count => this.allPhotosCount = count);
-    this.photos$.subscribe(res => {
-      this.photos = res;
-      this.isRequesting = false;
-      console.log('GalleryExplorerComponent : ', res.length)
-    });
+    this.subscription.add(this.currentPhoto$.subscribe(res => this.currentPhoto = res));
+    this.subscription.add(this.isAuthenticated$.subscribe(res => this.isAuthenticated = res));
+    this.subscription.add(this.allPhotosCount$.subscribe(count => this.allPhotosCount = count));
+    this.subscription.add(
+      this.photos$.subscribe(res => {
+        this.photos = res;
+        this.isRequesting = false;
+      }));
     this.store.dispatch(new LoadPhotosAction(60));
     this.initializeSelectionArea();
   }

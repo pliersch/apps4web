@@ -9,6 +9,7 @@
           <app-image-control *ngFor="let photo of (photos$ | async)" class="selection-item"
                              [selected]="currentPhoto === photo" [download]="isSelected(photo)"
                              (click)="setCurrent(photo)" [photo]="photo"
+                             [hasRights]="isAuthenticated"
                              (deleteEvent)="onSelectForDelete($event)"
                              (previewEvent)="onSelectForPreview($event)"
                              (downloadEvent)="onSelectForDownload($event)"></app-image-control>
