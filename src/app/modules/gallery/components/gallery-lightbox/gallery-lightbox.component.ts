@@ -5,7 +5,11 @@ import { GalleryVerticalScrollerComponent }
 import { GalleryHorizontalScrollerComponent }
   from '@gallery/components/gallery-horizontal-scroller/gallery-horizontal-scroller.component';
 import { AlertService } from '@app/services/alert.service';
-import { ClearPhotoSelectionAction, LoadPhotosAction } from "@gallery/store/photos/photo.actions";
+import {
+  ClearPhotoSelectionAction,
+  LoadPhotosAction,
+  TogglePhotoSelectionAction
+} from "@gallery/store/photos/photo.actions";
 import { ActionBarService } from "@app/services/action-bar.service";
 import { Action, ActionProvider } from "@app/models/actions";
 import { Photo } from "@gallery/store/photos/photo.model";
@@ -76,28 +80,8 @@ export class GalleryLightboxComponent implements OnInit, OnDestroy, ActionProvid
     this.view = this.view === View.Horizontal ? View.Vertical : View.Horizontal;
   }
 
-  onSelectImage(event: number): void {
-    this.index = event;
+  onSelectImage(photo: Photo): void {
+    this.store.dispatch(new TogglePhotoSelectionAction(photo));
   }
 
-  nextSlide(): void {
-    this.updateSlideIndex(1);
-  }
-
-  prevSlide(): void {
-    this.updateSlideIndex(-1);
-  }
-
-  updateSlideIndex(n: number): void {
-    this.index += n;
-    this.scrollToActiveItem();
-  }
-
-  private scrollToActiveItem(): void {
-    if (this.view === View.Horizontal) {
-      // this.horizontalScrollbarRef.scrollTo(this.index);
-    } else {
-      this.verticalScrollbarRef.scrollTo(this.index);
-    }
-  }
 }

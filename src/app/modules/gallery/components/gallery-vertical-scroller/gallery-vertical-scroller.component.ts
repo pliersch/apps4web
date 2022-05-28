@@ -27,7 +27,7 @@ export class GalleryVerticalScrollerComponent implements OnInit {
   currentIndex: number;
 
   @Output()
-  selectEvent = new EventEmitter<number>();
+  selectEvent = new EventEmitter<Photo>();
 
   ngOnInit(): void {
     console.log('GalleryVerticalScrollerComponent ngOnInit: ',)
@@ -38,8 +38,8 @@ export class GalleryVerticalScrollerComponent implements OnInit {
     });
   }
 
-  onSelectCurrentImage(index: number): void {
-    this.selectEvent.emit(index);
+  onSelectCurrentImage(photo: Photo): void {
+    this.selectEvent.emit(photo);
   }
 
   // TODO refactor to "scrollToIndex" without arg

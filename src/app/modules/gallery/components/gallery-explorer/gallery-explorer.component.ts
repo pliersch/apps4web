@@ -171,7 +171,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
 
   onSelectForPreview($event: Photo): void {
     this.setCurrent($event);
-    void this.router.navigate(['gallery/lightbox']);
+    void this.router.navigate(['gallery/slideshow']);
   }
 
   onSelectForDelete($event: Photo): void {
