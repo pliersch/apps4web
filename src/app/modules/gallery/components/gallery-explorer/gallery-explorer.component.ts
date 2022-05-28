@@ -100,6 +100,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     this.photos$.subscribe(res => {
       this.photos = res;
       this.isRequesting = false;
+      console.log('GalleryExplorerComponent : ', res.length)
     });
     this.store.dispatch(new LoadPhotosAction(60));
     this.initializeSelectionArea();
