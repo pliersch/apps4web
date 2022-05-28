@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { GalleryVerticalScrollerComponent }
-  from "@gallery/components/gallery-vertical-scroller/gallery-vertical-scroller.component";
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  GalleryVerticalScrollerComponent
+} from "@gallery/components/gallery-vertical-scroller/gallery-vertical-scroller.component";
 import { Select, Store } from "@ngxs/store";
 import {
   LoadPhotosAction,
@@ -8,11 +9,12 @@ import {
   SetNextPhotoAction,
   SetPreviousPhotoAction
 } from "@gallery/store/photos/photo.actions";
-import { GalleryHorizontalScrollerComponent }
-  from "@gallery/components/gallery-horizontal-scroller/gallery-horizontal-scroller.component";
+import {
+  GalleryHorizontalScrollerComponent
+} from "@gallery/components/gallery-horizontal-scroller/gallery-horizontal-scroller.component";
 import { getPhotoUrl } from "@gallery/store/photos/photo.tools";
 import { PhotoState } from "@gallery/store/photos/photo.state";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { Photo } from "@gallery/store/photos/photo.model";
 
 enum View {
@@ -25,7 +27,7 @@ enum View {
   templateUrl: './gallery-slideshow.component.html',
   styleUrls: ['./gallery-slideshow.component.scss']
 })
-export class GallerySlideshowComponent implements OnInit {
+export class GallerySlideshowComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild(GalleryHorizontalScrollerComponent)
   horizontalScrollbarRef!: GalleryHorizontalScrollerComponent;
@@ -44,21 +46,29 @@ export class GallerySlideshowComponent implements OnInit {
 
   viewEnum = View;
   view = View.Horizontal;
-  index = 0;
+  private subscription: Subscription;
 
   constructor(private store: Store) { }
 
   ngOnInit(): void {
     // this.store.select(state => state.gallery);
     this.store.dispatch(new LoadPhotosAction(60));
-    this.currentIndex$.subscribe(res => {
-      this.currentIndex = res;
-    });
-    this.currentPhoto$.subscribe(res => {
+    this.subscription = this.currentPhoto$.subscribe(res => {
       if (res) {
         this.imgUrl = getPhotoUrl(res.fileName);
       }
-    })
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.currentIndex$.subscribe(res => {
+      this.currentIndex = res;
+      this.scrollToActiveItem();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   onSelectImage($event: Photo): void {
@@ -76,15 +86,15 @@ export class GallerySlideshowComponent implements OnInit {
   }
 
   updateSlideIndex(n: number): void {
-    this.index += n;
+    // this.index += n;
     this.scrollToActiveItem();
   }
 
   private scrollToActiveItem(): void {
     if (this.view === View.Horizontal) {
-      this.horizontalScrollbarRef.scrollToPosition(this.index);
+      this.horizontalScrollbarRef.scrollToPosition(this.currentIndex);
     } else {
-      this.verticalScrollbarRef.scrollTo(this.index);
+      this.verticalScrollbarRef.scrollTo(this.currentIndex);
     }
   }
 

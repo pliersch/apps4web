@@ -30,11 +30,9 @@ export class GalleryVerticalScrollerComponent implements OnInit {
   selectEvent = new EventEmitter<Photo>();
 
   ngOnInit(): void {
-    console.log('GalleryVerticalScrollerComponent ngOnInit: ',)
     this.photo$.subscribe(res => console.log(res))
     this.currentIndex$.subscribe(res => {
       this.currentIndex = res;
-      console.log('GalleryVerticalScrollerComponent : ', res)
     });
   }
 
