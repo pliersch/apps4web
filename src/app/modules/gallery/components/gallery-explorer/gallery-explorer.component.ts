@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Photo } from '@gallery/store/photos/photo.model';
 import { Select, Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { Action, ActionProvider } from "@app/models/actions";
 import { ActionBarService } from "@app/services/action-bar.service";
@@ -67,8 +67,8 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
 
   @Select(PhotoState.getSelectedPictures)
   selection$: Observable<Photo[]>;
-
   selection: Photo[];
+
   showFilter = true;
   absoluteHeight = 0;
   private isRequesting: boolean;
@@ -82,6 +82,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     {name: ActionTypes.Download, icon: 'download', tooltip: 'download', handler: this},
     {name: ActionTypes.EditTags, icon: 'edit', tooltip: 'edit tags', handler: this},
   ]
+  private subscription: Subscription;
 
   constructor(private actionBarService: ActionBarService,
               private photoService: PhotoService,
@@ -93,18 +94,12 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
 
   ngOnInit(): void {
     this.actionBarService.setActions(this.actions);
-    this.selection$.subscribe(res => this.selection = res);
-
+    this.subscription = this.selection$.subscribe(res => this.selection = res);
+    this.currentPhoto$.subscribe(res => this.currentPhoto = res);
+    this.allPhotosCount$.subscribe(count => this.allPhotosCount = count);
     this.photos$.subscribe(res => {
       this.photos = res;
       this.isRequesting = false;
-    });
-
-    this.currentPhoto$.subscribe(res => {
-      this.currentPhoto = res;
-    });
-    this.allPhotosCount$.subscribe(count => {
-      this.allPhotosCount = count;
     });
     this.store.dispatch(new LoadPhotosAction(60));
     this.initializeSelectionArea();
@@ -120,6 +115,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   ngOnDestroy(): void {
+    this.subscription.unsubscribe();
     this.actionBarService.removeActions();
   }
 

@@ -10,6 +10,9 @@ export class GalleryMetaPanelComponent {
   @Input()
   allPhotosCount: number;
 
+  @Input()
+  selectedPhotosCount: number;
+
   constructor() { }
 
 }

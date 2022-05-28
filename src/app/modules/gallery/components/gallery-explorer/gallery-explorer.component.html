@@ -18,6 +18,7 @@
   </div>
 
   <app-gallery-meta-panel class="component gallery-explorer-grid-meta"
+                          [selectedPhotosCount]="selection.length"
                           [allPhotosCount]="allPhotosCount"></app-gallery-meta-panel>
 
   <app-gallery-image-detail class="component gallery-explorer-grid-details"
