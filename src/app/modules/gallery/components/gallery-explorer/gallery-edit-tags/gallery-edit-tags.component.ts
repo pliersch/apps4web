@@ -1,15 +1,15 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {Observable} from 'rxjs';
-import {Tag} from '@gallery/store/tags/tag.model';
-import {MatDialogRef} from '@angular/material/dialog';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Tag } from '@gallery/store/tags/tag.model';
+import { MatDialogRef } from '@angular/material/dialog';
 import {
   GalleryEditTagDetailComponent
 } from '@gallery/components/gallery-explorer/gallery-edit-tags/gallery-edit-tag-detail/gallery-edit-tag-detail.component';
-import {MatSelectionList} from '@angular/material/list';
-import {arrayUtil} from '@app/util/array-utils';
-import {Select, Store} from "@ngxs/store";
-import {TagState} from "@gallery/store/tags/tag.state";
-import {DeleteTag, UpdateTag} from "@gallery/store/tags/tag.action";
+import { MatSelectionList } from '@angular/material/list';
+import { arrayUtil } from '@app/util/array-utils';
+import { Select, Store } from "@ngxs/store";
+import { TagState } from "@gallery/store/tags/tag.state";
+import { DeleteTag, UpdateTag } from "@gallery/store/tags/tag.action";
 
 @Component({
   selector: 'app-gallery-edit-tags',
@@ -112,13 +112,4 @@ export class GalleryEditTagsComponent implements OnInit {
     }
   }
 
-  // private createTagUpdate(tag: Tag): Update<Tag> {
-  //   return {
-  //     // @ts-ignore
-  //     id: tag.id,
-  //     changes: {
-  //       entries: tag.entries
-  //     }
-  //   };
-  // }
 }

@@ -1,7 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Emoji} from "@modules/chat/models/emoji";
-import emoji from "@assets/emoji.json";
-import wasteFile from "@assets/abfall.json";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Emoji } from "@modules/chat/models/emoji";
+import emoji from "@assets/json/emoji.json";
 
 @Component({
   selector: 'app-chat-emoji-picker',
@@ -25,7 +24,6 @@ export class ChatEmojiPickerComponent implements OnInit {
 
   ngOnInit(): void {
     this.emojis = emoji.emojis
-    console.log('ChatEmojiPickerComponent ngOnInit: ', wasteFile)
   }
 
   onEmojiClick(emoji: Emoji): void {
@@ -54,10 +52,4 @@ export class ChatEmojiPickerComponent implements OnInit {
   //     }
   //   }
   // }
-
-//   import Emoji from './Emoji.vue'
-// import escapeMixin from '@/core/mixins/keyboard/escape'
-// import json from '@/assets/emoji.json'
-
-
 }
