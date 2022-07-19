@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, OnDestroy} from '@angular/core';
-import {Action} from "@app/models/actions";
-import {ActionBarService} from "@app/services/action-bar.service";
-import {Location} from "@angular/common";
-import {AppInjectorService} from "@app/services/app-injector.service";
+import { AfterViewInit, Component, OnDestroy } from '@angular/core';
+import { Action } from "@app/models/actions";
+import { ActionBarService } from "@app/services/action-bar.service";
+import { Location } from "@angular/common";
+import { AppInjectorService } from "@app/services/app-injector.service";
 
 @Component({
   selector: 'app-module',
@@ -25,9 +25,7 @@ export abstract class ModuleComponent implements AfterViewInit, OnDestroy {
 
   initialize(): void {
     this.location.onUrlChange(url => {
-      // if (url.startsWith('/gallery')) {
       this.service.setActions(this.getActions());
-      // }
       console.log('ActionBarService: ', url)
     });
   }

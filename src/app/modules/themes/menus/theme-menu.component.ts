@@ -1,9 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MatButton} from '@angular/material/button';
-import {MediaMatcher} from '@angular/cdk/layout';
-import {ThemeService} from "@modules/themes/services/theme.service";
-import {OverlayContainer} from "@angular/cdk/overlay";
-import {Themes} from "@modules/themes/themes";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatButton } from '@angular/material/button';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { OverlayContainer } from "@angular/cdk/overlay";
+import { Themes } from "@modules/themes/themes";
 
 @Component({
   selector: 'app-theme-menu',
@@ -17,8 +16,7 @@ export class ThemeMenuComponent implements OnInit {
   @Output()
   switchThemeEvent = new EventEmitter<string>();
 
-  constructor(private readonly themeService: ThemeService,
-              private overlayContainer: OverlayContainer,
+  constructor(private overlayContainer: OverlayContainer,
               private mediaMatcher: MediaMatcher) {
   }
 
@@ -37,7 +35,6 @@ export class ThemeMenuComponent implements OnInit {
     }
     this.switchThemeEvent.emit(theme);
     localStorage.setItem('theme', theme);
-    this.themeService.toggleTheme(theme);
   }
 
   detectTheme(): string {

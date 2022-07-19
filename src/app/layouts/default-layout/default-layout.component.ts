@@ -1,10 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {Observable} from 'rxjs';
-import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {map} from 'rxjs/operators';
-import {MatSidenav} from '@angular/material/sidenav';
-import {Store} from "@ngxs/store";
-import {ThemeState} from "@modules/themes/stores/theme-state";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Observable } from 'rxjs';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map } from 'rxjs/operators';
+import { MatSidenav } from '@angular/material/sidenav';
+import { Store } from "@ngxs/store";
+import { ThemeState } from "@modules/themes/stores/theme-state";
+import { constants } from "@app/const/const";
 
 @Component({
   selector: 'app-default-layout',
@@ -15,8 +16,9 @@ export class DefaultLayoutComponent implements OnInit {
 
   @ViewChild(MatSidenav) drawer!: MatSidenav;
 
+  appName: string = constants.appName;
   theme: string = 'dark-theme';
-  typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
+  routes = constants.routes;
 
   constructor(private breakpointObserver: BreakpointObserver,
               private store: Store) {

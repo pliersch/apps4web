@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {map} from 'rxjs/operators';
-import {Observable, of} from 'rxjs';
-import {DashboardItem} from "./dashboard-item";
+import { Component, OnInit } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { DashboardItem } from "./dashboard-item";
 
 @Component({
   selector: 'app-dashboard',

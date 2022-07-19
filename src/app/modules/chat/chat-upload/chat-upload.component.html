@@ -26,10 +26,7 @@
   <app-drag-drop-input (fileChangeEvent)="onFilesChange($event)"></app-drag-drop-input>
 
   <mat-card-content>
-          <textarea class="margin-10" auto-grow="auto-grow" outlined="outlined" filled="filled" rows="1" maxlength="800"
-                    clear-icon="mdi-close-circle" clearable="clearable" hide-details="hide-details"
-                    autofocus="autofocus"
-                    background-color="white" rounded="rounded" v-model="content"></textarea>
+    <textarea rows="1" maxlength="800" autofocus="autofocus"></textarea>
   </mat-card-content>
   <mat-card-actions>
     <button mat-icon-button (click)="onUploadClicked()"
