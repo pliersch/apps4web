@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { GalleryVerticalScrollerComponent }
-  from '@gallery/components/gallery-vertical-scroller/gallery-vertical-scroller.component';
+  from '@gallery/components/share/vertical-scroller/gallery-vertical-scroller.component';
 import { GalleryHorizontalScrollerComponent }
-  from '@gallery/components/gallery-horizontal-scroller/gallery-horizontal-scroller.component';
+  from '@gallery/components/share/horizontal-scroller/gallery-horizontal-scroller.component';
 import { AlertService } from '@app/services/alert.service';
 import {
   ClearPhotoSelectionAction,

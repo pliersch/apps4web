@@ -1,10 +1,10 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {Observable, of} from "rxjs";
-import {FormControl} from "@angular/forms";
-import {COMMA, ENTER} from "@angular/cdk/keycodes";
-import {MatChipInputEvent} from "@angular/material/chips";
-import {DialogData} from "@gallery/components/gallery-explorer/gallery-explorer.component";
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { Observable, of } from "rxjs";
+import { FormControl } from "@angular/forms";
+import { COMMA, ENTER } from "@angular/cdk/keycodes";
+import { MatChipInputEvent } from "@angular/material/chips";
+import { DialogData } from "@gallery/components/explorer/gallery-explorer.component";
 
 @Component({
   selector: 'app-gallery-edit-image-tags',

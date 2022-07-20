@@ -16,9 +16,9 @@ import {
   TogglePhotoDownloadAction,
   TogglePhotosDownloadAction
 } from "@gallery/store/photos/photo.actions";
-import { AreaSelection, AreaSelectionHandler } from "@gallery/components/gallery-explorer/area-selection";
+import { AreaSelection, AreaSelectionHandler } from "@gallery/components/explorer/area-selection";
 import { GalleryEditImageTagsComponent }
-  from "@gallery/components/gallery-explorer/gallery-edit-image-tags/gallery-edit-image-tags.component";
+  from "@gallery/components/explorer/edit-image-tags/gallery-edit-image-tags.component";
 import { MatDialog } from "@angular/material/dialog";
 import { PhotoService } from "@gallery/services/photo.service";
 import { NgScrollbar } from "ngx-scrollbar";

@@ -4,7 +4,7 @@ import { Tag } from '@gallery/store/tags/tag.model';
 import { MatDialogRef } from '@angular/material/dialog';
 import {
   GalleryEditTagDetailComponent
-} from '@gallery/components/gallery-explorer/gallery-edit-tags/gallery-edit-tag-detail/gallery-edit-tag-detail.component';
+} from '@gallery/components/explorer/edit-tags/edit-tag-detail/gallery-edit-tag-detail.component';
 import { MatSelectionList } from '@angular/material/list';
 import { arrayUtil } from '@app/util/array-utils';
 import { Select, Store } from "@ngxs/store";
