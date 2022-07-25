@@ -203,8 +203,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
 
   private downloadPictures(): void {
     this.photoService.download(this.selection)
-      // TODO use fileName of response
-      .subscribe(blob => saveAs(blob, 'archive.zip'));
+      .subscribe(blob => saveAs(blob, 'pictures.zip'));
   }
 
   private editTags(): void {

@@ -63,6 +63,7 @@ import {
   GalleryMetaPanelComponent
 } from './components/explorer/meta-panel/gallery-meta-panel.component';
 import { GallerySlideshowComponent } from './components/slideshow/gallery-slideshow.component';
+import { ActionPanelComponent } from './components/explorer/action-panel/action-panel.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { GallerySlideshowComponent } from './components/slideshow/gallery-slides
     GalleryEditImageTagsComponent,
     GalleryMetaPanelComponent,
     GallerySlideshowComponent,
+    ActionPanelComponent,
   ],
   imports: [
     CommonModule,

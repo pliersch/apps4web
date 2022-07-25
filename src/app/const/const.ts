@@ -1,5 +1,6 @@
 export const constants = {
   appName: 'A4W',
+  // todo: find way to use it inside routing modules
   routes: [
     {route: '/dashboard', name: 'Home'},
     {route: '/gallery/home', name: 'Galerie'},

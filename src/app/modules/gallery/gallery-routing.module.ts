@@ -16,7 +16,7 @@ const routes: Routes = [
     children: [
       {path: '', component: GalleryHomeComponent},
       {path: 'home', component: GalleryHomeComponent},
-      {path: 'explorer', component: GalleryExplorerComponent/*, resolve: {photos: PhotosResolver}*/},
+      {path: 'explorer', component: GalleryExplorerComponent},
       {path: 'lightbox', component: GalleryLightboxComponent},
       {path: 'slideshow', component: GallerySlideshowComponent},
       {path: 'upload', component: GalleryUploadComponent},

@@ -4,6 +4,7 @@
   height: 100%;
   grid-template-areas: "tag-filter images"
                        "meta images"
+                       "actions images"
                        "details images";
   grid-template-rows: minmax(0, 1fr);
   grid-template-columns: minmax(auto, 300px) 1fr;
@@ -14,7 +15,10 @@
 
   .gallery-explorer-grid-images {
     grid-area: images;
+  }
 
+  .gallery-explorer-grid-actions {
+    grid-area: actions;
   }
 
   .gallery-explorer-grid-meta {
