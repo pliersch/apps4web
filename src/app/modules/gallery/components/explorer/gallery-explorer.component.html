@@ -1,11 +1,22 @@
-<div class="gallery-explorer-grid">
-  <app-gallery-filter-expansion-panel class="component gallery-explorer-grid-filter"
-                                      *ngIf=showFilter></app-gallery-filter-expansion-panel>
+<div class="flex-row">
+  <div class="flex-column">
+    <app-gallery-filter-expansion-panel class="component"
+                                        *ngIf=showFilter></app-gallery-filter-expansion-panel>
 
-  <div class="gallery-explorer-grid-images">
+    <app-gallery-image-detail class="component"
+                              [currentPhoto]="currentPhoto"></app-gallery-image-detail>
+
+    <app-gallery-meta-panel class="component"
+                            [selectedPhotosCount]="selection.length"
+                            [filteredPhotosCount]="photos.length"
+                            [allPhotosCount]="allPhotosCount"></app-gallery-meta-panel>
+
+    <app-action-panel class="component"></app-action-panel>
+  </div>
+  <div class="flex-column-max-width">
     <div class="scrollbar-wrapper">
       <ng-scrollbar>
-        <div class="images-wrapper selection-area-container">
+        <div class="images-wrapper">
           <app-image-control *ngFor="let photo of (photos$ | async)" class="selection-item"
                              [selected]="currentPhoto === photo" [download]="isSelected(photo)"
                              (click)="setCurrent(photo)" [photo]="photo"
@@ -17,14 +28,4 @@
       </ng-scrollbar>
     </div>
   </div>
-
-  <app-gallery-meta-panel class="component gallery-explorer-grid-meta"
-                          [selectedPhotosCount]="selection.length"
-                          [filteredPhotosCount]="photos.length"
-                          [allPhotosCount]="allPhotosCount"></app-gallery-meta-panel>
-
-  <app-action-panel class="component gallery-explorer-grid-actions"></app-action-panel>
-
-  <app-gallery-image-detail class="component gallery-explorer-grid-details"
-                            [currentPhoto]="currentPhoto"></app-gallery-image-detail>
 </div>
