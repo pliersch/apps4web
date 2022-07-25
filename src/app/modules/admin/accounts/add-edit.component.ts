@@ -1,6 +1,6 @@
 ﻿import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 
 import {AlertService} from "@app/services/alert.service";
@@ -9,14 +9,14 @@ import {mustMatch} from "@app/core/helpers/must-match.validator";
 
 @Component({templateUrl: 'add-edit.component.html'})
 export class AddEditComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   id: string;
   isAddMode: boolean;
   loading = false;
   submitted = false;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private accountService: AccountService,

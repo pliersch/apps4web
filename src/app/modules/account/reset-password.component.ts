@@ -1,6 +1,6 @@
 ﻿import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 
 import {AlertService} from "@app/services/alert.service";
@@ -18,12 +18,12 @@ export class ResetPasswordComponent implements OnInit {
   TokenStatus = TokenStatus;
   tokenStatus = TokenStatus.Validating;
   token = null;
-  form: FormGroup;
+  form: UntypedFormGroup;
   loading = false;
   submitted = false;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private accountService: AccountService,

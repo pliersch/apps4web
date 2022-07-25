@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators, } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators, } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AlertService } from "@app/services/alert.service";
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authService: SocialAuthService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private accountService: AccountService,
@@ -41,10 +41,10 @@ export class LoginComponent implements OnInit {
     return this.form.controls;
   }
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   loading = false;
   submitted = false;
-  email = new FormControl('', [Validators.required, Validators.email]);
+  email = new UntypedFormControl('', [Validators.required, Validators.email]);
 
   ngOnInit(): void {
     this.authService.authState.subscribe((user) => {

@@ -1,5 +1,5 @@
 ﻿import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {first, finalize} from 'rxjs/operators';
 
 import {AlertService} from "@app/services/alert.service";
@@ -7,12 +7,12 @@ import {AccountService} from "@modules/account/services/account.service";
 
 @Component({templateUrl: 'forgot-password.component.html'})
 export class ForgotPasswordComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   loading = false;
   submitted = false;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private accountService: AccountService,
     private alertService: AlertService
   ) {}

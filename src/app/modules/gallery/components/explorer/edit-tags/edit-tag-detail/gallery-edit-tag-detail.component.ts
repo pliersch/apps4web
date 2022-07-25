@@ -1,6 +1,6 @@
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {UntypedFormControl} from '@angular/forms';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {Observable, of} from 'rxjs';
 import {Tag} from '@gallery/store/tags/tag.model';
@@ -23,7 +23,7 @@ export class GalleryEditTagDetailComponent implements OnChanges {
   entries: string[];
   observable: Observable<string[]>;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  tagCtrl = new FormControl();
+  tagCtrl = new UntypedFormControl();
 
   ngOnChanges(/*changes: SimpleChanges*/): void {
     this.entries = this.tag.entries;

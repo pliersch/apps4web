@@ -1,6 +1,6 @@
 ﻿import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AccountService} from "@modules/account/services/account.service";
 import {mustMatch} from "@app/core/helpers/must-match.validator";
@@ -9,13 +9,13 @@ import {AlertService} from "@app/services/alert.service";
 @Component({templateUrl: 'update.component.html'})
 export class UpdateComponent implements OnInit {
   account = this.accountService.accountValue;
-  form: FormGroup;
+  form: UntypedFormGroup;
   loading = false;
   submitted = false;
   deleting = false;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private accountService: AccountService,

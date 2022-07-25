@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormBuilder, Validators} from "@angular/forms";
+import {UntypedFormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-ingredients',
@@ -16,7 +16,7 @@ export class IngredientsComponent {
     salt: [null, Validators.required]
   });
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: UntypedFormBuilder) {
   }
 
   onSubmit(): void {

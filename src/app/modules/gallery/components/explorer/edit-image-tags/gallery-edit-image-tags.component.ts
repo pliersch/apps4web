@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Observable, of } from "rxjs";
-import { FormControl } from "@angular/forms";
+import { UntypedFormControl } from "@angular/forms";
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import { MatChipInputEvent } from "@angular/material/chips";
 import { DialogData } from "@gallery/components/explorer/gallery-explorer.component";
@@ -17,7 +17,7 @@ export class GalleryEditImageTagsComponent implements OnInit {
   observable: Observable<string[]>;
   addedTags: string[] = [];
   removedTags: string[] = [];
-  tagCtrl = new FormControl();
+  tagCtrl = new UntypedFormControl();
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
   constructor(public dialogRef: MatDialogRef<GalleryEditImageTagsComponent>,
