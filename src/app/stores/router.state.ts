@@ -1,16 +1,14 @@
-import {Location} from '@angular/common';
-import {Injectable} from '@angular/core';
-import {NavigationExtras, Router} from '@angular/router';
-import {Actions, ofActionDispatched} from '@ngxs/store';
+import { Location } from '@angular/common';
+import { Injectable } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
+import { Actions, ofActionDispatched } from '@ngxs/store';
 
-//------ router model -------
 export interface RouterStateModel {
   path: any[];
   query?: object;
   extras?: NavigationExtras;
 }
 
-//---- router action ------
 export class Go {
   static readonly type = '[Router] Go';
 

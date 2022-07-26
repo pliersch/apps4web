@@ -41,9 +41,6 @@ import {
   GalleryEditTagDetailComponent
 } from './components/explorer/edit-tags/edit-tag-detail/gallery-edit-tag-detail.component';
 import { GalleryEditTagsComponent } from './components/explorer/edit-tags/gallery-edit-tags.component';
-import {
-  MatListRemovePaddingDirective
-} from './components/explorer/edit-tags/mat-list-remove-padding.directive';
 import { NgxsModule } from "@ngxs/store";
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { ImageControlComponent } from './components/share/image-control/image-control.component';
@@ -82,7 +79,6 @@ import { ActionPanelComponent } from './components/explorer/action-panel/action-
     GalleryStarRatingComponent,
     GalleryEditTagDetailComponent,
     GalleryEditTagsComponent,
-    MatListRemovePaddingDirective,
     ImageControlComponent,
     GalleryNewTagCategoryComponent,
     GalleryEditImageTagsComponent,

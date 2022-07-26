@@ -33,6 +33,10 @@
             "styles": [
               "src/styles.scss"
             ],
+            "allowedCommonJsDependencies": [
+              "bezier-easing",
+              "file-saver"
+            ],
             "scripts": []
           },
           "configurations": {
