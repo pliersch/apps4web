@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { Store } from "@ngxs/store";
 import { LoadMetaDataAction } from "@gallery/store/photos/photo.actions";
 
 @Injectable({
   providedIn: 'root'
 })
-export class GalleryResolverService implements Resolve<any> {
+export class GalleryResolver implements Resolve<any> {
 
   constructor(private store: Store) { }
 

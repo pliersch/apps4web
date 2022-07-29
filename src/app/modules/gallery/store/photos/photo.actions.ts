@@ -12,7 +12,7 @@ export class LoadMetaDataAction {
 export class LoadMetaDataSuccessAction {
   static readonly type = '[Gallery] Load MetaData success';
 
-  constructor(public dto: PhotoMetaDataDto) { }
+  constructor(/*public dto: PhotoMetaDataDto*/) { }
 }
 
 export class LoadMetaDataFailAction {
