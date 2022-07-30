@@ -108,7 +108,6 @@ export class PhotoState {
 
   @Action(photoAction.LoadMetaDataAction)
   fetchMetaData(ctx: StateContext<PhotoStateModel>): Observable<void> { // todo void?!
-    console.log('PhotoState fetchMetaData: 1',)
     ctx.patchState({loading: true});
 
     return this.photoService.loadMetaData().pipe(
@@ -118,7 +117,6 @@ export class PhotoState {
         });
       }),
       mergeMap(() => {
-        console.log('PhotoState fetchMetaData: 2',)
         return ctx.dispatch(new photoAction.LoadMetaDataSuccessAction())
       }),
       catchError(error => {
@@ -165,6 +163,7 @@ export class PhotoState {
 
   @Action(photoAction.LoadPhotosAction)
   loadPhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosAction): Observable<Subscription> {
+    console.log('PhotoState loadPhotos: ', action)
     const state = ctx.getState();
     if (state.loading) {
       return of(Subscription.EMPTY);
@@ -173,6 +172,9 @@ export class PhotoState {
     const from: number = action.from ? action.from : state.photos.length;
     const availablePhotos: number = state.allPhotosCount - state.photos.length;
     const count: number = availablePhotos < action.count ? availablePhotos : action.count;
+    // console.log('PhotoState loadPhotos: from ', from)
+    // console.log('PhotoState loadPhotos: availablePhotos ', availablePhotos)
+    // console.log('PhotoState loadPhotos: count ', count)
     if (count == 0) {
       return of(Subscription.EMPTY);
     }
@@ -196,6 +198,7 @@ export class PhotoState {
 
   @Action(photoAction.LoadPhotosSuccessAction)
   loadPhotosSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosSuccessAction): void {
+    console.log('PhotoState loadPhotosSuccess: ',)
     const state = ctx.getState();
     let photos: Photo[] = [...state.photos, ...action.dto.photos]
     ctx.patchState({

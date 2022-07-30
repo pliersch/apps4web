@@ -32,13 +32,17 @@ export class UpdateMetaDataAction {
 export class LoadPhotosAction {
   static readonly type = '[Gallery] Load Photos';
 
-  constructor(public count: number, public from?: number) { }
+  constructor(public count: number, public from?: number) {
+    console.log('LoadPhotosAction constructor: ',)
+  }
 }
 
 export class LoadPhotosSuccessAction {
   static readonly type = '[Gallery] Load Photos success';
 
-  constructor(public dto: PhotoDto) { }
+  constructor(public dto: PhotoDto) {
+    console.log('LoadPhotosSuccessAction constructor: ',)
+  }
 }
 
 export class LoadPhotosFailAction {

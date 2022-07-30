@@ -1,8 +1,11 @@
-<div class="flex-row">
+<div class="flex-row-max-height">
   <div class="flex-column">
-    <app-gallery-filter-expansion-panel class="component"
-                                        *ngIf=showFilter></app-gallery-filter-expansion-panel>
-
+    <div class="scrollbar-container">
+      <!--      <ng-scrollbar track="vertical" [autoWidthDisabled]="false">-->
+      <app-gallery-filter-expansion-panel class="component"
+                                          *ngIf=showFilter></app-gallery-filter-expansion-panel>
+      <!--      </ng-scrollbar>-->
+    </div>
     <app-gallery-image-detail class="component"
                               [currentPhoto]="currentPhoto"></app-gallery-image-detail>
 
@@ -14,8 +17,8 @@
     <app-action-panel class="component"></app-action-panel>
   </div>
   <div class="flex-column-max-width">
-    <div class="scrollbar-wrapper">
-      <ng-scrollbar>
+    <div class="scrollbar-container">
+      <ng-scrollbar #img_scrollbar>
         <div class="images-wrapper">
           <app-image-control *ngFor="let photo of (photos$ | async)" class="selection-item"
                              [selected]="currentPhoto === photo" [download]="isSelected(photo)"
