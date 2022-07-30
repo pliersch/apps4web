@@ -1,11 +1,11 @@
 <div class="flex-row-max-height">
   <div class="flex-column">
-    <div class="scrollbar-container">
-      <!--      <ng-scrollbar track="vertical" [autoWidthDisabled]="false">-->
-      <app-gallery-filter-expansion-panel class="component"
-                                          *ngIf=showFilter></app-gallery-filter-expansion-panel>
-      <!--      </ng-scrollbar>-->
-    </div>
+    <!--    <div class="scrollbar-container">-->
+    <!--      <ng-scrollbar track="vertical" [autoWidthDisabled]="false">-->
+    <app-gallery-filter-expansion-panel class="component"
+                                        *ngIf=showFilter></app-gallery-filter-expansion-panel>
+    <!--      </ng-scrollbar>-->
+    <!--    </div>-->
     <app-gallery-image-detail class="component"
                               [currentPhoto]="currentPhoto"></app-gallery-image-detail>
 
