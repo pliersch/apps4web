@@ -26,8 +26,8 @@ import {
 
 import { ShareModule } from '@app/modules/share/share.module';
 import {
-  GalleryFilterExpansionPanelComponent
-} from './components/explorer/filter-expansion-panel/gallery-filter-expansion-panel.component';
+  GalleryFilterPanelComponent
+} from './components/explorer/filter-panel/gallery-filter-panel.component';
 import {
   GalleryImageDetailComponent
 } from './components/explorer/image-detail/gallery-image-detail.component';
@@ -76,7 +76,7 @@ import { ActionPanelComponent } from './components/explorer/action-panel/action-
     GalleryVerticalScrollerComponent,
     GalleryHorizontalScrollerComponent,
     GalleryImageGridComponent,
-    GalleryFilterExpansionPanelComponent,
+    GalleryFilterPanelComponent,
     GalleryImageDetailComponent,
     GalleryImagePlaceholderComponent,
     GalleryStarRatingComponent,

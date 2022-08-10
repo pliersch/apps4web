@@ -13,11 +13,11 @@ import {
 } from "@gallery/components/explorer/new-tag-category/gallery-new-tag-category.component";
 
 @Component({
-  selector: 'app-gallery-filter-expansion-panel',
-  templateUrl: './gallery-filter-expansion-panel.component.html',
-  styleUrls: ['./gallery-filter-expansion-panel.component.scss']
+  selector: 'app-gallery-filter-panel',
+  templateUrl: './gallery-filter-panel.component.html',
+  styleUrls: ['./gallery-filter-panel.component.scss']
 })
-export class GalleryFilterExpansionPanelComponent implements OnInit {
+export class GalleryFilterPanelComponent implements OnInit {
 
   @Select(TagState.getTags)
   tags$: Observable<Tag[]>;

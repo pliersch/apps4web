@@ -1,11 +1,13 @@
-import {Action, Selector, State, StateContext} from "@ngxs/store";
-import {Tag} from "@gallery/store/tags/tag.model";
-import {Injectable} from "@angular/core";
+import { Action, Selector, State, StateContext } from "@ngxs/store";
+import { Tag } from "@gallery/store/tags/tag.model";
+import { Injectable } from "@angular/core";
 import * as tagActions from "@gallery/store/tags/tag.action";
-import {asapScheduler, Observable, of, Subscription} from "rxjs";
-import {catchError, map} from "rxjs/operators";
-import {append, patch, removeItem} from "@ngxs/store/operators";
-import {TagService} from "@gallery/services/tag.service";
+import { asapScheduler, Observable, of, Subscription } from "rxjs";
+import { catchError, map } from "rxjs/operators";
+import { append, patch, removeItem, updateItem } from "@ngxs/store/operators";
+import { TagService } from "@gallery/services/tag.service";
+import { Photo } from "@gallery/store/photos/photo.model";
+import { AlertService } from "@app/services/alert.service";
 
 export interface TagStateModel {
   tags: Tag[];
@@ -39,7 +41,8 @@ export class TagState {
     return state.activeTags;
   }
 
-  constructor(private tagService: TagService) {
+  constructor(private tagService: TagService,
+              private alertService: AlertService) {
   }
 
   //////////////////////////////////////////////////////////
@@ -102,16 +105,16 @@ export class TagState {
       );
   }
 
-  @Action(tagActions.DeleteTagSuccess)
-  addTagSuccess({patchState}: StateContext<TagStateModel>, action: tagActions.DeleteTagSuccess): void {
-    console.log('TagState loadTagsSuccess: BUT NOT IMPL !!!', action.tag)
-    // patchState({tags: action.tags, loaded: true, loading: false});
+  @Action(tagActions.AddTagSuccess)
+  addTagSuccess(ctx: StateContext<TagStateModel>, action: tagActions.AddTagSuccess): void {
+    const state = ctx.getState();
+    let tags: Tag[] = [...state.tags, action.tag]
+    ctx.patchState({tags: tags, loaded: true, loading: false});
   }
 
-  @Action(tagActions.LoadTagsFail)
-  addTagFail({dispatch}: StateContext<TagStateModel>, action: tagActions.LoadTagsFail): void {
-    // TODO handle error!
-    console.log(action.error)
+  @Action(tagActions.AddTagFail)
+  addTagFail({dispatch}: StateContext<TagStateModel>, action: tagActions.AddTagFail): void {
+    this.alertService.error('Add tag fail');
     dispatch({loaded: false, loading: false});
   }
 
@@ -123,9 +126,9 @@ export class TagState {
   updateTag(ctx: StateContext<TagStateModel>, action: tagActions.UpdateTag): Observable<Subscription> {
     return this.tagService.update(action.tag.id!, {entries: action.tag.entries})
       .pipe(
-        map((tag: Tag) =>
+        map((res: any) =>
           asapScheduler.schedule(() =>
-            ctx.dispatch(new tagActions.UpdateTagSuccess(tag))
+            ctx.dispatch(new tagActions.UpdateTagSuccess(action.tag))
           )
         ),
         catchError(error =>
@@ -139,14 +142,23 @@ export class TagState {
   }
 
   @Action(tagActions.UpdateTagSuccess)
-  updateTagSuccess({patchState}: StateContext<TagStateModel>, action: tagActions.UpdateTagSuccess): void {
-    console.log('TagState updateTagSuccess: ', action)
+  updateTagSuccess(ctx: StateContext<TagStateModel>, action: tagActions.UpdateTagSuccess): void {
+    // const state = ctx.getState();
+    // let tags: Tag[] = [...state.tags, action.tag]
+    // ctx.patchState({tags: tags, loaded: true, loading: false});
+
+    ctx.setState(
+      patch({
+        tags: updateItem<Tag>(tag => tag!.id === action.tag.id,
+          patch({entries: action.tag.entries}))
+      })
+    );
   }
 
   @Action(tagActions.UpdateTagFail)
   updateTagFail({dispatch}: StateContext<TagStateModel>, action: tagActions.UpdateTagFail): void {
-    // TODO handle error!
-    console.log(action.error)
+    this.alertService.error('Update tag fail');
+    dispatch({loaded: false, loading: false});
   }
 
   //////////////////////////////////////////////////////////

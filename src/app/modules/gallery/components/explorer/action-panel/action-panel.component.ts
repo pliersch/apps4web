@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Action } from "@app/modules/action-bar/actions";
 
 @Component({
   selector: 'app-action-panel',
@@ -7,7 +8,13 @@ import { Component } from '@angular/core';
 })
 export class ActionPanelComponent {
 
-  onClickSelectAll(): void {
+  @Input()
+  actions: Action[]
 
+  @Output()
+  actionEvent = new EventEmitter<Action>();
+
+  onClickAction(action: Action): void {
+    this.actionEvent.emit(action);
   }
 }

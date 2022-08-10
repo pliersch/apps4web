@@ -45,16 +45,28 @@ body {
   flex: 1 1 auto;
 }
 
+.m5 {
+  margin: 5px;
+}
+
+.m10 {
+  margin: 10px;
+}
+
+.p5 {
+  padding: 5px;
+}
+
+.p10 {
+  padding: 10px;
+}
+
 .card-size-m {
   max-width: 400px;
 }
 
 .card-size-l {
   max-width: 600px;
-}
-
-.component {
-  margin: 10px;
 }
 
 .container {

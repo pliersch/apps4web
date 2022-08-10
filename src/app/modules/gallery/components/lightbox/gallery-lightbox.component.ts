@@ -10,9 +10,9 @@ import {
   LoadPhotosAction,
   TogglePhotoSelectionAction
 } from "@gallery/store/photos/photo.actions";
-import { ActionBarService } from "@app/services/action-bar.service";
-import { Action, ActionProvider } from "@app/models/actions";
 import { Photo } from "@gallery/store/photos/photo.model";
+import { Action, ActionProvider } from "@modules/action-bar/actions";
+import { ActionBarService } from "@modules/action-bar/action-bar.service";
 
 enum View {
   Horizontal,

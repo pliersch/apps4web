@@ -102,7 +102,6 @@ export class PhotoState {
               private alertService: AlertService) {
   }
 
-  //region meta data
   //////////////////////////////////////////////////////////
   //          meta data
   //////////////////////////////////////////////////////////
@@ -137,8 +136,6 @@ export class PhotoState {
     ctx.dispatch({loaded: false, loading: false});
     this.alertService.error('load meta data fail');
   }
-
-  //endregion
 
   // region loading
   //////////////////////////////////////////////////////////
@@ -187,7 +184,6 @@ export class PhotoState {
 
   @Action(photoAction.LoadPhotosFailAction)
   loadPhotosFail({dispatch}: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosFailAction): void {
-    console.log(action.error);
     this.alertService.error('Load photos fail');
     dispatch({loaded: false, loading: false});
   }
@@ -397,7 +393,6 @@ export class PhotoState {
     );
   }
 
-  //region tags
   //////////////////////////////////////////////////////////
   //          tags
   //////////////////////////////////////////////////////////
@@ -514,5 +509,4 @@ export class PhotoState {
     // dispatch({loaded: false, loading: false});
   }
 
-  //endregion
 }
