@@ -1,13 +1,13 @@
-﻿import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators,} from '@angular/forms';
-import {first} from 'rxjs/operators';
+﻿import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators, } from '@angular/forms';
+import { first } from 'rxjs/operators';
 
-import {AlertService} from "@app/services/alert.service";
-import {MatIconRegistry} from '@angular/material/icon';
-import {DomSanitizer} from '@angular/platform-browser';
-import {GoogleLoginProvider, SocialAuthService, SocialUser} from '@abacritt/angularx-social-login';
-import {AccountService} from "@modules/account/services/account.service";
+import { AlertService } from "@app/services/alert.service";
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { GoogleLoginProvider, SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+import { AccountService } from "@modules/account/services/account.service";
 
 @Component({
   templateUrl: 'login.component.html',
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     iconRegistry.addSvgIcon(
       'google',
       sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/Google__G__Logo.svg'
+        'assets/svg/Google__G__Logo.svg'
       )
     );
   }

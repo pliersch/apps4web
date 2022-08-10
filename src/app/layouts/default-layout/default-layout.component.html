@@ -1,18 +1,16 @@
 <div class="grid" [class]="theme">
-  <app-appbar class="appbar" appName="A4W" (switchThemeEvent)="onSwitchTheme($event)"
-              (toggleNavEvent)="toggleNav()"></app-appbar>
+  <app-appbar class="appbar" [appName]="appName" [isHandset$]="isHandset$"
+              (switchThemeEvent)="onSwitchTheme($event)" (toggleNavEvent)="toggleNav()"></app-appbar>
 
   <mat-sidenav-container class="main" autosize>
-    <mat-sidenav fixedInViewport="false" mode="side" class="example-sidenav"
-                 [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-                 [mode]="(isHandset$ | async) ? 'over' : 'side'"
-                 [opened]="(isHandset$ | async)">
+    <mat-sidenav mode="over">
 
-      <mat-selection-list [multiple]="false">
-        <mat-list-option *ngFor="let shoe of typesOfShoes" [value]="shoe">
-          {{shoe}}
-        </mat-list-option>
-      </mat-selection-list>
+      <mat-nav-list>
+        <nav>
+          <a mat-list-item *ngFor="let route of routes" [routerLink]="[route.route]"
+             [routerLinkActive]="['active-route']">{{route.name}}</a>
+        </nav>
+      </mat-nav-list>
 
     </mat-sidenav>
     <mat-sidenav-content>

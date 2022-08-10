@@ -1,11 +1,9 @@
-import {Directive, Input, ElementRef, HostListener} from '@angular/core';
+import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
   selector: 'img[appImgFallback]'
 })
 export class ImageFallbackDirective {
-
-  @Input() appImgFallback: string;
 
   constructor(private eRef: ElementRef) { }
 

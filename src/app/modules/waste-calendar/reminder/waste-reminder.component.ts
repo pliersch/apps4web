@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, Renderer2, ViewChild } from '@angular/core';
-import wasteFile from "@assets/abfall.json";
+import wasteFile from "@assets/json/abfall.json";
 import { WasteDate, WasteEvent, WasteKey } from "@modules/waste-calendar/waste-dates";
 import { MatCalendar } from "@angular/material/datepicker";
 import { formatGermanDayAndMonth, parseGerman, parseGerman2 } from "@app/util/date-util";

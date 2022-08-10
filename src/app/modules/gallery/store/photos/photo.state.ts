@@ -1,9 +1,8 @@
-import { Action, NgxsOnInit, Selector, State, StateContext } from "@ngxs/store";
+import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { Injectable } from "@angular/core";
 import { catchError, map } from "rxjs/operators";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import * as photoAction from "@gallery/store/photos/photo.actions";
-import { LoadMetaDataAction } from "@gallery/store/photos/photo.actions";
 import { Photo, PhotoUpdate } from "@gallery/store/photos/photo.model";
 import { insertItem, patch, removeItem, updateItem } from "@ngxs/store/operators";
 import { filterAllTags } from "@gallery/store/photos/photo.tools";
@@ -13,20 +12,16 @@ import { PhotoService } from "@gallery/services/photo.service";
 import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
 import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
 
-export interface PhotoStateMetaData {
-  allPhotosCount: number;
-  selectedPhotosCount: number;
-  filteredPhotosCount: number;
-}
-
 export interface PhotoStateModel {
   photos: Photo[];
   selectedPictures: Photo[];
-  metaData: PhotoStateMetaData;
   tagFilter: string[];
+  allPhotosCount: number;
+  selectedPhotosCount: number;
+  filteredPhotosCount: number;
   // comparePhotos: Photo[];
   // exportPhotos: Photo[];
-  // selectedPhoto: Photo | null;
+  currentPhoto: Photo | undefined;
   allPhotosLoaded: boolean;
   loaded: boolean;
   loading: boolean;
@@ -36,7 +31,10 @@ export interface PhotoStateModel {
   name: 'gallery', // todo maybe photos?
   defaults: {
     photos: [],
-    metaData: {allPhotosCount: 0, selectedPhotosCount: 0, filteredPhotosCount: 0},
+    currentPhoto: undefined,
+    allPhotosCount: 0,
+    selectedPhotosCount: 0,
+    filteredPhotosCount: 0,
     selectedPictures: [],
     tagFilter: [],
     allPhotosLoaded: false,
@@ -46,11 +44,7 @@ export interface PhotoStateModel {
 })
 
 @Injectable()
-export class PhotoState implements NgxsOnInit {
-
-  ngxsOnInit(ctx?: StateContext<any>): any {
-    ctx?.dispatch(new LoadMetaDataAction())
-  }
+export class PhotoState {
 
   @Selector([TagState.getActiveTags])
   static getPhotos(state: PhotoStateModel, activeTags: string[]): Photo[] {
@@ -61,10 +55,16 @@ export class PhotoState implements NgxsOnInit {
   }
 
   @Selector()
-  static pandas(state: string[]) {
-    return (type: string) => {
-      return state.filter(s => s.indexOf('panda') > -1).filter(s => s.indexOf(type) > -1);
-    };
+  static getCurrentPhoto(state: PhotoStateModel): Photo {
+    return <Photo>state.currentPhoto;
+  }
+
+  @Selector()
+  static getCurrentIndex(state: PhotoStateModel): number {
+    if (state.currentPhoto) {
+      return state.photos.indexOf(state.currentPhoto);
+    }
+    return 0;
   }
 
   @Selector()
@@ -78,8 +78,8 @@ export class PhotoState implements NgxsOnInit {
   }
 
   @Selector()
-  static getPageMetaData(state: PhotoStateModel): PhotoStateMetaData | null {
-    return state.metaData;
+  static getAllPhotosCount(state: PhotoStateModel): number {
+    return state.allPhotosCount;
   }
 
   // @Selector()
@@ -102,7 +102,6 @@ export class PhotoState implements NgxsOnInit {
               private alertService: AlertService) {
   }
 
-  //region meta data
   //////////////////////////////////////////////////////////
   //          meta data
   //////////////////////////////////////////////////////////
@@ -127,14 +126,8 @@ export class PhotoState implements NgxsOnInit {
 
   @Action(photoAction.LoadMetaDataSuccessAction)
   loadMetaDataSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataSuccessAction): void {
-    let current: PhotoStateMetaData = ctx.getState().metaData;
-    let next: PhotoStateMetaData = {
-      allPhotosCount: action.dto.count,
-      selectedPhotosCount: current.selectedPhotosCount,
-      filteredPhotosCount: current.filteredPhotosCount,
-    }
     ctx.patchState({
-      metaData: next, loading: false
+      allPhotosCount: action.dto.count, loading: false
     });
   }
 
@@ -143,8 +136,6 @@ export class PhotoState implements NgxsOnInit {
     ctx.dispatch({loaded: false, loading: false});
     this.alertService.error('load meta data fail');
   }
-
-  //endregion
 
   // region loading
   //////////////////////////////////////////////////////////
@@ -159,7 +150,7 @@ export class PhotoState implements NgxsOnInit {
     }
     ctx.patchState({loading: true, loaded: false});
     const from: number = action.from ? action.from : state.photos.length;
-    const availablePhotos: number = state.metaData.allPhotosCount - state.photos.length;
+    const availablePhotos: number = state.allPhotosCount - state.photos.length;
     const count: number = availablePhotos < action.count ? availablePhotos : action.count;
     if (count == 0) {
       return of(Subscription.EMPTY);
@@ -187,13 +178,12 @@ export class PhotoState implements NgxsOnInit {
     const state = ctx.getState();
     let photos: Photo[] = [...state.photos, ...action.dto.photos]
     ctx.patchState({
-      photos: photos, loaded: true, loading: false
+      photos: photos, loaded: true, loading: false, currentPhoto: photos[0]
     });
   }
 
   @Action(photoAction.LoadPhotosFailAction)
   loadPhotosFail({dispatch}: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosFailAction): void {
-    console.log(action.error);
     this.alertService.error('Load photos fail');
     dispatch({loaded: false, loading: false});
   }
@@ -201,12 +191,41 @@ export class PhotoState implements NgxsOnInit {
   // endregion
 
   //////////////////////////////////////////////////////////
+  //          set current
+  //////////////////////////////////////////////////////////
+
+  @Action(photoAction.SetCurrentPhotoAction)
+  setCurrentPhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.SetCurrentPhotoAction): void {
+    ctx.patchState({
+      currentPhoto: action.photo
+    });
+  }
+
+  @Action(photoAction.SetNextPhotoAction)
+  setNextPhotoAction(ctx: StateContext<PhotoStateModel>, action: photoAction.SetNextPhotoAction): void {
+    let photos = ctx.getState().photos;
+    let index = photos.indexOf(ctx.getState().currentPhoto!);
+    ctx.patchState({
+      currentPhoto: photos[++index]
+    });
+  }
+
+  @Action(photoAction.SetPreviousPhotoAction)
+  setPreviousPhotoAction(ctx: StateContext<PhotoStateModel>, action: photoAction.SetPreviousPhotoAction): void {
+    let photos = ctx.getState().photos;
+    let index = photos.indexOf(ctx.getState().currentPhoto!);
+    ctx.patchState({
+      currentPhoto: photos[--index]
+    });
+  }
+
+  //////////////////////////////////////////////////////////
   //          add
   //////////////////////////////////////////////////////////
 
   @Action(photoAction.AddPhotoAction)
   addPhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoAction): Observable<Subscription> {
-    return this.photoService.create(action.photo, action.tags).pipe(
+    return this.photoService.create(action.photo, action.tags, action.created).pipe(
       map((photo: Photo) =>
         asapScheduler.schedule(() =>
           ctx.dispatch(new photoAction.AddPhotoSuccessAction(photo))
@@ -374,7 +393,6 @@ export class PhotoState implements NgxsOnInit {
     );
   }
 
-  //region tags
   //////////////////////////////////////////////////////////
   //          tags
   //////////////////////////////////////////////////////////
@@ -491,5 +509,4 @@ export class PhotoState implements NgxsOnInit {
     // dispatch({loaded: false, loading: false});
   }
 
-  //endregion
 }

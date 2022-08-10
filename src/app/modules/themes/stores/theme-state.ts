@@ -1,8 +1,10 @@
-import {Action, Selector, State, StateContext} from "@ngxs/store";
-import {ThemeStateModel} from "@modules/themes/stores/theme-state-model";
-import {Injectable} from "@angular/core";
-import {ThemeService} from "@modules/themes/services/theme.service";
-import {ToggleAction} from "@modules/themes/stores/toggle-action";
+import { Action, Selector, State, StateContext } from "@ngxs/store";
+import { Injectable } from "@angular/core";
+import { ToggleAction } from "@modules/themes/stores/toggle-action";
+
+export interface ThemeStateModel {
+  theme: string;
+}
 
 @State<ThemeStateModel>({
   name: 'theme',
@@ -19,13 +21,9 @@ export class ThemeState {
     return state.theme;
   }
 
-  constructor(private themeService: ThemeService) {
-  }
-
   @Action(ToggleAction)
-  toggle(ctx: StateContext<ThemeStateModel>, action: ToggleAction) {
+  toggle(ctx: StateContext<ThemeStateModel>, action: ToggleAction): void {
     ctx.patchState({theme: action.payload.theme})
-    return this.themeService.toggleTheme(action.payload.theme);
   }
 
 }

@@ -1,4 +1,4 @@
-import {Action} from "@app/models/actions";
+import { Action } from "@modules/action-bar/actions";
 
 export interface ActionBarHost {
 

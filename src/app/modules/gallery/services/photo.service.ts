@@ -3,10 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { Photo, PhotoUpdate } from '@gallery/store/photos/photo.model';
-import { PageDto } from "@app/common/dto/page.dto";
 import { Order } from "@app/common/constants/order.constant";
-import { PageOptionsDto } from "@app/common/dto/page-options.dto";
-import { PageMetaDto } from "@app/common/dto/page-meta.dto";
 import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
 import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
 
@@ -50,11 +47,12 @@ export class PhotoService {
     return this.http.get<Photo>(`${PICTURE_BASE_URL}/${id}`);
   }
 
-  create(file: File, tags: string[]): Observable<Photo> {
+  create(file: File, tags: string[], created: number): Observable<Photo> {
     const stringify = JSON.stringify(tags);
     const formData = new FormData();
     formData.append('image', file);
     formData.append('tags', stringify);
+    formData.append('created', created.toString());
     return this.http.post<Photo>(PICTURE_BASE_URL + '/file', formData);
   }
 

@@ -1,0 +1,80 @@
+.grid {
+  display: grid;
+  width: 100%;
+  height: 100%;
+
+  &.horizontal {
+    grid-template:
+      'detail' 1fr
+      'thumbs' 120px
+      / 1fr;
+  }
+
+  &.vertical {
+    grid-template-columns: 200px 1fr;
+    grid-template-areas: "thumbs detail";
+  }
+
+  .grid-detail {
+    grid-area: detail;
+    overflow: hidden;
+    min-height: 0;
+    min-width: 0;
+
+    .responsive-image {
+      background-position: center center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      width: 100%;
+      height: 100%;
+
+      //&:hover {
+      //  -webkit-transform: scale(1.2);
+      //  transform: scale(1.2);
+      //}
+    }
+  }
+
+  .grid-thumbs {
+    grid-area: thumbs;
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .prev,
+  .next {
+    cursor: pointer;
+    position: absolute;
+    top: 40%;
+    width: auto;
+    padding: 16px;
+    margin-top: -50px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+  }
+
+  /* On hover, add a black background color with a little bit see-through */
+  .prev:hover,
+  .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
+  .caption-container {
+    text-align: center;
+    background-color: #222;
+    padding: 2px 16px;
+    color: white;
+  }
+
+
+}

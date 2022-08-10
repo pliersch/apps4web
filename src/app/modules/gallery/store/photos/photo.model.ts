@@ -3,6 +3,7 @@ export interface Photo {
   fileName: string;
   tags: string[];
   createDateTime: Date;
+  recordDate: Date;
   baseUrl: string;
   isSelected: boolean;
 }

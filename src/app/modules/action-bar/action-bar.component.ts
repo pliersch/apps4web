@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
-import {ActionBarService} from "@app/services/action-bar.service";
-import {Action} from "@app/models/actions";
-import {ActionBarHost} from "@modules/action-bar/action-bar-host";
+import { Component } from '@angular/core';
+import { ActionBarHost } from "@modules/action-bar/action-bar-host";
+import { ActionBarService } from "@modules/action-bar/action-bar.service";
+import { Action } from "@modules/action-bar/actions";
 
 @Component({
   selector: 'app-action-bar',

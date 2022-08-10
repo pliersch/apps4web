@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {GoogleLoginProvider, SocialAuthService, SocialUser} from '@abacritt/angularx-social-login';
+import { Component } from '@angular/core';
+import { GoogleLoginProvider, SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-account-menu',
@@ -19,7 +19,7 @@ export class AccountMenuComponent {
     //   this.loggedIn = account != null;
     // });
     this.authService.authState.subscribe((user) => {
-      console.log('AccountMenuComponent : ',)
+      // console.log('AccountMenuComponent : ',)
       this.user = user;
       this.loggedIn = !user;
     });

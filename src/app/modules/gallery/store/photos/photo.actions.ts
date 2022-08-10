@@ -1,7 +1,6 @@
 import { Photo, PhotoUpdate } from "@gallery/store/photos/photo.model";
 import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
 import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
-import { PhotoStateMetaData } from "@gallery/store/photos/photo.state";
 
 // meta data
 
@@ -23,9 +22,9 @@ export class LoadMetaDataFailAction {
 }
 
 export class UpdateMetaDataAction {
-  static readonly type = '[Gallery] Update MetaData';
+  static readonly type = '[Gallery] Update AllPhotos Count';
 
-  constructor(public data: PhotoStateMetaData) { }
+  constructor(public count: number) { }
 }
 
 // loading photos
@@ -54,7 +53,7 @@ export class LoadPhotosFailAction {
 export class AddPhotoAction {
   static readonly type = '[Gallery] Add Photo';
 
-  constructor(public photo: File, public tags: string[]) { }
+  constructor(public photo: File, public tags: string[], public created: number) { }
 }
 
 export class AddPhotoSuccessAction {
@@ -69,6 +68,21 @@ export class AddPhotoFailAction {
   constructor(public error: any) { }
 }
 
+// current photo
+
+export class SetCurrentPhotoAction {
+  static readonly type = '[Gallery] Set Current Photo';
+
+  constructor(public photo: Photo) { }
+}
+
+export class SetNextPhotoAction {
+  static readonly type = '[Gallery] Set Next Photo';
+}
+
+export class SetPreviousPhotoAction {
+  static readonly type = '[Gallery] Set Previous Photo';
+}
 
 // compare
 

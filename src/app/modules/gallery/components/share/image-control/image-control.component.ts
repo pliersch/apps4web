@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Photo} from "@gallery/store/photos/photo.model";
-import {getThumbUrl} from "@gallery/store/photos/photo.tools";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Photo } from "@gallery/store/photos/photo.model";
+import { getThumbUrl } from "@gallery/store/photos/photo.tools";
 
 @Component({
   selector: 'app-image-control',
@@ -18,11 +18,17 @@ export class ImageControlComponent {
   @Input()
   download: boolean;
 
+  @Input()
+  hasRights: boolean;
+
   @Output()
   downloadEvent = new EventEmitter<Photo>();
 
   @Output()
   deleteEvent = new EventEmitter<Photo>();
+
+  @Output()
+  previewEvent = new EventEmitter<Photo>();
 
   constructor() {
   }
@@ -41,5 +47,9 @@ export class ImageControlComponent {
 
   onClickDelete(): void {
     this.deleteEvent.emit(this.photo);
+  }
+
+  onClickPreview(): void {
+    this.previewEvent.emit(this.photo);
   }
 }

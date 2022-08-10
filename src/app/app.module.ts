@@ -1,42 +1,41 @@
-import {APP_INITIALIZER, ErrorHandler, NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {AuthLayoutComponent} from "./layouts/auth-layout/auth-layout.component";
-import {DefaultLayoutComponent} from "./layouts/default-layout/default-layout.component";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {NgxsModule, Store} from '@ngxs/store';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthLayoutComponent } from "./layouts/auth-layout/auth-layout.component";
+import { DefaultLayoutComponent } from "./layouts/default-layout/default-layout.component";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { NgxsModule, Store } from '@ngxs/store';
 
-import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from "@abacritt/angularx-social-login";
-import {NgScrollbarModule} from "ngx-scrollbar";
-import {GlobalErrorHandler} from "@app/core/helpers/global-error-handler";
-import {environment} from "@environments/environment";
-import {AppBarComponent} from "@modules/app-bar/app-bar.component";
-import {ThemeMenuComponent} from "@modules/themes/menus/theme-menu.component";
-import {DashboardComponent} from "@modules/dashboard/dashboard.component";
-import {DynamicAppbarComponent} from "@modules/app-bar/dynamic/dynamic-appbar.component";
-import {DynamicAppbarDirective} from "@modules/app-bar/dynamic/dynamic-appbar.directive";
-import {DashboardCardComponent} from "@modules/dashboard/cards/dashboard-card.component";
-import {LegalNoticeComponent} from "@modules/legal-notice/legal-notice.component";
-import {AccountModule} from "@modules/account/account.module";
-import {MaterialModule} from "@app/shared/material/material.module";
-import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
-import {ThemeState} from "@modules/themes/stores/theme-state";
-import {WasteCalendarModule} from "@modules/waste-calendar/waste-calendar.module";
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
-import {DateFnsAdapter, MAT_DATE_FNS_FORMATS} from "@angular/material-date-fns-adapter";
-import {initTheme} from "@app/core/app-initializer/theme.initializer";
-import {initApplication} from "@app/core/app-initializer/app.initializer";
-import {JwtInterceptor} from "@app/core/helpers/jwt.interceptor";
-import {ErrorInterceptor} from "@app/core/helpers/error.interceptor";
+import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from "@abacritt/angularx-social-login";
+import { NgScrollbarModule } from "ngx-scrollbar";
+import { GlobalErrorHandler } from "@app/core/helpers/global-error-handler";
+import { environment } from "@environments/environment";
+import { AppBarComponent } from "@modules/app-bar/app-bar.component";
+import { ThemeMenuComponent } from "@modules/themes/menus/theme-menu.component";
+import { DashboardComponent } from "@modules/dashboard/dashboard.component";
+import { DynamicAppbarComponent } from "@modules/app-bar/dynamic/dynamic-appbar.component";
+import { DynamicAppbarDirective } from "@modules/app-bar/dynamic/dynamic-appbar.directive";
+import { DashboardCardComponent } from "@modules/dashboard/cards/dashboard-card.component";
+import { LegalNoticeComponent } from "@modules/legal-notice/legal-notice.component";
+import { AccountModule } from "@modules/account/account.module";
+import { MaterialModule } from "@app/shared/material/material.module";
+import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
+import { WasteCalendarModule } from "@modules/waste-calendar/waste-calendar.module";
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from "@angular/material/core";
+import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from "@angular/material-date-fns-adapter";
+import { initTheme } from "@app/core/initializers/theme.initializer";
+import { initApplication } from "@app/core/initializers/app.initializer";
+import { JwtInterceptor } from "@app/core/helpers/jwt.interceptor";
+import { ErrorInterceptor } from "@app/core/helpers/error.interceptor";
+import { ThemeState } from "@modules/themes/stores/theme-state";
 
 @NgModule({
   declarations: [
     AppComponent,
     AppBarComponent,
-    // AppFooterComponent,
     AuthLayoutComponent,
     DefaultLayoutComponent,
     ThemeMenuComponent,
@@ -76,7 +75,6 @@ import {ErrorInterceptor} from "@app/core/helpers/error.interceptor";
         ]
       } as SocialAuthServiceConfig
     },
-    // {provide: MAT_DATE_LOCALE, useValue: 'de'},
     {
       provide: DateAdapter,
       useClass: DateFnsAdapter,
