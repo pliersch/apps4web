@@ -211,7 +211,6 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     let dialogRef = this.dialog.open(GalleryEditImageTagsComponent, {
       data: {tags: this.computeAvailableTagsOfPictures()},
       width: '800px',
-      // minWidth: '600px',
       // minHeight: '400px',
       // maxHeight: '600px',
       restoreFocus: false,

@@ -1,8 +1,29 @@
 <mat-grid-list [cols]="colsAvailable" rowHeight="fit" gutterSize="6px">
-  <mat-grid-tile class="bg-image"
-                 *ngFor="let image of (selection | async); let i = index"
-                 [colspan]="cols"
-                 [rowspan]="rows"
-                 [style.background-image]="'url(' + getPhotoUrl(image.fileName) + ')'">
+  <mat-grid-tile *ngFor="let image of (selection | async); let i = index"
+                 [colspan]="cols" [rowspan]="rows">
+    <div class="image-container">
+      <div class="bg-image" [style.background-image]="'url(' + getPhotoUrl(image.fileName) + ')'"></div>
+      <div class="flex-column">
+        <button mat-icon-button (click)="onClickClose(image)">
+          <mat-icon>visibility</mat-icon>
+        </button>
+      </div>
+    </div>
   </mat-grid-tile>
+
 </mat-grid-list>
+
+<!--<mat-grid-list [cols]="colsAvailable" rowHeight="fit" gutterSize="6px">-->
+<!--  <mat-grid-tile class="bg-image"-->
+<!--                 *ngFor="let image of (selection | async); let i = index"-->
+<!--                 [colspan]="cols" [rowspan]="rows">-->
+<!--    <div class="image-container">-->
+<!--      <img alt="thumbnail" [src]="getPhotoUrl(image.fileName)">-->
+<!--      <div class="flex-column">-->
+<!--        <button mat-icon-button (click)="onClickClose(image)">-->
+<!--          <mat-icon>visibility</mat-icon>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </mat-grid-tile>-->
+<!--</mat-grid-list>-->

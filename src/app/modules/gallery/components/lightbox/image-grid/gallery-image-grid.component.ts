@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { PhotoState } from '@gallery/store/photos/photo.state';
 import { Select } from "@ngxs/store";
 import { getPhotoUrl } from "@gallery/store/photos/photo.tools";
+import { getThumbUrl } from "@gallery/store/photos/photo.tools";
 
 @Component({
   selector: 'app-gallery-image-grid',
@@ -76,5 +77,9 @@ export class GalleryImageGridComponent implements OnInit {
 
   getPhotoUrl(fileName: string): string {
     return getPhotoUrl(fileName);
+  }
+
+  onClickClose(image: Photo) {
+
   }
 }

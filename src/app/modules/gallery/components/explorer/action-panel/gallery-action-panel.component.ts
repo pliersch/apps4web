@@ -2,11 +2,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Action } from "@app/modules/action-bar/actions";
 
 @Component({
-  selector: 'app-action-panel',
-  templateUrl: './action-panel.component.html',
-  styleUrls: ['./action-panel.component.scss']
+  selector: 'app-gallery-action-panel',
+  templateUrl: './gallery-action-panel.component.html',
+  styleUrls: ['./gallery-action-panel.component.scss']
 })
-export class ActionPanelComponent {
+export class GalleryActionPanelComponent {
 
   @Input()
   actions: Action[]

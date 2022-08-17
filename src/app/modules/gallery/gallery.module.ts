@@ -63,7 +63,7 @@ import {
   GalleryMetaPanelComponent
 } from './components/explorer/meta-panel/gallery-meta-panel.component';
 import { GallerySlideshowComponent } from './components/slideshow/gallery-slideshow.component';
-import { ActionPanelComponent } from './components/explorer/action-panel/action-panel.component';
+import { GalleryActionPanelComponent } from './components/explorer/action-panel/gallery-action-panel.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +88,7 @@ import { ActionPanelComponent } from './components/explorer/action-panel/action-
     GalleryEditImageTagsComponent,
     GalleryMetaPanelComponent,
     GallerySlideshowComponent,
-    ActionPanelComponent,
+    GalleryActionPanelComponent,
   ],
   imports: [
     CommonModule,
@@ -102,7 +102,6 @@ import { ActionPanelComponent } from './components/explorer/action-panel/action-
     // TODO enable, impl?
     // RouterModule.forChild(ROUTES),
     NgxsModule.forFeature([PhotoState, TagState]),
-    // StoreRouterConnectingModule.forRoot(),
     MatButtonToggleModule,
     ActionBarModule,
     MatSlideToggleModule,

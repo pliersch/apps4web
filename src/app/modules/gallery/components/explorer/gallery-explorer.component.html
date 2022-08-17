@@ -5,7 +5,8 @@
         <app-gallery-filter-panel *ngIf=showFilter></app-gallery-filter-panel>
       </ng-scrollbar>
     </div>
-    <app-action-panel [actions]="actions" (actionEvent)="onAction($event)" class="m5"></app-action-panel>
+    <app-gallery-action-panel [actions]="actions" (actionEvent)="onAction($event)"
+                              class="m5"></app-gallery-action-panel>
     <app-gallery-image-detail class="m5" [currentPhoto]="currentPhoto"></app-gallery-image-detail>
     <!--    <app-action-bar class="action-bar"></app-action-bar>-->
     <app-gallery-meta-panel class="m5"
