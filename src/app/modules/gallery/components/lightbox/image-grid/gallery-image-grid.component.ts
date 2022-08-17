@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Photo } from '@gallery/store/photos/photo.model';
 import { Observable } from 'rxjs';
 import { PhotoState } from '@gallery/store/photos/photo.state';
 import { Select } from "@ngxs/store";
 import { getPhotoUrl } from "@gallery/store/photos/photo.tools";
-import { getThumbUrl } from "@gallery/store/photos/photo.tools";
 
 @Component({
   selector: 'app-gallery-image-grid',
@@ -15,6 +14,9 @@ export class GalleryImageGridComponent implements OnInit {
 
   @Select(PhotoState.getComparePhotos)
   selection: Observable<Photo[]>
+
+  @Output()
+  closeEvent = new EventEmitter<Photo>();
 
   layoutTiles = 0;
   colsAvailable = 1;
@@ -79,7 +81,7 @@ export class GalleryImageGridComponent implements OnInit {
     return getPhotoUrl(fileName);
   }
 
-  onClickClose(image: Photo) {
-
+  onClickClose(photo: Photo): void {
+    this.closeEvent.emit(photo);
   }
 }

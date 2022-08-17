@@ -3,7 +3,7 @@
      [class.vertical]="view === viewEnum.Vertical">
 
   <div class="grid-detail">
-    <app-gallery-image-grid></app-gallery-image-grid>
+    <app-gallery-image-grid (closeEvent)="onSelectImage($event)"></app-gallery-image-grid>
   </div>
 
   <div class="grid-thumbs">
