@@ -20,7 +20,7 @@ export class GalleryHorizontalScrollerComponent implements OnInit {
   photos$: Observable<Photo[]>
 
   @Select(PhotoState.getComparePhotos)
-  images2: Observable<Photo[]>
+  comparePhotos$: Observable<Photo[]>
 
   @Select(PhotoState.getCurrentIndex)
   currentIndex$: Observable<number>;
@@ -55,10 +55,6 @@ export class GalleryHorizontalScrollerComponent implements OnInit {
       left: position * 200
     });
   }
-
-  // private updateSelection(photo: Photo): void {
-  //   this.store.dispatch(new TogglePhotoSelectionAction(photo));
-  // }
 
   getThumbUrl(fileName: string): string {
     return getThumbUrl(fileName);

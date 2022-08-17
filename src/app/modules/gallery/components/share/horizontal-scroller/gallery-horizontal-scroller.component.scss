@@ -22,5 +22,10 @@
       border: 1px solid cornflowerblue;
       box-sizing: border-box;
     }
+
+    &.selected {
+      border: 2px solid green;
+      box-sizing: border-box;
+    }
   }
 }

@@ -4,6 +4,7 @@
       <div class="thumbnail-item item" *ngFor="let photo of (photos$ | async); let i = index"
            [style.background-image]="'url(' + getThumbUrl(photo.fileName) + ')'"
            [class.active]="currentIndex === i"
+           [class.selected]="photo.isSelected"
            (click)="onSelectImage(photo)">
       </div>
     </div>
