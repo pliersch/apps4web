@@ -1,20 +1,28 @@
 .thumbnail-list {
   display: block;
-  //height: 120px;
   white-space: nowrap;
 
   .thumbnail-item {
     display: inline-block;
+    position: relative;
     background-size: cover;
     background-position: center center;
     height: 120px;
     width: 200px;
   }
 
+  .hidden {
+    visibility: hidden;
+  }
+
+  .top-left {
+    position: absolute;
+    top: 0;
+    right: 4px;
+  }
+
   .item {
     border: none;
-    //padding: 5px;
-    //margin: 0;
     box-sizing: border-box;
     cursor: pointer;
 
@@ -23,9 +31,5 @@
       box-sizing: border-box;
     }
 
-    &.selected {
-      border: 2px solid green;
-      box-sizing: border-box;
-    }
   }
 }

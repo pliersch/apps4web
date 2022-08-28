@@ -49,7 +49,6 @@ export class GallerySlideshowComponent implements OnInit, AfterViewInit, OnDestr
   constructor(private store: Store) { }
 
   ngOnInit(): void {
-    // this.store.select(state => state.gallery);
     this.store.dispatch(new LoadPhotosAction(60));
     this.subscription =
       this.currentPhoto$.subscribe(res => {
@@ -85,7 +84,7 @@ export class GallerySlideshowComponent implements OnInit, AfterViewInit, OnDestr
 
   private scrollToActiveItem(): void {
     if (this.view === View.Horizontal) {
-      this.horizontalScrollbarRef.scrollToPosition(this.currentIndex);
+      this.horizontalScrollbarRef.scrollToIndex(this.currentIndex);
     } else {
       this.verticalScrollbarRef.scrollTo(this.currentIndex);
     }

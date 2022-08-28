@@ -37,22 +37,28 @@ export class GalleryHorizontalScrollerComponent implements OnInit {
 
   onSelectImage(photo: Photo): void {
     this.selectEvent.emit(photo);
-    // this.updateSelection(photo);
   }
 
   onScroll($event: WheelEvent): void {
     const scrollLeft = this.scrollbar.viewport.scrollLeft;
     if ($event.deltaY > 0) {
-      this.scrollToPosition(scrollLeft + 400);
+      this.scrollToPosition(scrollLeft + 600);
     } else {
-      this.scrollToPosition(scrollLeft - 400);
+      this.scrollToPosition(scrollLeft - 600);
     }
     $event.preventDefault();
   }
 
-  scrollToPosition(position: number): void {
+  scrollToIndex(index: number): void {
     void this.scrollbar.scrollTo({
-      left: position * 200
+      left: index * 200
+    });
+  }
+
+  scrollToPosition(position: number): void {
+    console.log('GalleryHorizontalScrollerComponent scrollToPosition: ', position)
+    void this.scrollbar.scrollTo({
+      left: position
     });
   }
 

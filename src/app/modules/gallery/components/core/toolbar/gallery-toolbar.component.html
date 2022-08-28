@@ -1,7 +1,7 @@
 <mat-toolbar>
   <span class="spacer"></span>
-  <button mat-icon-button
-          [class.hidden]="view !== viewType.Lightbox" (click)="emitSwitchView()">
+  <button mat-icon-button (click)="emitSwitchView()"
+          [class.hidden]="view !== viewType.Lightbox">
     <mat-icon>{{ icon }}</mat-icon>
   </button>
   <button mat-icon-button (click)="openFilterMenu()">

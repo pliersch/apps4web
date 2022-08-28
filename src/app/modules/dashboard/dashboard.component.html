@@ -1,9 +1,10 @@
-<div class="grid-container">
-  <app-reminder></app-reminder>
-  <mat-grid-list cols="4">
-    <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
-      <app-dashboard-card [title]="card.title"
-                          imgUrl="http://localhost:3000/image-1635497339371.jpg"></app-dashboard-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+<div class="flex-row">
+  <app-reminder class="component"></app-reminder>
+  <app-ingredients class="component"></app-ingredients>
+  <!--  <mat-grid-list cols="4">-->
+  <!--    <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">-->
+  <!--      <app-dashboard-card [title]="card.title"-->
+  <!--                          imgUrl="http://localhost:3000/image-1635497339371.jpg"></app-dashboard-card>-->
+  <!--    </mat-grid-tile>-->
+  <!--  </mat-grid-list>-->
 </div>

@@ -31,6 +31,7 @@ import { initApplication } from "@app/core/initializers/app.initializer";
 import { JwtInterceptor } from "@app/core/helpers/jwt.interceptor";
 import { ErrorInterceptor } from "@app/core/helpers/error.interceptor";
 import { ThemeState } from "@modules/themes/stores/theme-state";
+import { RecipesModule } from "@modules/recipes/recipes.module";
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { ThemeState } from "@modules/themes/stores/theme-state";
     NgxsModule.forRoot([ThemeState], {developmentMode: !environment.production}),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     // NgxsLoggerPluginModule.forRoot(),
-    WasteCalendarModule
+    WasteCalendarModule,
+    RecipesModule
   ],
   exports: [],
   providers: [

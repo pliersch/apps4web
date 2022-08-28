@@ -1,4 +1,7 @@
 - impl ngxs router state! (app/stores/router.state)
 - chat und gallery nutzen denselben service (photoservice)
 - alt property für img
-- fonts einbinden!!! https://t3n.de/news/google-fonts-illegal-urteil-dsgvo-1447698/
+- styles.css (build) bindet ein:
+  @import url(https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500&display=swap);
+  warum? default? fallback?
+- scroller(photo) haben feste werte
