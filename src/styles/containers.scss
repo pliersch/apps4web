@@ -1,0 +1,37 @@
+@media (min-width: 576px) {
+  .col-s25 {
+    flex: 0 0 auto;
+    width: 25%;
+  }
+  .col-s33 {
+    flex: 0 0 auto;
+    width: calc(100% / 3);
+  }
+  .col-s50 {
+    flex: 0 0 auto;
+    width: 50%;
+  }
+  .col-s100 {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  .col-m25 {
+    flex: 0 0 auto;
+    width: 25%;
+  }
+  .col-m33 {
+    flex: 0 0 auto;
+    width: calc(100% / 3);
+  }
+  .col-m50 {
+    flex: 0 0 auto;
+    width: 50%;
+  }
+  .col-m100 {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}

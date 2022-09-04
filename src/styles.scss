@@ -1,8 +1,6 @@
 @use '@angular/material' as mat;
 //@use './src/app/modules/doctor/footer/footer.component-theme' as footer;
-
-//@import '../node_modules/@angular/material/prebuilt-themes/purple-green.css';
-//@import '../node_modules/@angular/material/prebuilt-themes/indigo-pink.css';
+@import 'styles/containers.scss';
 @import 'styles/roboto.scss';
 @import 'styles/material-icons.scss';
 @import 'styles/themes';
