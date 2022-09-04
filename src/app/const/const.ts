@@ -11,7 +11,7 @@ export const constants = {
     {route: '/account/login', name: 'Login'},
     {route: '/profile', name: 'Profil'},
     {route: '/samples/address', name: 'Adresse'},
-    {route: '/samples/selection', name: 'Selection'},
-    {route: '/doctor', name: 'Doc'},
+    // {route: '/samples/selection', name: 'Selection'},
+    // {route: '/doctor', name: 'Doc'},
   ]
 } as const;
