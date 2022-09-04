@@ -56,7 +56,6 @@ export class GalleryHorizontalScrollerComponent implements OnInit {
   }
 
   scrollToPosition(position: number): void {
-    console.log('GalleryHorizontalScrollerComponent scrollToPosition: ', position)
     void this.scrollbar.scrollTo({
       left: position
     });

@@ -1,29 +1,27 @@
-<div id="chat-input">
+<div class="flex-container bg-primary-dark">
 
-  <div class="flex-container bg-primary-dark">
+  <app-chat-emoji-picker [show]="emojiPanel" (close)="onClose()"
+                         (emojiSelectEvent)="addEmojiToMessage($event)"></app-chat-emoji-picker>
+  <button mat-mini-fab color="primary" class="m10" (click)="toggleEmojiPanel()">
+    <mat-icon>emoji_emotions</mat-icon>
+  </button>
 
-    <app-chat-emoji-picker [show]="emojiPanel" (close)="onClose()"
-                           (emojiSelectEvent)="addEmojiToMessage($event)"></app-chat-emoji-picker>
-    <button mat-mini-fab color="primary" class="margin-10" (click)="toggleEmojiPanel()">
-      <mat-icon>emoji_emotions</mat-icon>
-    </button>
+  <button mat-mini-fab color="primary" class="upload-btn m10"
+          (click)="toggleUpload()">
+    <mat-icon>attach_file</mat-icon>
+  </button>
 
-    <button mat-mini-fab color="primary" class="upload-btn margin-10"
-            (click)="toggleUpload()">
-      <mat-icon>attach_file</mat-icon>
-    </button>
+  <textarea class="spacer m10" matInput [(ngModel)]="content" name="what"
+            placeholder="Schreib eine Nachricht" required></textarea>
+  <button mat-mini-fab color="primary" class="m10" (click)="emitMessage()"
+          [disabled]="content === &quot;&quot;">
+    <mat-icon>send</mat-icon>
+  </button>
 
-    <textarea class="flex-full-space margin-10" matInput [(ngModel)]="content" name="what"
-              placeholder="Schreib eine Nachricht" required></textarea>
-    <button mat-mini-fab color="primary" class="margin-10" (click)="emitMessage()"
-            [disabled]="content === &quot;&quot;">
-      <mat-icon>send</mat-icon>
-    </button>
+  <!--    <v-textarea class="m10" auto-grow="auto-grow" outlined="outlined" filled="filled" rows="1" maxlength="800"-->
+  <!--                clear-icon="mdi-close-circle" clearable="clearable" hide-details="hide-details" autofocus="autofocus"-->
+  <!--                background-color="background_primary" color="text_primary-base" rounded="rounded"-->
+  <!--                v-model="content"></v-textarea>-->
 
-    <!--    <v-textarea class="margin-10" auto-grow="auto-grow" outlined="outlined" filled="filled" rows="1" maxlength="800"-->
-    <!--                clear-icon="mdi-close-circle" clearable="clearable" hide-details="hide-details" autofocus="autofocus"-->
-    <!--                background-color="background_primary" color="text_primary-base" rounded="rounded"-->
-    <!--                v-model="content"></v-textarea>-->
-
-  </div>
 </div>
+

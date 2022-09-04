@@ -1,7 +1,3 @@
-.margin-10 {
-  margin: 10px;
-}
-
 .flex-container {
   align-items: flex-end;
   box-sizing: border-box;
@@ -10,15 +6,6 @@
   max-width: 100%;
   position: relative;
   z-index: 2;
-}
-
-.flex-full-space {
-  flex: 1 1 auto;
-}
-
-.flex {
-  display: flex;
-  width: 100%;
 }
 
 textarea {
