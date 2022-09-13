@@ -26,7 +26,7 @@ export class HouseComponent implements OnInit, AfterViewInit {
 
   //* Stage Properties
 
-  @Input() public cameraZ: number = 400;
+  @Input() public cameraZ: number = 15;
 
   @Input() public fieldOfView: number = 1;
 
@@ -91,12 +91,16 @@ export class HouseComponent implements OnInit, AfterViewInit {
     this.scene.add(this.cube);
     //*Camera
     let aspectRatio = this.canvas.clientWidth / this.canvas.clientHeight;
-    this.camera = new THREE.PerspectiveCamera(
-      this.fieldOfView,
-      aspectRatio,
-      this.nearClippingPlane,
-      this.farClippingPlane
-    )
+
+    // this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.25, 20);
+    this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+
+    // this.camera = new THREE.PerspectiveCamera(
+    //   this.fieldOfView,
+    //   aspectRatio,
+    //   this.nearClippingPlane,
+    //   this.farClippingPlane
+    // )
     this.camera.position.z = this.cameraZ;
 
     this.renderer = new THREE.WebGLRenderer({canvas: this.canvas});

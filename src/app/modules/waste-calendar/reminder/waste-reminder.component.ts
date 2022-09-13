@@ -8,7 +8,7 @@ import { de } from 'date-fns/locale'
 import { DateAdapter } from "@angular/material/core";
 
 @Component({
-  selector: 'app-reminder',
+  selector: 'app-waste-reminder',
   templateUrl: './waste-reminder.component.html',
   styleUrls: ['./waste-reminder.component.scss'],
 })

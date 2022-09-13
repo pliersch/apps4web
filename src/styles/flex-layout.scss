@@ -12,6 +12,9 @@
 :where(.row) > * {
   width: 100%;
   max-width: 100%;
+  margin-top: var(--gutter);
+  padding-right: calc(.5 * var(--gutter));
+  padding-left: calc(.5 * var(--gutter));
 }
 
 .row-max-height {
