@@ -6,19 +6,6 @@ export interface Ingredient {
   value: number;
 }
 
-export interface Poolish {
-  flour: Ingredient;
-  water: Ingredient;
-  yeast: Ingredient;
-  honey: Ingredient;
-}
-
-export interface Dough {
-  flour: Ingredient;
-  water: Ingredient;
-  salt: Ingredient;
-}
-
 @Component({
   selector: 'app-ingredients',
   templateUrl: './pizza.component.html',
@@ -37,32 +24,41 @@ export class PizzaComponent implements AfterContentInit {
     }, Validators.required]
   });
 
-  poolish: Poolish = {
-    flour: {name: 'Mehl', value: 0},
-    water: {name: 'Wasser', value: 0},
-    yeast: {name: 'Frischhefe', value: 0},
-    honey: {name: 'Honig', value: 0},
-  }
+  poolish: Ingredient[] = [
+    {name: 'Mehl', value: 0},
+    {name: 'Wasser', value: 0},
+    {name: 'Frischhefe', value: 0},
+    {name: 'Honig', value: 0}];
 
-  dough: Dough = {
-    flour: {name: 'Mehl', value: 0},
-    water: {name: 'Wasser', value: 0},
-    salt: {name: 'Salz', value: 0},
-  }
+  dough: Ingredient[] = [
+    {name: 'Mehl', value: 0},
+    {name: 'Wasser', value: 0},
+    {name: 'Salz', value: 0}];
 
   constructor(private builder: FormBuilder) {
   }
 
   updateFields(): void {
-    Object.entries(this.poolish).forEach(([key, value]) => console.log(`${key}: ${value}`))
-    const salt = 0.018;
+    const salt = 0.03;
     let controls = this.ingredientsForm.controls;
     let count = controls['count'].value;
     let hydration = controls['hydration'].value / 100;
-    this.poolish.flour.value = count * 50;
-    this.poolish.water.value = count * 50 * 0.95;
-    this.poolish.yeast.value = count * hydration * 50;
-    this.poolish.honey.value = count * hydration * 50;
+
+    let poolishFlour: Ingredient = this.poolish.find(ingredient => ingredient.name === 'Mehl')!;
+    let poolishWater: Ingredient = this.poolish.find(ingredient => ingredient.name === 'Wasser')!;
+    let poolishYeast: Ingredient = this.poolish.find(ingredient => ingredient.name === 'Frischhefe')!;
+    let poolishHoney: Ingredient = this.poolish.find(ingredient => ingredient.name === 'Honig')!;
+    let doughFlour: Ingredient = this.dough.find(ingredient => ingredient.name === 'Mehl')!;
+    let doughWater: Ingredient = this.dough.find(ingredient => ingredient.name === 'Wasser')!;
+    let doughSalt: Ingredient = this.dough.find(ingredient => ingredient.name === 'Salz')!;
+
+    poolishFlour.value = count * 50;
+    poolishWater.value = count * 50 * hydration;
+    poolishHoney.value = count * 50;
+    poolishYeast.value = Number((count * 50 * hydration * 0.0085).toFixed(2));
+    doughFlour.value = count * 106;
+    doughWater.value = count * 62.5;
+    doughSalt.value = Number(((doughFlour.value + poolishWater.value) * salt).toFixed(2));
   }
 
   ngAfterContentInit(): void {

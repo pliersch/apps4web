@@ -16,13 +16,18 @@
       </div>
       <mat-divider inset></mat-divider>
       <div class="subtitle">Poolish</div>
-      <!--      <mat-list>-->
-      <!--        <mat-list-item *ngFor="let ingredient of poolish">-->
-      <!--          {{ ingredient.name }}: {{ingredient.value}}  -->
-      <!--        </mat-list-item>-->
-      <!--      </mat-list>-->
+      <mat-list>
+        <mat-list-item *ngFor="let ingredient of poolish">
+          {{ ingredient.name }}: {{ingredient.value}}
+        </mat-list-item>
+      </mat-list>
       <mat-divider inset></mat-divider>
-      <mat-card-subtitle>Hauptteig</mat-card-subtitle>
+      <div class="subtitle">Hauptteig</div>
+      <mat-list>
+        <mat-list-item *ngFor="let ingredient of dough">
+          {{ ingredient.name }}: {{ingredient.value}}
+        </mat-list-item>
+      </mat-list>
     </mat-card-content>
   </mat-card>
 </form>
