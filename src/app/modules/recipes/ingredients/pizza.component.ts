@@ -40,17 +40,17 @@ export class PizzaComponent implements AfterContentInit {
 
   updateFields(): void {
     const salt = 0.03;
-    let controls = this.ingredientsForm.controls;
-    let count = controls['count'].value;
-    let hydration = controls['hydration'].value / 100;
+    const controls = this.ingredientsForm.controls;
+    const count = controls['count'].value;
+    const hydration = controls['hydration'].value / 100;
 
-    let poolishFlour: Ingredient = this.poolish.find(ingredient => ingredient.name === 'Mehl')!;
-    let poolishWater: Ingredient = this.poolish.find(ingredient => ingredient.name === 'Wasser')!;
-    let poolishYeast: Ingredient = this.poolish.find(ingredient => ingredient.name === 'Frischhefe')!;
-    let poolishHoney: Ingredient = this.poolish.find(ingredient => ingredient.name === 'Honig')!;
-    let doughFlour: Ingredient = this.dough.find(ingredient => ingredient.name === 'Mehl')!;
-    let doughWater: Ingredient = this.dough.find(ingredient => ingredient.name === 'Wasser')!;
-    let doughSalt: Ingredient = this.dough.find(ingredient => ingredient.name === 'Salz')!;
+    const poolishFlour: Ingredient = this.poolish.find(ingredient => ingredient.name === 'Mehl')!;
+    const poolishWater: Ingredient = this.poolish.find(ingredient => ingredient.name === 'Wasser')!;
+    const poolishYeast: Ingredient = this.poolish.find(ingredient => ingredient.name === 'Frischhefe')!;
+    const poolishHoney: Ingredient = this.poolish.find(ingredient => ingredient.name === 'Honig')!;
+    const doughFlour: Ingredient = this.dough.find(ingredient => ingredient.name === 'Mehl')!;
+    const doughWater: Ingredient = this.dough.find(ingredient => ingredient.name === 'Wasser')!;
+    const doughSalt: Ingredient = this.dough.find(ingredient => ingredient.name === 'Salz')!;
 
     poolishFlour.value = count * 50;
     poolishWater.value = count * 50 * hydration;
