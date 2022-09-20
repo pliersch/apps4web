@@ -1,0 +1,47 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+@import '@angular/material/theming';
+
+@mixin color($theme) {
+  // Get the color config from the theme.
+  $color-config: mat.get-color-config($theme);
+
+  // Get the primary color palette from the color-config.
+  $primary-palette: map.get($color-config, 'primary');
+  $accent-palette: map.get($color-config, 'accent');
+
+  .yellow .mat-calendar-body-cell-content {
+    background-color: rgba(255, 255, 0, 0.5);
+  }
+
+  .blue .mat-calendar-body-cell-content {
+    background-color: rgba(0, 0, 255, 0.5);
+  }
+
+  .green .mat-calendar-body-cell-content {
+    background-color: rgba(0, 255, 0, 0.5);
+  }
+
+  .gray .mat-calendar-body-cell-content {
+    background-color: rgba(128, 128, 128, 0.5);
+  }
+
+  .red .mat-calendar-body-cell-content {
+    background-color: rgba(255, 0, 0, 0.5);
+  }
+
+  .mat-calendar-body-cell[disabled] {
+    pointer-events: none;
+  }
+
+  .mat-calendar-body-cell[disabled] .mat-calendar-body-cell-content {
+    background-color: rgba(128, 128, 128, 0.637);
+  }
+}
+
+@mixin theme($theme) {
+  $color-config: mat.get-color-config($theme);
+  @if $color-config != null {
+    @include color($theme);
+  }
+}

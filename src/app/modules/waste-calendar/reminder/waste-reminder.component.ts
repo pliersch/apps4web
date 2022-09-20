@@ -63,7 +63,7 @@ export class WasteReminderComponent implements OnInit, AfterViewInit {
     );
     for (const wasteEvent of this.nextEventsOfSelectedMonth) {
       Array.from(dayElements).forEach((element) => {
-        let attribute = element.getAttribute('aria-label');
+        const attribute = element.getAttribute('aria-label');
         if (attribute) {
 
           if (wasteEvent.date.getDate() == parseGerman(attribute).getDate()) {
@@ -91,16 +91,16 @@ export class WasteReminderComponent implements OnInit, AfterViewInit {
 
   updateEventsOfMonth(month: number): void {
     this.eventsOfSelectedMonth = this.getEventsOfMonth(month);
-    let today = this.getDateWithoutHours(new Date());
+    const today = this.getDateWithoutHours(new Date());
     this.nextEventsOfSelectedMonth = this.eventsOfSelectedMonth.filter(event => event.date >= today);
   }
 
   getCountdown(event: WasteEvent): string {
-    let actualDate = this.getDateWithoutHours(new Date());
-    let difference = differenceInDays(event.date, actualDate);
-    let days = difference > 1 ? 'Tage' : 'Tag';
-    let hint = this.computeHint(event.wasteType);
-    let result = formatGermanDayAndMonth(event.date) + ' in ' + difference + ' ' + days;
+    const actualDate = this.getDateWithoutHours(new Date());
+    const difference = differenceInDays(event.date, actualDate);
+    const days = difference > 1 ? 'Tage' : 'Tag';
+    const hint = this.computeHint(event.wasteType);
+    const result = formatGermanDayAndMonth(event.date) + ' in ' + difference + ' ' + days;
     return result + ' ' + hint;
   }
 
@@ -109,12 +109,12 @@ export class WasteReminderComponent implements OnInit, AfterViewInit {
   }
 
   private processJson(): WasteEvent[][] {
-    let events: WasteEvent[][] = [];
+    const events: WasteEvent[][] = [];
     for (let i = 0; i < 12; i++) {
       events[i] = [];
     }
     this.generateWasteEvents(this.rawEvents).forEach(event => {
-        let month = event.date.getMonth();
+        const month = event.date.getMonth();
         events[month].push(event);
       }
     );
@@ -122,9 +122,9 @@ export class WasteReminderComponent implements OnInit, AfterViewInit {
   }
 
   private generateWasteEvents(dates: WasteDate[]): WasteEvent[] {
-    let events: WasteEvent[] = [];
+    const events: WasteEvent[] = [];
     for (const event of dates) {
-      let date = parseGerman2(event.date);
+      const date = parseGerman2(event.date);
       events.push({
         date: new Date(date),
         wasteType: event.type

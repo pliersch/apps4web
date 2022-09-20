@@ -1,31 +1,3 @@
 .card {
   width: 300px;
 }
-
-::ng-deep .yellow .mat-calendar-body-cell-content {
-  background-color: rgba(255, 255, 0, 0.5);
-}
-
-::ng-deep .blue .mat-calendar-body-cell-content {
-  background-color: rgba(0, 0, 255, 0.5);
-}
-
-::ng-deep .green .mat-calendar-body-cell-content {
-  background-color: rgba(0, 255, 0, 0.5);
-}
-
-::ng-deep .gray .mat-calendar-body-cell-content {
-  background-color: rgba(128, 128, 128, 0.5);
-}
-
-::ng-deep .red .mat-calendar-body-cell-content {
-  background-color: rgba(255, 0, 0, 0.5);
-}
-
-::ng-deep .mat-calendar-body-cell[disabled] {
-  pointer-events: none;
-}
-
-::ng-deep .mat-calendar-body-cell[disabled] .mat-calendar-body-cell-content {
-  background-color: rgba(128, 128, 128, 0.637);
-}
