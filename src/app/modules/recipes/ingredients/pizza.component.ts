@@ -1,5 +1,5 @@
 import { AfterContentInit, Component } from '@angular/core';
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormControl } from "@angular/forms";
 
 export interface Ingredient {
   name: string;
@@ -13,12 +13,7 @@ export interface Ingredient {
 })
 export class PizzaComponent implements AfterContentInit {
 
-  ingredientsForm = this.builder.group({
-    count: [{
-      value: 4,
-      disabled: false,
-    }, Validators.required]
-  });
+  countControl = new FormControl('4');
 
   poolish: Ingredient[] = [
     {name: 'Mehl', value: '0'},
@@ -31,11 +26,8 @@ export class PizzaComponent implements AfterContentInit {
     {name: 'Wasser', value: '0'},
     {name: 'Salz', value: '0'}];
 
-  constructor(private builder: FormBuilder) {
-  }
-
   updateFields(): void {
-    const count = this.ingredientsForm.controls['count'].value;
+    const count = this.countControl.value;
 
     const poolishFlour: Ingredient = this.poolish.find(ingredient => ingredient.name === 'Mehl')!;
     const poolishWater: Ingredient = this.poolish.find(ingredient => ingredient.name === 'Wasser')!;

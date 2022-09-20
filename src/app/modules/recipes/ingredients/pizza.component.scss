@@ -1,10 +1,21 @@
 .pizza-card {
   max-width: 400px;
-  width: 4000px;
+  width: 360px;
   //min-width: 120px;
 }
 
 .subtitle {
   font-size: 18px;
   margin-top: 8px;
+}
+
+.flexbox-panel {
+  display: flex;
+  justify-content: center;
+}
+
+.m8-l-r {
+  margin: 8px 0 8px 0;
+  //margin-left: 8px;
+  //margin-right: 8px;
 }

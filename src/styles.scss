@@ -1,5 +1,4 @@
 @use '@angular/material' as mat;
-//@use './src/app/modules/doctor/footer/footer.component-theme' as footer;
 @import 'styles/containers.scss';
 @import 'styles/roboto.scss';
 @import 'styles/material-icons.scss';
@@ -10,17 +9,6 @@
 @import 'styles/flex-layout';
 
 @include mat.core();
-
-
-//@include mat.all-component-themes($dark-theme);
-//@include footer.theme($dark-theme);
-//
-//@include mat.all-component-themes($light-theme);
-//@include footer.theme($light-theme);
-
-//.dark-theme {
-//  @include angular-material-color($dark-theme);
-//}
 
 html, body {
   height: 100%;
@@ -45,6 +33,10 @@ body {
 
 .m5 {
   margin: 5px;
+}
+
+.m8 {
+  margin: 8px;
 }
 
 .m10 {

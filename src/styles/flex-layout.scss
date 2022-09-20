@@ -4,6 +4,12 @@
   flex-wrap: wrap;
 }
 
+.row-max-width {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
 /* syntax is needed because have to decrease specificity.
    so this is not possible
  .flex-row > * {
@@ -41,6 +47,7 @@
 }
 
 .flex-center-content-evenly {
+  align-items: center;
   justify-content: space-evenly;
 }
 

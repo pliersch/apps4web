@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import * as THREE from "three";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js';
 
 @Component({
@@ -13,29 +14,20 @@ export class HouseComponent implements OnInit, AfterViewInit {
   @ViewChild('canvas')
   private canvasRef: ElementRef;
 
-  //* Cube Properties
-
-  @Input() public rotationSpeedX: number = 0.005;
-
-  @Input() public rotationSpeedY: number = 0.003;
-
-  @Input() public size: number = 200;
-
-  @Input() public texture: string = "/assets/texture.jpg";
-
+  // //* Cube Properties
+  //
+  // @Input() public rotationSpeedX = 0.005;
+  // @Input() public rotationSpeedY = 0.003;
+  // @Input() public size = 200;
+  // @Input() public texture = "/assets/texture.jpg";
 
   //* Stage Properties
-
-  @Input() public cameraZ: number = 15;
-
-  @Input() public fieldOfView: number = 1;
-
-  @Input('nearClipping') public nearClippingPlane: number = 1;
-
-  @Input('farClipping') public farClippingPlane: number = 1000;
+  // @Input() public cameraZ = 15;
+  @Input() public fieldOfView = 1;
+  @Input('nearClipping') public nearClippingPlane = 1;
+  @Input('farClipping') public farClippingPlane = 1000;
 
   //? Helper Properties (Private Properties);
-
   private camera!: THREE.PerspectiveCamera;
   private controls: TrackballControls;
 
@@ -43,20 +35,28 @@ export class HouseComponent implements OnInit, AfterViewInit {
     return this.canvasRef.nativeElement;
   }
 
-  private loader = new THREE.TextureLoader();
-  private geometry = new THREE.BoxGeometry(1, 1, 1);
-  private material = new THREE.MeshBasicMaterial({map: this.loader.load(this.texture)});
+  // private loader = new THREE.TextureLoader();
+  // private geometry = new THREE.BoxGeometry(1, 1, 1);
+  // private material = new THREE.MeshBasicMaterial({map: this.loader.load(this.texture)});
 
-  private cube: THREE.Mesh = new THREE.Mesh(this.geometry, this.material);
+  // private cube: THREE.Mesh = new THREE.Mesh(this.geometry, this.material);
 
   private renderer!: THREE.WebGLRenderer;
 
   private scene!: THREE.Scene;
 
   ngOnInit(): void {
-    const loader = new GLTFLoader();
-    loader.load('/assets/v01.glb', (gltf) => {
+    new RGBELoader()
+      .setPath('/assets/3d/')
+      .load('studio_small_01_1k.hdr', (texture) => {
+        texture.mapping = THREE.EquirectangularReflectionMapping;
+        this.scene.background = texture;
+        this.scene.environment = texture;
+      });
+    new GLTFLoader().load('/assets/3d/export01.gltf', (gltf) => {
+      gltf.scene.scale.set(10, 10, 10);
       this.scene.add(gltf.scene);
+      // gltf.scene.getObjectByName()
     }, undefined, (error) => {
       console.error(error);
     });
@@ -67,16 +67,10 @@ export class HouseComponent implements OnInit, AfterViewInit {
     this.animate();
   }
 
-  /**
-   *Animate the cube
-   *
-   * @private
-   * @memberof CubeComponent
-   */
-  private animateCube(): void {
-    this.cube.rotation.x += this.rotationSpeedX;
-    this.cube.rotation.y += this.rotationSpeedY;
-  }
+  // private animateCube(): void {
+  //   this.cube.rotation.x += this.rotationSpeedX;
+  //   this.cube.rotation.y += this.rotationSpeedY;
+  // }
 
   /**
    * Create the scene
@@ -88,9 +82,9 @@ export class HouseComponent implements OnInit, AfterViewInit {
     this.scene = new THREE.Scene();
     // this.scene.background = new THREE.Color(0x000000)
     this.scene.background = new THREE.Color(0x777777)
-    this.scene.add(this.cube);
+    // this.scene.add(this.cube);
     //*Camera
-    let aspectRatio = this.canvas.clientWidth / this.canvas.clientHeight;
+    // let aspectRatio = this.canvas.clientWidth / this.canvas.clientHeight;
 
     // this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.25, 20);
     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
@@ -101,7 +95,8 @@ export class HouseComponent implements OnInit, AfterViewInit {
     //   this.nearClippingPlane,
     //   this.farClippingPlane
     // )
-    this.camera.position.z = this.cameraZ;
+    this.camera.position.y = 4;
+    this.camera.position.z = 10;
 
     this.renderer = new THREE.WebGLRenderer({canvas: this.canvas});
     this.renderer.setPixelRatio(devicePixelRatio);
@@ -121,6 +116,24 @@ export class HouseComponent implements OnInit, AfterViewInit {
     c.staticMoving = false;
     c.dynamicDampingFactor = 0.15;
     // c.keys = ['KeyA', 'KeyS', 'KeyD']; not working
+
+    const spotLight = new THREE.SpotLight(0xffffff, 10);
+    spotLight.position.set(2, 5, 2);
+    spotLight.angle = Math.PI / 6;
+    spotLight.penumbra = 1;
+    spotLight.decay = 2;
+    spotLight.distance = 100;
+    // spotLight.map = textures[ 'disturb.jpg' ];
+
+    spotLight.castShadow = true;
+    spotLight.shadow.mapSize.width = 1024;
+    spotLight.shadow.mapSize.height = 1024;
+    spotLight.shadow.camera.near = 10;
+    spotLight.shadow.camera.far = 200;
+    spotLight.shadow.focus = 1;
+    this.scene.add(spotLight);
+
+
   }
 
   private animate(): void {
@@ -130,9 +143,8 @@ export class HouseComponent implements OnInit, AfterViewInit {
   }
 
   private render(): void {
-    let component: HouseComponent = this;
-    component.animateCube();
-    component.renderer.render(component.scene, component.camera);
+    // component.animateCube();
+    this.renderer.render(this.scene, this.camera);
   }
 
 }

@@ -1,6 +1,12 @@
 <div class="row">
-  <app-waste-reminder class="component col"></app-waste-reminder>
-  <app-ingredients class="component col"></app-ingredients>
+  <div class="col-s-6">
+    <app-waste-reminder></app-waste-reminder>
+  </div>
+  <div class="col-s-6">
+    <app-ingredients></app-ingredients>
+  </div>
+
+
   <!--  <mat-grid-list cols="4">-->
   <!--    <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">-->
   <!--      <app-dashboard-card [title]="card.title"-->
@@ -9,7 +15,7 @@
   <!--  </mat-grid-list>-->
 </div>
 
-<mat-card class="test-container">
+<mat-card class="test-container component">
   <mat-card-content>
     <div class="row">
       <div class="col-s-6 test-col">Foo</div>
