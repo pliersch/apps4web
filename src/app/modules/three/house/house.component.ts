@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '
 import * as THREE from "three";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
-import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 @Component({
   selector: 'app-house',
@@ -29,7 +29,7 @@ export class HouseComponent implements OnInit, AfterViewInit {
 
   //? Helper Properties (Private Properties);
   private camera!: THREE.PerspectiveCamera;
-  private controls: TrackballControls;
+  private controls: OrbitControls;
 
   private get canvas(): HTMLCanvasElement {
     return this.canvasRef.nativeElement;
@@ -102,19 +102,22 @@ export class HouseComponent implements OnInit, AfterViewInit {
     this.renderer.setPixelRatio(devicePixelRatio);
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
 
-    this.controls = new TrackballControls(this.camera, this.renderer.domElement);
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     const c = this.controls;
     c.target.set(0, 0, 0);
+
+    // c.minPolarAngle = Math.PI / 2;
+    // c.maxPolarAngle = Math.PI / 2;
 
     c.rotateSpeed = 5.0;
     c.zoomSpeed = 1.2;
     c.panSpeed = 0.01;
 
-    c.noZoom = false;
-    c.noPan = false;
+    // c.noZoom = false;
+    // c.noPan = false;
 
-    c.staticMoving = false;
-    c.dynamicDampingFactor = 0.15;
+    // c.staticMoving = false;
+    // c.dynamicDampingFactor = 0.15;
     // c.keys = ['KeyA', 'KeyS', 'KeyD']; not working
 
     const spotLight = new THREE.SpotLight(0xffffff, 10);
