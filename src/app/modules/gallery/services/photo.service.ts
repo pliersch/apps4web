@@ -56,10 +56,7 @@ export class PhotoService {
     return this.http.post<Photo>(PICTURE_BASE_URL + '/file', formData);
   }
 
-  /**
-   * @param id picture id
-   * @param tags all existing tags
-   */
+  // todo use PhotoUpdate as return result
   updateTagsOfPicture(id: string, tags: string[]): Observable<string[]> {
     const dto = {tags: tags}
     return this.http.patch<string[]>(`${PICTURE_BASE_URL}/${id}`, dto);
@@ -69,8 +66,13 @@ export class PhotoService {
     return this.http.delete<PhotoUpdate>(`${PICTURE_BASE_URL}/${id}`);
   }
 
+  setRating(photo: Photo, rate: number): Observable<PhotoUpdate> {
+    const dto = {rating: rate}
+    return this.http.patch<PhotoUpdate>(`${PICTURE_BASE_URL}/${photo.id}`, dto);
+  }
+
   download(photos: Photo[]): Observable<any> {
-    let fileNames: string[] = [];
+    const fileNames: string[] = [];
     for (const photo of photos) {
       fileNames.push(photo.fileName);
     }

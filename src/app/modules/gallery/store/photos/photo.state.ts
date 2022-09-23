@@ -176,7 +176,7 @@ export class PhotoState {
   @Action(photoAction.LoadPhotosSuccessAction)
   loadPhotosSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosSuccessAction): void {
     const state = ctx.getState();
-    let photos: Photo[] = [...state.photos, ...action.dto.photos]
+    const photos: Photo[] = [...state.photos, ...action.dto.photos]
     ctx.patchState({
       photos: photos, loaded: true, loading: false, currentPhoto: photos[0]
     });
@@ -203,7 +203,7 @@ export class PhotoState {
 
   @Action(photoAction.SetNextPhotoAction)
   setNextPhotoAction(ctx: StateContext<PhotoStateModel>, action: photoAction.SetNextPhotoAction): void {
-    let photos = ctx.getState().photos;
+    const photos = ctx.getState().photos;
     let index = photos.indexOf(ctx.getState().currentPhoto!);
     ctx.patchState({
       currentPhoto: photos[++index]
@@ -212,7 +212,7 @@ export class PhotoState {
 
   @Action(photoAction.SetPreviousPhotoAction)
   setPreviousPhotoAction(ctx: StateContext<PhotoStateModel>, action: photoAction.SetPreviousPhotoAction): void {
-    let photos = ctx.getState().photos;
+    const photos = ctx.getState().photos;
     let index = photos.indexOf(ctx.getState().currentPhoto!);
     ctx.patchState({
       currentPhoto: photos[--index]
@@ -304,7 +304,7 @@ export class PhotoState {
   @Action(photoAction.TogglePhotoSelectionAction)
   addToComparedPhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.TogglePhotoSelectionAction): void {
     // const state = ctx.getState();
-    let isSelected = !action.photo.isSelected;
+    const isSelected = !action.photo.isSelected;
     ctx.setState(
       patch({
         photos: updateItem<Photo>(photo => photo!.id === action.photo.id, patch({isSelected: isSelected}))
@@ -315,7 +315,7 @@ export class PhotoState {
   @Action(photoAction.ClearPhotoSelectionAction)
   clearComparedPhotos(ctx: StateContext<PhotoStateModel>): void {
     // TODO what a fucking solution!!! unfortunately there is no method like "updateMany"
-    let comparePhotos = PhotoState.getComparePhotos(ctx.getState());
+    const comparePhotos = PhotoState.getComparePhotos(ctx.getState());
     for (let i = 0; i < comparePhotos.length; i++) {
       ctx.setState(
         patch({
@@ -331,8 +331,8 @@ export class PhotoState {
 
   @Action(photoAction.TogglePhotoDownloadAction)
   toggleDownload(ctx: StateContext<PhotoStateModel>, action: photoAction.TogglePhotoDownloadAction): void {
-    let downloads = ctx.getState().selectedPictures;
-    let isDownload = downloads.includes(action.photo);
+    const downloads = ctx.getState().selectedPictures;
+    const isDownload = downloads.includes(action.photo);
     ctx.setState(
       patch({
         selectedPictures:
@@ -385,9 +385,9 @@ export class PhotoState {
   @Action(photoAction.TogglePhotosDownloadAction)
   togglePhotosDownload(ctx: StateContext<PhotoStateModel>): void {
     console.log('togglePhotosDownloadAction!')
-    let photos = ctx.getState().photos;
-    let downloads = ctx.getState().selectedPictures;
-    let difference = photos.filter(x => !downloads.includes(x));
+    const photos = ctx.getState().photos;
+    const downloads = ctx.getState().selectedPictures;
+    const difference = photos.filter(x => !downloads.includes(x));
     ctx.setState(
       patch({selectedPictures: difference})
     );
@@ -428,14 +428,13 @@ export class PhotoState {
 
   @Action(photoAction.SetTagsOfPictureFail)
   setTagsOfPictureFail({dispatch}: StateContext<PhotoStateModel>, action: photoAction.SetTagsOfPictureFail): void {
-    // TODO handle error!
+    this.alertService.error('Set tags fail');
     console.log(action.error)
-    // dispatch({loaded: false, loading: false});
   }
 
   @Action(photoAction.AddTagToPicture)
   addTagToPicture(ctx: StateContext<PhotoStateModel>, action: photoAction.AddTagToPicture): Observable<Subscription> {
-    let photo = ctx.getState().photos.find(photo => photo.id === action.photo.id);
+    const photo = ctx.getState().photos.find(photo => photo.id === action.photo.id);
     const allTags: string[] = photo!.tags.concat(action.tag);
     return this.photoService.updateTagsOfPicture(action.photo.id, allTags)
       .pipe(
@@ -466,15 +465,14 @@ export class PhotoState {
 
   @Action(photoAction.AddTagToPictureFail)
   addTagToPictureFail({dispatch}: StateContext<PhotoStateModel>, action: photoAction.AddTagToPictureFail): void {
-    // TODO handle error!
+    this.alertService.error('Add tag fail');
     console.log(action.error)
-    // dispatch({loaded: false, loading: false});
   }
 
   @Action(photoAction.RemoveTagFromPicture)
   removeTagFromPicture(ctx: StateContext<PhotoStateModel>, action: photoAction.RemoveTagFromPicture): Observable<Subscription> {
-    let photo = ctx.getState().photos.find(photo => photo.id === action.photo.id);
-    let difference = photo!.tags.filter(item => item !== action.tag);
+    const photo = ctx.getState().photos.find(photo => photo.id === action.photo.id);
+    const difference = photo!.tags.filter(item => item !== action.tag);
     return this.photoService.updateTagsOfPicture(action.photo.id, difference)
       .pipe(
         map((res: any) =>
@@ -504,9 +502,46 @@ export class PhotoState {
 
   @Action(photoAction.RemoveTagFromPictureFail)
   removeTagFromPictureFail({dispatch}: StateContext<PhotoStateModel>, action: photoAction.RemoveTagFromPictureFail): void {
-    // TODO handle error!
+    this.alertService.error('Remove tag fail');
     console.log(action.error)
-    // dispatch({loaded: false, loading: false});
   }
 
+  //////////////////////////////////////////////////////////
+  //          rating
+  //////////////////////////////////////////////////////////
+
+  @Action(photoAction.SetRating)
+  setRating(ctx: StateContext<PhotoStateModel>, action: photoAction.SetRating): Observable<Subscription> {
+    return this.photoService.setRating(action.photo, action.rate).pipe(
+      // tap(console.log(action)),
+      map((update: PhotoUpdate) =>
+        asapScheduler.schedule(() =>
+          ctx.dispatch(new photoAction.SetRatingSuccess(update))
+        )
+      ),
+      catchError(error =>
+        of(
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new photoAction.SetRatingFail(error))
+          )
+        )
+      )
+    );
+  }
+
+  @Action(photoAction.SetRatingSuccess)
+  setRatingSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.SetRatingSuccess): void {
+    ctx.setState(
+      patch({
+        photos: updateItem<Photo>(photo => photo!.id === action.update.id,
+          patch({rating: action.update.rating}))
+      })
+    );
+  }
+
+  @Action(photoAction.SetRatingFail)
+  setRatingFail(ctx: StateContext<PhotoStateModel>, action: photoAction.SetRatingFail): void {
+    console.log(action.error)
+    this.alertService.error('Rating photo fail');
+  }
 }

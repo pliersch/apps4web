@@ -6,9 +6,11 @@ export interface Photo {
   recordDate: Date;
   baseUrl: string;
   isSelected: boolean;
+  rating: number;
 }
 
 export interface PhotoUpdate {
   id: string;
   tags?: string[];
+  rating?: number;
 }

@@ -220,3 +220,26 @@ export class RemoveTagFromPictureFail {
   constructor(public error: any) {
   }
 }
+
+// Star rating
+
+export class SetRating {
+  static readonly type = '[Gallery] Set Rating Of Photo';
+
+  constructor(public photo: Photo, public rate: number) {
+  }
+}
+
+export class SetRatingSuccess {
+  static readonly type = '[Gallery] Set Rating Of Photo Success';
+
+  constructor(public update: PhotoUpdate) {
+  }
+}
+
+export class SetRatingFail {
+  static readonly type = '[Gallery] Set Rating Of Photo Fail';
+
+  constructor(public error: any) {
+  }
+}

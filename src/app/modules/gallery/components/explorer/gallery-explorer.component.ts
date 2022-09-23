@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Photo } from '@gallery/store/photos/photo.model';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
@@ -93,7 +93,6 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
               private photoService: PhotoService,
               private router: Router,
               public dialog: MatDialog,
-              private ngZone: NgZone,
               private store: Store) {
   }
 
@@ -127,7 +126,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   observeScrollContent(): void {
-    let element = this.scrollbarRef.nativeElement.querySelector('.ng-scroll-content');
+    const element = this.scrollbarRef.nativeElement.querySelector('.ng-scroll-content');
     this.resizeObserver = new ResizeObserver(res => {
       this.absoluteHeight = res[0].contentRect.height;
     });
@@ -190,9 +189,9 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   onSelectionFinish(photoFileNames: string[]): void {
-    let photos: Photo[] = [];
+    const photos: Photo[] = [];
     for (const fileName of photoFileNames) {
-      let photo = this.photos.find(img => img.fileName == fileName);
+      const photo = this.photos.find(img => img.fileName == fileName);
       if (photo) {
         photos.push(photo);
       } else {
@@ -208,7 +207,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   private editTags(): void {
-    let dialogRef = this.dialog.open(GalleryEditImageTagsComponent, {
+    const dialogRef = this.dialog.open(GalleryEditImageTagsComponent, {
       data: {tags: this.computeAvailableTagsOfPictures()},
       width: '800px',
       // minHeight: '400px',
@@ -222,7 +221,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   private computeAvailableTagsOfPictures(): string[] {
-    let res: string[] = [];
+    const res: string[] = [];
     for (const pic of this.selection) {
       res.push(...pic.tags);
     }

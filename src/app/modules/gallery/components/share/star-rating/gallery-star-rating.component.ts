@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Select, Store } from "@ngxs/store";
+import { PhotoState } from "@gallery/store/photos/photo.state";
+import { Observable } from "rxjs";
+import { Photo } from "@gallery/store/photos/photo.model";
+import { SetRating } from "@gallery/store/photos/photo.actions";
 
 @Component({
   selector: 'app-gallery-star-rating',
@@ -7,9 +12,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GalleryStarRatingComponent implements OnInit {
 
-  constructor() { }
+  @Select(PhotoState.getCurrentPhoto)
+  currentPhoto$: Observable<Photo>;
+  currentPhoto: Photo;
 
-  ngOnInit(): void {
+
+  constructor(private store: Store) {
   }
 
+  ngOnInit(): void {
+    this.currentPhoto$.subscribe(res => {
+      this.currentPhoto = res;
+    });
+  }
+
+  onChangeRate(rate: number): void {
+    this.store.dispatch(new SetRating(this.currentPhoto, rate));
+  }
 }
