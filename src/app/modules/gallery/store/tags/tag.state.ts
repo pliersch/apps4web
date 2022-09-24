@@ -33,20 +33,15 @@ export class TagState {
   @Selector()
   static getTags(state: TagStateModel): Tag[] {
     const copy: Tag[] = state.tags.slice(0);
-    const sortedArray: Tag[] = copy.sort((obj1, obj2) => {
-      if (obj1.priority > obj2.priority) {
+    return copy.sort((tag1, tag2) => {
+      if (tag1.priority > tag2.priority) {
         return 1;
       }
-      if (obj1.priority < obj2.priority) {
+      if (tag1.priority < tag2.priority) {
         return -1;
       }
       return 0;
     });
-    // const tags1 = state.tags.sort((a, b) => a.priority - b.priority);
-    // console.log('TagState getTags 1: ', tags1)
-    // const tags2 = state.tags.sort((a, b) => (a.priority > b.priority) ? 1 : ((b.priority > a.priority) ? -1 : 0));
-    // console.log('TagState getTags 2: ', tags2)
-    return sortedArray;
   }
 
   @Selector()

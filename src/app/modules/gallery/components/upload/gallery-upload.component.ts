@@ -55,7 +55,7 @@ export class GalleryUploadComponent implements OnInit {
   }
 
   onChange(event: Event): void {
-    let files = (event.target as HTMLInputElement).files;
+    const files = (event.target as HTMLInputElement).files;
     if (!files) {
       return;
     }

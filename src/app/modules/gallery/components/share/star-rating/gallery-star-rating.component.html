@@ -1,12 +1,22 @@
 <div class="rate">
-  <input type="radio" id="star5" name="rate" value="5" (change)="onChangeRate(5)"/>
-  <label for="star5" title="text">5 stars</label>
-  <input type="radio" id="star4" name="rate" value="4" (change)="onChangeRate(4)"/>
-  <label for="star4" title="text">4 stars</label>
-  <input type="radio" id="star3" name="rate" value="3" (change)="onChangeRate(3)"/>
-  <label for="star3" title="text">3 stars</label>
-  <input type="radio" id="star2" name="rate" value="2" (change)="onChangeRate(2)"/>
-  <label for="star2" title="text">2 stars</label>
-  <input type="radio" id="star1" name="rate" value="1" (change)="onChangeRate(1)"/>
-  <label for="star1" title="text">1 star</label>
+  <button mat-icon-button [color]="currentPhoto && currentPhoto.rating > 0 ? 'accent' : 'primary'"
+          (click)="onClickStar(1)">
+    <mat-icon>star_rate</mat-icon>
+  </button>
+  <button mat-icon-button [color]="currentPhoto && currentPhoto.rating > 1 ? 'accent' : 'primary'"
+          (click)="onClickStar(2)">
+    <mat-icon>star_rate</mat-icon>
+  </button>
+  <button mat-icon-button [color]="currentPhoto && currentPhoto.rating > 2 ? 'accent' : 'primary'"
+          (click)="onClickStar(3)">
+    <mat-icon>star_rate</mat-icon>
+  </button>
+  <button mat-icon-button [color]="currentPhoto && currentPhoto.rating > 3 ? 'accent' : 'primary'"
+          (click)="onClickStar(4)">
+    <mat-icon>star_rate</mat-icon>
+  </button>
+  <button mat-icon-button [color]="currentPhoto && currentPhoto.rating > 4 ? 'accent' : 'primary'"
+          (click)="onClickStar(5)">
+    <mat-icon>star_rate</mat-icon>
+  </button>
 </div>
