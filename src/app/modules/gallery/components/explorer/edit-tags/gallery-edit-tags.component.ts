@@ -32,7 +32,7 @@ export class GalleryEditTagsComponent implements OnInit {
   copies: Tag[] = [];
   currentTag: Tag;
   currentIndex = 0;
-  hasChanges: boolean = false;
+  hasChanges = false;
 
   constructor(private store: Store,
               public dialogRef: MatDialogRef<GalleryEditTagsComponent>) {
@@ -51,7 +51,6 @@ export class GalleryEditTagsComponent implements OnInit {
     if (!this.currentTag) {
       this.currentTag = this.copies[0];
     } else {
-      // @ts-ignore TODO warum eigentlich? es wird doch geprüft!?!
       const index: number = this.copies.findIndex((x) => x.id === this.currentTag.id);
       if (index === -1) {
         const max: number = Math.max(this.currentIndex - 1, 0);

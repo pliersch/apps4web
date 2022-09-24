@@ -16,7 +16,6 @@ export class GalleryStarRatingComponent implements OnInit {
   currentPhoto$: Observable<Photo>;
   currentPhoto: Photo;
 
-
   constructor(private store: Store) {
   }
 

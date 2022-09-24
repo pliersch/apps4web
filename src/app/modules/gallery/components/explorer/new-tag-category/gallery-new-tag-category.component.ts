@@ -1,9 +1,9 @@
-import {Component} from '@angular/core';
-import {FormBuilder, Validators} from "@angular/forms";
-import {MatDialogRef} from "@angular/material/dialog";
-import {Store} from "@ngxs/store";
-import {AddTag} from "@gallery/store/tags/tag.action";
-import {Tag} from "@gallery/store/tags/tag.model";
+import { Component } from '@angular/core';
+import { FormBuilder, Validators } from "@angular/forms";
+import { MatDialogRef } from "@angular/material/dialog";
+import { Store } from "@ngxs/store";
+import { AddTag } from "@gallery/store/tags/tag.action";
+import { Tag } from "@gallery/store/tags/tag.model";
 
 @Component({
   selector: 'app-new-tag-category',
@@ -15,6 +15,10 @@ export class GalleryNewTagCategoryComponent {
   form = this.fb.group({
     category: [null, Validators.required],
     tags: [null, Validators.required],
+    priority: [{
+      value: 1,
+      disabled: false,
+    }, Validators.required],
   });
   isValid = false;
 
@@ -26,13 +30,15 @@ export class GalleryNewTagCategoryComponent {
     const category: string = this.form.get('category')!.value;
     const tags: string = this.form.get('tags')!.value;
     const entries: string[] = tags.split(',');
+    const priority: number = this.form.get('priority')!.value;
     const result: string[] = [];
     entries.forEach(entry => {
       result.push(entry.trim());
     });
     const tag: Tag = {
       tagName: category,
-      entries: result
+      entries: result,
+      priority: priority
     }
     this.store.dispatch(new AddTag(tag));
     this.dialogRef.close();

@@ -12,6 +12,12 @@
       <input matInput placeholder="Ex. Peter, Paul, Mary" formControlName="tags"
              autocomplete="nope" (input)="detectChanges()">
     </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Priority</mat-label>
+      <input matInput placeholder="Integer 1-10 (sort order)" formControlName="tags"
+             autocomplete="nope" (input)="detectChanges()">
+    </mat-form-field>
   </form>
 </mat-dialog-content>
 

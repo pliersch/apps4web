@@ -32,7 +32,21 @@ export class TagState {
 
   @Selector()
   static getTags(state: TagStateModel): Tag[] {
-    return state.tags;
+    const copy: Tag[] = state.tags.slice(0);
+    const sortedArray: Tag[] = copy.sort((obj1, obj2) => {
+      if (obj1.priority > obj2.priority) {
+        return 1;
+      }
+      if (obj1.priority < obj2.priority) {
+        return -1;
+      }
+      return 0;
+    });
+    // const tags1 = state.tags.sort((a, b) => a.priority - b.priority);
+    // console.log('TagState getTags 1: ', tags1)
+    // const tags2 = state.tags.sort((a, b) => (a.priority > b.priority) ? 1 : ((b.priority > a.priority) ? -1 : 0));
+    // console.log('TagState getTags 2: ', tags2)
+    return sortedArray;
   }
 
   @Selector()
@@ -107,7 +121,7 @@ export class TagState {
   @Action(tagActions.AddTagSuccess)
   addTagSuccess(ctx: StateContext<TagStateModel>, action: tagActions.AddTagSuccess): void {
     const state = ctx.getState();
-    let tags: Tag[] = [...state.tags, action.tag]
+    const tags: Tag[] = [...state.tags, action.tag]
     ctx.patchState({tags: tags, loaded: true, loading: false});
   }
 
