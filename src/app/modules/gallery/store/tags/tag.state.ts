@@ -32,16 +32,7 @@ export class TagState {
 
   @Selector()
   static getTags(state: TagStateModel): Tag[] {
-    const copy: Tag[] = state.tags.slice(0);
-    return copy.sort((tag1, tag2) => {
-      if (tag1.priority > tag2.priority) {
-        return 1;
-      }
-      if (tag1.priority < tag2.priority) {
-        return -1;
-      }
-      return 0;
-    });
+    return state.tags;
   }
 
   @Selector()
@@ -79,13 +70,18 @@ export class TagState {
 
   @Action(tagActions.LoadTagsSuccess)
   loadTagsSuccess({patchState}: StateContext<TagStateModel>, action: tagActions.LoadTagsSuccess): void {
-    patchState({tags: action.tags, loaded: true, loading: false});
+    const sortedTags: Tag[] = action.tags.sort((tag1, tag2) => {
+      return (tag1.priority > tag2.priority) ? 1 : -1;
+    });
+    for (const tag of sortedTags) {
+      tag.entries = tag.entries.sort((e1: string, e2: string) => e1.localeCompare(e2));
+    }
+    patchState({tags: sortedTags, loaded: true, loading: false});
   }
 
   @Action(tagActions.LoadTagsFail)
   loadTagsFail({dispatch}: StateContext<TagStateModel>, action: tagActions.LoadTagsFail): void {
-    // TODO handle error!
-    console.log(action.error)
+    this.alertService.error('Load tags fail');
     dispatch({loaded: false, loading: false});
   }
 
@@ -151,10 +147,6 @@ export class TagState {
 
   @Action(tagActions.UpdateTagSuccess)
   updateTagSuccess(ctx: StateContext<TagStateModel>, action: tagActions.UpdateTagSuccess): void {
-    // const state = ctx.getState();
-    // let tags: Tag[] = [...state.tags, action.tag]
-    // ctx.patchState({tags: tags, loaded: true, loading: false});
-
     ctx.setState(
       patch({
         tags: updateItem<Tag>(tag => tag!.id === action.tag.id,
@@ -196,13 +188,13 @@ export class TagState {
   @Action(tagActions.DeleteTagSuccess)
   deleteTagsSuccess({patchState}: StateContext<TagStateModel>, action: tagActions.DeleteTagSuccess): void {
     console.log('TagState loadTagsSuccess: BUT NOT IMPL !!!', action.tag)
+    // TODO !!!
     // patchState({tags: action.tags, loaded: true, loading: false});
   }
 
-  @Action(tagActions.LoadTagsFail)
-  deleteTagsFail({dispatch}: StateContext<TagStateModel>, action: tagActions.LoadTagsFail): void {
-    // TODO handle error!
-    console.log(action.error)
+  @Action(tagActions.DeleteTagFail)
+  deleteTagsFail({dispatch}: StateContext<TagStateModel>, action: tagActions.DeleteTagFail): void {
+    this.alertService.error('Delete tag fail');
     dispatch({loaded: false, loading: false});
   }
 
