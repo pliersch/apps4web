@@ -21,7 +21,7 @@ export interface PhotoStateModel {
   filteredPhotosCount: number;
   // comparePhotos: Photo[];
   // exportPhotos: Photo[];
-  currentPhoto: Photo | undefined;
+  currentPhoto: Photo;
   allPhotosLoaded: boolean;
   loaded: boolean;
   loading: boolean;
@@ -31,7 +31,7 @@ export interface PhotoStateModel {
   name: 'gallery', // todo maybe photos?
   defaults: {
     photos: [],
-    currentPhoto: undefined,
+    currentPhoto: {id: '0', tags: [], rating: 0, isSelected: false, fileName: '', recordDate: new Date()},
     allPhotosCount: 0,
     selectedPhotosCount: 0,
     filteredPhotosCount: 0,
@@ -427,7 +427,7 @@ export class PhotoState {
   }
 
   @Action(photoAction.SetTagsOfPictureFail)
-  setTagsOfPictureFail({dispatch}: StateContext<PhotoStateModel>, action: photoAction.SetTagsOfPictureFail): void {
+  setTagsOfPictureFail(ctx: StateContext<PhotoStateModel>, action: photoAction.SetTagsOfPictureFail): void {
     this.alertService.error('Set tags fail');
     console.log(action.error)
   }
@@ -464,7 +464,7 @@ export class PhotoState {
   }
 
   @Action(photoAction.AddTagToPictureFail)
-  addTagToPictureFail({dispatch}: StateContext<PhotoStateModel>, action: photoAction.AddTagToPictureFail): void {
+  addTagToPictureFail(ctx: StateContext<PhotoStateModel>, action: photoAction.AddTagToPictureFail): void {
     this.alertService.error('Add tag fail');
     console.log(action.error)
   }
@@ -501,7 +501,7 @@ export class PhotoState {
   }
 
   @Action(photoAction.RemoveTagFromPictureFail)
-  removeTagFromPictureFail({dispatch}: StateContext<PhotoStateModel>, action: photoAction.RemoveTagFromPictureFail): void {
+  removeTagFromPictureFail(ctx: StateContext<PhotoStateModel>, action: photoAction.RemoveTagFromPictureFail): void {
     this.alertService.error('Remove tag fail');
     console.log(action.error)
   }
@@ -516,7 +516,7 @@ export class PhotoState {
       // tap(console.log(action)),
       map((update: PhotoUpdate) =>
         asapScheduler.schedule(() =>
-          ctx.dispatch(new photoAction.SetRatingSuccess(update))
+          ctx.dispatch(new photoAction.SetRatingSuccess({id: action.photo.id, rating: action.rate}))
         )
       ),
       catchError(error =>
@@ -534,9 +534,13 @@ export class PhotoState {
     ctx.setState(
       patch({
         photos: updateItem<Photo>(photo => photo!.id === action.update.id,
-          patch({rating: action.update.rating}))
+          patch({rating: action.update.rating})),
       })
     );
+    const photo = ctx.getState().photos.find(photo => photo.id === action.update.id);
+    ctx.patchState({
+      currentPhoto: photo
+    });
   }
 
   @Action(photoAction.SetRatingFail)

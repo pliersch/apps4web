@@ -167,6 +167,10 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     }
   }
 
+  onSelectForEdit($event: Photo): void {
+    // todo: open edit component
+  }
+
   onSelectForDownload($event: Photo): void {
     this.store.dispatch(new TogglePhotoDownloadAction($event));
   }

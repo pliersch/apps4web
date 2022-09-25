@@ -2,9 +2,9 @@ export interface Photo {
   id: string;
   fileName: string;
   tags: string[];
-  createDateTime: Date;
+  // createDateTime: Date;
   recordDate: Date;
-  baseUrl: string;
+  // baseUrl: string;
   isSelected: boolean;
   rating: number;
 }

@@ -22,6 +22,9 @@ export class ImageControlComponent {
   hasRights: boolean;
 
   @Output()
+  editEvent = new EventEmitter<Photo>();
+
+  @Output()
   downloadEvent = new EventEmitter<Photo>();
 
   @Output()
@@ -30,8 +33,6 @@ export class ImageControlComponent {
   @Output()
   previewEvent = new EventEmitter<Photo>();
 
-  constructor() {
-  }
 
   onClickDownload(): void {
     this.downloadEvent.emit(this.photo);
@@ -42,7 +43,7 @@ export class ImageControlComponent {
   }
 
   onClickEdit(): void {
-
+    this.editEvent.emit(this.photo);
   }
 
   onClickDelete(): void {
