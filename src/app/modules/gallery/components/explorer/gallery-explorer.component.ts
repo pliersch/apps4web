@@ -138,7 +138,6 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     this.currentPhoto = photo;
   }
 
-  // todo: find a better name
   requestNextPhotos(element: Element): void {
     const currentHeight = element.clientHeight + element.scrollTop /* + element.scrollTop*/;
     if (currentHeight + 180 > this.absoluteHeight && !this.isRequesting) {

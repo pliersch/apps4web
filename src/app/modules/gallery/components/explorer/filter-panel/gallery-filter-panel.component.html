@@ -7,7 +7,7 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <mat-selection-list>
+    <mat-selection-list dense>
       <mat-list-option *ngFor="let entry of tag.entries" [selected]="isTagActivated(entry)"
                        [value]="entry" (click)="onSelectionChange(entry)">
         {{entry}}

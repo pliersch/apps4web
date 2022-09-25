@@ -6,3 +6,6 @@
   warum? default? fallback?
 - scroller(photo) haben feste werte
 - sharemodule prüfen (wird in anderen modulen importiert)
+- typeORM updates werden nicht genutzt
+  - https://stackoverflow.com/questions/47792808/typeorm-update-item-and-return-it
+  - The key is returning response.raw[0] in order to get the type back.
