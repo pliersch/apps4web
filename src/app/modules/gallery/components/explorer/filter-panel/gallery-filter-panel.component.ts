@@ -54,10 +54,6 @@ export class GalleryFilterPanelComponent implements OnInit {
       restoreFocus: false,
       autoFocus: false
     });
-    // const tag = {} as Tag;
-    // tag.tagName = 'Fuck2';
-    // tag.entries = ['you2', 'to2'];
-    // this.store.dispatch(addTag({tag: tag}));
   }
 
   openEditTagDialog(): void {
@@ -70,12 +66,6 @@ export class GalleryFilterPanelComponent implements OnInit {
       autoFocus: false
     });
   }
-
-  // collectCategories(): string[] {
-  //   const categories: string[] = [];
-  //   this.tags.forEach(tag => categories.push(tag.tagName));
-  //   return categories;
-  // }
 
   onSelectionChange(entry: string): void {
     if (this.isTagActivated(entry)) {

@@ -1,22 +1,3 @@
-<div class="rate">
-  <button mat-icon-button [color]="currentPhoto && currentPhoto.rating > 0 ? 'accent' : 'primary'"
-          (click)="onClickStar(1)">
-    <mat-icon>star_rate</mat-icon>
-  </button>
-  <button mat-icon-button [color]="currentPhoto && currentPhoto.rating > 1 ? 'accent' : 'primary'"
-          (click)="onClickStar(2)">
-    <mat-icon>star_rate</mat-icon>
-  </button>
-  <button mat-icon-button [color]="currentPhoto && currentPhoto.rating > 2 ? 'accent' : 'primary'"
-          (click)="onClickStar(3)">
-    <mat-icon>star_rate</mat-icon>
-  </button>
-  <button mat-icon-button [color]="currentPhoto && currentPhoto.rating > 3 ? 'accent' : 'primary'"
-          (click)="onClickStar(4)">
-    <mat-icon>star_rate</mat-icon>
-  </button>
-  <button mat-icon-button [color]="currentPhoto && currentPhoto.rating > 4 ? 'accent' : 'primary'"
-          (click)="onClickStar(5)">
-    <mat-icon>star_rate</mat-icon>
-  </button>
+<div>
+  <app-gallery-star-rating (rateChangeEvent)="onRateChange($event)"></app-gallery-star-rating>
 </div>

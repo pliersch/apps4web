@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Select, Store } from "@ngxs/store";
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { Observable } from "rxjs";
@@ -6,11 +6,11 @@ import { Photo } from "@gallery/store/photos/photo.model";
 import { SetRating } from "@gallery/store/photos/photo.actions";
 
 @Component({
-  selector: 'app-gallery-rating-filter',
-  templateUrl: './gallery-rating-filter.component.html',
-  styleUrls: ['./gallery-rating-filter.component.scss']
+  selector: 'app-gallery-rating',
+  templateUrl: './gallery-rating.component.html',
+  styleUrls: ['./gallery-rating.component.scss']
 })
-export class GalleryRatingFilterComponent implements OnInit {
+export class GalleryRatingComponent implements OnInit {
 
   @Select(PhotoState.getCurrentPhoto)
   currentPhoto$: Observable<Photo>;

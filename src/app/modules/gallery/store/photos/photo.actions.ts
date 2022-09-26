@@ -221,7 +221,7 @@ export class RemoveTagFromPictureFail {
   }
 }
 
-// Star rating
+// rating
 
 export class SetRating {
   static readonly type = '[Gallery] Set Rating Of Photo';

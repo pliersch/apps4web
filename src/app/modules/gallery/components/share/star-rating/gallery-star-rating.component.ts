@@ -1,31 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { Select, Store } from "@ngxs/store";
-import { PhotoState } from "@gallery/store/photos/photo.state";
-import { Observable } from "rxjs";
-import { Photo } from "@gallery/store/photos/photo.model";
-import { SetRating } from "@gallery/store/photos/photo.actions";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-gallery-star-rating',
   templateUrl: './gallery-star-rating.component.html',
   styleUrls: ['./gallery-star-rating.component.scss']
 })
-export class GalleryStarRatingComponent implements OnInit {
+export class GalleryStarRatingComponent {
 
-  @Select(PhotoState.getCurrentPhoto)
-  currentPhoto$: Observable<Photo>;
-  currentPhoto: Photo;
+  @Input()
+  rate: number;
 
-  constructor(private store: Store) {
-  }
-
-  ngOnInit(): void {
-    this.currentPhoto$.subscribe(res => {
-      this.currentPhoto = res;
-    });
-  }
+  @Output()
+  rateChangeEvent = new EventEmitter<number>();
 
   onClickStar(rate: number): void {
-    this.store.dispatch(new SetRating(this.currentPhoto, rate));
+    this.rateChangeEvent.emit(rate);
   }
 }

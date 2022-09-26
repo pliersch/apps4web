@@ -65,6 +65,7 @@ import {
 import { GallerySlideshowComponent } from './components/slideshow/gallery-slideshow.component';
 import { GalleryActionPanelComponent } from './components/explorer/action-panel/gallery-action-panel.component';
 import { GalleryRatingFilterComponent } from './components/explorer/rating-filter/gallery-rating-filter.component';
+import { GalleryRatingComponent } from './components/explorer/rating-panel/gallery-rating.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +92,7 @@ import { GalleryRatingFilterComponent } from './components/explorer/rating-filte
     GallerySlideshowComponent,
     GalleryActionPanelComponent,
     GalleryRatingFilterComponent,
+    GalleryRatingComponent,
   ],
   imports: [
     CommonModule,

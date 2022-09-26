@@ -209,9 +209,6 @@ export class TagState {
         activeTags: append([action.filter])
       })
     );
-    // let filters = [];
-    // filters.push(action.filter);
-    // ctx.patchState({tagFilter: filters});
   }
 
   @Action(tagActions.RemoveTagFilter)
