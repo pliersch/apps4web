@@ -1,4 +1,5 @@
-import {Message} from "@modules/chat/models/message";
+import { Message } from "@modules/chat/models/message";
+import { HttpErrorResponse } from "@angular/common/http";
 
 // loading chat
 
@@ -16,7 +17,7 @@ export class LoadChatSuccess {
 export class LoadChatFail {
   static readonly type = '[Chat] Load Chat Fail';
 
-  constructor(public error: any) {
+  constructor(public error: HttpErrorResponse) {
   }
 }
 
@@ -39,7 +40,7 @@ export class SendMessageSuccess {
 export class SendMessageFail {
   static readonly type = '[Chat] Send Message Fail';
 
-  constructor(public error: any) {
+  constructor(public error: HttpErrorResponse) {
   }
 }
 

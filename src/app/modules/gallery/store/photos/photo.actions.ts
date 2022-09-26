@@ -1,6 +1,7 @@
 import { Photo, PhotoUpdate } from "@gallery/store/photos/photo.model";
 import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
 import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
+import { HttpErrorResponse } from '@angular/common/http';
 
 // meta data
 
@@ -18,7 +19,7 @@ export class LoadMetaDataSuccessAction {
 export class LoadMetaDataFailAction {
   static readonly type = '[Gallery] Load MetaData Fail';
 
-  constructor(public error: any) { }
+  constructor(public error: HttpErrorResponse) { }
 }
 
 export class UpdateMetaDataAction {
@@ -44,7 +45,7 @@ export class LoadPhotosSuccessAction {
 export class LoadPhotosFailAction {
   static readonly type = '[Gallery] Load Photos Fail';
 
-  constructor(public error: any) { }
+  constructor(public error: HttpErrorResponse) { }
 }
 
 
@@ -65,7 +66,7 @@ export class AddPhotoSuccessAction {
 export class AddPhotoFailAction {
   static readonly type = '[Gallery] Add Photo fail';
 
-  constructor(public error: any) { }
+  constructor(public error: HttpErrorResponse) { }
 }
 
 // current photo
@@ -145,7 +146,7 @@ export class DeletePhotoSuccessAction {
 export class DeletePhotoFailAction {
   static readonly type = '[Gallery] Delete Photo fail';
 
-  constructor(public error: any) { }
+  constructor(public error: HttpErrorResponse) { }
 }
 
 // update
@@ -175,7 +176,7 @@ export class SetTagsOfPictureSuccess {
 export class SetTagsOfPictureFail {
   static readonly type = '[Gallery] Set Tags Of Picture fail';
 
-  constructor(public error: any) {
+  constructor(public error: HttpErrorResponse) {
   }
 }
 
@@ -196,7 +197,7 @@ export class AddTagToPictureSuccess {
 export class AddTagToPictureFail {
   static readonly type = '[Gallery] Add Tag To Picture fail';
 
-  constructor(public error: any) {
+  constructor(public error: HttpErrorResponse) {
   }
 }
 
@@ -217,7 +218,7 @@ export class RemoveTagFromPictureSuccess {
 export class RemoveTagFromPictureFail {
   static readonly type = '[Gallery] Remove Tag From Picture fail';
 
-  constructor(public error: any) {
+  constructor(public error: HttpErrorResponse) {
   }
 }
 
@@ -240,6 +241,6 @@ export class SetRatingSuccess {
 export class SetRatingFail {
   static readonly type = '[Gallery] Set Rating Of Photo Fail';
 
-  constructor(public error: any) {
+  constructor(public error: HttpErrorResponse) {
   }
 }

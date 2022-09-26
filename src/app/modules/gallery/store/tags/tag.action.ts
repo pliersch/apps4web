@@ -1,4 +1,5 @@
-import {Tag} from "@gallery/store/tags/tag.model";
+import { HttpErrorResponse } from '@angular/common/http';
+import { Tag } from "@gallery/store/tags/tag.model";
 
 // load tags
 export class LoadTags {
@@ -15,7 +16,7 @@ export class LoadTagsSuccess {
 export class LoadTagsFail {
   static readonly type = '[Gallery] Load Tags fail';
 
-  constructor(public error: any) {
+  constructor(public error: HttpErrorResponse) {
   }
 }
 
@@ -38,7 +39,7 @@ export class AddTagSuccess {
 export class AddTagFail {
   static readonly type = '[Gallery] Add Tag fail';
 
-  constructor(public error: any) {
+  constructor(public error: HttpErrorResponse) {
   }
 }
 
@@ -61,7 +62,7 @@ export class UpdateTagSuccess {
 export class UpdateTagFail {
   static readonly type = '[Gallery] Update Tag fail';
 
-  constructor(public error: any) {
+  constructor(public error: HttpErrorResponse) {
   }
 }
 
@@ -84,7 +85,7 @@ export class DeleteTagSuccess {
 export class DeleteTagFail {
   static readonly type = '[Gallery] Delete Tag fail';
 
-  constructor(public error: any) {
+  constructor(public error: HttpErrorResponse) {
   }
 }
 

@@ -1,3 +1,5 @@
+import { HttpErrorResponse } from "@angular/common/http";
+
 export class LoginAction {
   static readonly type = '[Auth] Login';
 
@@ -15,7 +17,7 @@ export class LoginSuccessAction {
 export class LoginFailAction {
   static readonly type = '[Auth] Login Fail';
 
-  constructor(public error: any) {
+  constructor(public error: HttpErrorResponse) {
   }
 }
 
@@ -33,6 +35,6 @@ export class LogoutSuccessAction {
 export class LogoutFailAction {
   static readonly type = '[Auth] Logout Fail';
 
-  constructor(public error: any) {
+  constructor(public error: HttpErrorResponse) {
   }
 }

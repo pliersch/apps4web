@@ -1,3 +1,5 @@
+import { HttpErrorResponse } from '@angular/common/http';
+
 export class LoadUsers {
   static readonly type = '[User Manager] Load Users';
 }
@@ -12,6 +14,6 @@ export class LoadUsersSuccess {
 export class LoadUsersFail {
   static readonly type = '[User Manager] Load Users Fail';
 
-  constructor(public error: any) {
+  constructor(public error: HttpErrorResponse) {
   }
 }
