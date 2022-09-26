@@ -53,7 +53,7 @@ export class AreaSelection {
   }
 
   private findPhotoIds(selected: Array<Element>): string[] {
-    let imageIds: string[] = [];
+    const imageIds: string[] = [];
     for (const element of selected) {
       imageIds.push(element.getElementsByTagName('img')[0].id);
     }

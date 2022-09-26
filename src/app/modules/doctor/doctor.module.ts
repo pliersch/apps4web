@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { MaterialModule } from "@app/shared/material/material.module";
 import { DoctorRoutingModule } from './doctor-routing.module';
-// import {DoctorContainerComponent} from './doctor-container.component';
-// import {FooterComponent} from './footer/footer.component';
+import { DoctorContainerComponent } from './doctor-container.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
-    // DoctorContainerComponent,
-    // FooterComponent,
+    DoctorContainerComponent,
+    FooterComponent,
   ],
   imports: [
     CommonModule,
