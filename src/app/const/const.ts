@@ -3,7 +3,7 @@ export const constants = {
   // todo: find way to use it inside routing modules
   routes: [
     {route: '/dashboard', name: 'Home'},
-    {route: '/gallery/home', name: 'Galerie'},
+    {route: '/gallery/explorer', name: 'Galerie'},
     {route: '/chat', name: 'Chat'},
     {route: '/admin', name: 'Admin'},
     // {route: '/recipes', name: 'Rezepte'},

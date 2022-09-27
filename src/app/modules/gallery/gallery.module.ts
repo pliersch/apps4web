@@ -110,10 +110,6 @@ import { GalleryRatingComponent } from './components/explorer/rating-panel/galle
     ActionBarModule,
     MatSlideToggleModule,
   ],
-  providers: [
-    PhotoService,
-    TagService
-  ]
 })
 
 export class GalleryModule {

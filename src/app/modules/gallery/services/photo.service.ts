@@ -11,25 +11,14 @@ const PICTURE_BASE_URL = `${environment.apiUrl}/photos`;
 const DOWNLOAD_BASE_URL = `${environment.apiUrl}/download`;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'any'
 })
 export class PhotoService {
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
   loadMetaData(): Observable<PhotoMetaDataDto> {
     return this.http.get<PhotoMetaDataDto>(PICTURE_BASE_URL + '/meta');
-  }
-
-  getAll(): Observable<PhotoDto> {
-    return this.http.get<PhotoDto>(PICTURE_BASE_URL, {
-      params: {
-        order: Order.ASC,
-        page: 1,
-        take: 30
-      }
-    });
   }
 
   getPhotos(take: number, from: number): Observable<PhotoDto> {
@@ -43,9 +32,9 @@ export class PhotoService {
     });
   }
 
-  getById(id: string): Observable<Photo> {
-    return this.http.get<Photo>(`${PICTURE_BASE_URL}/${id}`);
-  }
+  // getById(id: string): Observable<Photo> {
+  //   return this.http.get<Photo>(`${PICTURE_BASE_URL}/${id}`);
+  // }
 
   create(file: File, tags: string[], created: number): Observable<Photo> {
     const stringify = JSON.stringify(tags);
@@ -71,7 +60,7 @@ export class PhotoService {
     return this.http.patch<PhotoUpdate>(`${PICTURE_BASE_URL}/${photo.id}`, dto);
   }
 
-  download(photos: Photo[]): Observable<any> {
+  download(photos: Photo[]): Observable<Blob> {
     const fileNames: string[] = [];
     for (const photo of photos) {
       fileNames.push(photo.fileName);
