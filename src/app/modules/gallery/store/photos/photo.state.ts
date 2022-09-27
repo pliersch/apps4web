@@ -5,7 +5,7 @@ import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import { Photo, PhotoUpdate } from "@gallery/store/photos/photo.model";
 import { insertItem, patch, removeItem, updateItem } from "@ngxs/store/operators";
-import { filterAllTags } from "@gallery/store/photos/photo.tools";
+import { filterByRating, filterByTags } from "@gallery/store/photos/photo.tools";
 import { TagState } from "@gallery/store/tags/tag.state";
 import { AlertService } from "@app/services/alert.service";
 import { PhotoService } from "@gallery/services/photo.service";
@@ -16,6 +16,7 @@ export interface PhotoStateModel {
   photos: Photo[];
   selectedPictures: Photo[];
   tagFilter: string[];
+  filterRating: number;
   allPhotosCount: number;
   selectedPhotosCount: number;
   filteredPhotosCount: number;
@@ -37,6 +38,7 @@ export interface PhotoStateModel {
     filteredPhotosCount: 0,
     selectedPictures: [],
     tagFilter: [],
+    filterRating: 1,
     allPhotosLoaded: false,
     loaded: false,
     loading: false,
@@ -48,10 +50,12 @@ export class PhotoState {
 
   @Selector([TagState.getActiveTags])
   static getPhotos(state: PhotoStateModel, activeTags: string[]): Photo[] {
-    if (activeTags.length == 0) {
+    if (activeTags.length == 0 && state.filterRating == 1) {
       return state.photos;
     }
-    return filterAllTags(state.photos, activeTags);
+    let filteredPhotos = filterByTags(state.photos, activeTags);
+    filteredPhotos = filterByRating(filteredPhotos, state.filterRating);
+    return filteredPhotos;
   }
 
   @Selector()
@@ -80,6 +84,11 @@ export class PhotoState {
   @Selector()
   static getAllPhotosCount(state: PhotoStateModel): number {
     return state.allPhotosCount;
+  }
+
+  @Selector()
+  static getFilterRating(state: PhotoStateModel): number {
+    return state.filterRating;
   }
 
   // @Selector()
@@ -513,7 +522,6 @@ export class PhotoState {
   @Action(photoAction.SetRating)
   setRating(ctx: StateContext<PhotoStateModel>, action: photoAction.SetRating): Observable<Subscription> {
     return this.photoService.setRating(action.photo, action.rate).pipe(
-      // tap(console.log(action)),
       map((update: PhotoUpdate) =>
         asapScheduler.schedule(() =>
           ctx.dispatch(new photoAction.SetRatingSuccess({id: action.photo.id, rating: action.rate}))
@@ -547,5 +555,16 @@ export class PhotoState {
   setRatingFail(ctx: StateContext<PhotoStateModel>, action: photoAction.SetRatingFail): void {
     console.log(action.error)
     this.alertService.error('Rating photo fail');
+  }
+
+  //////////////////////////////////////////////////////////
+  //          set rating filter
+  //////////////////////////////////////////////////////////
+
+  @Action(photoAction.SetRatingFilter)
+  setRatingFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.SetRatingFilter): void {
+    ctx.patchState({
+      filterRating: action.rate
+    });
   }
 }

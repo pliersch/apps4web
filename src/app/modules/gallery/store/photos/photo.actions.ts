@@ -244,3 +244,12 @@ export class SetRatingFail {
   constructor(public error: HttpErrorResponse) {
   }
 }
+
+// rating filter
+
+export class SetRatingFilter {
+  static readonly type = '[Gallery] Set Rating Filter';
+
+  constructor(public rate: number) {
+  }
+}

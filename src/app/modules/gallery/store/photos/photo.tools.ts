@@ -1,6 +1,6 @@
-import {Photo} from "@gallery/store/photos/photo.model";
+import { Photo } from "@gallery/store/photos/photo.model";
 
-const BASE_URL: string = 'http://localhost:3000/images/gallery/';
+const BASE_URL = 'http://localhost:3000/images/gallery/';
 
 // export function filterSomeTags(photos: Photo[], tags: string[]): Photo[] {
 //   let result = [];
@@ -12,11 +12,21 @@ const BASE_URL: string = 'http://localhost:3000/images/gallery/';
 //   return result;
 // }
 
-export function filterAllTags(photos: Photo[], tags: string[]): Photo[] {
-  let result = [];
+export function filterByTags(photos: Photo[], tags: string[]): Photo[] {
+  const result = [];
   for (const photo of photos) {
-    let some = tags.every(r => photo.tags.includes(r));
+    const some = tags.every(r => photo.tags.includes(r));
     if (some) {
+      result.push(photo);
+    }
+  }
+  return result;
+}
+
+export function filterByRating(photos: Photo[], rate: number): Photo[] {
+  const result = [];
+  for (const photo of photos) {
+    if (photo.rating >= rate) {
       result.push(photo);
     }
   }
