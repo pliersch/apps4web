@@ -4,7 +4,7 @@ import {
   GalleryContainerComponent
 } from '@app/modules/gallery/components/core/container/gallery-container.component';
 import { GalleryExplorerComponent } from '@app/modules/gallery/components/explorer/gallery-explorer.component';
-import { GalleryHomeComponent } from '@app/modules/gallery/components/home/gallery-home.component';
+// import { GalleryHomeComponent } from '@app/modules/gallery/components/home/gallery-home.component';
 import { GalleryLightboxComponent } from '@app/modules/gallery/components/lightbox/gallery-lightbox.component';
 import { GalleryUploadComponent } from '@app/modules/gallery/components/upload/gallery-upload.component';
 import { GalleryResolverService } from "@gallery/services/gallery-resolver.service";
@@ -14,8 +14,8 @@ const routes: Routes = [
   {
     path: '', component: GalleryContainerComponent, resolve: {meta: GalleryResolverService},
     children: [
-      {path: '', component: GalleryHomeComponent},
-      {path: 'home', component: GalleryHomeComponent},
+      {path: '', component: GalleryExplorerComponent},
+      // {path: 'home', component: GalleryHomeComponent},
       {path: 'explorer', component: GalleryExplorerComponent},
       {path: 'lightbox', component: GalleryLightboxComponent},
       {path: 'slideshow', component: GallerySlideshowComponent},

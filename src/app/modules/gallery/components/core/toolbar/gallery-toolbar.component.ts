@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {NavigationEnd, Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 
 enum View {
-  Home = 1,
+  // Home = 1,
   Explorer,
   Lightbox,
   Upload
@@ -15,10 +15,9 @@ enum View {
 })
 export class GalleryToolbarComponent implements OnInit {
 
-  @Input() data: any;
-
   viewType = View;
-  view = View.Home;
+  // view = View.Home;
+  view = View.Explorer;
   icon = 'arrow_downward';
 
   constructor(private router: Router) {
@@ -44,7 +43,7 @@ export class GalleryToolbarComponent implements OnInit {
       case '/gallery/upload':
         return View.Upload;
       default:
-        return View.Home;
+        return View.Explorer;
     }
   }
 
