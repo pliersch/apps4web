@@ -5,7 +5,8 @@ const BASE_URL = 'http://localhost:3000/images/gallery/';
 export function filterByTags(photos: Photo[], tags: string[]): Photo[] {
   const result = [];
   for (const photo of photos) {
-    if (photo.tags.some(tag => tags.includes(tag))) {
+    const some = tags.every(r => photo.tags.includes(r));
+    if (some) {
       result.push(photo);
     }
   }

@@ -50,7 +50,6 @@ import { GallerySlideshowComponent } from './components/slideshow/gallery-slides
 import { GalleryActionPanelComponent } from './components/explorer/action-panel/gallery-action-panel.component';
 import { GalleryRatingFilterComponent } from './components/explorer/rating-filter/gallery-rating-filter.component';
 import { GalleryRatingComponent } from './components/explorer/rating-panel/gallery-rating.component';
-import { MatCheckboxModule } from "@angular/material/checkbox";
 import { GalleryDateFilterComponent } from './components/explorer/date-filter/gallery-date-filter.component';
 
 @NgModule({
@@ -96,7 +95,6 @@ import { GalleryDateFilterComponent } from './components/explorer/date-filter/ga
     MatButtonToggleModule,
     ActionBarModule,
     MatSlideToggleModule,
-    MatCheckboxModule,
   ],
 })
 

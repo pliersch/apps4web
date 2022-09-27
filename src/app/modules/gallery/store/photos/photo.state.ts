@@ -31,7 +31,7 @@ export interface PhotoStateModel {
 }
 
 @State<PhotoStateModel>({
-  name: 'gallery', // todo maybe photos?
+  name: 'photos', // todo maybe photos?
   defaults: {
     photos: [],
     currentPhoto: {id: '0', tags: [], rating: 0, isSelected: false, fileName: '', recordDate: new Date()},

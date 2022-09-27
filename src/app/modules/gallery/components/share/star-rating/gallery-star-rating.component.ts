@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class GalleryStarRatingComponent {
 
   @Input()
-  rate: number = 1;
+  rate = 1;
 
   @Output()
   rateChangeEvent = new EventEmitter<number>();

@@ -3,17 +3,11 @@ import { Photo } from '@gallery/store/photos/photo.model';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
 import { PhotoState } from "@gallery/store/photos/photo.state";
-
 import { saveAs } from 'file-saver';
 import {
-  DeletePhotoAction,
-  DeselectAllPhotosAction,
-  LoadPhotosAction,
-  SelectAllPhotosAction,
-  SelectManyPhotosAction, SetCurrentPhotoAction,
-  SetTagsOfPicture,
-  TogglePhotoDownloadAction,
-  TogglePhotosDownloadAction
+  DeletePhotoAction, DeselectAllPhotosAction, LoadPhotosAction,
+  SelectAllPhotosAction, SelectManyPhotosAction, SetCurrentPhotoAction,
+  SetTagsOfPicture, TogglePhotoDownloadAction, TogglePhotosDownloadAction
 } from "@gallery/store/photos/photo.actions";
 import { AreaSelection, AreaSelectionHandler } from "@gallery/components/explorer/area-selection";
 import { GalleryEditImageTagsComponent }
