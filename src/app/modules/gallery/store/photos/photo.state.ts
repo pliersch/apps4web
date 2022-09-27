@@ -5,7 +5,7 @@ import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import { Photo, PhotoUpdate } from "@gallery/store/photos/photo.model";
 import { insertItem, patch, removeItem, updateItem } from "@ngxs/store/operators";
-import { filterByRating, filterByTags } from "@gallery/store/photos/photo.tools";
+import { filterByRating, filterByTags, filterByYear } from "@gallery/store/photos/photo.tools";
 import { TagState } from "@gallery/store/tags/tag.state";
 import { AlertService } from "@app/services/alert.service";
 import { PhotoService } from "@gallery/services/photo.service";
@@ -17,6 +17,8 @@ export interface PhotoStateModel {
   selectedPictures: Photo[];
   tagFilter: string[];
   filterRating: number;
+  filterFrom: number,
+  filterTo: number,
   allPhotosCount: number;
   selectedPhotosCount: number;
   filteredPhotosCount: number;
@@ -39,6 +41,8 @@ export interface PhotoStateModel {
     selectedPictures: [],
     tagFilter: [],
     filterRating: 1,
+    filterFrom: -1,
+    filterTo: -1,
     allPhotosLoaded: false,
     loaded: false,
     loading: false,
@@ -55,6 +59,13 @@ export class PhotoState {
     }
     let filteredPhotos = filterByTags(state.photos, activeTags);
     filteredPhotos = filterByRating(filteredPhotos, state.filterRating);
+    if (state.filterFrom > -1 && state.filterTo > -1) {
+      const from = 2004;
+      const to = 2006;
+      filteredPhotos = filterByYear(filteredPhotos, from, to);
+    }
+
+
     return filteredPhotos;
   }
 

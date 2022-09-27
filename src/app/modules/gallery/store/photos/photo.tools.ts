@@ -2,21 +2,10 @@ import { Photo } from "@gallery/store/photos/photo.model";
 
 const BASE_URL = 'http://localhost:3000/images/gallery/';
 
-// export function filterSomeTags(photos: Photo[], tags: string[]): Photo[] {
-//   let result = [];
-//   for (const photo of photos) {
-//     if (photo.tags.some(tag => tags.includes(tag))) {
-//       result.push(photo);
-//     }
-//   }
-//   return result;
-// }
-
 export function filterByTags(photos: Photo[], tags: string[]): Photo[] {
   const result = [];
   for (const photo of photos) {
-    const some = tags.every(r => photo.tags.includes(r));
-    if (some) {
+    if (photo.tags.some(tag => tags.includes(tag))) {
       result.push(photo);
     }
   }
@@ -27,6 +16,17 @@ export function filterByRating(photos: Photo[], rate: number): Photo[] {
   const result = [];
   for (const photo of photos) {
     if (photo.rating >= rate) {
+      result.push(photo);
+    }
+  }
+  return result;
+}
+
+export function filterByYear(photos: Photo[], from: number, to: number): Photo[] {
+  console.log('filterByYear filterByYear: ', photos[0].recordDate.getFullYear())
+  const result = [];
+  for (const photo of photos) {
+    if (photo.recordDate.getFullYear() >= from && photo.recordDate.getFullYear() <= to) {
       result.push(photo);
     }
   }

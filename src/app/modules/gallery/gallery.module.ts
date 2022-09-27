@@ -20,30 +20,20 @@ import {
 import {
   GalleryHorizontalScrollerComponent
 } from '@gallery/components/share/horizontal-scroller/gallery-horizontal-scroller.component';
-import {
-  GalleryImageGridComponent
-} from '@gallery/components/lightbox/image-grid/gallery-image-grid.component';
+import { GalleryImageGridComponent } from '@gallery/components/lightbox/image-grid/gallery-image-grid.component';
 
 import { ShareModule } from '@app/modules/share/share.module';
-import {
-  GalleryFilterPanelComponent
-} from './components/explorer/filter-panel/gallery-filter-panel.component';
-import {
-  GalleryImageDetailComponent
-} from './components/explorer/image-detail/gallery-image-detail.component';
+import { GalleryFilterPanelComponent } from './components/explorer/filter-panel/gallery-filter-panel.component';
+import { GalleryImageDetailComponent } from './components/explorer/image-detail/gallery-image-detail.component';
 import {
   GalleryImagePlaceholderComponent
 } from './components/share/image-placeholder/gallery-image-placeholder.component';
-import {
-  GalleryStarRatingComponent
-} from '@gallery/components/share/star-rating/gallery-star-rating.component';
+import { GalleryStarRatingComponent } from '@gallery/components/share/star-rating/gallery-star-rating.component';
 import {
   GalleryEditTagDetailComponent
 } from './components/explorer/edit-tags/edit-tag-detail/gallery-edit-tag-detail.component';
 import { GalleryEditTagsComponent } from './components/explorer/edit-tags/gallery-edit-tags.component';
-import {
-  MatListRemovePaddingDirective
-} from './components/explorer/edit-tags/mat-list-remove-padding.directive';
+import { MatListRemovePaddingDirective } from './components/explorer/edit-tags/mat-list-remove-padding.directive';
 import { NgxsModule } from "@ngxs/store";
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { ImageControlComponent } from './components/share/image-control/image-control.component';
@@ -54,18 +44,14 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import {
   GalleryNewTagCategoryComponent
 } from './components/explorer/new-tag-category/gallery-new-tag-category.component';
-import {
-  GalleryEditImageTagsComponent
-} from './components/explorer/edit-image-tags/gallery-edit-image-tags.component';
-import { TagService } from "@gallery/services/tag.service";
-import { PhotoService } from "@gallery/services/photo.service";
-import {
-  GalleryMetaPanelComponent
-} from './components/explorer/meta-panel/gallery-meta-panel.component';
+import { GalleryEditImageTagsComponent } from './components/explorer/edit-image-tags/gallery-edit-image-tags.component';
+import { GalleryMetaPanelComponent } from './components/explorer/meta-panel/gallery-meta-panel.component';
 import { GallerySlideshowComponent } from './components/slideshow/gallery-slideshow.component';
 import { GalleryActionPanelComponent } from './components/explorer/action-panel/gallery-action-panel.component';
 import { GalleryRatingFilterComponent } from './components/explorer/rating-filter/gallery-rating-filter.component';
 import { GalleryRatingComponent } from './components/explorer/rating-panel/gallery-rating.component';
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { GalleryDateFilterComponent } from './components/explorer/date-filter/gallery-date-filter.component';
 
 @NgModule({
   declarations: [
@@ -93,6 +79,7 @@ import { GalleryRatingComponent } from './components/explorer/rating-panel/galle
     GalleryActionPanelComponent,
     GalleryRatingFilterComponent,
     GalleryRatingComponent,
+    GalleryDateFilterComponent,
   ],
   imports: [
     CommonModule,
@@ -109,6 +96,7 @@ import { GalleryRatingComponent } from './components/explorer/rating-panel/galle
     MatButtonToggleModule,
     ActionBarModule,
     MatSlideToggleModule,
+    MatCheckboxModule,
   ],
 })
 
