@@ -24,10 +24,11 @@ export function filterByRating(photos: Photo[], rate: number): Photo[] {
 }
 
 export function filterByYear(photos: Photo[], from: number, to: number): Photo[] {
-  console.log('filterByYear filterByYear: ', photos[0].recordDate.getFullYear())
   const result = [];
+  let year: number;
   for (const photo of photos) {
-    if (photo.recordDate.getFullYear() >= from && photo.recordDate.getFullYear() <= to) {
+    year = photo.recordDate.getFullYear();
+    if (year >= from && year <= to) {
       result.push(photo);
     }
   }

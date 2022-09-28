@@ -16,7 +16,7 @@ export class GalleryVerticalScrollerComponent implements OnInit {
   @ViewChild(NgScrollbar)
   scrollbarRef!: NgScrollbar;
 
-  @Select(PhotoState.getPhotos)
+  @Select(PhotoState.getFilteredPhotos)
   photos$: Observable<Photo[]>;
 
   @Select(PhotoState.getCurrentPhoto)

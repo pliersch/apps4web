@@ -42,7 +42,7 @@ export interface PhotoStateModel {
     tagFilter: [],
     filterRating: 1,
     filterFrom: -1,
-    filterTo: -1,
+    filterTo: new Date().getFullYear(),
     allPhotosLoaded: false,
     loaded: false,
     loading: false,
@@ -52,26 +52,32 @@ export interface PhotoStateModel {
 @Injectable()
 export class PhotoState {
 
+  @Selector()
+  static getPhotos(state: PhotoStateModel): Photo[] {
+    return state.photos;
+  }
+
   @Selector([TagState.getActiveTags])
-  static getPhotos(state: PhotoStateModel, activeTags: string[]): Photo[] {
-    if (activeTags.length == 0 && state.filterRating == 1) {
+  static getPhotosByTags(state: PhotoStateModel, activeTags: string[]): Photo[] {
+    if (activeTags.length == 0) {
       return state.photos;
     }
-    let filteredPhotos = filterByTags(state.photos, activeTags);
-    filteredPhotos = filterByRating(filteredPhotos, state.filterRating);
-    if (state.filterFrom > -1 && state.filterTo > -1) {
-      const from = 2004;
-      const to = 2006;
-      filteredPhotos = filterByYear(filteredPhotos, from, to);
+    return filterByTags(state.photos, activeTags);
+  }
+
+  @Selector([PhotoState.getPhotosByTags])
+  static getFilteredPhotos(state: PhotoStateModel, photos: Photo[]): Photo[] {
+    let filteredPhotos = filterByRating(photos, state.filterRating);
+    console.log('PhotoState getPhotos: ', state.filterFrom, state.filterTo)
+    if (state.filterFrom > -1) {
+      filteredPhotos = filterByYear(filteredPhotos, state.filterFrom, state.filterTo);
     }
-
-
     return filteredPhotos;
   }
 
   @Selector()
   static getCurrentPhoto(state: PhotoStateModel): Photo {
-    return <Photo>state.currentPhoto;
+    return state.currentPhoto;
   }
 
   @Selector()
@@ -196,6 +202,9 @@ export class PhotoState {
   @Action(photoAction.LoadPhotosSuccessAction)
   loadPhotosSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosSuccessAction): void {
     const state = ctx.getState();
+    for (const photo of action.dto.photos) {
+      photo.recordDate = new Date(Number(photo.recordDate));
+    }
     const photos: Photo[] = [...state.photos, ...action.dto.photos]
     ctx.patchState({
       photos: photos, loaded: true, loading: false, currentPhoto: photos[0]
@@ -576,6 +585,24 @@ export class PhotoState {
   setRatingFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.SetRatingFilter): void {
     ctx.patchState({
       filterRating: action.rate
+    });
+  }
+
+  //////////////////////////////////////////////////////////
+  //          set year filter
+  //////////////////////////////////////////////////////////
+
+  @Action(photoAction.SetFromYearFilter)
+  setFromYearFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.SetFromYearFilter): void {
+    ctx.patchState({
+      filterFrom: action.year
+    });
+  }
+
+  @Action(photoAction.SetToYearFilter)
+  setToYearFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.SetToYearFilter): void {
+    ctx.patchState({
+      filterTo: action.year
     });
   }
 }

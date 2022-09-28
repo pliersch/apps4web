@@ -16,7 +16,7 @@ export class GalleryHorizontalScrollerComponent implements OnInit {
   @ViewChild(NgScrollbar)
   scrollbar!: NgScrollbar;
 
-  @Select(PhotoState.getPhotos)
+  @Select(PhotoState.getFilteredPhotos)
   photos$: Observable<Photo[]>
 
   @Select(PhotoState.getComparePhotos)

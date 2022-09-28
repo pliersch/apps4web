@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Select } from "@ngxs/store";
+import { Select, Store } from "@ngxs/store";
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { Observable } from "rxjs";
 import { Photo } from "@gallery/store/photos/photo.model";
+import { SetFromYearFilter, SetToYearFilter } from "@gallery/store/photos/photo.actions";
 import { MatSelectChange } from "@angular/material/select";
 
 @Component({
@@ -12,17 +13,14 @@ import { MatSelectChange } from "@angular/material/select";
 })
 export class GalleryDateFilterComponent implements OnInit {
 
-  @Select(PhotoState.getPhotos)
+  @Select(PhotoState.getPhotosByTags)
   photos$: Observable<Photo[]>;
 
-  years: number[];
-  from: number;
-  to: number;
+  fromYears: number[];
+  toYears: number[];
 
-  states: string[] = [
-    'Alabama',
-    'Alaska',
-    'Arizona'];
+  constructor(private store: Store) {
+  }
 
   ngOnInit(): void {
     this.photos$.subscribe({
@@ -33,20 +31,23 @@ export class GalleryDateFilterComponent implements OnInit {
   private updateAvailableYears(photos: Photo[]): void {
     let years: number[] = [];
     for (const photo of photos) {
-      console.log('GalleryDateFilterComponent updateAvailableYears: ', photo.recordDate);
-      console.log('GalleryDateFilterComponent updateAvailableYears: ', new Date(photo.recordDate));
       years.push(new Date(photo.recordDate).getFullYear());
     }
     years = Array.from(new Set(years))
     years.sort(function (a, b) {
       return a - b;
     });
-    this.years = years;
-    this.from = years[0];
-    this.to = years[years.length - 1];
+    this.fromYears = years.slice(0);
+    this.toYears = years.slice(0);
   }
 
   onChangeFrom($event: MatSelectChange): void {
+    const year: number = $event.value === undefined ? this.fromYears[0] : $event.value;
+    this.store.dispatch(new SetFromYearFilter(year));
+  }
 
+  onChangeTo($event: MatSelectChange): void {
+    const year: number = $event.value === undefined ? this.toYears[this.toYears.length - 1] : $event.value;
+    this.store.dispatch(new SetToYearFilter(year));
   }
 }

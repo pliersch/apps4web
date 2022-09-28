@@ -1,14 +1,8 @@
 <mat-form-field appearance="fill">
   <mat-label>Von</mat-label>
-
-  <!--  <mat-select>-->
-  <!--    <mat-option>None</mat-option>-->
-  <!--    <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>-->
-  <!--  </mat-select>-->
-
-  <mat-select [(value)]='from' (selectionChange)='onChangeFrom($event)'>
-    <!--    <mat-option *ngFor='let list of (listsOfUser$ | async)' [value]='list.title'>-->
-    <mat-option *ngFor='let year of years' [value]='year'>
+  <mat-select (selectionChange)='onChangeFrom($event)'>
+    <mat-option>X</mat-option>
+    <mat-option *ngFor='let year of fromYears' [value]='year'>
       {{year}}
     </mat-option>
   </mat-select>
@@ -16,8 +10,10 @@
 </mat-form-field>
 <mat-form-field appearance="fill">
   <mat-label>Bis</mat-label>
-  <mat-select>
-    <mat-option>None</mat-option>
-    <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
+  <mat-select (selectionChange)='onChangeTo($event)'>
+    <mat-option>X</mat-option>
+    <mat-option *ngFor='let year of fromYears' [value]='year'>
+      {{year}}
+    </mat-option>
   </mat-select>
 </mat-form-field>

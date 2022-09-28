@@ -56,7 +56,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   allPhotosCount$: Observable<number>;
   allPhotosCount: number;
 
-  @Select(PhotoState.getPhotos)
+  @Select(PhotoState.getFilteredPhotos)
   photos$: Observable<Photo[]>;
   photos: Photo[];
 

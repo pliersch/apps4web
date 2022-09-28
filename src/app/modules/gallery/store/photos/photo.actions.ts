@@ -253,3 +253,19 @@ export class SetRatingFilter {
   constructor(public rate: number) {
   }
 }
+
+// date filter
+
+export class SetFromYearFilter {
+  static readonly type = '[Gallery] Set From Year Filter';
+
+  constructor(public year: number) {
+  }
+}
+
+export class SetToYearFilter {
+  static readonly type = '[Gallery] Set To Year Filter';
+
+  constructor(public year: number) {
+  }
+}
