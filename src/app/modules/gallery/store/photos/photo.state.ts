@@ -11,6 +11,7 @@ import { AlertService } from "@app/services/alert.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
 import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
+import { SetTagsOfPictureFail, SetTagsOfPictureSuccess } from "@gallery/store/photos/photo.actions";
 
 export interface PhotoStateModel {
   photos: Photo[];
@@ -432,13 +433,13 @@ export class PhotoState {
       .pipe(
         map((res: any) =>
           asapScheduler.schedule(() =>
-            ctx.dispatch(new photoAction.AddTagToPictureSuccess({id: action.photo.id, tags: action.tags}))
+            ctx.dispatch(new photoAction.SetTagsOfPictureSuccess({id: action.photo.id, tags: action.tags}))
           )
         ),
         catchError(error =>
           of(
             asapScheduler.schedule(() =>
-              ctx.dispatch(new photoAction.AddTagToPictureFail(error))
+              ctx.dispatch(new photoAction.SetTagsOfPictureFail(error))
             )
           )
         )
