@@ -11,7 +11,6 @@ import { AlertService } from "@app/services/alert.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
 import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
-import { SetTagsOfPictureFail, SetTagsOfPictureSuccess } from "@gallery/store/photos/photo.actions";
 
 export interface PhotoStateModel {
   photos: Photo[];
@@ -41,7 +40,7 @@ export interface PhotoStateModel {
     filteredPhotosCount: 0,
     selectedPictures: [],
     tagFilter: [],
-    filterRating: 1,
+    filterRating: 0,
     filterFrom: -1,
     filterTo: new Date().getFullYear(),
     allPhotosLoaded: false,

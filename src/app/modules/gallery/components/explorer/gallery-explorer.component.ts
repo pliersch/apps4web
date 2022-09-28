@@ -20,6 +20,10 @@ import { Router } from "@angular/router";
 import { AuthState } from "@modules/account/store/auth.state";
 import { Action, ActionProvider } from "@modules/action-bar/actions";
 import { ActionBarService } from "@modules/action-bar/action-bar.service";
+import {
+  GalleryNewTagCategoryComponent
+} from "@gallery/components/explorer/new-tag-category/gallery-new-tag-category.component";
+import { GalleryEditTagsComponent } from "@gallery/components/explorer/edit-tags/gallery-edit-tags.component";
 
 export interface DialogData {
   tags: string[];
@@ -35,7 +39,9 @@ enum ActionTypes {
   DeselectAll,
   ToggleSelection,
   Download,
-  EditTags
+  EditTags,
+  NewTag,
+  ManageTags
 }
 
 @Component({
@@ -80,6 +86,8 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     {name: ActionTypes.ToggleSelection, icon: 'published_with_changes', tooltip: 'toggle selection', handler: this},
     {name: ActionTypes.Download, icon: 'download', tooltip: 'download', handler: this},
     {name: ActionTypes.EditTags, icon: 'edit', tooltip: 'edit tags', handler: this},
+    {name: ActionTypes.NewTag, icon: 'playlist_add', tooltip: 'new tag', handler: this},
+    {name: ActionTypes.ManageTags, icon: 'list', tooltip: 'manage tags', handler: this},
   ]
   private subscription: Subscription;
 
@@ -157,6 +165,12 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
       case ActionTypes.EditTags:
         this.editTags();
         break;
+      case ActionTypes.NewTag:
+        this.openNewTagDialog();
+        break;
+      case ActionTypes.ManageTags:
+        this.openEditTagDialog();
+        break;
     }
   }
 
@@ -214,6 +228,28 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     });
     dialogRef.afterClosed().subscribe(result => {
       this.updateTagsOfSelectedPictures(result);
+    });
+  }
+
+  private openNewTagDialog(): void {
+    this.dialog.open(GalleryNewTagCategoryComponent, {
+      // minWidth: '600px',
+      width: '500px',
+      // minHeight: '400px',
+      // maxHeight: '600px',
+      restoreFocus: false,
+      autoFocus: false
+    });
+  }
+
+  private openEditTagDialog(): void {
+    this.dialog.open(GalleryEditTagsComponent, {
+      // minWidth: '600px',
+      width: '800px',
+      // minHeight: '400px',
+      // maxHeight: '600px',
+      restoreFocus: false,
+      autoFocus: false
     });
   }
 

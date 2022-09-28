@@ -2,13 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Tag } from '@gallery/store/tags/tag.model';
 import { Select, Store } from '@ngxs/store';
-import { MatDialog } from '@angular/material/dialog';
-import { GalleryEditTagsComponent } from '@gallery/components/explorer/edit-tags/gallery-edit-tags.component';
 import { TagState } from "@gallery/store/tags/tag.state";
 import { AddTagFilter, LoadTags, RemoveTagFilter } from "@gallery/store/tags/tag.action";
-import {
-  GalleryNewTagCategoryComponent
-} from "@gallery/components/explorer/new-tag-category/gallery-new-tag-category.component";
 
 @Component({
   selector: 'app-gallery-filter-panel',
@@ -27,8 +22,7 @@ export class GalleryFilterPanelComponent implements OnInit {
   activeTags: string[] = [];
   step = 0;
 
-  constructor(private store: Store,
-              public dialog: MatDialog) {
+  constructor(private store: Store) {
     this.tags$.subscribe(tags => {
       this.tags = tags;
     });
@@ -43,28 +37,6 @@ export class GalleryFilterPanelComponent implements OnInit {
 
   setStep(index: number): void {
     this.step = index;
-  }
-
-  openNewTagDialog(): void {
-    this.dialog.open(GalleryNewTagCategoryComponent, {
-      // minWidth: '600px',
-      width: '500px',
-      // minHeight: '400px',
-      // maxHeight: '600px',
-      restoreFocus: false,
-      autoFocus: false
-    });
-  }
-
-  openEditTagDialog(): void {
-    this.dialog.open(GalleryEditTagsComponent, {
-      // minWidth: '600px',
-      width: '800px',
-      // minHeight: '400px',
-      // maxHeight: '600px',
-      restoreFocus: false,
-      autoFocus: false
-    });
   }
 
   onSelectionChange(entry: string): void {

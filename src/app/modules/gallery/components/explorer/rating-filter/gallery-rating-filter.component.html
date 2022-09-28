@@ -1,4 +1,7 @@
 <div>
-  <app-gallery-star-rating *ngIf="currentRating$ | async as progress" [rate]="progress"
+  <!-- check '0' stars with ngif doesnt works :((( -->
+  <!--  <app-gallery-star-rating *ngIf="currentRating$ | async as progress" [rate]="progress"-->
+  <!--                           (rateChangeEvent)="onRateChange($event)"></app-gallery-star-rating>-->
+  <app-gallery-star-rating [rate]="currentRating"
                            (rateChangeEvent)="onRateChange($event)"></app-gallery-star-rating>
 </div>
