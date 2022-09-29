@@ -33,6 +33,13 @@ import { ErrorInterceptor } from "@app/core/helpers/error.interceptor";
 import { ThemeState } from "@modules/themes/stores/theme-state";
 import { RecipesModule } from "@modules/recipes/recipes.module";
 
+
+// TODO use this then update "angularx-social-login"
+// const googleLoginOptions: GoogleInitOptions = {
+//   oneTapEnabled: false, // default is true
+// };
+// https://github.com/abacritt/angularx-social-login/issues/524#issuecomment-1236529035
+
 @NgModule({
   declarations: [
     AppComponent,
