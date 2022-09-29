@@ -34,6 +34,9 @@
       "@gallery/*": [
         "app/modules/gallery/*"
       ],
+      "@account/*": [
+        "app/modules/account/*"
+      ],
       "@styles/*": [
         "styles/*"
       ],

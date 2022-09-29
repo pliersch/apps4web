@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { GoogleLoginProvider, SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+import { SocialUser } from '@abacritt/angularx-social-login';
+import { Select, Store } from "@ngxs/store";
+import { LoginWithGoogleAction, LogoutWithGoogleAction } from "@modules/account/store/auth.actions";
+import { Observable } from "rxjs";
+import { AuthState } from "@account/store/auth.state";
 
 @Component({
   selector: 'app-account-menu',
@@ -9,36 +13,34 @@ import { GoogleLoginProvider, SocialAuthService, SocialUser } from '@abacritt/an
 export class AccountMenuComponent {
   // account: Account;
 
-  user: SocialUser;
+  @Select(AuthState.user)
+  user$: Observable<SocialUser>;
+  // user: SocialUser;
   loggedIn = false;
 
   constructor(/*private accountService: AccountService,*/
-              private authService: SocialAuthService) {
+              private store: Store) {
+
     // this.accountService.account.subscribe((account) => {
     //   this.account = account;
     //   this.loggedIn = account != null;
     // });
-    this.authService.authState.subscribe((user) => {
-      // console.log('AccountMenuComponent : ',)
-      this.user = user;
-      this.loggedIn = !user;
-    });
+    //   this.authService.authState.subscribe((user) => {
+    //     console.log('AccountMenuComponent : ', user)
+    //     this.user = user;
+    //     this.loggedIn = !user;
+    //   });
   }
 
   loginWithGoogle(): void {
-    const googleLoginOptions = {
-      scope: 'profile email'
-    };
-    void this.authService.signIn(GoogleLoginProvider.PROVIDER_ID, googleLoginOptions)
-    // .then((account) => {
-    //   this.loggedIn = account != null;
-    // });
+    this.store.dispatch(new LoginWithGoogleAction());
   }
 
   logout(): void {
-    // this.accountService.logout();
-    this.authService.signOut(true).then(res => {
-      console.log('AccountMenuComponent sign out: ', res)
-    });
+    this.store.dispatch(new LogoutWithGoogleAction());
+    // // this.accountService.logout();
+    // this.authService.signOut(true).then(res => {
+    //   console.log('AccountMenuComponent sign out: ', res)
+    // });
   }
 }

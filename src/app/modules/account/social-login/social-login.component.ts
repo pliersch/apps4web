@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {GoogleLoginProvider, SocialAuthService, SocialUser} from '@abacritt/angularx-social-login';
+import { Component, OnInit } from '@angular/core';
+import { GoogleLoginProvider, SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-social-login',
@@ -16,6 +16,7 @@ export class SocialLoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.authState.subscribe((user) => {
+      console.log('SocialLoginComponent : ', user)
       this.user = user;
       this.loggedIn = user != null;
     });
