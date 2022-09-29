@@ -1,4 +1,4 @@
-import { Action, Selector, State, StateContext } from "@ngxs/store";
+import { Action, NgxsOnInit, Selector, State, StateContext } from "@ngxs/store";
 import { Injectable } from "@angular/core";
 import { GoogleLoginProvider, SocialAuthService, SocialUser } from "@abacritt/angularx-social-login";
 import * as authActions from "@account/store/auth.actions";
@@ -17,7 +17,7 @@ export interface AuthStateModel {
 })
 
 @Injectable()
-export class AuthState {
+export class AuthState implements NgxsOnInit {
 
   @Selector()
   static user(state: AuthStateModel): SocialUser | null {
@@ -32,6 +32,15 @@ export class AuthState {
   constructor(/*private authService: AuthService,*/
               private socialAuthService: SocialAuthService,
               private alertService: AlertService) {
+  }
+
+  ngxsOnInit(ctx?: StateContext<any>): any {
+    this.socialAuthService.authState.subscribe((user) => {
+      console.log('AccountMenuComponent : ', user)
+      // this.user = user;
+      // this.loggedIn = !user;
+    });
+    this.socialAuthService.authState.forEach((user) => console.log(user));
   }
 
   // @Action(authActions.LoginAction)
