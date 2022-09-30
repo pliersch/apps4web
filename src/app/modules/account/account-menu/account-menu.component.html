@@ -1,7 +1,6 @@
 <ng-template [ngIf]="(user$ | async)" [ngIfElse]="noUsersMessage">
   <button *ngIf="user$ | async as user" mat-icon-button class="m10" [matMenuTriggerFor]="accountMenu">
     <img class="avatar" [src]="user.photoUrl">
-    <!--    <mat-icon>fingerprint</mat-icon>-->
   </button>
 </ng-template>
 
@@ -13,52 +12,6 @@
 </ng-template>
 
 <mat-menu #accountMenu="matMenu" yPosition="below">
-  <button *ngIf="!loggedIn" mat-menu-item style="margin: 0;" (click)="loginWithGoogle()">Login</button>
-  <button *ngIf="loggedIn" mat-menu-item style="margin: 0;" (click)="logout()">Logout</button>
+  <button *ngIf="!user" mat-menu-item style="margin: 0;" (click)="loginWithGoogle()">Login</button>
+  <button *ngIf="user" mat-menu-item style="margin: 0;" (click)="logout()">Logout</button>
 </mat-menu>
-
-<!--<ng-container *ngIf="user$ | async; then avatar; else svgIcon">-->
-<!--</ng-container>-->
-
-<!--<ng-template #avatar *ngIf="user$ | async as user">-->
-<!--  <button mat-icon-button class="m10" [matMenuTriggerFor]="accountMenu">-->
-<!--    <img class="avatar" [src]="user.photoUrl">-->
-<!--    &lt;!&ndash;    <mat-icon>fingerprint</mat-icon>&ndash;&gt;-->
-<!--  </button>-->
-<!--</ng-template>-->
-
-<!--<ng-template #svgIcon>-->
-<!--  <button mat-icon-button [matMenuTriggerFor]="accountMenu"-->
-<!--          aria-label="Example icon-button with share icon">-->
-<!--    <mat-icon>account_circle</mat-icon>-->
-<!--  </button>-->
-<!--</ng-template>-->
-
-<!--<mat-menu #accountMenu="matMenu" yPosition="below">-->
-<!--  <button *ngIf="!loggedIn" mat-menu-item style="margin: 0;" (click)="loginWithGoogle()">Login</button>-->
-<!--  <button *ngIf="loggedIn" mat-menu-item style="margin: 0;" (click)="logout()">Logout</button>-->
-<!--</mat-menu>-->
-
-
-<!--no async works-->
-
-<!--<ng-container *ngIf="user && user.photoUrl;  then avatar; else svgIcon">-->
-<!--</ng-container>-->
-
-<!--<ng-template #avatar>-->
-<!--  <button mat-icon-button class="m10" [matMenuTriggerFor]="accountMenu">-->
-<!--    <img class="avatar" [src]="user.photoUrl">-->
-<!--  </button>-->
-<!--</ng-template>-->
-
-<!--<ng-template #svgIcon>-->
-<!--  <button mat-icon-button [matMenuTriggerFor]="accountMenu"-->
-<!--          aria-label="Example icon-button with share icon">-->
-<!--    <mat-icon>account_circle</mat-icon>-->
-<!--  </button>-->
-<!--</ng-template>-->
-
-<!--<mat-menu #accountMenu="matMenu" yPosition="below">-->
-<!--  <button *ngIf="loggedIn" mat-menu-item style="margin: 0;" (click)="loginWithGoogle()">Login</button>-->
-<!--  <button *ngIf="!loggedIn" mat-menu-item style="margin: 0;" (click)="logout()">Logout</button>-->
-<!--</mat-menu>-->

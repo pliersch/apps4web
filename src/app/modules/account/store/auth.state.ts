@@ -1,4 +1,13 @@
-import { Action, NgxsAfterBootstrap, NgxsOnInit, Selector, State, StateContext } from "@ngxs/store";
+import {
+  Action,
+  NgxsAfterBootstrap,
+  NgxsOnChanges,
+  NgxsOnInit,
+  NgxsSimpleChange,
+  Selector,
+  State,
+  StateContext
+} from "@ngxs/store";
 import { Injectable } from "@angular/core";
 import { GoogleLoginProvider, SocialAuthService, SocialUser } from "@abacritt/angularx-social-login";
 import * as authActions from "@account/store/auth.actions";
@@ -17,7 +26,7 @@ export interface AuthStateModel {
 })
 
 @Injectable()
-export class AuthState implements NgxsOnInit, NgxsAfterBootstrap {
+export class AuthState implements NgxsOnInit, NgxsAfterBootstrap, NgxsOnChanges {
 
   @Selector()
   static user(state: AuthStateModel): SocialUser | null {
@@ -39,8 +48,8 @@ export class AuthState implements NgxsOnInit, NgxsAfterBootstrap {
     });
   }
 
-  ngxsOnInit(ctx?: StateContext<any>): any {
-    console.log('AuthState ngxsOnInit: ',)
+  ngxsOnInit(ctx: StateContext<AuthStateModel>): void {
+    console.log('AuthState ngxsOnInit: ', ctx.getState())
     this.socialAuthService.authState.subscribe((user) => {
       console.log('AuthState ngxsOnInit: 2', user)
       // this.user = user;
@@ -49,8 +58,13 @@ export class AuthState implements NgxsOnInit, NgxsAfterBootstrap {
     // this.socialAuthService.authState.forEach((user) => console.log(user));
   }
 
-  ngxsAfterBootstrap(ctx?: StateContext<any>): void {
-    console.log('AuthState ngxsAfterBootstrap: ',)
+  ngxsAfterBootstrap(ctx: StateContext<AuthStateModel>): void {
+    console.log('AuthState ngxsAfterBootstrap: ', ctx.getState())
+  }
+
+  ngxsOnChanges(change: NgxsSimpleChange): void {
+    console.log('prev state', change.previousValue);
+    console.log('next state', change.currentValue);
   }
 
   // @Action(authActions.LoginAction)
@@ -111,6 +125,7 @@ export class AuthState implements NgxsOnInit, NgxsAfterBootstrap {
 
   @Action(authActions.AutoLoginWithGoogleAction)
   autoLoginWithGoogleAction(ctx: StateContext<AuthStateModel>, action: authActions.AutoLoginWithGoogleAction): void {
+    console.log('AuthState autoLoginWithGoogleAction: ', action.payload)
     ctx.patchState({socialUser: action.payload});
   }
 

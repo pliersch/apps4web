@@ -1,11 +1,11 @@
-﻿import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {finalize, map} from 'rxjs/operators';
+﻿import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
 
-import {environment} from '@environments/environment';
-import {Account} from "@modules/account/models/account";
+import { environment } from '@environments/environment';
+import { Account } from "@modules/account/models/account";
 
 const baseUrl = `${environment.apiUrl}/accounts`;
 
