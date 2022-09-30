@@ -5,6 +5,7 @@ import { DashboardComponent } from "@modules/dashboard/dashboard.component";
 import { LegalNoticeComponent } from "@modules/legal-notice/legal-notice.component";
 import { AuthGuard } from "@modules/account/helpers/auth.guard";
 
+const loginModule = () => import('@app/modules/login/login.module').then((x) => x.LoginModule);
 const chatModule = () => import('@app/modules/chat/chat.module').then((x) => x.ChatModule);
 const adminModule = () => import('@app/modules/admin/admin.module').then((x) => x.AdminModule);
 // const doctorModule = () => import('@app/modules/doctor/doctor.module').then((x) => x.DoctorModule);
@@ -21,6 +22,7 @@ const routes: Routes = [{
     {path: '', component: DashboardComponent},
     {path: 'dashboard', component: DashboardComponent},
     {path: 'impressum', component: LegalNoticeComponent},
+    {path: 'login', loadChildren: loginModule},
     {path: 'chat', loadChildren: chatModule},
     {path: 'admin', loadChildren: adminModule, canActivate: [AuthGuard]},
     // {path: 'waste', loadChildren: wasteModule},

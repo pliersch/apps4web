@@ -32,7 +32,7 @@ export class WasteReminderComponent implements OnInit, AfterViewInit {
 
   constructor(private renderer: Renderer2,
               private _adapter: DateAdapter<any>) {
-    this._adapter.localeChanges.subscribe(evt => console.log('WasteReminderComponent : local changes muhaha ', evt))
+    // this._adapter.localeChanges.subscribe(evt => console.log('WasteReminderComponent : local changes muhaha ', evt))
     this._adapter.setLocale(de);
   }
 

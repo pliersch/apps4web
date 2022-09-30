@@ -90,11 +90,11 @@ import { RecipesModule } from "@modules/recipes/recipes.module";
       deps: [MAT_DATE_LOCALE],
     },
     {provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS},
-    {
-      provide: APP_INITIALIZER, useFactory: initApplication, multi: true, deps: [
-        Store
-      ]
-    },
+    // {
+    //   provide: APP_INITIALIZER, useFactory: initApplication, multi: true, deps: [
+    //     Store
+    //   ]
+    // },
     {
       provide: APP_INITIALIZER, useFactory: initTheme, multi: true, deps: [
         Store

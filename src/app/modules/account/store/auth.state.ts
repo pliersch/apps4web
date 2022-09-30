@@ -41,11 +41,6 @@ export class AuthState implements NgxsOnInit, NgxsAfterBootstrap, NgxsOnChanges 
   constructor(/*private authService: AuthService,*/
               private socialAuthService: SocialAuthService,
               private alertService: AlertService) {
-    this.socialAuthService.authState.subscribe((user) => {
-      console.log('AuthState constructor: ', user)
-
-      // this.s.user = user;
-    });
   }
 
   ngxsOnInit(ctx: StateContext<AuthStateModel>): void {
