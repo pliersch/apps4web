@@ -9,7 +9,7 @@ import { DefaultLayoutComponent } from "./layouts/default-layout/default-layout.
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { NgxsModule, Store } from '@ngxs/store';
 
-import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from "@abacritt/angularx-social-login";
+import { SocialLoginModule } from "@abacritt/angularx-social-login";
 import { NgScrollbarModule } from "ngx-scrollbar";
 import { GlobalErrorHandler } from "@app/core/helpers/global-error-handler";
 import { environment } from "@environments/environment";
@@ -70,20 +70,20 @@ import { RecipesModule } from "@modules/recipes/recipes.module";
   ],
   exports: [],
   providers: [
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: true,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '334979481378-o30p8vigr8pma4sdod58qepl6ekk1k8b.apps.googleusercontent.com'
-            )
-          }
-        ]
-      } as SocialAuthServiceConfig
-    },
+    // {
+    //   provide: 'SocialAuthServiceConfig',
+    //   useValue: {
+    //     autoLogin: true,
+    //     providers: [
+    //       {
+    //         id: GoogleLoginProvider.PROVIDER_ID,
+    //         provider: new GoogleLoginProvider(
+    //           '334979481378-o30p8vigr8pma4sdod58qepl6ekk1k8b.apps.googleusercontent.com'
+    //         )
+    //       }
+    //     ]
+    //   } as SocialAuthServiceConfig
+    // },
     {
       provide: DateAdapter,
       useClass: DateFnsAdapter,
@@ -91,7 +91,9 @@ import { RecipesModule } from "@modules/recipes/recipes.module";
     },
     {provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS},
     {
-      provide: APP_INITIALIZER, useFactory: initApplication, multi: true
+      provide: APP_INITIALIZER, useFactory: initApplication, multi: true, deps: [
+        Store
+      ]
     },
     {
       provide: APP_INITIALIZER, useFactory: initTheme, multi: true, deps: [

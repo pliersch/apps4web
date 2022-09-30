@@ -47,7 +47,13 @@ export class LogoutFailAction {
 
 export class LoginWithGoogleAction {
   static readonly type = '[Auth] Google Login';
+}
 
+export class AutoLoginWithGoogleAction {
+  static readonly type = '[Auth] Google Auto Login';
+
+  constructor(public readonly payload: SocialUser) {
+  }
 }
 
 export class LoginWithGoogleSuccessAction {

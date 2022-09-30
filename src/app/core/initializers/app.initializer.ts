@@ -1,10 +1,10 @@
-import {SocialAuthService, SocialUser} from '@abacritt/angularx-social-login';
-import {filter, take} from 'rxjs/operators';
+import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+import { filter, take } from 'rxjs/operators';
+import { Store } from "@ngxs/store";
 
-
-export function initApplication(/*store: Store<AppState>,*/
-                                /*authService: SocialAuthService,
-                                userService: UserService*/): () => Promise<unknown> {
+export function initApplication(store: Store,
+                                authService: SocialAuthService,
+                                /*userService: UserService*/): () => Promise<unknown> {
   return () => new Promise(resolve => {
     resolve(true);
     // authService.authState.subscribe((authUser) => {

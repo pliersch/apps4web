@@ -15,6 +15,7 @@ import { AccountMenuComponent } from "@modules/account/account-menu/account-menu
 import { NgxsModule } from "@ngxs/store";
 import { AuthState } from "@modules/account/store/auth.state";
 import { ShareModule } from "@modules/share/share.module";
+import { GoogleLoginProvider, SocialAuthServiceConfig } from "@abacritt/angularx-social-login";
 
 @NgModule({
   imports: [
@@ -35,6 +36,21 @@ import { ShareModule } from "@modules/share/share.module";
     SocialLoginComponent,
     EmailLoginComponent
   ],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: true,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '334979481378-o30p8vigr8pma4sdod58qepl6ekk1k8b.apps.googleusercontent.com'
+            )
+          }
+        ]
+      } as SocialAuthServiceConfig
+    }],
   exports: [AccountMenuComponent]
 })
 export class AccountModule {

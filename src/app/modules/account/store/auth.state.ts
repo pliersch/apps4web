@@ -1,4 +1,4 @@
-import { Action, NgxsOnInit, Selector, State, StateContext } from "@ngxs/store";
+import { Action, NgxsAfterBootstrap, NgxsOnInit, Selector, State, StateContext } from "@ngxs/store";
 import { Injectable } from "@angular/core";
 import { GoogleLoginProvider, SocialAuthService, SocialUser } from "@abacritt/angularx-social-login";
 import * as authActions from "@account/store/auth.actions";
@@ -17,7 +17,7 @@ export interface AuthStateModel {
 })
 
 @Injectable()
-export class AuthState implements NgxsOnInit {
+export class AuthState implements NgxsOnInit, NgxsAfterBootstrap {
 
   @Selector()
   static user(state: AuthStateModel): SocialUser | null {
@@ -32,15 +32,25 @@ export class AuthState implements NgxsOnInit {
   constructor(/*private authService: AuthService,*/
               private socialAuthService: SocialAuthService,
               private alertService: AlertService) {
+    this.socialAuthService.authState.subscribe((user) => {
+      console.log('AuthState constructor: ', user)
+
+      // this.s.user = user;
+    });
   }
 
   ngxsOnInit(ctx?: StateContext<any>): any {
+    console.log('AuthState ngxsOnInit: ',)
     this.socialAuthService.authState.subscribe((user) => {
-      console.log('AccountMenuComponent : ', user)
+      console.log('AuthState ngxsOnInit: 2', user)
       // this.user = user;
       // this.loggedIn = !user;
     });
-    this.socialAuthService.authState.forEach((user) => console.log(user));
+    // this.socialAuthService.authState.forEach((user) => console.log(user));
+  }
+
+  ngxsAfterBootstrap(ctx?: StateContext<any>): void {
+    console.log('AuthState ngxsAfterBootstrap: ',)
   }
 
   // @Action(authActions.LoginAction)
@@ -88,7 +98,6 @@ export class AuthState implements NgxsOnInit {
     })
   }
 
-
   @Action(authActions.LoginWithGoogleSuccessAction)
   loginWithGoogleSuccess(ctx: StateContext<AuthStateModel>, action: authActions.LoginWithGoogleSuccessAction): void {
     ctx.patchState({socialUser: action.payload});
@@ -98,6 +107,11 @@ export class AuthState implements NgxsOnInit {
   loginWithGoogleFailAction(ctx: StateContext<AuthStateModel>, action: authActions.LoginWithGoogleFailAction): void {
     this.alertService.error('Login with Google fail');
     console.log('AuthState : ', action.error)
+  }
+
+  @Action(authActions.AutoLoginWithGoogleAction)
+  autoLoginWithGoogleAction(ctx: StateContext<AuthStateModel>, action: authActions.AutoLoginWithGoogleAction): void {
+    ctx.patchState({socialUser: action.payload});
   }
 
   // logout
