@@ -22,7 +22,7 @@ const routes: Routes = [{
     {path: '', component: DashboardComponent},
     {path: 'dashboard', component: DashboardComponent},
     {path: 'impressum', component: LegalNoticeComponent},
-    {path: 'login', loadChildren: authModule},
+    {path: 'auth', loadChildren: authModule},
     {path: 'chat', loadChildren: chatModule},
     {path: 'admin', loadChildren: adminModule, canActivate: [AuthGuard]},
     // {path: 'waste', loadChildren: wasteModule},

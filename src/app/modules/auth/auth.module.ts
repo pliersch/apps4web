@@ -5,6 +5,8 @@ import { NgxsModule } from "@ngxs/store";
 import { LazyComponent } from "@modules/auth/lazy.component";
 import { AuthState } from "@modules/auth/store/auth-state";
 import { GoogleLoginProvider, SocialAuthServiceConfig } from "@abacritt/angularx-social-login";
+import { AuthMenuComponent } from './components/auth-menu/auth-menu.component';
+import { MaterialModule } from "@app/shared/material/material.module";
 
 const routes: Routes = [
   {
@@ -14,11 +16,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [LazyComponent],
+  declarations: [LazyComponent, AuthMenuComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    NgxsModule.forFeature([AuthState])
+    NgxsModule.forFeature([AuthState]),
+    MaterialModule
   ],
   providers: [
     {
@@ -35,5 +38,6 @@ const routes: Routes = [
         ]
       } as SocialAuthServiceConfig
     }],
+  // exports: [AuthMenuComponent]
 })
 export class AuthModule {}

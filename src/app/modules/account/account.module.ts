@@ -51,7 +51,7 @@ import { GoogleLoginProvider, SocialAuthServiceConfig } from "@abacritt/angularx
         ]
       } as SocialAuthServiceConfig
     }],
-  exports: [AccountMenuComponent]
+  // exports: [AccountMenuComponent]
 })
 export class AccountModule {
 }
