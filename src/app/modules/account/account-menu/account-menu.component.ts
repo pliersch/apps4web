@@ -18,7 +18,7 @@ export class AccountMenuComponent {
 
   @Select(AuthState.user)
   user$: Observable<SocialUser>;
-  user: SocialUser;
+  user: SocialUser | null;
 
   constructor(private authService: SocialAuthService,
               private store: Store) {
@@ -28,6 +28,9 @@ export class AccountMenuComponent {
       if (!!user) {
         this.store.dispatch(new AutoLoginWithGoogleAction(user));
       }
+    });
+    this.store.select(AuthState.user).subscribe((user) => {
+      this.user = user;
     });
   }
 

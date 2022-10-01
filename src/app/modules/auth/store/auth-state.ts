@@ -1,17 +1,8 @@
-import {
-  Action,
-  NgxsAfterBootstrap,
-  NgxsOnChanges,
-  NgxsOnInit,
-  NgxsSimpleChange,
-  Selector,
-  State,
-  StateContext
-} from "@ngxs/store";
+import { Action, NgxsAfterBootstrap, NgxsOnInit, Selector, State, StateContext } from '@ngxs/store';
 import { Injectable } from "@angular/core";
 import { GoogleLoginProvider, SocialAuthService, SocialUser } from "@abacritt/angularx-social-login";
-import * as authActions from "@account/store/auth.actions";
 import { AlertService } from "@app/services/alert.service";
+import * as authActions from "@account/store/auth.actions";
 import { HttpErrorResponse } from "@angular/common/http";
 
 export interface AuthStateModel {
@@ -19,14 +10,14 @@ export interface AuthStateModel {
 }
 
 @State<AuthStateModel>({
-  name: 'auth_old',
+  name: 'auth',
   defaults: {
     socialUser: null,
   }
 })
 
 @Injectable()
-export class AuthState implements NgxsOnInit, NgxsAfterBootstrap, NgxsOnChanges {
+export class AuthState implements NgxsOnInit, NgxsAfterBootstrap {
 
   @Selector()
   static user(state: AuthStateModel): SocialUser | null {
@@ -43,49 +34,15 @@ export class AuthState implements NgxsOnInit, NgxsAfterBootstrap, NgxsOnChanges 
               private alertService: AlertService) {
   }
 
+
   ngxsOnInit(ctx: StateContext<AuthStateModel>): void {
-    console.log('AuthState ngxsOnInit: ', ctx.getState())
-    this.socialAuthService.authState.subscribe((user) => {
-      console.log('AuthState ngxsOnInit: 2', user)
-      // this.user = user;
-      // this.loggedIn = !user;
-    });
-    // this.socialAuthService.authState.forEach((user) => console.log(user));
+    console.log('LazyState ngxsOnInit: ', ctx.getState())
   }
 
   ngxsAfterBootstrap(ctx: StateContext<AuthStateModel>): void {
-    console.log('AuthState ngxsAfterBootstrap: ', ctx.getState())
+    console.log('LazyState ngxsAfterBootstrap: ', ctx.getState())
   }
 
-  ngxsOnChanges(change: NgxsSimpleChange): void {
-    console.log('prev state', change.previousValue);
-    console.log('next state', change.currentValue);
-  }
-
-  // @Action(authActions.LoginAction)
-  // login(ctx: StateContext<AuthStateModel>, action: authActions.LoginAction): Observable<{ token: string }> {
-  //   return this.authService.login(action.payload).pipe(
-  //     tap((result: { token: string }) => {
-  //       ctx.patchState({
-  //         token: result.token,
-  //         username: action.payload.username
-  //       });
-  //     })
-  //   );
-  // }
-  //
-  // @Action(authActions.LogoutAction)
-  // logout(ctx: StateContext<AuthStateModel>, action: authActions.LogoutAction): Observable<any> {
-  //   const state = ctx.getState();
-  //   return this.authService.logout(state.token!).pipe(
-  //     tap(() => {
-  //       ctx.setState({
-  //         token: null,
-  //         username: null
-  //       });
-  //     })
-  //   );
-  // }
 
 //////////////////////////////////////////////////////////
 //          google auth
