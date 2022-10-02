@@ -1,7 +1,7 @@
 import {
   AfterViewInit,
   Compiler,
-  Component,
+  Component, createNgModuleRef,
   EventEmitter, Injector,
   Input,
   Output,
@@ -10,6 +10,8 @@ import {
 } from '@angular/core';
 import { Observable } from "rxjs";
 import { constants } from "@app/const/const";
+import { AuthMenuComponent } from "@modules/auth/components/auth-menu/auth-menu.component";
+import { Type } from "@angular/compiler";
 
 @Component({
   selector: 'app-appbar',
@@ -38,9 +40,9 @@ export class AppBarComponent implements AfterViewInit {
   }
 
   onSwitchTheme($event: string): void {
-    // this.switchThemeEvent.emit($event);
+    this.switchThemeEvent.emit($event);
     // this.loadFeature()
-    this.loadForm()
+    // this.loadForm()
   }
 
   async loadForm() {
@@ -50,26 +52,33 @@ export class AppBarComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // this.loadFeature()
+    void this.loadFeature()
   }
 
-  loadFeature() {
-    // Dynamic import, activate code splitting and on demand loading of feature module
-    import('../auth/auth.module').then(({AuthModule}) => {
-      // Compile the module
-      this.compiler.compileModuleAsync(AuthModule).then(moduleFactory => {
-        // Create a moduleRef, resolve an entry component, create the component
-        const moduleRef = moduleFactory.create(this.injector);
-        const componentFactory = moduleRef.instance.resolveComponent();
-        const {instance} = this.authMenuPlaceHolder.createComponent(componentFactory);
+  async loadFeature(): Promise<void> {
+    const {AuthModule} = await import('../auth/auth.module');
+    /*const ngModuleRef = */
+    createNgModuleRef(AuthModule, this.injector);
 
-        // set component Input() property
-        // instance.title = 'foo';
+    const {instance} = this.authMenuPlaceHolder.createComponent(AuthMenuComponent);
+    // you have to manually call ngOnChanges for dynamically created components
+    instance.ngOnChanges();
 
-        // you have to manually call ngOnChanges for dynamically created components
-        instance.ngOnChanges();
-      });
-    });
+    // const {AuthMenuComponent} = await import("../auth/components/auth-menu/auth-menu.component");
+    // this.authMenuPlaceHolder.clear();
+
+    // this.authMenuPlaceHolder.createComponent(AuthMenuComponent);
+
+
+    /*    import('../auth/auth.module').then((AuthModule) => {
+          const moduleRef = createNgModuleRef(AuthModule, this.injector);
+          // Compile the module
+          this.compiler.compileModuleAsync(AuthModule).then(moduleFactory => {
+            const {instance} = this.authMenuPlaceHolder.createComponent(AuthMenuComponent);
+            // you have to manually call ngOnChanges for dynamically created components
+            instance.ngOnChanges();
+          });
+        });*/
   }
 
 }

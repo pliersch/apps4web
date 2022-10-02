@@ -36,11 +36,11 @@ export class AuthState implements NgxsOnInit, NgxsAfterBootstrap {
 
 
   ngxsOnInit(ctx: StateContext<AuthStateModel>): void {
-    console.log('LazyState ngxsOnInit: ', ctx.getState())
+    console.log('AuthState ngxsOnInit: ', ctx.getState())
   }
 
   ngxsAfterBootstrap(ctx: StateContext<AuthStateModel>): void {
-    console.log('LazyState ngxsAfterBootstrap: ', ctx.getState())
+    console.log('AuthState ngxsAfterBootstrap: ', ctx.getState())
   }
 
 
