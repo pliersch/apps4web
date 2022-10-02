@@ -70,31 +70,17 @@ import { RecipesModule } from "@modules/recipes/recipes.module";
   ],
   exports: [],
   providers: [
-    // {
-    //   provide: 'SocialAuthServiceConfig',
-    //   useValue: {
-    //     autoLogin: true,
-    //     providers: [
-    //       {
-    //         id: GoogleLoginProvider.PROVIDER_ID,
-    //         provider: new GoogleLoginProvider(
-    //           '334979481378-o30p8vigr8pma4sdod58qepl6ekk1k8b.apps.googleusercontent.com'
-    //         )
-    //       }
-    //     ]
-    //   } as SocialAuthServiceConfig
-    // },
     {
       provide: DateAdapter,
       useClass: DateFnsAdapter,
       deps: [MAT_DATE_LOCALE],
     },
     {provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS},
-    // {
-    //   provide: APP_INITIALIZER, useFactory: initApplication, multi: true, deps: [
-    //     Store
-    //   ]
-    // },
+    {
+      provide: APP_INITIALIZER, useFactory: initApplication, multi: true, deps: [
+        Store
+      ]
+    },
     {
       provide: APP_INITIALIZER, useFactory: initTheme, multi: true, deps: [
         Store

@@ -6,6 +6,7 @@ export function initApplication(store: Store,
                                 authService: SocialAuthService,
                                 /*userService: UserService*/): () => Promise<unknown> {
   return () => new Promise(resolve => {
+    console.log('initApplication: APP_INITIALIZER ')
     resolve(true);
     // authService.authState.subscribe((authUser) => {
     //     if (authUser) {
