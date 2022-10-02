@@ -1,65 +1,37 @@
-import {
-  Action,
-  NgxsAfterBootstrap,
-  NgxsOnChanges,
-  NgxsOnInit,
-  NgxsSimpleChange,
-  Selector,
-  State,
-  StateContext
-} from "@ngxs/store";
+import { Action, State, StateContext } from "@ngxs/store";
 import { Injectable } from "@angular/core";
 import { GoogleLoginProvider, SocialAuthService, SocialUser } from "@abacritt/angularx-social-login";
-import * as authActions from "@account/store/auth.actions";
+import * as authActions from "@modules/auth/store/auth.actions";
 import { AlertService } from "@app/services/alert.service";
 import { HttpErrorResponse } from "@angular/common/http";
 
 export interface AuthStateModel {
-  socialUser: SocialUser | null;
+  user: SocialUser | null;
 }
 
 @State<AuthStateModel>({
-  name: 'auth_old',
+  name: 'legacy_auth',
   defaults: {
-    socialUser: null,
+    user: null,
   }
 })
 
 @Injectable()
-export class AuthState implements NgxsOnInit, NgxsAfterBootstrap, NgxsOnChanges {
+export class AuthState {
 
-  @Selector()
-  static user(state: AuthStateModel): SocialUser | null {
-    return state.socialUser;
-  }
-
-  @Selector()
-  static isAuthenticated(state: AuthStateModel): boolean {
-    return !!state.socialUser?.authToken;
-  }
+  // @Selector()
+  // static user(state: AuthStateModel): SocialUser | null {
+  //   return state.user;
+  // }
+  //
+  // @Selector()
+  // static isAuthenticated(state: AuthStateModel): boolean {
+  //   return !!state.user?.authToken;
+  // }
 
   constructor(/*private authService: AuthService,*/
               private socialAuthService: SocialAuthService,
               private alertService: AlertService) {
-  }
-
-  ngxsOnInit(ctx: StateContext<AuthStateModel>): void {
-    console.log('AuthState ngxsOnInit: ', ctx.getState())
-    this.socialAuthService.authState.subscribe((user) => {
-      console.log('AuthState ngxsOnInit: 2', user)
-      // this.user = user;
-      // this.loggedIn = !user;
-    });
-    // this.socialAuthService.authState.forEach((user) => console.log(user));
-  }
-
-  ngxsAfterBootstrap(ctx: StateContext<AuthStateModel>): void {
-    console.log('AuthState ngxsAfterBootstrap: ', ctx.getState())
-  }
-
-  ngxsOnChanges(change: NgxsSimpleChange): void {
-    console.log('prev state', change.previousValue);
-    console.log('next state', change.currentValue);
   }
 
   // @Action(authActions.LoginAction)
@@ -109,7 +81,7 @@ export class AuthState implements NgxsOnInit, NgxsAfterBootstrap, NgxsOnChanges 
 
   @Action(authActions.LoginWithGoogleSuccessAction)
   loginWithGoogleSuccess(ctx: StateContext<AuthStateModel>, action: authActions.LoginWithGoogleSuccessAction): void {
-    ctx.patchState({socialUser: action.payload});
+    ctx.patchState({user: action.payload});
   }
 
   @Action(authActions.LoginWithGoogleFailAction)
@@ -121,7 +93,7 @@ export class AuthState implements NgxsOnInit, NgxsAfterBootstrap, NgxsOnChanges 
   @Action(authActions.AutoLoginWithGoogleAction)
   autoLoginWithGoogleAction(ctx: StateContext<AuthStateModel>, action: authActions.AutoLoginWithGoogleAction): void {
     console.log('AuthState autoLoginWithGoogleAction: ', action.payload)
-    ctx.patchState({socialUser: action.payload});
+    ctx.patchState({user: action.payload});
   }
 
   // logout
@@ -139,8 +111,7 @@ export class AuthState implements NgxsOnInit, NgxsAfterBootstrap, NgxsOnChanges 
 
   @Action(authActions.LogoutWithGoogleSuccessAction)
   logoutWithGoogleSuccess(ctx: StateContext<AuthStateModel>, action: authActions.LogoutWithGoogleSuccessAction): void {
-    ctx.patchState({socialUser: null});
-
+    ctx.patchState({user: null});
   }
 
   @Action(authActions.LogoutWithGoogleFailAction)

@@ -1,9 +1,13 @@
 import { Component, OnChanges } from '@angular/core';
 import { Select, Store } from "@ngxs/store";
-import { AuthState } from "@account/store/auth.state";
+import { AuthState } from "@modules/auth/store/auth.state";
 import { Observable } from "rxjs";
 import { SocialAuthService, SocialUser } from "@abacritt/angularx-social-login";
-import { AutoLoginWithGoogleAction, LoginWithGoogleAction, LogoutWithGoogleAction } from "@account/store/auth.actions";
+import {
+  AutoLoginWithGoogleAction,
+  LoginWithGoogleAction,
+  LogoutWithGoogleAction
+} from "@modules/auth/store/auth.actions";
 
 @Component({
   selector: 'app-auth-menu',

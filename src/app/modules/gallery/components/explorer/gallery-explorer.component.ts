@@ -5,19 +5,26 @@ import { Observable, Subscription } from 'rxjs';
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { saveAs } from 'file-saver';
 import {
-  DeletePhotoAction, DeselectAllPhotosAction, LoadPhotosAction,
-  SelectAllPhotosAction, SelectManyPhotosAction, SetCurrentPhotoAction,
-  SetTagsOfPicture, TogglePhotoDownloadAction, TogglePhotosDownloadAction
+  DeletePhotoAction,
+  DeselectAllPhotosAction,
+  LoadPhotosAction,
+  SelectAllPhotosAction,
+  SelectManyPhotosAction,
+  SetCurrentPhotoAction,
+  SetTagsOfPicture,
+  TogglePhotoDownloadAction,
+  TogglePhotosDownloadAction
 } from "@gallery/store/photos/photo.actions";
 import { AreaSelection, AreaSelectionHandler } from "@gallery/components/explorer/area-selection";
-import { GalleryEditImageTagsComponent }
-  from "@gallery/components/explorer/edit-image-tags/gallery-edit-image-tags.component";
+import {
+  GalleryEditImageTagsComponent
+} from "@gallery/components/explorer/edit-image-tags/gallery-edit-image-tags.component";
 import { MatDialog } from "@angular/material/dialog";
 import { PhotoService } from "@gallery/services/photo.service";
 import { NgScrollbar } from "ngx-scrollbar";
 import { tap } from "rxjs/operators";
 import { Router } from "@angular/router";
-import { AuthState } from "@modules/account/store/auth.state";
+import { AuthState } from "@modules/auth/store/auth.state";
 import { Action, ActionProvider } from "@modules/action-bar/actions";
 import { ActionBarService } from "@modules/action-bar/action-bar.service";
 import {

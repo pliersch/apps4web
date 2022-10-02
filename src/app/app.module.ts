@@ -8,19 +8,12 @@ import { AuthLayoutComponent } from "./layouts/auth-layout/auth-layout.component
 import { DefaultLayoutComponent } from "./layouts/default-layout/default-layout.component";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { NgxsModule, Store } from '@ngxs/store';
-
-import { SocialLoginModule } from "@abacritt/angularx-social-login";
-import { NgScrollbarModule } from "ngx-scrollbar";
 import { GlobalErrorHandler } from "@app/core/helpers/global-error-handler";
 import { environment } from "@environments/environment";
 import { AppBarComponent } from "@modules/app-bar/app-bar.component";
 import { ThemeMenuComponent } from "@modules/themes/menus/theme-menu.component";
 import { DashboardComponent } from "@modules/dashboard/dashboard.component";
-import { DynamicAppbarComponent } from "@modules/app-bar/dynamic/dynamic-appbar.component";
-import { DynamicAppbarDirective } from "@modules/app-bar/dynamic/dynamic-appbar.directive";
 import { DashboardCardComponent } from "@modules/dashboard/cards/dashboard-card.component";
-import { LegalNoticeComponent } from "@modules/legal-notice/legal-notice.component";
-import { AccountModule } from "@modules/account/account.module";
 import { MaterialModule } from "@app/shared/material/material.module";
 import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
 import { WasteCalendarModule } from "@modules/waste-calendar/waste-calendar.module";
@@ -32,6 +25,7 @@ import { JwtInterceptor } from "@app/core/helpers/jwt.interceptor";
 import { ErrorInterceptor } from "@app/core/helpers/error.interceptor";
 import { ThemeState } from "@modules/themes/stores/theme-state";
 import { RecipesModule } from "@modules/recipes/recipes.module";
+import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from "@abacritt/angularx-social-login";
 
 
 // TODO use this then update "angularx-social-login"
@@ -42,30 +36,30 @@ import { RecipesModule } from "@modules/recipes/recipes.module";
 
 @NgModule({
   declarations: [
+    DefaultLayoutComponent,
+    AuthLayoutComponent,
     AppComponent,
     AppBarComponent,
-    AuthLayoutComponent,
-    DefaultLayoutComponent,
     ThemeMenuComponent,
     DashboardComponent,
     DashboardCardComponent,
-    DynamicAppbarDirective,
-    DynamicAppbarComponent,
-    LegalNoticeComponent,
+    // DynamicAppbarDirective,
+    // DynamicAppbarComponent,
+    // LegalNoticeComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    SocialLoginModule,
-    AccountModule,
-    NgScrollbarModule,
+    // NgScrollbarModule,
     MaterialModule,
+    // AuthModule,
     NgxsModule.forRoot([ThemeState], {developmentMode: !environment.production}),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     // NgxsLoggerPluginModule.forRoot(),
     WasteCalendarModule,
+    SocialLoginModule,
     RecipesModule
   ],
   exports: [],
@@ -85,6 +79,20 @@ import { RecipesModule } from "@modules/recipes/recipes.module";
       provide: APP_INITIALIZER, useFactory: initTheme, multi: true, deps: [
         Store
       ]
+    },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: true,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '334979481378-o30p8vigr8pma4sdod58qepl6ekk1k8b.apps.googleusercontent.com'
+            )
+          }
+        ]
+      } as SocialAuthServiceConfig
     },
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},

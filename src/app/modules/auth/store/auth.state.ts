@@ -2,7 +2,7 @@ import { Action, NgxsAfterBootstrap, NgxsOnInit, Selector, State, StateContext }
 import { Injectable } from "@angular/core";
 import { GoogleLoginProvider, SocialAuthService, SocialUser } from "@abacritt/angularx-social-login";
 import { AlertService } from "@app/services/alert.service";
-import * as authActions from "@account/store/auth.actions";
+import * as authActions from "@modules/auth/store/auth.actions";
 import { HttpErrorResponse } from "@angular/common/http";
 
 export interface AuthStateModel {
@@ -29,11 +29,9 @@ export class AuthState implements NgxsOnInit, NgxsAfterBootstrap {
     return !!state.socialUser?.authToken;
   }
 
-  constructor(/*private authService: AuthService,*/
-              private socialAuthService: SocialAuthService,
+  constructor(private socialAuthService: SocialAuthService,
               private alertService: AlertService) {
   }
-
 
   ngxsOnInit(ctx: StateContext<AuthStateModel>): void {
     console.log('AuthState ngxsOnInit: ', ctx.getState())
@@ -42,7 +40,6 @@ export class AuthState implements NgxsOnInit, NgxsAfterBootstrap {
   ngxsAfterBootstrap(ctx: StateContext<AuthStateModel>): void {
     console.log('AuthState ngxsAfterBootstrap: ', ctx.getState())
   }
-
 
 //////////////////////////////////////////////////////////
 //          google auth

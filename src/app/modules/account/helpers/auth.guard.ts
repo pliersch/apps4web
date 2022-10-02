@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 import { AccountService } from "@modules/account/services/account.service";
 import { Store } from "@ngxs/store";
 import { AuthService } from "@modules/account/services/auth.service";
-import { AuthState } from "@modules/account/store/auth.state";
+import { AuthState } from "@modules/auth/store/auth.state";
 
 @Injectable({providedIn: 'root'})
 export class AuthGuard implements CanActivate {
