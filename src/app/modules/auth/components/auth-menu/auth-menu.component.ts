@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnChanges } from '@angular/core';
 import { Select, Store } from "@ngxs/store";
 import { AuthState } from "@account/store/auth.state";
 import { Observable } from "rxjs";
@@ -10,7 +10,7 @@ import { AutoLoginWithGoogleAction, LoginWithGoogleAction, LogoutWithGoogleActio
   templateUrl: './auth-menu.component.html',
   styleUrls: ['./auth-menu.component.scss']
 })
-export class AuthMenuComponent {
+export class AuthMenuComponent implements OnChanges {
 
   @Select(AuthState.user)
   user$: Observable<SocialUser>;
@@ -38,4 +38,7 @@ export class AuthMenuComponent {
     this.store.dispatch(new LogoutWithGoogleAction());
   }
 
+  ngOnChanges(): void {
+    console.log('ngOnChanges');
+  }
 }

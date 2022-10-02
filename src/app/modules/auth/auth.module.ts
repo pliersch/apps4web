@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ComponentFactory, ComponentFactoryResolver, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from "@angular/router";
 import { NgxsModule } from "@ngxs/store";
@@ -40,4 +40,12 @@ const routes: Routes = [
     }],
   // exports: [AuthMenuComponent]
 })
-export class AuthModule {}
+export class AuthModule {
+
+  constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
+
+  // fixme Deprecated
+  public resolveComponent(): ComponentFactory<AuthMenuComponent> {
+    return this.componentFactoryResolver.resolveComponentFactory(AuthMenuComponent);
+  }
+}
