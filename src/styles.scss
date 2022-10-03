@@ -4,7 +4,6 @@
 @import 'styles/material-icons.scss';
 @import 'styles/themes';
 @import 'styles/scrollbar';
-//@import 'styles/copy';
 @import 'styles/colors';
 @import 'styles/flex-layout';
 
@@ -18,6 +17,7 @@ html, body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  overflow: hidden;
 }
 
 * {
