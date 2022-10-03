@@ -58,7 +58,7 @@ enum ActionTypes {
 })
 export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestroy, ActionProvider, AreaSelectionHandler {
 
-  @ViewChild(NgScrollbar)
+  @ViewChild('scrollbar')
   scrollbarRef: NgScrollbar;
 
   @Select(AuthState.isAuthenticated)

@@ -19,7 +19,7 @@
   </div>
   <div class="column-max-width">
     <div class="scrollbar-container">
-      <ng-scrollbar>
+      <ng-scrollbar #scrollbar>
         <div class="images-wrapper">
           <app-image-control *ngFor="let photo of (photos$ | async)" class="selection-item"
                              [selected]="currentPhoto === photo" [download]="isSelected(photo)"
