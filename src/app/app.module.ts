@@ -26,6 +26,7 @@ import { ErrorInterceptor } from "@app/core/helpers/error.interceptor";
 import { ThemeState } from "@modules/themes/stores/theme-state";
 import { RecipesModule } from "@modules/recipes/recipes.module";
 import { GoogleSigninModule } from "@modules/google-signin/google-signin.module";
+import { AuthState } from "@modules/google-signin/store/auth.state";
 
 @NgModule({
   declarations: [
@@ -48,7 +49,7 @@ import { GoogleSigninModule } from "@modules/google-signin/google-signin.module"
     // NgScrollbarModule,
     MaterialModule,
     // AuthModule,
-    NgxsModule.forRoot([ThemeState], {developmentMode: !environment.production}),
+    NgxsModule.forRoot([ThemeState, AuthState], {developmentMode: !environment.production}),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     // NgxsLoggerPluginModule.forRoot(),
     WasteCalendarModule,

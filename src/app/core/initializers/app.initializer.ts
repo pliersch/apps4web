@@ -1,9 +1,7 @@
-import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { filter, take } from 'rxjs/operators';
 import { Store } from "@ngxs/store";
 
 export function initApplication(store: Store,
-                                authService: SocialAuthService,
                                 /*userService: UserService*/): () => Promise<unknown> {
   return () => new Promise(resolve => {
     // console.log('initApplication: APP_INITIALIZER ')

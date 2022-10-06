@@ -33,21 +33,6 @@ import { ShareModule } from "@modules/share/share.module";
     SocialLoginComponent,
     EmailLoginComponent
   ],
-  // providers: [
-  //   {
-  //     provide: 'SocialAuthServiceConfig',
-  //     useValue: {
-  //       autoLogin: true,
-  //       providers: [
-  //         {
-  //           id: GoogleLoginProvider.PROVIDER_ID,
-  //           provider: new GoogleLoginProvider(
-  //             '334979481378-o30p8vigr8pma4sdod58qepl6ekk1k8b.apps.googleusercontent.com'
-  //           )
-  //         }
-  //       ]
-  //     } as SocialAuthServiceConfig
-  //   }],
 })
 export class AccountModule {
 }

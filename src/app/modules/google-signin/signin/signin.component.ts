@@ -3,7 +3,12 @@ import { SocialUser } from "@modules/google-signin/social-user.model";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { AuthState } from "@modules/google-signin/store/auth.state";
-import { LoginWithGoogleAction } from "@modules/google-signin/store/auth.actions";
+import {
+  LoginWithGoogleAction,
+  LoginWithGoogleFailAction,
+  LogoutWithGoogleAction
+} from "@modules/google-signin/store/auth.actions";
+import { CredentialResponse } from "google-one-tap";
 
 @Component({
   selector: 'app-signin',
@@ -20,6 +25,9 @@ export class SigninComponent implements OnInit {
 
   ngOnInit(): void {
 
+    // this.user$.pipe(tap(user => this.user = user));
+    this.user$.subscribe(user => this.user = user);
+
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     window.onGoogleLibraryLoad = () => {
@@ -28,11 +36,10 @@ export class SigninComponent implements OnInit {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       google.accounts.id.initialize({
-        // Ref: https://developers.google.com/identity/gsi/web/reference/js-reference#IdConfiguration
         client_id: "334979481378-o30p8vigr8pma4sdod58qepl6ekk1k8b.apps.googleusercontent.com",
-        callback: this.handleCredentialResponse.bind(this), // Whatever function you want to trigger...
+        callback: this.handleCredentialResponse.bind(this),
         auto_select: true,
-        cancel_on_tap_outside: false
+        cancel_on_tap_outside: false,
       });
 
       /*      // OPTIONAL: In my case I want to redirect the user to an specific path.
@@ -48,46 +55,41 @@ export class SigninComponent implements OnInit {
               }
             });*/
     };
-
-    /*    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        window.handleCredentialResponse = (response) => {
-          const socialUser = this.createSocialUser(response.credential);
-          console.log('SigninComponent handleCredentialResponse: ', socialUser)
-          this.store.dispatch(new LoginWithGoogleAction(socialUser));
-        }*/
-    // this.loadScript();
   }
 
   handleCredentialResponse(response: any): void {
-    const socialUser = this.createSocialUser(response.credential);
-    console.log('SigninComponent handleCredentialResponse: ', socialUser)
-    this.store.dispatch(new LoginWithGoogleAction(socialUser));
+    // const socialUser = this.createSocialUser(response.credential)
+    const user = this.decodeCredentialResponse(response);
+    // console.log('SigninComponent handleCredentialResponse: ', socialUser)
+    if (user) {
+      this.store.dispatch(new LoginWithGoogleAction(user));
+    } else {
+      this.store.dispatch(new LoginWithGoogleFailAction('Login fail'));
+    }
+
   }
 
-  // loadScript(): void {
-  //   const meta = document.createElement('meta');
-  //   meta.name = "google-signin-client_id";
-  //   meta.content = "334979481378-o30p8vigr8pma4sdod58qepl6ekk1k8b.apps.googleusercontent.com";
-  //   document.getElementsByTagName('head')[0].appendChild(meta);
-  //
-  //   const script = document.createElement('script');
-  //   script.async = true;
-  //   script.src = 'https://accounts.google.com/gsi/client';
-  //   document.head.appendChild(script);
-  //   console.log('SigninComponent loadScript: loaded',)
-  // }
+  decodeCredentialResponse(response: CredentialResponse): SocialUser | null {
+    let decodedToken: any | null = null;
+    try {
+      decodedToken = JSON.parse(atob(response?.credential.split('.')[1]));
+    } catch (e) {
+      console.error('Error while trying to decode token', e);
+    }
+    if (!decodedToken) {
+      return null;
+    }
+    return this.createSocialUser(decodedToken);
+  }
 
-  private createSocialUser(idToken: string): SocialUser {
+  private createSocialUser(decodedToken: any): SocialUser {
     const user = new SocialUser();
-    user.idToken = idToken;
-    const payload = this.decodeJwt(idToken);
-    user.id = payload.sub || '-1';
-    user.name = payload.name || 'Nope';
-    user.email = payload.email || 'Nope';
-    user.photoUrl = payload.picture || 'Nope';
-    user.firstName = payload['given_name'] || 'Nope';
-    user.lastName = payload['family_name'] || 'Nope';
+    user.id = decodedToken.sub;
+    user.name = decodedToken.name;
+    user.email = decodedToken.email;
+    user.photoUrl = decodedToken.picture;
+    user.firstName = decodedToken.given_name;
+    user.lastName = decodedToken.family_name;
     return user;
   }
 
@@ -106,6 +108,9 @@ export class SigninComponent implements OnInit {
   }
 
   logout(): void {
-
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    google.accounts.id.disableAutoSelect();
+    this.store.dispatch(new LogoutWithGoogleAction());
   }
 }

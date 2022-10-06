@@ -47,41 +47,12 @@ export class AuthState implements NgxsOnInit, NgxsAfterBootstrap {
 
   @Action(authActions.LoginWithGoogleAction)
   loginWithGoogle(ctx: StateContext<AuthStateModel>, action: authActions.LoginWithGoogleAction): void {
-    console.log('AuthState loginWithGoogle: ',)
-    const googleLoginOptions = {
-      scope: 'profile email'
-    };
-  }
-
-  @Action(authActions.AutoLoginWithGoogleAction)
-  autoLoginWithGoogleAction(ctx: StateContext<AuthStateModel>, action: authActions.AutoLoginWithGoogleAction): void {
-    console.log('AuthState autoLoginWithGoogleAction: ', action.payload)
     ctx.patchState({socialUser: action.payload});
   }
 
-  // logout
-
   @Action(authActions.LogoutWithGoogleAction)
   logoutWithGoogle(ctx: StateContext<AuthStateModel>, action: authActions.LogoutWithGoogleAction): void {
-
-    // this.socialAuthService.signOut(true)
-    //   .then(() => {
-    //     ctx.dispatch(new authActions.LogoutWithGoogleSuccessAction());
-    //   }).catch((error: HttpErrorResponse) => {
-    //   ctx.dispatch(new authActions.LogoutWithGoogleFailAction(error));
-    // })
-  }
-
-  @Action(authActions.LogoutWithGoogleSuccessAction)
-  logoutWithGoogleSuccess(ctx: StateContext<AuthStateModel>, action: authActions.LogoutWithGoogleSuccessAction): void {
     ctx.patchState({socialUser: null});
-
-  }
-
-  @Action(authActions.LogoutWithGoogleFailAction)
-  logoutWithGoogleFail(ctx: StateContext<AuthStateModel>, action: authActions.LogoutWithGoogleFailAction): void {
-    this.alertService.error('Logout with Google fail');
-    console.log('AuthState : ', action.error)
   }
 
 }

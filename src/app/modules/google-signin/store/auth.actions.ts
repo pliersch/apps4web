@@ -1,5 +1,4 @@
-import { HttpErrorResponse } from "@angular/common/http";
-import { SocialUser } from "@abacritt/angularx-social-login";
+import { SocialUser } from "@modules/google-signin/social-user.model";
 
 //////////////////////////////////////////////////////////
 //          google login
@@ -28,7 +27,7 @@ export class LoginWithGoogleSuccessAction {
 export class LoginWithGoogleFailAction {
   static readonly type = '[Auth] Google Login Fail';
 
-  constructor(public error: HttpErrorResponse) {
+  constructor(public error: string) {
   }
 }
 
@@ -36,14 +35,3 @@ export class LogoutWithGoogleAction {
   static readonly type = '[Auth] Google Logout';
 }
 
-export class LogoutWithGoogleSuccessAction {
-  static readonly type = '[Auth] Google Logout Success';
-
-}
-
-export class LogoutWithGoogleFailAction {
-  static readonly type = '[Auth] Google Logout Fail';
-
-  constructor(public error: HttpErrorResponse) {
-  }
-}

@@ -1,9 +1,32 @@
-<div *ngIf="!user">
-  <div id="g_id_onload" data-auto_prompt="true" data-ux_mode="popup"
-       data-client_id="334979481378-o30p8vigr8pma4sdod58qepl6ekk1k8b.apps.googleusercontent.com">
+<!--<div *ngIf="!user">-->
+<!--  <div id="g_id_onload" data-auto_prompt="true" data-ux_mode="popup"-->
+<!--       data-client_id="334979481378-o30p8vigr8pma4sdod58qepl6ekk1k8b.apps.googleusercontent.com">-->
+<!--  </div>-->
+<!--  <div class="g_id_signin" data-type="standard" data-size="large"-->
+<!--       data-theme="filled_black" data-text="sign_in_with" data-shape="rectangular"-->
+<!--       data-logo_alignment="left">-->
+<!--  </div>-->
+<!--</div>-->
+
+<ng-template [ngIf]="(user$ | async)" [ngIfElse]="noUsersMessage">
+  <button *ngIf="user$ | async as user" mat-icon-button class="m10" [matMenuTriggerFor]="accountMenu">
+    <img class="avatar" [src]="user.photoUrl">
+  </button>
+</ng-template>
+
+<ng-template #noUsersMessage>
+  <div>
+    <div id="g_id_onload" data-auto_prompt="true" data-ux_mode="popup"
+         data-client_id="334979481378-o30p8vigr8pma4sdod58qepl6ekk1k8b.apps.googleusercontent.com">
+    </div>
+    <div class="g_id_signin" data-type="standard" data-size="large"
+         data-theme="filled_black" data-text="sign_in_with" data-shape="rectangular"
+         data-logo_alignment="left">
+    </div>
   </div>
-  <div class="g_id_signin" data-type="standard" data-size="large"
-       data-theme="filled_black" data-text="sign_in_with" data-shape="rectangular"
-       data-logo_alignment="left">
-  </div>
-</div>
+</ng-template>
+
+<mat-menu #accountMenu="matMenu" yPosition="below">
+  <!--  <button *ngIf="!user" mat-menu-item style="margin: 0;" (click)="loginWithGoogle()">Login</button>-->
+  <button *ngIf="user" mat-menu-item style="margin: 0;" (click)="logout()">Logout</button>
+</mat-menu>
