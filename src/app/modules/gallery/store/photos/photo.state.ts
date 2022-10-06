@@ -20,6 +20,7 @@ export interface PhotoStateModel {
   filterFrom: number,
   filterTo: number,
   allPhotosCount: number;
+  loadedPhotosCount: number,
   selectedPhotosCount: number;
   filteredPhotosCount: number;
   // comparePhotos: Photo[];
@@ -34,8 +35,9 @@ export interface PhotoStateModel {
   name: 'photos', // todo maybe photos?
   defaults: {
     photos: [],
-    currentPhoto: {id: '0', tags: [], rating: 0, isSelected: false, fileName: '', recordDate: new Date()},
+    currentPhoto: {id: '0', index: -1, tags: [], rating: 0, isSelected: false, fileName: '', recordDate: new Date()},
     allPhotosCount: 0,
+    loadedPhotosCount: 0,
     selectedPhotosCount: 0,
     filteredPhotosCount: 0,
     selectedPictures: [],
@@ -51,6 +53,10 @@ export interface PhotoStateModel {
 
 @Injectable()
 export class PhotoState {
+
+  constructor(private photoService: PhotoService,
+              private alertService: AlertService) {
+  }
 
   @Selector()
   static getPhotos(state: PhotoStateModel): Photo[] {
@@ -68,7 +74,7 @@ export class PhotoState {
   @Selector([PhotoState.getPhotosByTags])
   static getFilteredPhotos(state: PhotoStateModel, photos: Photo[]): Photo[] {
     let filteredPhotos = filterByRating(photos, state.filterRating);
-    console.log('PhotoState getPhotos: ', state.filterFrom, state.filterTo)
+    console.log('PhotoState getFilteredPhotos: ', state.filterFrom, state.filterTo)
     if (state.filterFrom > -1) {
       filteredPhotos = filterByYear(filteredPhotos, state.filterFrom, state.filterTo);
     }
@@ -123,10 +129,6 @@ export class PhotoState {
   // isDataSelected(state: PhotoStateModel): (photo: Photo) => boolean {
   //   return (photo: Photo) => state.downloads.includes(photo);
   // }
-
-  constructor(private photoService: PhotoService,
-              private alertService: AlertService) {
-  }
 
   //////////////////////////////////////////////////////////
   //          meta data
@@ -202,11 +204,14 @@ export class PhotoState {
   @Action(photoAction.LoadPhotosSuccessAction)
   loadPhotosSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosSuccessAction): void {
     const state = ctx.getState();
+    let index = state.loadedPhotosCount;
     for (const photo of action.dto.photos) {
       photo.recordDate = new Date(Number(photo.recordDate));
+      photo.index = index++;
     }
     const photos: Photo[] = [...state.photos, ...action.dto.photos]
     ctx.patchState({
+      loadedPhotosCount: index,
       photos: photos, loaded: true, loading: false, currentPhoto: photos[0]
     });
   }
@@ -336,7 +341,7 @@ export class PhotoState {
     const isSelected = !action.photo.isSelected;
     ctx.setState(
       patch({
-        photos: updateItem<Photo>(photo => photo!.id === action.photo.id, patch({isSelected: isSelected}))
+        photos: updateItem<Photo>(action.photo.index, patch({isSelected: isSelected}))
       })
     );
   }
@@ -366,7 +371,7 @@ export class PhotoState {
       patch({
         selectedPictures:
           isDownload
-            ? removeItem<Photo>(photo => photo!.id === action.photo.id)
+            ? removeItem<Photo>(action.photo.index)
             : insertItem<Photo>(action.photo)
       })
     );
@@ -390,16 +395,6 @@ export class PhotoState {
       })
     );
   }
-
-  // @Action(photoAction.AddManyPhotosAction)
-  // addManyPhotosAction(ctx: StateContext<PhotoStateModel>): void {
-  //   const state = ctx.getState();
-  //   ctx.setState(
-  //     patch({
-  //       downloads: state.photos
-  //     })
-  //   );
-  // }
 
   @Action(photoAction.DeselectAllPhotosAction)
   deselectAllPhotos(ctx: StateContext<PhotoStateModel>): void {
@@ -428,11 +423,12 @@ export class PhotoState {
 
   @Action(photoAction.SetTagsOfPicture)
   setTagsOfPicture(ctx: StateContext<PhotoStateModel>, action: photoAction.SetTagsOfPicture): Observable<Subscription> {
+    const photo = ctx.getState().photos[action.photo.index];
     return this.photoService.updateTagsOfPicture(action.photo.id, action.tags)
       .pipe(
         map((res: any) =>
           asapScheduler.schedule(() =>
-            ctx.dispatch(new photoAction.SetTagsOfPictureSuccess({id: action.photo.id, tags: action.tags}))
+            ctx.dispatch(new photoAction.SetTagsOfPictureSuccess(photo, action.tags))
           )
         ),
         catchError(error =>
@@ -449,8 +445,7 @@ export class PhotoState {
   setTagsOfPictureSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.SetTagsOfPictureSuccess): void {
     ctx.setState(
       patch({
-        photos: updateItem<Photo>(photo => photo!.id === action.update.id,
-          patch({tags: action.update.tags}))
+        photos: updateItem<Photo>(action.photo.index, patch({tags: action.tags}))
       })
     );
   }
@@ -461,79 +456,78 @@ export class PhotoState {
     console.log(action.error)
   }
 
-  @Action(photoAction.AddTagToPicture)
-  addTagToPicture(ctx: StateContext<PhotoStateModel>, action: photoAction.AddTagToPicture): Observable<Subscription> {
-    const photo = ctx.getState().photos.find(photo => photo.id === action.photo.id);
-    const allTags: string[] = photo!.tags.concat(action.tag);
-    return this.photoService.updateTagsOfPicture(action.photo.id, allTags)
-      .pipe(
-        map((res: any) =>
-          asapScheduler.schedule(() =>
-            ctx.dispatch(new photoAction.AddTagToPictureSuccess({id: action.photo.id, tags: allTags}))
-          )
-        ),
-        catchError(error =>
-          of(
-            asapScheduler.schedule(() =>
-              ctx.dispatch(new photoAction.AddTagToPictureFail(error))
-            )
-          )
-        )
-      );
-  }
-
-  @Action(photoAction.AddTagToPictureSuccess)
-  addTagToPictureSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.AddTagToPictureSuccess): void {
-    ctx.setState(
-      patch({
-        photos: updateItem<Photo>(photo => photo!.id === action.update.id,
-          patch({tags: action.update.tags}))
-      })
-    );
-  }
-
-  @Action(photoAction.AddTagToPictureFail)
-  addTagToPictureFail(ctx: StateContext<PhotoStateModel>, action: photoAction.AddTagToPictureFail): void {
-    this.alertService.error('Add tag fail');
-    console.log(action.error)
-  }
-
-  @Action(photoAction.RemoveTagFromPicture)
-  removeTagFromPicture(ctx: StateContext<PhotoStateModel>, action: photoAction.RemoveTagFromPicture): Observable<Subscription> {
-    const photo = ctx.getState().photos.find(photo => photo.id === action.photo.id);
-    const difference = photo!.tags.filter(item => item !== action.tag);
-    return this.photoService.updateTagsOfPicture(action.photo.id, difference)
-      .pipe(
-        map((res: any) =>
-          asapScheduler.schedule(() =>
-            ctx.dispatch(new photoAction.AddTagToPictureSuccess({id: action.photo.id, tags: difference}))
-          )
-        ),
-        catchError(error =>
-          of(
-            asapScheduler.schedule(() =>
-              ctx.dispatch(new photoAction.AddTagToPictureFail(error))
-            )
-          )
-        )
-      );
-  }
-
-  @Action(photoAction.RemoveTagFromPictureSuccess)
-  removeTagFromPictureSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.RemoveTagFromPictureSuccess): void {
-    ctx.setState(
-      patch({
-        photos: updateItem<Photo>(photo => photo!.id === action.update.id,
-          patch({tags: action.update.tags}))
-      })
-    );
-  }
-
-  @Action(photoAction.RemoveTagFromPictureFail)
-  removeTagFromPictureFail(ctx: StateContext<PhotoStateModel>, action: photoAction.RemoveTagFromPictureFail): void {
-    this.alertService.error('Remove tag fail');
-    console.log(action.error)
-  }
+  // @Action(photoAction.AddTagsToPicture)
+  // addTagsToPicture(ctx: StateContext<PhotoStateModel>, action: photoAction.AddTagsToPicture): Observable<Subscription> {
+  //   const photo = ctx.getState().photos[action.photo.index];
+  //   const allTags: string[] = photo.tags.concat(action.tags);
+  //   console.log('PhotoState addTagsToPicture: ', allTags)
+  //   return this.photoService.updateTagsOfPicture(action.photo.id, allTags)
+  //     .pipe(
+  //       map((res: any) =>
+  //         asapScheduler.schedule(() =>
+  //           ctx.dispatch(new photoAction.AddTagsToPictureSuccess(photo, allTags))
+  //         )
+  //       ),
+  //       catchError(error =>
+  //         of(
+  //           asapScheduler.schedule(() =>
+  //             ctx.dispatch(new photoAction.AddTagsToPictureFail(error))
+  //           )
+  //         )
+  //       )
+  //     );
+  // }
+  //
+  // @Action(photoAction.AddTagsToPictureSuccess)
+  // addTagsToPictureSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.AddTagsToPictureSuccess): void {
+  //   ctx.setState(
+  //     patch({
+  //       photos: updateItem<Photo>(action.photo.index, patch({tags: action.photo.tags}))
+  //     })
+  //   );
+  // }
+  //
+  // @Action(photoAction.AddTagsToPictureFail)
+  // addTagsToPictureFail(ctx: StateContext<PhotoStateModel>, action: photoAction.AddTagsToPictureFail): void {
+  //   this.alertService.error('Add tag fail');
+  //   console.log(action.error)
+  // }
+  //
+  // @Action(photoAction.RemoveTagsFromPicture)
+  // removeTagsFromPicture(ctx: StateContext<PhotoStateModel>, action: photoAction.RemoveTagsFromPicture): Observable<Subscription> {
+  //   const photo = ctx.getState().photos[action.photo.index];
+  //   const difference = photo.tags.filter(x => !action.tags.includes(x));
+  //   return this.photoService.updateTagsOfPicture(action.photo.id, difference)
+  //     .pipe(
+  //       map((res: any) =>
+  //         asapScheduler.schedule(() =>
+  //           ctx.dispatch(new photoAction.RemoveTagsFromPictureSuccess(action.photo, difference))
+  //         )
+  //       ),
+  //       catchError(error =>
+  //         of(
+  //           asapScheduler.schedule(() =>
+  //             ctx.dispatch(new photoAction.RemoveTagsFromPictureFail(error))
+  //           )
+  //         )
+  //       )
+  //     );
+  // }
+  //
+  // @Action(photoAction.RemoveTagsFromPictureSuccess)
+  // removeTagsFromPictureSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.RemoveTagsFromPictureSuccess): void {
+  //   ctx.setState(
+  //     patch({
+  //       photos: updateItem<Photo>(action.photo.index, patch({tags: action.tags}))
+  //     })
+  //   );
+  // }
+  //
+  // @Action(photoAction.RemoveTagsFromPictureFail)
+  // removeTagsFromPictureFail(ctx: StateContext<PhotoStateModel>, action: photoAction.RemoveTagsFromPictureFail): void {
+  //   this.alertService.error('Remove tag fail');
+  //   console.log(action.error)
+  // }
 
   //////////////////////////////////////////////////////////
   //          rating
@@ -544,7 +538,7 @@ export class PhotoState {
     return this.photoService.setRating(action.photo, action.rate).pipe(
       map((update: PhotoUpdate) =>
         asapScheduler.schedule(() =>
-          ctx.dispatch(new photoAction.SetRatingSuccess({id: action.photo.id, rating: action.rate}))
+          ctx.dispatch(new photoAction.SetRatingSuccess(action.photo, action.rate))
         )
       ),
       catchError(error =>
@@ -561,14 +555,9 @@ export class PhotoState {
   setRatingSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.SetRatingSuccess): void {
     ctx.setState(
       patch({
-        photos: updateItem<Photo>(photo => photo!.id === action.update.id,
-          patch({rating: action.update.rating})),
+        photos: updateItem<Photo>(action.photo.index, patch({rating: action.rate})),
       })
     );
-    const photo = ctx.getState().photos.find(photo => photo.id === action.update.id);
-    ctx.patchState({
-      currentPhoto: photo
-    });
   }
 
   @Action(photoAction.SetRatingFail)

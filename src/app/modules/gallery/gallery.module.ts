@@ -89,8 +89,6 @@ import { GalleryDateFilterComponent } from './components/explorer/date-filter/ga
     // NgxScrollbarModule,
     NgScrollbarModule,
     ShareModule,
-    // TODO enable, impl?
-    // RouterModule.forChild(ROUTES),
     NgxsModule.forFeature([PhotoState, TagState]),
     MatButtonToggleModule,
     ActionBarModule,

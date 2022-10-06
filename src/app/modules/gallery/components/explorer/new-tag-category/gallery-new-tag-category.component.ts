@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from "@angular/forms";
+import { UntypedFormBuilder, Validators } from "@angular/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import { Store } from "@ngxs/store";
 import { AddTag } from "@gallery/store/tags/tag.action";
@@ -22,7 +22,7 @@ export class GalleryNewTagCategoryComponent {
   });
   isValid = false;
 
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
               private store: Store,
               public dialogRef: MatDialogRef<GalleryNewTagCategoryComponent>) { }
 

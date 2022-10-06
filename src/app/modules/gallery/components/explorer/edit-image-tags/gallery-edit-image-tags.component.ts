@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Observable, of } from "rxjs";
-import { FormControl } from "@angular/forms";
+import { UntypedFormControl } from "@angular/forms";
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import { MatChipInputEvent } from "@angular/material/chips";
 import { DialogData } from "@gallery/components/explorer/gallery-explorer.component";
@@ -17,11 +17,11 @@ export class GalleryEditImageTagsComponent implements OnInit {
   observable: Observable<string[]>;
   addedTags: string[] = [];
   removedTags: string[] = [];
-  tagCtrl = new FormControl();
+  tagCtrl = new UntypedFormControl();
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
   constructor(public dialogRef: MatDialogRef<GalleryEditImageTagsComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: DialogData,) { }
+              @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   ngOnInit(): void {
     this.observable = of(this.data.tags);
@@ -31,8 +31,8 @@ export class GalleryEditImageTagsComponent implements OnInit {
     const value = (event.value || '').trim();
     if (value) {
       if (!this.data.tags.includes(value)) {
-        this.data.tags.push(value);
-        this.addedTags.push(value);
+        this.data.tags.push(value); // todo these 2 lines looks weird
+        this.addedTags.push(value); // hmm?
         event.chipInput!.clear();
       }
     }
