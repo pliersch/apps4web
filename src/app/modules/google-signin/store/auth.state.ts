@@ -1,16 +1,15 @@
 import { Action, NgxsAfterBootstrap, NgxsOnInit, Selector, State, StateContext } from '@ngxs/store';
 import { Injectable } from "@angular/core";
-import { /*GoogleLoginProvider, SocialAuthService,*/ SocialUser } from "@abacritt/angularx-social-login";
 import { AlertService } from "@app/services/alert.service";
-import * as authActions from "@modules/auth/store/auth.actions";
-import { HttpErrorResponse } from "@angular/common/http";
+import * as authActions from "@modules/google-signin/store/auth.actions";
+import { SocialUser } from "@modules/google-signin/social-user.model";
 
 export interface AuthStateModel {
   socialUser: SocialUser | null;
 }
 
 @State<AuthStateModel>({
-  name: 'auth',
+  name: 'googleAuth',
   defaults: {
     socialUser: null,
   }
@@ -29,8 +28,7 @@ export class AuthState implements NgxsOnInit, NgxsAfterBootstrap {
     return !!state.socialUser?.authToken;
   }
 
-  constructor(/*private socialAuthService: SocialAuthService,*/
-              private alertService: AlertService) {
+  constructor(private alertService: AlertService) {
   }
 
   ngxsOnInit(ctx: StateContext<AuthStateModel>): void {
@@ -49,27 +47,10 @@ export class AuthState implements NgxsOnInit, NgxsAfterBootstrap {
 
   @Action(authActions.LoginWithGoogleAction)
   loginWithGoogle(ctx: StateContext<AuthStateModel>, action: authActions.LoginWithGoogleAction): void {
+    console.log('AuthState loginWithGoogle: ',)
     const googleLoginOptions = {
       scope: 'profile email'
     };
-    // this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID, googleLoginOptions)
-    //   .then((account) => {
-    //     console.log('AuthState : ', account)
-    //     ctx.dispatch(new authActions.LoginWithGoogleSuccessAction(account));
-    //   }).catch((error: HttpErrorResponse) => {
-    //   ctx.dispatch(new authActions.LoginWithGoogleFailAction(error));
-    // })
-  }
-
-  @Action(authActions.LoginWithGoogleSuccessAction)
-  loginWithGoogleSuccess(ctx: StateContext<AuthStateModel>, action: authActions.LoginWithGoogleSuccessAction): void {
-    ctx.patchState({socialUser: action.payload});
-  }
-
-  @Action(authActions.LoginWithGoogleFailAction)
-  loginWithGoogleFailAction(ctx: StateContext<AuthStateModel>, action: authActions.LoginWithGoogleFailAction): void {
-    this.alertService.error('Login with Google fail');
-    console.log('AuthState : ', action.error)
   }
 
   @Action(authActions.AutoLoginWithGoogleAction)

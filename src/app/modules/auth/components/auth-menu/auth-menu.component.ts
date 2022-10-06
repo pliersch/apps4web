@@ -2,7 +2,7 @@ import { Component, OnChanges } from '@angular/core';
 import { Select, Store } from "@ngxs/store";
 import { AuthState } from "@modules/auth/store/auth.state";
 import { Observable } from "rxjs";
-import { SocialAuthService, SocialUser } from "@abacritt/angularx-social-login";
+import { /*SocialAuthService,*/ SocialUser } from "@abacritt/angularx-social-login";
 import {
   AutoLoginWithGoogleAction,
   LoginWithGoogleAction,
@@ -20,18 +20,18 @@ export class AuthMenuComponent implements OnChanges {
   user$: Observable<SocialUser>;
   user: SocialUser | null;
 
-  constructor(private authService: SocialAuthService,
+  constructor(/*private authService: SocialAuthService,*/
               private store: Store) {
 
-    this.authService.authState.subscribe((user) => {
-      this.user = user;
-      // if (!!user) {
-      //   this.store.dispatch(new AutoLoginWithGoogleAction(user));
-      // }
-    });
-    this.store.select(AuthState.user).subscribe((user) => {
-      this.user = user;
-    });
+    // this.authService.authState.subscribe((user) => {
+    //   this.user = user;
+    //   // if (!!user) {
+    //   //   this.store.dispatch(new AutoLoginWithGoogleAction(user));
+    //   // }
+    // });
+    // this.store.select(AuthState.user).subscribe((user) => {
+    //   this.user = user;
+    // });
   }
 
   loginWithGoogle(): void {

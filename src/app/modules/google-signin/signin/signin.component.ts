@@ -19,28 +19,64 @@ export class SigninComponent implements OnInit {
   constructor(private store: Store) { }
 
   ngOnInit(): void {
+
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    window.handleCredentialResponse = (response) => {
-      const socialUser = this.createSocialUser(response.credential);
-      console.log('SigninComponent handleCredentialResponse: ', socialUser)
-      this.store.dispatch(new LoginWithGoogleAction(socialUser));
-    }
-    this.loadScript();
+    window.onGoogleLibraryLoad = () => {
+      console.log('Google\'s One-tap sign in script loaded!');
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      google.accounts.id.initialize({
+        // Ref: https://developers.google.com/identity/gsi/web/reference/js-reference#IdConfiguration
+        client_id: "334979481378-o30p8vigr8pma4sdod58qepl6ekk1k8b.apps.googleusercontent.com",
+        callback: this.handleCredentialResponse.bind(this), // Whatever function you want to trigger...
+        auto_select: true,
+        cancel_on_tap_outside: false
+      });
+
+      /*      // OPTIONAL: In my case I want to redirect the user to an specific path.
+            // @ts-ignore
+            google.accounts.id.prompt((notification: PromptMomentNotification) => {
+              console.log('Google prompt event triggered...');
+
+              if (notification.getDismissedReason() === 'credential_returned') {
+                this.ngZone.run(() => {
+                  this.router.navigate(['myapp/somewhere'], {replaceUrl: true});
+                  console.log('Welcome back!');
+                });
+              }
+            });*/
+    };
+
+    /*    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        window.handleCredentialResponse = (response) => {
+          const socialUser = this.createSocialUser(response.credential);
+          console.log('SigninComponent handleCredentialResponse: ', socialUser)
+          this.store.dispatch(new LoginWithGoogleAction(socialUser));
+        }*/
+    // this.loadScript();
   }
 
-  loadScript(): void {
-    const meta = document.createElement('meta');
-    meta.name = "google-signin-client_id";
-    meta.content = "334979481378-o30p8vigr8pma4sdod58qepl6ekk1k8b.apps.googleusercontent.com";
-    document.getElementsByTagName('head')[0].appendChild(meta);
-
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = 'https://accounts.google.com/gsi/client';
-    document.head.appendChild(script);
-    console.log('SigninComponent loadScript: loaded',)
+  handleCredentialResponse(response: any): void {
+    const socialUser = this.createSocialUser(response.credential);
+    console.log('SigninComponent handleCredentialResponse: ', socialUser)
+    this.store.dispatch(new LoginWithGoogleAction(socialUser));
   }
+
+  // loadScript(): void {
+  //   const meta = document.createElement('meta');
+  //   meta.name = "google-signin-client_id";
+  //   meta.content = "334979481378-o30p8vigr8pma4sdod58qepl6ekk1k8b.apps.googleusercontent.com";
+  //   document.getElementsByTagName('head')[0].appendChild(meta);
+  //
+  //   const script = document.createElement('script');
+  //   script.async = true;
+  //   script.src = 'https://accounts.google.com/gsi/client';
+  //   document.head.appendChild(script);
+  //   console.log('SigninComponent loadScript: loaded',)
+  // }
 
   private createSocialUser(idToken: string): SocialUser {
     const user = new SocialUser();

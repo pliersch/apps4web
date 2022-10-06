@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { DefaultLayoutComponent } from "./layouts/default-layout/default-layout.component";
 import { DashboardComponent } from "@modules/dashboard/dashboard.component";
 import { LegalNoticeComponent } from "@modules/legal-notice/legal-notice.component";
-import { AuthGuard } from "@modules/account/helpers/auth.guard";
 
 // const authModule = () => import('@app/modules/auth/auth.module').then((x) => x.AuthModule);
 const chatModule = () => import('@app/modules/chat/chat.module').then((x) => x.ChatModule);
@@ -15,6 +14,7 @@ const chatModule = () => import('@app/modules/chat/chat.module').then((x) => x.C
 const profileModule = () => import('@app/modules/profile/profile.module').then((x) => x.ProfileModule);
 const galleryModule = () => import('@app/modules/gallery/gallery.module').then((x) => x.GalleryModule);
 const threeModule = () => import('@app/modules/three/three.module').then((x) => x.ThreeModule);
+const googleSignInModule = () => import('@app/modules/google-signin/google-signin.module').then((x) => x.GoogleSigninModule);
 // const wasteModule = () => import('@app/modules/waste-calendar/waste-calendar.module').then((x) => x.WasteCalendarModule);
 
 const routes: Routes = [{
@@ -33,6 +33,7 @@ const routes: Routes = [{
     // {path: 'recipes', loadChildren: recipesModule},
     {path: 'profile', loadChildren: profileModule},
     {path: 'three', loadChildren: threeModule},
+    {path: 'signin', loadChildren: googleSignInModule},
   ]
 }];
 

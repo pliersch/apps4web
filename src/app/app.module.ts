@@ -25,14 +25,7 @@ import { JwtInterceptor } from "@app/core/helpers/jwt.interceptor";
 import { ErrorInterceptor } from "@app/core/helpers/error.interceptor";
 import { ThemeState } from "@modules/themes/stores/theme-state";
 import { RecipesModule } from "@modules/recipes/recipes.module";
-import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from "@abacritt/angularx-social-login";
-
-
-// TODO use this then update "angularx-social-login"
-// const googleLoginOptions: GoogleInitOptions = {
-//   oneTapEnabled: false, // default is true
-// };
-// https://github.com/abacritt/angularx-social-login/issues/524#issuecomment-1236529035
+import { GoogleSigninModule } from "@modules/google-signin/google-signin.module";
 
 @NgModule({
   declarations: [
@@ -59,8 +52,8 @@ import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 
     NgxsReduxDevtoolsPluginModule.forRoot(),
     // NgxsLoggerPluginModule.forRoot(),
     WasteCalendarModule,
-    SocialLoginModule,
-    RecipesModule
+    RecipesModule,
+    GoogleSigninModule
   ],
   exports: [],
   providers: [
@@ -79,20 +72,6 @@ import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 
       provide: APP_INITIALIZER, useFactory: initTheme, multi: true, deps: [
         Store
       ]
-    },
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '334979481378-o30p8vigr8pma4sdod58qepl6ekk1k8b.apps.googleusercontent.com'
-            )
-          }
-        ]
-      } as SocialAuthServiceConfig
     },
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
