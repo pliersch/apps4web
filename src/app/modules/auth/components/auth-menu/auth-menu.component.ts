@@ -25,9 +25,9 @@ export class AuthMenuComponent implements OnChanges {
 
     this.authService.authState.subscribe((user) => {
       this.user = user;
-      if (!!user) {
-        this.store.dispatch(new AutoLoginWithGoogleAction(user));
-      }
+      // if (!!user) {
+      //   this.store.dispatch(new AutoLoginWithGoogleAction(user));
+      // }
     });
     this.store.select(AuthState.user).subscribe((user) => {
       this.user = user;

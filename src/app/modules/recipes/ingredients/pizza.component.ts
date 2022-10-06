@@ -1,5 +1,5 @@
 import { AfterContentInit, Component } from '@angular/core';
-import { FormControl } from "@angular/forms";
+import { UntypedFormControl } from "@angular/forms";
 
 export interface Ingredient {
   name: string;
@@ -13,7 +13,7 @@ export interface Ingredient {
 })
 export class PizzaComponent implements AfterContentInit {
 
-  countControl = new FormControl('4');
+  countControl = new UntypedFormControl('4');
 
   poolish: Ingredient[] = [
     {name: 'Mehl', value: '0'},

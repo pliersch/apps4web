@@ -10,8 +10,7 @@ import {
   LoadPhotosAction,
   SelectAllPhotosAction,
   SelectManyPhotosAction,
-  SetCurrentPhotoAction,
-  SetTagsOfPicture,
+  SetCurrentPhotoAction, SetTagsOfPicture,
   TogglePhotoDownloadAction,
   TogglePhotosDownloadAction
 } from "@gallery/store/photos/photo.actions";
@@ -272,7 +271,8 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     if (!res) {
       return;
     }
-
+    console.log('GalleryExplorerComponent updateTagsOfSelectedPictures add: ', res.addedTags)
+    console.log('GalleryExplorerComponent updateTagsOfSelectedPictures rem: ', res.removedTags)
     let tags: string[] = [];
     for (const photo of this.selection) {
       tags = photo.tags.filter(x => !res.removedTags.includes(x));

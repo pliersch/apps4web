@@ -6,11 +6,13 @@
   warum? default? fallback?
 - scroller(photo) haben feste werte
 - sharemodule prüfen (wird in anderen modulen importiert)
+- ngxs: schauen, ob selectOnce möglich ist
 - typeORM updates werden nicht genutzt
   - https://stackoverflow.com/questions/47792808/typeorm-update-item-and-return-it
   - The key is returning response.raw[0] in order to get the type back.
 - impl: state properties loaded & loading
 - configure eslintrc. is disabled: @typescript-eslint/explicit-member-accessibility
+- Add / Remove tags optimieren? z.zt. werden die tags am stück ersetzt
 - optimize/refactor routes:
   - Example1:
       export const APP_ROUTES: Routes = [

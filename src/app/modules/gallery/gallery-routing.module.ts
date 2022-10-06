@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {
-  GalleryContainerComponent
-} from '@app/modules/gallery/components/core/container/gallery-container.component';
+import { GalleryContainerComponent } from '@app/modules/gallery/components/core/container/gallery-container.component';
 import { GalleryExplorerComponent } from '@app/modules/gallery/components/explorer/gallery-explorer.component';
 // import { GalleryHomeComponent } from '@app/modules/gallery/components/home/gallery-home.component';
 import { GalleryLightboxComponent } from '@app/modules/gallery/components/lightbox/gallery-lightbox.component';

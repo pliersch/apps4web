@@ -1,5 +1,5 @@
 <div class="row-max-height">
-  <div class="column p5">
+  <div class="column control-panel p5">
     <div class="scrollbar-container m5">
       <ng-scrollbar track="vertical">
         <app-gallery-filter-panel *ngIf=showFilter></app-gallery-filter-panel>
@@ -10,7 +10,6 @@
     <app-gallery-action-panel [actions]="actions" (actionEvent)="onAction($event)"
                               class="m5"></app-gallery-action-panel>
     <app-gallery-image-detail class="m5" [currentPhoto]="currentPhoto"></app-gallery-image-detail>
-    <!--    <app-action-bar class="action-bar"></app-action-bar>-->
     <app-gallery-meta-panel class="m5"
                             [selectedPhotosCount]="selection.length"
                             [filteredPhotosCount]="photos.length"
