@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SigninComponent } from './signin/signin.component';
-import { RouterModule, Routes } from "@angular/router";
 import { MaterialModule } from "@app/shared/material/material.module";
 
-const routes: Routes = [{
-  path: '', component: SigninComponent,
-}];
+// const routes: Routes = [{
+//   path: '', component: SigninComponent,
+// }];
 
 @NgModule({
   declarations: [
@@ -17,7 +16,7 @@ const routes: Routes = [{
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes),
+    // RouterModule.forChild(routes),
     MaterialModule,
   ]
 })

@@ -24,15 +24,12 @@ export class SigninComponent implements OnInit {
   constructor(private store: Store) { }
 
   ngOnInit(): void {
-
-    // this.user$.pipe(tap(user => this.user = user));
+    console.log('SigninComponent ngOnInit: ',)
     this.user$.subscribe(user => this.user = user);
-
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     window.onGoogleLibraryLoad = () => {
       console.log('Google\'s One-tap sign in script loaded!');
-
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       google.accounts.id.initialize({
@@ -41,7 +38,6 @@ export class SigninComponent implements OnInit {
         auto_select: true,
         cancel_on_tap_outside: false,
       });
-
       /*      // OPTIONAL: In my case I want to redirect the user to an specific path.
             // @ts-ignore
             google.accounts.id.prompt((notification: PromptMomentNotification) => {
@@ -85,26 +81,13 @@ export class SigninComponent implements OnInit {
   private createSocialUser(decodedToken: any): SocialUser {
     const user = new SocialUser();
     user.id = decodedToken.sub;
+    user.authToken = decodedToken.authToken;
     user.name = decodedToken.name;
     user.email = decodedToken.email;
     user.photoUrl = decodedToken.picture;
     user.firstName = decodedToken.given_name;
     user.lastName = decodedToken.family_name;
     return user;
-  }
-
-  private decodeJwt(idToken: string): Record<string, string | undefined> {
-    const base64Url = idToken.split(".")[1];
-    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    const jsonPayload = decodeURIComponent(
-      window.atob(base64)
-        .split("")
-        .map(function (c) {
-          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-        })
-        .join("")
-    );
-    return JSON.parse(jsonPayload);
   }
 
   logout(): void {

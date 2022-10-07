@@ -1,4 +1,4 @@
-import { Action, NgxsAfterBootstrap, NgxsOnInit, Selector, State, StateContext } from '@ngxs/store';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { Injectable } from "@angular/core";
 import { AlertService } from "@app/services/alert.service";
 import * as authActions from "@modules/google-signin/store/auth.actions";
@@ -16,7 +16,7 @@ export interface AuthStateModel {
 })
 
 @Injectable()
-export class AuthState implements NgxsOnInit, NgxsAfterBootstrap {
+export class AuthState {
 
   @Selector()
   static user(state: AuthStateModel): SocialUser | null {
@@ -25,18 +25,10 @@ export class AuthState implements NgxsOnInit, NgxsAfterBootstrap {
 
   @Selector()
   static isAuthenticated(state: AuthStateModel): boolean {
-    return !!state.socialUser?.authToken;
+    return !!state.socialUser;
   }
 
   constructor(private alertService: AlertService) {
-  }
-
-  ngxsOnInit(ctx: StateContext<AuthStateModel>): void {
-    console.log('AuthState ngxsOnInit: ', ctx.getState())
-  }
-
-  ngxsAfterBootstrap(ctx: StateContext<AuthStateModel>): void {
-    console.log('AuthState ngxsAfterBootstrap: ', ctx.getState())
   }
 
 //////////////////////////////////////////////////////////
