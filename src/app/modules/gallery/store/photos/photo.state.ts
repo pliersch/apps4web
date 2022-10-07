@@ -1,6 +1,6 @@
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { Injectable } from "@angular/core";
-import { catchError, map } from "rxjs/operators";
+import { catchError, map, mergeMap, tap } from "rxjs/operators";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import { Photo, PhotoUpdate } from "@gallery/store/photos/photo.model";
@@ -131,35 +131,55 @@ export class PhotoState {
   //////////////////////////////////////////////////////////
 
   @Action(photoAction.LoadMetaDataAction)
-  loadMetaData(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataAction): Observable<Subscription> {
-    return this.photoService.loadMetaData().pipe(
-      map((metaDto: PhotoMetaDataDto) =>
-        asapScheduler.schedule(() =>
-          ctx.dispatch(new photoAction.LoadMetaDataSuccessAction(metaDto))
-        )
-      ),
-      catchError(error =>
-        of(
-          asapScheduler.schedule(() =>
-            ctx.dispatch(new photoAction.LoadMetaDataFailAction(error))
-          )
-        )
-      )
-    );
+  loadMetaData(ctx: StateContext<PhotoStateModel>): Observable<void> {
+    ctx.patchState({loading: true});
+    return this.photoService.loadMetaData().pipe(tap((metaDto) => {
+        ctx.patchState({
+          allPhotosCount: metaDto.count, loading: false
+        })
+        console.log('Inside of load',)
+      }),
+      mergeMap(() => {
+        console.log("Inside of mergeMap")
+        return ctx.dispatch(new photoAction.LoadMetaDataSuccessAction({count: 4}))
+      }),
+      catchError(err => {
+          console.log("Inside of catchError")
+          return ctx.dispatch(new photoAction.LoadMetaDataFailAction(err))
+        }
+      ))
   }
 
-  @Action(photoAction.LoadMetaDataSuccessAction)
-  loadMetaDataSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataSuccessAction): void {
-    ctx.patchState({
-      allPhotosCount: action.dto.count, loading: false
-    });
-  }
-
-  @Action(photoAction.LoadMetaDataFailAction)
-  loadMetaDataFail(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataFailAction): void {
-    ctx.dispatch({loaded: false, loading: false});
-    this.alertService.error('load meta data fail');
-  }
+  // @Action(photoAction.LoadMetaDataAction)
+  // loadMetaData(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataAction): Observable<Subscription> {
+  //   return this.photoService.loadMetaData().pipe(
+  //     map((metaDto: PhotoMetaDataDto) =>
+  //       asapScheduler.schedule(() =>
+  //         ctx.dispatch(new photoAction.LoadMetaDataSuccessAction(metaDto))
+  //       )
+  //     ),
+  //     catchError(error =>
+  //       of(
+  //         asapScheduler.schedule(() =>
+  //           ctx.dispatch(new photoAction.LoadMetaDataFailAction(error))
+  //         )
+  //       )
+  //     )
+  //   );
+  // }
+  //
+  // @Action(photoAction.LoadMetaDataSuccessAction)
+  // loadMetaDataSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataSuccessAction): void {
+  //   ctx.patchState({
+  //     allPhotosCount: action.dto.count, loading: false
+  //   });
+  // }
+  //
+  // @Action(photoAction.LoadMetaDataFailAction)
+  // loadMetaDataFail(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataFailAction): void {
+  //   ctx.dispatch({loaded: false, loading: false});
+  //   this.alertService.error('load meta data fail');
+  // }
 
   // region loading
   //////////////////////////////////////////////////////////
