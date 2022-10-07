@@ -21,9 +21,9 @@
       <ng-scrollbar #scrollbar>
         <div class="images-wrapper">
           <app-image-control *ngFor="let photo of (photos$ | async)" class="selection-item"
-                             [selected]="currentPhoto === photo" [download]="isSelected(photo)"
+                             [selected]="currentPhoto === photo" [download]="isDownload(photo)"
                              (click)="setCurrent(photo)" [photo]="photo"
-                             [hasRights]="isAuthenticated"
+                             [hasRights]="true"
                              (deleteEvent)="onSelectForDelete($event)"
                              (previewEvent)="onSelectForPreview($event)"
                              (editEvent)="onSelectForEdit($event)"

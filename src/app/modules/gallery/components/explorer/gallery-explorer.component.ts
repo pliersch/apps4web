@@ -4,16 +4,7 @@ import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { saveAs } from 'file-saver';
-import {
-  DeletePhotoAction,
-  DeselectAllPhotosAction,
-  LoadPhotosAction,
-  SelectAllPhotosAction,
-  SelectManyPhotosAction,
-  SetCurrentPhotoAction, SetTagsOfPicture,
-  TogglePhotoDownloadAction,
-  TogglePhotosDownloadAction
-} from "@gallery/store/photos/photo.actions";
+import * as photoAction from "@gallery/store/photos/photo.actions";
 import { AreaSelection, AreaSelectionHandler } from "@gallery/components/explorer/area-selection";
 import {
   GalleryEditImageTagsComponent
@@ -80,6 +71,10 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   selection$: Observable<Photo[]>;
   selection: Photo[];
 
+  @Select(PhotoState.getDownloads)  // todo look for pipe to remove field downloads
+  downloads$: Observable<Photo[]>;
+  downloads: Photo[];
+
   showFilter = true;
   absoluteHeight = 0;
   private isRequesting: boolean;
@@ -107,6 +102,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   ngOnInit(): void {
     this.actionBarService.setActions(this.actions);
     this.subscription = this.selection$.subscribe(res => this.selection = res);
+    this.subscription = this.downloads$.subscribe(res => this.downloads = res);
     this.subscription.add(this.currentPhoto$.subscribe(res => this.currentPhoto = res));
     this.subscription.add(this.isAuthenticated$.subscribe(res => this.isAuthenticated = res));
     this.subscription.add(this.allPhotosCount$.subscribe(count => this.allPhotosCount = count));
@@ -115,7 +111,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
         this.photos = res;
         this.isRequesting = false;
       }));
-    this.store.dispatch(new LoadPhotosAction(60));
+    this.store.dispatch(new photoAction.LoadPhotosAction(60));
     this.initializeSelectionArea();
   }
 
@@ -142,7 +138,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   setCurrent(photo: Photo): void {
-    this.store.dispatch(new SetCurrentPhotoAction(photo))
+    this.store.dispatch(new photoAction.SetCurrentPhotoAction(photo))
     this.currentPhoto = photo;
   }
 
@@ -150,20 +146,20 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     const currentHeight = element.clientHeight + element.scrollTop /* + element.scrollTop*/;
     if (currentHeight + 180 > this.absoluteHeight && !this.isRequesting) {
       this.isRequesting = true;
-      this.store.dispatch(new LoadPhotosAction(60));
+      this.store.dispatch(new photoAction.LoadPhotosAction(60));
     }
   }
 
   onAction(action: Action): void {
     switch (action.name) {
       case ActionTypes.SelectAll:
-        this.store.dispatch(new SelectAllPhotosAction());
+        this.store.dispatch(new photoAction.SelectAllPhotosAction());
         break;
       case ActionTypes.DeselectAll:
-        this.store.dispatch(new DeselectAllPhotosAction());
+        this.store.dispatch(new photoAction.DeselectAllPhotosAction());
         break;
       case ActionTypes.ToggleSelection:
-        this.store.dispatch(new TogglePhotosDownloadAction());
+        this.store.dispatch(new photoAction.ToggleAllDownloadAction());
         break;
       case ActionTypes.Download:
         this.downloadPictures();
@@ -181,11 +177,13 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   onSelectForEdit($event: Photo): void {
-    // todo: open edit component
+    this.store.dispatch(new photoAction.TogglePhotoDownloadAction($event)).subscribe(() =>
+      this.editTags()
+    ).unsubscribe()
   }
 
   onSelectForDownload($event: Photo): void {
-    this.store.dispatch(new TogglePhotoDownloadAction($event));
+    this.store.dispatch(new photoAction.TogglePhotoDownloadAction($event));
   }
 
   onSelectForPreview($event: Photo): void {
@@ -194,11 +192,11 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   onSelectForDelete($event: Photo): void {
-    this.store.dispatch(new DeletePhotoAction($event.id));
+    this.store.dispatch(new photoAction.DeletePhotoAction($event.id));
   }
 
-  isSelected(photo: Photo): boolean {
-    return this.selection.includes(photo);
+  isDownload(photo: Photo): boolean {
+    return this.downloads.includes(photo);
   }
 
   private initializeSelectionArea(): void {
@@ -215,12 +213,16 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
         console.log('GalleryExplorerComponent err why cant find the id?: ', fileName)
       }
     }
-    this.store.dispatch(new SelectManyPhotosAction(photos));
+    this.store.dispatch(new photoAction.SelectManyPhotosAction(photos));
   }
 
   private downloadPictures(): void {
-    this.photoService.download(this.selection)
-      .subscribe(blob => saveAs(blob, 'pictures.zip'));
+    console.log('GalleryExplorerComponent downloadPictures: ',)
+    this.photoService.download(this.downloads)
+      .subscribe((blob) => {
+        saveAs(blob, 'pictures.zip')
+        this.store.dispatch(new photoAction.DeselectAllDownloads())
+      })
   }
 
   private editTags(): void {
@@ -271,14 +273,12 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     if (!res) {
       return;
     }
-    console.log('GalleryExplorerComponent updateTagsOfSelectedPictures add: ', res.addedTags)
-    console.log('GalleryExplorerComponent updateTagsOfSelectedPictures rem: ', res.removedTags)
     let tags: string[] = [];
     for (const photo of this.selection) {
       tags = photo.tags.filter(x => !res.removedTags.includes(x));
       tags = tags.filter(x => !res.addedTags.includes(x))
         .concat(res.addedTags.filter(x => !tags.includes(x)));
-      this.store.dispatch(new SetTagsOfPicture(photo, tags));
+      this.store.dispatch(new photoAction.SetTagsOfPicture(photo, tags));
     }
   }
 

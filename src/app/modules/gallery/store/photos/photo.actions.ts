@@ -22,12 +22,6 @@ export class LoadMetaDataFailAction {
   constructor(public error: HttpErrorResponse) { }
 }
 
-export class UpdateMetaDataAction {
-  static readonly type = '[Gallery] Update AllPhotos Count';
-
-  constructor(public count: number) { }
-}
-
 // loading photos
 
 export class LoadPhotosAction {
@@ -47,7 +41,6 @@ export class LoadPhotosFailAction {
 
   constructor(public error: HttpErrorResponse) { }
 }
-
 
 // adding photo
 
@@ -97,7 +90,7 @@ export class ClearPhotoSelectionAction {
   static readonly type = '[Gallery] Clear Photo Selection';
 }
 
-// selection download
+// selections
 
 export class SelectAllPhotosAction {
   static readonly type = '[Gallery] Select All Photos Download';
@@ -109,17 +102,13 @@ export class SelectManyPhotosAction {
   constructor(public photos: Photo[]) { }
 }
 
-// export class AddManyPhotosAction {
-//   static readonly type = '[Gallery] Add Many Photos Download';
-//
-//   constructor(public photos: Photo[]) { }
-// }
-
 export class DeselectAllPhotosAction {
-  static readonly type = '[Gallery] Clear Photo Download';
+  static readonly type = '[Gallery] Clear Selection';
 }
 
-export class TogglePhotosDownloadAction {
+// downloads
+
+export class ToggleAllDownloadAction {
   static readonly type = '[Gallery] Toggle Photos Download';
 }
 
@@ -127,6 +116,10 @@ export class TogglePhotoDownloadAction {
   static readonly type = '[Gallery] Toggle Photo Download';
 
   constructor(public photo: Photo) { }
+}
+
+export class DeselectAllDownloads {
+  static readonly type = '[Gallery] Clear Download';
 }
 
 // delete
@@ -228,8 +221,7 @@ export class RemoveTagsFromPictureFail {
 export class SetRating {
   static readonly type = '[Gallery] Set Rating Of Photo';
 
-  constructor(public photo: Photo, public rate: number) {
-  }
+  constructor(public photo: Photo, public rate: number) { }
 }
 
 export class SetRatingSuccess {
@@ -260,8 +252,7 @@ export class SetRatingFilter {
 export class SetFromYearFilter {
   static readonly type = '[Gallery] Set From Year Filter';
 
-  constructor(public year: number) {
-  }
+  constructor(public year: number) { }
 }
 
 export class SetToYearFilter {
