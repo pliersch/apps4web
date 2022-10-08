@@ -46,7 +46,7 @@ export interface PhotoStateModel {
     tagFilter: [],
     filterRating: 0,
     filterFrom: -1,
-    filterTo: new Date().getFullYear(),
+    filterTo: -1,
     allPhotosLoaded: false,
     loaded: false,
     loading: false,
@@ -65,20 +65,20 @@ export class PhotoState {
     return state.photos;
   }
 
-  @Selector([TagState.getActiveTags])
-  static getPhotosByTags(state: PhotoStateModel, activeTags: string[]): Photo[] {
+  @Selector([PhotoState.getPhotos, TagState.getActiveTags])
+  static getPhotosByTags(photos: Photo[], activeTags: string[]): Photo[] {
     if (activeTags.length == 0) {
-      return state.photos;
+      return photos;
     }
-    return filterByTags(state.photos, activeTags);
+    return filterByTags(photos, activeTags);
   }
 
-  @Selector([PhotoState.getPhotosByTags])
-  static getFilteredPhotos(state: PhotoStateModel, photos: Photo[]): Photo[] {
-    let filteredPhotos = filterByRating(photos, state.filterRating);
-    console.log('PhotoState getFilteredPhotos: ', state.filterFrom, state.filterTo)
-    if (state.filterFrom > -1) {
-      filteredPhotos = filterByYear(filteredPhotos, state.filterFrom, state.filterTo);
+  @Selector([PhotoState.getPhotosByTags, PhotoState.getFilterRating, PhotoState.getFilterFrom, PhotoState.getFilterTo])
+  static getFilteredPhotos(photos: Photo[], filterRating: number, filterFrom: number, filterTo: number): Photo[] {
+    let filteredPhotos = filterByRating(photos, filterRating);
+    console.log('PhotoState getFilteredPhotos: ', filterFrom, filterTo)
+    if (filterFrom > -1 || filterTo > -1) {
+      filteredPhotos = filterByYear(filteredPhotos, filterFrom, filterTo);
     }
     return filteredPhotos;
   }
@@ -114,6 +114,16 @@ export class PhotoState {
   @Selector()
   static getFilterRating(state: PhotoStateModel): number {
     return state.filterRating;
+  }
+
+  @Selector()
+  static getFilterFrom(state: PhotoStateModel): number {
+    return state.filterFrom;
+  }
+
+  @Selector()
+  static getFilterTo(state: PhotoStateModel): number {
+    return state.filterTo;
   }
 
   @Selector()

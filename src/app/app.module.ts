@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthLayoutComponent } from "./layouts/auth-layout/auth-layout.component";
 import { DefaultLayoutComponent } from "./layouts/default-layout/default-layout.component";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
-import { NgxsModule, Store } from '@ngxs/store';
+import { NgxsModule, NgxsModuleOptions, Store } from '@ngxs/store';
 import { GlobalErrorHandler } from "@app/core/helpers/global-error-handler";
 import { environment } from "@environments/environment";
 import { AppBarComponent } from "@modules/app-bar/app-bar.component";
@@ -27,6 +27,22 @@ import { ThemeState } from "@modules/themes/stores/theme-state";
 import { RecipesModule } from "@modules/recipes/recipes.module";
 import { GoogleSigninModule } from "@modules/google-signin/google-signin.module";
 import { AuthState } from "@modules/google-signin/store/auth.state";
+
+const ngxsConfig: NgxsModuleOptions = {
+  developmentMode: !environment.production,
+  selectorOptions: {
+    // These Selector Settings are recommended in preparation for NGXS v4
+    // (See above for their effects)
+    suppressErrors: false,
+    injectContainerState: false
+  },
+  compatibility: {
+    strictContentSecurityPolicy: true
+  },
+  // Execution strategy overridden for illustrative purposes
+  // (only do this if you know what you are doing)
+  // executionStrategy: NoopNgxsExecutionStrategy
+};
 
 @NgModule({
   declarations: [
@@ -49,7 +65,7 @@ import { AuthState } from "@modules/google-signin/store/auth.state";
     // NgScrollbarModule,
     MaterialModule,
     // AuthModule,
-    NgxsModule.forRoot([ThemeState, AuthState], {developmentMode: !environment.production}),
+    NgxsModule.forRoot([ThemeState, AuthState], ngxsConfig),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     // NgxsLoggerPluginModule.forRoot(),
     WasteCalendarModule,
