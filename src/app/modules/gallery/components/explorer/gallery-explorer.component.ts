@@ -111,7 +111,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
         this.photos = res;
         this.isRequesting = false;
       }));
-    this.store.dispatch(new photoAction.LoadPhotosAction(60));
+    this.store.dispatch(new photoAction.LoadPhotos(60));
     this.initializeSelectionArea();
   }
 
@@ -138,7 +138,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   setCurrent(photo: Photo): void {
-    this.store.dispatch(new photoAction.SetCurrentPhotoAction(photo))
+    this.store.dispatch(new photoAction.SetCurrentPhoto(photo))
     this.currentPhoto = photo;
   }
 
@@ -146,20 +146,20 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     const currentHeight = element.clientHeight + element.scrollTop /* + element.scrollTop*/;
     if (currentHeight + 180 > this.absoluteHeight && !this.isRequesting) {
       this.isRequesting = true;
-      this.store.dispatch(new photoAction.LoadPhotosAction(60));
+      this.store.dispatch(new photoAction.LoadPhotos(60));
     }
   }
 
   onAction(action: Action): void {
     switch (action.name) {
       case ActionTypes.SelectAll:
-        this.store.dispatch(new photoAction.SelectAllPhotosAction());
+        this.store.dispatch(new photoAction.SelectAllPhotos());
         break;
       case ActionTypes.DeselectAll:
-        this.store.dispatch(new photoAction.DeselectAllPhotosAction());
+        this.store.dispatch(new photoAction.DeselectAllPhotos());
         break;
       case ActionTypes.ToggleSelection:
-        this.store.dispatch(new photoAction.ToggleAllDownloadAction());
+        this.store.dispatch(new photoAction.ToggleAllDownload());
         break;
       case ActionTypes.Download:
         this.downloadPictures();
@@ -177,13 +177,13 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   onSelectForEdit($event: Photo): void {
-    this.store.dispatch(new photoAction.TogglePhotoDownloadAction($event)).subscribe(() =>
+    this.store.dispatch(new photoAction.TogglePhotoDownload($event)).subscribe(() =>
       this.editTags()
     ).unsubscribe()
   }
 
   onSelectForDownload($event: Photo): void {
-    this.store.dispatch(new photoAction.TogglePhotoDownloadAction($event));
+    this.store.dispatch(new photoAction.TogglePhotoDownload($event));
   }
 
   onSelectForPreview($event: Photo): void {
@@ -192,7 +192,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   onSelectForDelete($event: Photo): void {
-    this.store.dispatch(new photoAction.DeletePhotoAction($event.id));
+    this.store.dispatch(new photoAction.DeletePhoto($event.id));
   }
 
   isDownload(photo: Photo): boolean {
@@ -213,7 +213,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
         console.log('GalleryExplorerComponent err why cant find the id?: ', fileName)
       }
     }
-    this.store.dispatch(new photoAction.SelectManyPhotosAction(photos));
+    this.store.dispatch(new photoAction.SelectManyPhotos(photos));
   }
 
   private downloadPictures(): void {

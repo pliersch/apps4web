@@ -3,7 +3,7 @@ import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Photo } from '@gallery/store/photos/photo.model';
 import { getPhotoUrl, getPreviewUrl, getThumbUrl } from "@gallery/store/photos/photo.tools";
-import { LoadPhotosAction } from "@gallery/store/photos/photo.actions";
+import { LoadPhotos } from "@gallery/store/photos/photo.actions";
 
 @Component({
   selector: 'app-gallery-home',
@@ -18,7 +18,7 @@ export class GalleryHomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new LoadPhotosAction(60));
+    this.store.dispatch(new LoadPhotos(60));
   }
 
   getPhotoUrl(fileName: string): string {

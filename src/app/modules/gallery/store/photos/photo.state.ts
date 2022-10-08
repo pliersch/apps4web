@@ -140,7 +140,7 @@ export class PhotoState {
   //          meta data
   //////////////////////////////////////////////////////////
 
-  @Action(photoAction.LoadMetaDataAction)
+  @Action(photoAction.LoadMetaData)
   loadMetaData(ctx: StateContext<PhotoStateModel>): Observable<void> {
     ctx.patchState({loading: true});
     return this.photoService.loadMetaData().pipe(tap((metaDto) => {
@@ -151,11 +151,11 @@ export class PhotoState {
       }),
       mergeMap(() => {
         console.log("Inside of mergeMap")
-        return ctx.dispatch(new photoAction.LoadMetaDataSuccessAction({count: 4}))
+        return ctx.dispatch(new photoAction.LoadMetaDataSuccess({count: 4}))
       }),
       catchError(err => {
           console.log("Inside of catchError")
-          return ctx.dispatch(new photoAction.LoadMetaDataFailAction(err))
+          return ctx.dispatch(new photoAction.LoadMetaDataFail(err))
         }
       ))
   }
@@ -196,8 +196,8 @@ export class PhotoState {
   //          load photos
   //////////////////////////////////////////////////////////
 
-  @Action(photoAction.LoadPhotosAction)
-  loadPhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosAction): Observable<Subscription> {
+  @Action(photoAction.LoadPhotos)
+  loadPhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadPhotos): Observable<Subscription> {
     const state = ctx.getState();
     if (state.loading) {
       return of(Subscription.EMPTY);
@@ -213,22 +213,22 @@ export class PhotoState {
       .pipe(
         map((dto: PhotoDto) =>
           asapScheduler.schedule(() => {
-              ctx.dispatch(new photoAction.LoadPhotosSuccessAction(dto))
+              ctx.dispatch(new photoAction.LoadPhotosSuccess(dto))
             }
           )
         ),
         catchError(error =>
           of(
             asapScheduler.schedule(() =>
-              ctx.dispatch(new photoAction.LoadPhotosFailAction(error))
+              ctx.dispatch(new photoAction.LoadPhotosFail(error))
             )
           )
         )
       );
   }
 
-  @Action(photoAction.LoadPhotosSuccessAction)
-  loadPhotosSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosSuccessAction): void {
+  @Action(photoAction.LoadPhotosSuccess)
+  loadPhotosSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosSuccess): void {
     const state = ctx.getState();
     let index = state.loadedPhotosCount;
     for (const photo of action.dto.photos) {
@@ -242,8 +242,8 @@ export class PhotoState {
     });
   }
 
-  @Action(photoAction.LoadPhotosFailAction)
-  loadPhotosFail({dispatch}: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosFailAction): void {
+  @Action(photoAction.LoadPhotosFail)
+  loadPhotosFail({dispatch}: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosFail): void {
     this.alertService.error('Load photos fail');
     dispatch({loaded: false, loading: false});
   }
@@ -254,15 +254,15 @@ export class PhotoState {
   //          set current
   //////////////////////////////////////////////////////////
 
-  @Action(photoAction.SetCurrentPhotoAction)
-  setCurrentPhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.SetCurrentPhotoAction): void {
+  @Action(photoAction.SetCurrentPhoto)
+  setCurrentPhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.SetCurrentPhoto): void {
     ctx.patchState({
       currentPhoto: action.photo
     });
   }
 
-  @Action(photoAction.SetNextPhotoAction)
-  setNextPhotoAction(ctx: StateContext<PhotoStateModel>, action: photoAction.SetNextPhotoAction): void {
+  @Action(photoAction.SetNextPhoto)
+  setNextPhotoAction(ctx: StateContext<PhotoStateModel>, action: photoAction.SetNextPhoto): void {
     const photos = ctx.getState().photos;
     let index = photos.indexOf(ctx.getState().currentPhoto!);
     ctx.patchState({
@@ -270,8 +270,8 @@ export class PhotoState {
     });
   }
 
-  @Action(photoAction.SetPreviousPhotoAction)
-  setPreviousPhotoAction(ctx: StateContext<PhotoStateModel>, action: photoAction.SetPreviousPhotoAction): void {
+  @Action(photoAction.SetPreviousPhoto)
+  setPreviousPhotoAction(ctx: StateContext<PhotoStateModel>, action: photoAction.SetPreviousPhoto): void {
     const photos = ctx.getState().photos;
     let index = photos.indexOf(ctx.getState().currentPhoto!);
     ctx.patchState({
@@ -283,26 +283,26 @@ export class PhotoState {
   //          add
   //////////////////////////////////////////////////////////
 
-  @Action(photoAction.AddPhotoAction)
-  addPhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoAction): Observable<Subscription> {
+  @Action(photoAction.AddPhoto)
+  addPhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhoto): Observable<Subscription> {
     return this.photoService.create(action.photo, action.tags, action.created).pipe(
       map((photo: Photo) =>
         asapScheduler.schedule(() =>
-          ctx.dispatch(new photoAction.AddPhotoSuccessAction(photo))
+          ctx.dispatch(new photoAction.AddPhotoSuccess(photo))
         )
       ),
       catchError(error =>
         of(
           asapScheduler.schedule(() =>
-            ctx.dispatch(new photoAction.AddPhotoFailAction(error))
+            ctx.dispatch(new photoAction.AddPhotoFail(error))
           )
         )
       )
     );
   }
 
-  @Action(photoAction.AddPhotoSuccessAction)
-  addPhotoSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoSuccessAction): void {
+  @Action(photoAction.AddPhotoSuccess)
+  addPhotoSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoSuccess): void {
     const state = ctx.getState();
     ctx.patchState({
       photos: [
@@ -313,8 +313,8 @@ export class PhotoState {
     this.alertService.success('Upload success');
   }
 
-  @Action(photoAction.AddPhotoFailAction)
-  addPhotoFail(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoFailAction): void {
+  @Action(photoAction.AddPhotoFail)
+  addPhotoFail(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoFail): void {
     ctx.dispatch({loaded: false, loading: false});
     this.alertService.error('Upload fail');
   }
@@ -323,27 +323,27 @@ export class PhotoState {
   //          delete
   //////////////////////////////////////////////////////////
 
-  @Action(photoAction.DeletePhotoAction)
-  deletePhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhotoAction): Observable<Subscription> {
+  @Action(photoAction.DeletePhoto)
+  deletePhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhoto): Observable<Subscription> {
     return this.photoService.delete(action.id).pipe(
       // tap(console.log(action)),
       map((update: PhotoUpdate) =>
         asapScheduler.schedule(() =>
-          ctx.dispatch(new photoAction.DeletePhotoSuccessAction(update))
+          ctx.dispatch(new photoAction.DeletePhotoSuccess(update))
         )
       ),
       catchError(error =>
         of(
           asapScheduler.schedule(() =>
-            ctx.dispatch(new photoAction.DeletePhotoFailAction(error))
+            ctx.dispatch(new photoAction.DeletePhotoFail(error))
           )
         )
       )
     );
   }
 
-  @Action(photoAction.DeletePhotoSuccessAction)
-  deletePhotoSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhotoSuccessAction): void {
+  @Action(photoAction.DeletePhotoSuccess)
+  deletePhotoSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhotoSuccess): void {
     ctx.setState(
       patch({
         photos: removeItem<Photo>(photo => photo!.id === action.photoUpdate.id)
@@ -351,8 +351,8 @@ export class PhotoState {
     );
   }
 
-  @Action(photoAction.DeletePhotoFailAction)
-  deletePhotoFail(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhotoFailAction): void {
+  @Action(photoAction.DeletePhotoFail)
+  deletePhotoFail(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhotoFail): void {
     console.log(action.error)
     this.alertService.error('Delete fail');
   }
@@ -361,8 +361,8 @@ export class PhotoState {
   //          photos to compare
   //////////////////////////////////////////////////////////
 
-  @Action(photoAction.TogglePhotoSelectionAction)
-  addToComparedPhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.TogglePhotoSelectionAction): void {
+  @Action(photoAction.TogglePhotoSelection)
+  addToComparedPhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.TogglePhotoSelection): void {
     // const state = ctx.getState();
     const isSelected = !action.photo.isSelected;
     ctx.setState(
@@ -372,7 +372,7 @@ export class PhotoState {
     );
   }
 
-  @Action(photoAction.ClearPhotoSelectionAction)
+  @Action(photoAction.ClearPhotoSelection)
   clearComparedPhotos(ctx: StateContext<PhotoStateModel>): void {
     // TODO what a fucking solution!!! unfortunately there is no method like "updateMany"
     const comparePhotos = PhotoState.getComparePhotos(ctx.getState());
@@ -389,8 +389,8 @@ export class PhotoState {
   //          download
   //////////////////////////////////////////////////////////
 
-  @Action(photoAction.TogglePhotoDownloadAction)
-  toggleDownload(ctx: StateContext<PhotoStateModel>, action: photoAction.TogglePhotoDownloadAction): void {
+  @Action(photoAction.TogglePhotoDownload)
+  toggleDownload(ctx: StateContext<PhotoStateModel>, action: photoAction.TogglePhotoDownload): void {
     const downloads = ctx.getState().downloads;
     const isDownload = downloads.includes(action.photo);
     ctx.setState(
@@ -403,7 +403,7 @@ export class PhotoState {
     );
   }
 
-  @Action(photoAction.SelectAllPhotosAction)
+  @Action(photoAction.SelectAllPhotos)
   selectAllPhotos(ctx: StateContext<PhotoStateModel>): void {
     const state = ctx.getState();
     ctx.setState(
@@ -413,8 +413,8 @@ export class PhotoState {
     );
   }
 
-  @Action(photoAction.SelectManyPhotosAction)
-  selectManyPhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.SelectManyPhotosAction): void {
+  @Action(photoAction.SelectManyPhotos)
+  selectManyPhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.SelectManyPhotos): void {
     ctx.setState(
       patch({
         selectedPictures: action.photos
@@ -422,7 +422,7 @@ export class PhotoState {
     );
   }
 
-  @Action(photoAction.DeselectAllPhotosAction)
+  @Action(photoAction.DeselectAllPhotos)
   deselectAllPhotos(ctx: StateContext<PhotoStateModel>): void {
     const photos: Photo[] = [];
     ctx.setState(
@@ -442,7 +442,7 @@ export class PhotoState {
     );
   }
 
-  @Action(photoAction.ToggleAllDownloadAction)
+  @Action(photoAction.ToggleAllDownload)
   togglePhotosDownload(ctx: StateContext<PhotoStateModel>): void {
     const photos = ctx.getState().photos;
     const downloads = ctx.getState().downloads;

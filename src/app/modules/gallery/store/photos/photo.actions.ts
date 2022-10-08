@@ -5,18 +5,18 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 // meta data
 
-export class LoadMetaDataAction {
+export class LoadMetaData {
   static readonly type = '[Gallery] Load MetaData';
 
 }
 
-export class LoadMetaDataSuccessAction {
+export class LoadMetaDataSuccess {
   static readonly type = '[Gallery] Load MetaData success';
 
   constructor(public dto: PhotoMetaDataDto) { }
 }
 
-export class LoadMetaDataFailAction {
+export class LoadMetaDataFail {
   static readonly type = '[Gallery] Load MetaData Fail';
 
   constructor(public error: HttpErrorResponse) { }
@@ -24,19 +24,19 @@ export class LoadMetaDataFailAction {
 
 // loading photos
 
-export class LoadPhotosAction {
+export class LoadPhotos {
   static readonly type = '[Gallery] Load Photos';
 
   constructor(public count: number, public from?: number) { }
 }
 
-export class LoadPhotosSuccessAction {
+export class LoadPhotosSuccess {
   static readonly type = '[Gallery] Load Photos success';
 
   constructor(public dto: PhotoDto) { }
 }
 
-export class LoadPhotosFailAction {
+export class LoadPhotosFail {
   static readonly type = '[Gallery] Load Photos Fail';
 
   constructor(public error: HttpErrorResponse) { }
@@ -44,19 +44,19 @@ export class LoadPhotosFailAction {
 
 // adding photo
 
-export class AddPhotoAction {
+export class AddPhoto {
   static readonly type = '[Gallery] Add Photo';
 
   constructor(public photo: File, public tags: string[], public created: number) { }
 }
 
-export class AddPhotoSuccessAction {
+export class AddPhotoSuccess {
   static readonly type = '[Gallery] Add Photo success';
 
   constructor(public photo: Photo) { }
 }
 
-export class AddPhotoFailAction {
+export class AddPhotoFail {
   static readonly type = '[Gallery] Add Photo fail';
 
   constructor(public error: HttpErrorResponse) { }
@@ -64,55 +64,55 @@ export class AddPhotoFailAction {
 
 // current photo
 
-export class SetCurrentPhotoAction {
+export class SetCurrentPhoto {
   static readonly type = '[Gallery] Set Current Photo';
 
   constructor(public photo: Photo) { }
 }
 
-export class SetNextPhotoAction {
+export class SetNextPhoto {
   static readonly type = '[Gallery] Set Next Photo';
 }
 
-export class SetPreviousPhotoAction {
+export class SetPreviousPhoto {
   static readonly type = '[Gallery] Set Previous Photo';
 }
 
 // compare
 
-export class TogglePhotoSelectionAction {
+export class TogglePhotoSelection {
   static readonly type = '[Gallery] Toggle Photo Selection';
 
   constructor(public photo: Photo) { }
 }
 
-export class ClearPhotoSelectionAction {
+export class ClearPhotoSelection {
   static readonly type = '[Gallery] Clear Photo Selection';
 }
 
 // selections
 
-export class SelectAllPhotosAction {
+export class SelectAllPhotos {
   static readonly type = '[Gallery] Select All Photos Download';
 }
 
-export class SelectManyPhotosAction {
+export class SelectManyPhotos {
   static readonly type = '[Gallery] Select Many Photos Download';
 
   constructor(public photos: Photo[]) { }
 }
 
-export class DeselectAllPhotosAction {
+export class DeselectAllPhotos {
   static readonly type = '[Gallery] Clear Selection';
 }
 
 // downloads
 
-export class ToggleAllDownloadAction {
+export class ToggleAllDownload {
   static readonly type = '[Gallery] Toggle Photos Download';
 }
 
-export class TogglePhotoDownloadAction {
+export class TogglePhotoDownload {
   static readonly type = '[Gallery] Toggle Photo Download';
 
   constructor(public photo: Photo) { }
@@ -124,30 +124,22 @@ export class DeselectAllDownloads {
 
 // delete
 
-export class DeletePhotoAction {
+export class DeletePhoto {
   static readonly type = '[Gallery] Delete Photo';
 
   constructor(public id: string) { }
 }
 
-export class DeletePhotoSuccessAction {
+export class DeletePhotoSuccess {
   static readonly type = '[Gallery] Delete Photo success';
 
   constructor(public photoUpdate: PhotoUpdate) { }
 }
 
-export class DeletePhotoFailAction {
+export class DeletePhotoFail {
   static readonly type = '[Gallery] Delete Photo fail';
 
   constructor(public error: HttpErrorResponse) { }
-}
-
-// update
-
-export class UpdatePhotoAction {
-  static readonly type = '[Gallery] Update Photo';
-
-  constructor(public photo: Photo) { }
 }
 
 // tags of picture

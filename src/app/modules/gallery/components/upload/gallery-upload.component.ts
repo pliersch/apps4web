@@ -4,7 +4,7 @@ import { TagState } from "@gallery/store/tags/tag.state";
 import { Observable, of } from "rxjs";
 import { Tag } from "@gallery/store/tags/tag.model";
 import { LoadTags } from "@gallery/store/tags/tag.action";
-import { AddPhotoAction } from "@gallery/store/photos/photo.actions";
+import { AddPhoto } from "@gallery/store/photos/photo.actions";
 import { TagService } from "@gallery/services/tag.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { formatEnglish } from "@app/util/date-util";
@@ -32,7 +32,7 @@ export class GalleryUploadComponent implements OnInit {
   imgUrls: string[] = [PLACEHOLDER_URL];
   imgFiles: File[];
   allCategories: string[] = [];
-  actions: AddPhotoAction[] = [];
+  actions: AddPhoto[] = [];
 
   constructor(private renderer: Renderer2,
               private photoService: PhotoService,
@@ -63,7 +63,7 @@ export class GalleryUploadComponent implements OnInit {
     this.imgFiles = Array.from(files);
     for (const file of this.imgFiles) {
       console.log('GalleryUploadComponent onChange: ', file)
-      this.actions.push(new AddPhotoAction(file, this.selectedTags, file.lastModified));
+      this.actions.push(new AddPhoto(file, this.selectedTags, file.lastModified));
       const reader = new FileReader();
       reader.onload = (e: any): void => {
         this.imgUrls.push(e.target.result);

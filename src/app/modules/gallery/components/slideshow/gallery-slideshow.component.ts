@@ -3,10 +3,10 @@ import { GalleryVerticalScrollerComponent }
   from "@gallery/components/share/vertical-scroller/gallery-vertical-scroller.component";
 import { Select, Store } from "@ngxs/store";
 import {
-  LoadPhotosAction,
-  SetCurrentPhotoAction,
-  SetNextPhotoAction,
-  SetPreviousPhotoAction
+  LoadPhotos,
+  SetCurrentPhoto,
+  SetNextPhoto,
+  SetPreviousPhoto
 } from "@gallery/store/photos/photo.actions";
 import { GalleryHorizontalScrollerComponent }
   from "@gallery/components/share/horizontal-scroller/gallery-horizontal-scroller.component";
@@ -49,7 +49,7 @@ export class GallerySlideshowComponent implements OnInit, AfterViewInit, OnDestr
   constructor(private store: Store) { }
 
   ngOnInit(): void {
-    this.store.dispatch(new LoadPhotosAction(60));
+    this.store.dispatch(new LoadPhotos(60));
     this.subscription =
       this.currentPhoto$.subscribe(res => {
         if (res) {
@@ -71,15 +71,15 @@ export class GallerySlideshowComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   onSelectImage($event: Photo): void {
-    this.store.dispatch(new SetCurrentPhotoAction($event))
+    this.store.dispatch(new SetCurrentPhoto($event))
   }
 
   nextSlide(): void {
-    this.store.dispatch(new SetNextPhotoAction())
+    this.store.dispatch(new SetNextPhoto())
   }
 
   prevSlide(): void {
-    this.store.dispatch(new SetPreviousPhotoAction())
+    this.store.dispatch(new SetPreviousPhoto())
   }
 
   private scrollToActiveItem(): void {
