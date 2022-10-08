@@ -37,13 +37,13 @@ export class AuthState {
 
   // login
 
-  @Action(authActions.LoginWithGoogleAction)
-  loginWithGoogle(ctx: StateContext<AuthStateModel>, action: authActions.LoginWithGoogleAction): void {
+  @Action(authActions.LoginWithGoogle)
+  loginWithGoogle(ctx: StateContext<AuthStateModel>, action: authActions.LoginWithGoogle): void {
     ctx.patchState({socialUser: action.payload});
   }
 
-  @Action(authActions.LogoutWithGoogleAction)
-  logoutWithGoogle(ctx: StateContext<AuthStateModel>, action: authActions.LogoutWithGoogleAction): void {
+  @Action(authActions.LogoutWithGoogle)
+  logoutWithGoogle(ctx: StateContext<AuthStateModel>, action: authActions.LogoutWithGoogle): void {
     ctx.patchState({socialUser: null});
   }
 

@@ -4,34 +4,27 @@ import { SocialUser } from "@modules/google-signin/social-user.model";
 //          google login
 //////////////////////////////////////////////////////////
 
-export class LoginWithGoogleAction {
+export class LoginWithGoogle {
   static readonly type = '[Auth] Google Login';
 
   constructor(public readonly payload: SocialUser) { }
 }
 
-export class AutoLoginWithGoogleAction {
-  static readonly type = '[Auth] Google Auto Login';
-
-  constructor(public readonly payload: SocialUser) {
-  }
-}
-
-export class LoginWithGoogleSuccessAction {
+export class LoginWithGoogleSuccess {
   static readonly type = '[Auth] Google Login Success';
 
   constructor(public readonly payload: SocialUser) {
   }
 }
 
-export class LoginWithGoogleFailAction {
+export class LoginWithGoogleFail {
   static readonly type = '[Auth] Google Login Fail';
 
   constructor(public error: string) {
   }
 }
 
-export class LogoutWithGoogleAction {
+export class LogoutWithGoogle {
   static readonly type = '[Auth] Google Logout';
 }
 

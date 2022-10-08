@@ -4,9 +4,9 @@ import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { AuthState } from "@modules/google-signin/store/auth.state";
 import {
-  LoginWithGoogleAction,
-  LoginWithGoogleFailAction,
-  LogoutWithGoogleAction
+  LoginWithGoogle,
+  LoginWithGoogleFail,
+  LogoutWithGoogle
 } from "@modules/google-signin/store/auth.actions";
 import { CredentialResponse } from "google-one-tap";
 
@@ -58,9 +58,9 @@ export class SigninComponent implements OnInit {
     const user = this.decodeCredentialResponse(response);
     // console.log('SigninComponent handleCredentialResponse: ', socialUser)
     if (user) {
-      this.store.dispatch(new LoginWithGoogleAction(user));
+      this.store.dispatch(new LoginWithGoogle(user));
     } else {
-      this.store.dispatch(new LoginWithGoogleFailAction('Login fail'));
+      this.store.dispatch(new LoginWithGoogleFail('Login fail'));
     }
 
   }
@@ -94,6 +94,6 @@ export class SigninComponent implements OnInit {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     google.accounts.id.disableAutoSelect();
-    this.store.dispatch(new LogoutWithGoogleAction());
+    this.store.dispatch(new LogoutWithGoogle());
   }
 }
