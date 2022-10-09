@@ -5,12 +5,12 @@ import { GalleryExplorerComponent } from '@app/modules/gallery/components/explor
 // import { GalleryHomeComponent } from '@app/modules/gallery/components/home/gallery-home.component';
 import { GalleryLightboxComponent } from '@app/modules/gallery/components/lightbox/gallery-lightbox.component';
 import { GalleryUploadComponent } from '@app/modules/gallery/components/upload/gallery-upload.component';
-import { GalleryResolverService } from "@gallery/services/gallery-resolver.service";
 import { GallerySlideshowComponent } from "@gallery/components/slideshow/gallery-slideshow.component";
+import { GalleryResolver } from "@gallery/resolver/gallery.resolver";
 
 const routes: Routes = [
   {
-    path: '', component: GalleryContainerComponent, resolve: {meta: GalleryResolverService},
+    path: '', component: GalleryContainerComponent, resolve: {meta: GalleryResolver},
     children: [
       {path: '', component: GalleryExplorerComponent},
       // {path: 'home', component: GalleryHomeComponent},

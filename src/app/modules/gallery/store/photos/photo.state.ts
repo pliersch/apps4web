@@ -157,7 +157,7 @@ export class PhotoState {
           console.log("Inside of catchError")
           return ctx.dispatch(new photoAction.LoadMetaDataFail(err))
         }
-      ))
+      ));
   }
 
   // @Action(photoAction.LoadMetaDataAction)
