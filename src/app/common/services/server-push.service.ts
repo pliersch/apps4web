@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-export class PushMessageEvent {
+export class PushMessageEvent { // todo make generic for other endpoints. so we can remove these types
   static META_CHANGED = 'meta_changed';
   static PHOTOS_CHANGED = 'photos_changed'
   static TAGS_CHANGED = 'tags_changed'
@@ -19,18 +19,18 @@ interface ServerPushListener {
 @Injectable({
   providedIn: 'root'
 })
-export class ServerPushService {
+export class ServerPushService { // todo make generic for other endpoints
 
   private listeners: ServerPushListener[] = [];
 
   constructor() {
-    const eventSource = new EventSource('http://localhost:3000/sse');
+    const eventSource = new EventSource('http://localhost:3000/photos/sse');
     eventSource.onmessage = (event: MessageEvent): void => {
-      this.handleMessage(event)
+      this.handleServerSent(event)
     }
   }
 
-  private handleMessage(event: MessageEvent): void {
+  private handleServerSent(event: MessageEvent): void {
     const message: PushMessageEvent = JSON.parse(event.data);
     if ('type' in message) {
       this.emit(message);

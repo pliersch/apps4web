@@ -14,7 +14,6 @@ export class GalleryResolver implements PushMessageListener, Resolve<any> {
 
   constructor(private store: Store,
               private pushService: ServerPushService) {
-    console.log('GalleryResolver constructor: ',)
     this.pushService.addListener(PushMessageEvent.META_CHANGED, this)
   }
 
