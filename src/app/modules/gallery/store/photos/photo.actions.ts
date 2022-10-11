@@ -142,66 +142,66 @@ export class DeletePhotoFail {
   constructor(public error: HttpErrorResponse) { }
 }
 
-// tags of picture
+// tags of photo
 
-export class SetTagsOfPicture {
-  static readonly type = '[Gallery] Set Tags Of Picture';
+export class SetTagsOfPhoto {
+  static readonly type = '[Gallery] Set Tags Of Photo';
 
   constructor(public photo: Photo, public tags: string[]) {
   }
 }
 
-export class SetTagsOfPictureSuccess {
-  static readonly type = '[Gallery] Set Tags Of Picture success';
+export class SetTagsOfPhotoSuccess {
+  static readonly type = '[Gallery] Set Tags Of Photo success';
 
   constructor(public photo: Photo, public tags: string[]) { }
 }
 
-export class SetTagsOfPictureFail {
-  static readonly type = '[Gallery] Set Tags Of Picture fail';
+export class SetTagsOfPhotoFail {
+  static readonly type = '[Gallery] Set Tags Of Photo fail';
 
   constructor(public error: HttpErrorResponse) { }
 }
 
 /*
 
-export class AddTagsToPicture {
-  static readonly type = '[Gallery] Add Tags To Picture';
+export class AddTagsToPhoto {
+  static readonly type = '[Gallery] Add Tags To Photo';
 
   constructor(public photo: Photo, public tags: string[]) {
   }
 }
 
-export class AddTagsToPictureSuccess {
-  static readonly type = '[Gallery] Add Tags To Picture success';
+export class AddTagsToPhotoSuccess {
+  static readonly type = '[Gallery] Add Tags To Photo success';
 
   constructor(public photo: Photo, public tags: string[]) {
   }
 }
 
-export class AddTagsToPictureFail {
-  static readonly type = '[Gallery] Add Tags To Picture fail';
+export class AddTagsToPhotoFail {
+  static readonly type = '[Gallery] Add Tags To Photo fail';
 
   constructor(public error: HttpErrorResponse) {
   }
 }
 
-export class RemoveTagsFromPicture {
-  static readonly type = '[Gallery] Remove Tags From Picture';
+export class RemoveTagsFromPhoto {
+  static readonly type = '[Gallery] Remove Tags From Photo';
 
   constructor(public photo: Photo, public tags: string[]) {
   }
 }
 
-export class RemoveTagsFromPictureSuccess {
-  static readonly type = '[Gallery] Remove Tags From Picture success';
+export class RemoveTagsFromPhotoSuccess {
+  static readonly type = '[Gallery] Remove Tags From Photo success';
 
   constructor(public photo: Photo, public tags: string[]) {
   }
 }
 
-export class RemoveTagsFromPictureFail {
-  static readonly type = '[Gallery] Remove Tags From Picture fail';
+export class RemoveTagsFromPhotoFail {
+  static readonly type = '[Gallery] Remove Tags From Photo fail';
 
   constructor(public error: HttpErrorResponse) {
   }
@@ -230,7 +230,7 @@ export class SetRatingFail {
   }
 }
 
-// rating filter
+// filtering
 
 export class SetRatingFilter {
   static readonly type = '[Gallery] Set Rating Filter';
@@ -238,8 +238,6 @@ export class SetRatingFilter {
   constructor(public rate: number) {
   }
 }
-
-// date filter
 
 export class SetFromYearFilter {
   static readonly type = '[Gallery] Set From Year Filter';
@@ -252,4 +250,11 @@ export class SetToYearFilter {
 
   constructor(public year: number) {
   }
+}
+
+// server sent
+
+export class SetNewPhotosAvailable {
+  static readonly type = '[Gallery] Set New Data Available';
+
 }

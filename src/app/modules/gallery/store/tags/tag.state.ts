@@ -7,6 +7,8 @@ import { catchError, map } from "rxjs/operators";
 import { append, patch, removeItem, updateItem } from "@ngxs/store/operators";
 import { TagService } from "@gallery/services/tag.service";
 import { AlertService } from "@app/services/alert.service";
+import * as photoAction from "@gallery/store/photos/photo.actions";
+import { PhotoStateModel } from "@gallery/store/photos/photo.state";
 
 export interface TagStateModel {
   tags: Tag[];
@@ -14,6 +16,7 @@ export interface TagStateModel {
   allTagsLoaded: boolean;
   loaded: boolean;
   loading: boolean;
+  newDataAvailable: boolean,
 }
 
 @State<TagStateModel>({
@@ -23,7 +26,8 @@ export interface TagStateModel {
     activeTags: [],
     allTagsLoaded: false,
     loaded: false,
-    loading: false
+    loading: false,
+    newDataAvailable: true,
   }
 })
 
@@ -50,6 +54,10 @@ export class TagState {
 
   @Action(tagActions.LoadTags)
   loadTags(ctx: StateContext<TagStateModel>, action: tagActions.LoadTags): Observable<Subscription> {
+    const state = ctx.getState();
+    if (!state.newDataAvailable) {
+      return of(Subscription.EMPTY);
+    }
     ctx.patchState({loading: true});
     return this.tagService.getAll()
       .pipe(
@@ -76,7 +84,7 @@ export class TagState {
     for (const tag of sortedTags) {
       tag.entries = tag.entries.sort((e1: string, e2: string) => e1.localeCompare(e2));
     }
-    patchState({tags: sortedTags, loaded: true, loading: false});
+    patchState({tags: sortedTags, loaded: true, loading: false, newDataAvailable: false});
   }
 
   @Action(tagActions.LoadTagsFail)
@@ -84,6 +92,21 @@ export class TagState {
     this.alertService.error('Load tags fail');
     dispatch({loaded: false, loading: false});
   }
+
+  //////////////////////////////////////////////////////////
+  //          server sent new tags available
+  //////////////////////////////////////////////////////////
+
+  @Action(tagActions.SetNewTagsAvailable)
+  setNewDataAvailable(ctx: StateContext<PhotoStateModel>): void {
+    console.log('TagState setNewDataAvailable: ',)
+    ctx.patchState({
+      newDataAvailable: true
+    });
+    // todo: only dispatch when inside gallery
+    ctx.dispatch(new tagActions.LoadTags())
+  }
+
 
   //////////////////////////////////////////////////////////
   //          add

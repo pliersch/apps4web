@@ -108,3 +108,10 @@ export class ClearTagFilter {
   static readonly type = '[Gallery] Clear Filter';
 
 }
+
+// server sent
+
+export class SetNewTagsAvailable {
+  static readonly type = '[Gallery] Set New Tags Available';
+
+}

@@ -19,13 +19,17 @@ interface ServerPushListener {
 @Injectable({
   providedIn: 'root'
 })
-export class ServerPushService { // todo make generic for other endpoints
+export class ServerSentService { // todo: make generic for other endpoints
 
   private listeners: ServerPushListener[] = [];
 
   constructor() {
-    const eventSource = new EventSource('http://localhost:3000/photos/sse');
-    eventSource.onmessage = (event: MessageEvent): void => {
+    const photoEventSource = new EventSource('http://localhost:3000/photos/sse');
+    photoEventSource.onmessage = (event: MessageEvent): void => {
+      this.handleServerSent(event)
+    }
+    const tagEventSource = new EventSource('http://localhost:3000/tags/sse');
+    tagEventSource.onmessage = (event: MessageEvent): void => {
       this.handleServerSent(event)
     }
   }

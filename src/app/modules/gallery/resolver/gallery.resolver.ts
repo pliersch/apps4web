@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/r
 import { Observable, of } from "rxjs";
 import { Store } from "@ngxs/store";
 import { LoadMetaData } from "@gallery/store/photos/photo.actions";
-import { PushMessageEvent, PushMessageListener, ServerPushService } from "@app/common/services/server-push.service";
+import { PushMessageEvent, PushMessageListener, ServerSentService } from "@app/common/services/server-sent.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class GalleryResolver implements PushMessageListener, Resolve<any> {
   private metaChanged = true;
 
   constructor(private store: Store,
-              private pushService: ServerPushService) {
+              private pushService: ServerSentService) {
     this.pushService.addListener(PushMessageEvent.META_CHANGED, this)
   }
 

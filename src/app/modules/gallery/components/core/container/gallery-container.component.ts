@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { Location } from "@angular/common";
-import {
-  PushMessageEvent,
-  PushMessageListener,
-  ServerPushService
-} from "@app/common/services/server-push.service";
+import { PushMessageEvent, PushMessageListener, ServerSentService } from "@app/common/services/server-sent.service";
+import { Store } from "@ngxs/store";
+import * as photoActions from "@gallery/store/photos/photo.actions";
+import * as tagActions from "@gallery/store/tags/tag.action";
 
 // TODO ugly naming
 interface LinkAndName {
@@ -32,7 +31,8 @@ export class GalleryContainerComponent implements OnInit, OnDestroy, PushMessage
 
   constructor(private router: Router,
               private location: Location,
-              private pushService: ServerPushService
+              private store: Store,
+              private pushService: ServerSentService
   ) { }
 
   ngOnInit(): void {
@@ -54,6 +54,16 @@ export class GalleryContainerComponent implements OnInit, OnDestroy, PushMessage
   }
 
   onServerPushMessage(event: PushMessageEvent): void {
+    console.log('GalleryContainerComponent onServerPushMessage: ', event.type)
+    switch (event.type) {
+      case PushMessageEvent.PHOTOS_CHANGED:
+        this.store.dispatch(new photoActions.SetNewPhotosAvailable())
+        break;
+      case PushMessageEvent.TAGS_CHANGED:
+        this.store.dispatch(new tagActions.SetNewTagsAvailable())
+        console.log('GalleryContainerComponent onServerPushMessage: PushMessageEvent.TAGS_CHANGED',)
+        break;
+    }
     console.log('GalleryContainerComponent onServerPushMessage: ', event.type)
   }
 }

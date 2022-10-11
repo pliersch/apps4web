@@ -55,7 +55,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   isAuthenticated$: Observable<boolean>;
   isAuthenticated: boolean;
 
-  @Select(PhotoState.getAllPhotosCount)
+  @Select(PhotoState.getAvailablePhotos)
   allPhotosCount$: Observable<number>;
   allPhotosCount: number;
 
@@ -278,7 +278,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
       tags = photo.tags.filter(x => !res.removedTags.includes(x));
       tags = tags.filter(x => !res.addedTags.includes(x))
         .concat(res.addedTags.filter(x => !tags.includes(x)));
-      this.store.dispatch(new photoAction.SetTagsOfPicture(photo, tags));
+      this.store.dispatch(new photoAction.SetTagsOfPhoto(photo, tags));
     }
   }
 

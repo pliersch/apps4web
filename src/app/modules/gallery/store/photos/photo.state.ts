@@ -9,8 +9,8 @@ import { filterByRating, filterByTags, filterByYear } from "@gallery/store/photo
 import { TagState } from "@gallery/store/tags/tag.state";
 import { AlertService } from "@app/services/alert.service";
 import { PhotoService } from "@gallery/services/photo.service";
-import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
 import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
+import { ServerSentService } from "@app/common/services/server-sent.service";
 
 export interface PhotoStateModel {
   photos: Photo[];
@@ -18,10 +18,11 @@ export interface PhotoStateModel {
   downloads: Photo[];
   tagFilter: string[];
   filterRating: number;
-  filterFrom: number,
-  filterTo: number,
-  allPhotosCount: number;
-  loadedPhotosCount: number,
+  filterFrom: number;
+  filterTo: number;
+  newDataAvailable: boolean;
+  availablePhotos: number;
+  loadedPhotosCount: number;
   selectedPhotosCount: number;
   filteredPhotosCount: number;
   // comparePhotos: Photo[];
@@ -39,7 +40,8 @@ export interface PhotoStateModel {
     downloads: [],
     selectedPictures: [],
     currentPhoto: {id: '0', index: -1, tags: [], rating: 0, isSelected: false, fileName: '', recordDate: new Date()},
-    allPhotosCount: 0,
+    newDataAvailable: true,
+    availablePhotos: 0,
     loadedPhotosCount: 0,
     selectedPhotosCount: 0,
     filteredPhotosCount: 0,
@@ -57,8 +59,8 @@ export interface PhotoStateModel {
 export class PhotoState {
 
   constructor(private photoService: PhotoService,
-              private alertService: AlertService) {
-  }
+              private pushService: ServerSentService,
+              private alertService: AlertService) { }
 
   @Selector()
   static getPhotos(state: PhotoStateModel): Photo[] {
@@ -81,6 +83,11 @@ export class PhotoState {
       filteredPhotos = filterByYear(filteredPhotos, filterFrom, filterTo);
     }
     return filteredPhotos;
+  }
+
+  @Selector()
+  static newDataAvailable(state: PhotoStateModel): Photo {
+    return state.currentPhoto;
   }
 
   @Selector()
@@ -107,8 +114,8 @@ export class PhotoState {
   }
 
   @Selector()
-  static getAllPhotosCount(state: PhotoStateModel): number {
-    return state.allPhotosCount;
+  static getAvailablePhotos(state: PhotoStateModel): number {
+    return state.availablePhotos;
   }
 
   @Selector()
@@ -137,6 +144,17 @@ export class PhotoState {
   // }
 
   //////////////////////////////////////////////////////////
+  //          server sent new photos available
+  //////////////////////////////////////////////////////////
+
+  @Action(photoAction.SetNewPhotosAvailable)
+  setNewDataAvailable(ctx: StateContext<PhotoStateModel>): void {
+    ctx.patchState({
+      newDataAvailable: true
+    });
+  }
+
+  //////////////////////////////////////////////////////////
   //          meta data
   //////////////////////////////////////////////////////////
 
@@ -145,16 +163,13 @@ export class PhotoState {
     ctx.patchState({loading: true});
     return this.photoService.loadMetaData().pipe(tap((metaDto) => {
         ctx.patchState({
-          allPhotosCount: metaDto.count, loading: false
+          availablePhotos: metaDto.count, loading: false
         })
-        console.log('Inside of load',)
       }),
       mergeMap(() => {
-        console.log("Inside of mergeMap")
         return ctx.dispatch(new photoAction.LoadMetaDataSuccess({count: 4}))
       }),
       catchError(err => {
-          console.log("Inside of catchError")
           return ctx.dispatch(new photoAction.LoadMetaDataFail(err))
         }
       ));
@@ -204,11 +219,12 @@ export class PhotoState {
     }
     ctx.patchState({loading: true, loaded: false});
     const from: number = action.from ? action.from : state.photos.length;
-    const availablePhotos: number = state.allPhotosCount - state.photos.length;
-    const count: number = availablePhotos < action.count ? availablePhotos : action.count;
+    const unloadedPhotos: number = state.availablePhotos - state.photos.length;
+    const count: number = unloadedPhotos < action.count ? unloadedPhotos : action.count;
     if (count == 0) {
       return of(Subscription.EMPTY);
     }
+    console.log('PhotoState loadPhotos: XXXXXXXXXXXXXXXXXXXXXX',)
     return this.photoService.getPhotos(count, from)
       .pipe(
         map((dto: PhotoDto) =>
@@ -456,28 +472,28 @@ export class PhotoState {
   //          tags
   //////////////////////////////////////////////////////////
 
-  @Action(photoAction.SetTagsOfPicture)
-  setTagsOfPicture(ctx: StateContext<PhotoStateModel>, action: photoAction.SetTagsOfPicture): Observable<Subscription> {
+  @Action(photoAction.SetTagsOfPhoto)
+  setTagsOfPicture(ctx: StateContext<PhotoStateModel>, action: photoAction.SetTagsOfPhoto): Observable<Subscription> {
     const photo = ctx.getState().photos[action.photo.index];
     return this.photoService.updateTagsOfPicture(action.photo.id, action.tags)
       .pipe(
         map((res: any) =>
           asapScheduler.schedule(() =>
-            ctx.dispatch(new photoAction.SetTagsOfPictureSuccess(photo, action.tags))
+            ctx.dispatch(new photoAction.SetTagsOfPhotoSuccess(photo, action.tags))
           )
         ),
         catchError(error =>
           of(
             asapScheduler.schedule(() =>
-              ctx.dispatch(new photoAction.SetTagsOfPictureFail(error))
+              ctx.dispatch(new photoAction.SetTagsOfPhotoFail(error))
             )
           )
         )
       );
   }
 
-  @Action(photoAction.SetTagsOfPictureSuccess)
-  setTagsOfPictureSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.SetTagsOfPictureSuccess): void {
+  @Action(photoAction.SetTagsOfPhotoSuccess)
+  setTagsOfPictureSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.SetTagsOfPhotoSuccess): void {
     ctx.setState(
       patch({
         photos: updateItem<Photo>(action.photo.index, patch({tags: action.tags}))
@@ -485,8 +501,8 @@ export class PhotoState {
     );
   }
 
-  @Action(photoAction.SetTagsOfPictureFail)
-  setTagsOfPictureFail(ctx: StateContext<PhotoStateModel>, action: photoAction.SetTagsOfPictureFail): void {
+  @Action(photoAction.SetTagsOfPhotoFail)
+  setTagsOfPictureFail(ctx: StateContext<PhotoStateModel>, action: photoAction.SetTagsOfPhotoFail): void {
     this.alertService.error('Set tags fail');
     console.log(action.error)
   }
