@@ -7,7 +7,6 @@ import { catchError, map } from "rxjs/operators";
 import { append, patch, removeItem, updateItem } from "@ngxs/store/operators";
 import { TagService } from "@gallery/services/tag.service";
 import { AlertService } from "@app/services/alert.service";
-import * as photoAction from "@gallery/store/photos/photo.actions";
 import { PhotoStateModel } from "@gallery/store/photos/photo.state";
 
 export interface TagStateModel {
@@ -88,7 +87,7 @@ export class TagState {
   }
 
   @Action(tagActions.LoadTagsFail)
-  loadTagsFail({dispatch}: StateContext<TagStateModel>, action: tagActions.LoadTagsFail): void {
+  loadTagsFail({dispatch}: StateContext<TagStateModel>): void {
     this.alertService.error('Load tags fail');
     dispatch({loaded: false, loading: false});
   }

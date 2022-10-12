@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Tag } from '@gallery/store/tags/tag.model';
 import { Select, Store } from '@ngxs/store';
 import { TagState } from "@gallery/store/tags/tag.state";
-import { AddTagFilter, LoadTags, RemoveTagFilter } from "@gallery/store/tags/tag.action";
+import { AddTagFilter, RemoveTagFilter } from "@gallery/store/tags/tag.action";
 
 @Component({
   selector: 'app-gallery-filter-panel',
   templateUrl: './gallery-filter-panel.component.html',
   styleUrls: ['./gallery-filter-panel.component.scss']
 })
-export class GalleryFilterPanelComponent implements OnInit {
+export class GalleryFilterPanelComponent {
 
   @Select(TagState.getTags)
   tags$: Observable<Tag[]>;
@@ -29,10 +29,6 @@ export class GalleryFilterPanelComponent implements OnInit {
     this.activeTags$.subscribe(tags => {
       this.activeTags = tags;
     });
-  }
-
-  ngOnInit(): void {
-    this.store.dispatch(new LoadTags());
   }
 
   setStep(index: number): void {
