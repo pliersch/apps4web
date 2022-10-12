@@ -67,7 +67,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   currentPhoto$: Observable<Photo>;
   currentPhoto: Photo;
 
-  @Select(PhotoState.getSelectedPictures)
+  @Select(PhotoState.getSelectedPhotos)
   selection$: Observable<Photo[]>;
   selection: Photo[];
 
@@ -162,7 +162,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
         this.store.dispatch(new photoAction.ToggleAllDownload());
         break;
       case ActionTypes.Download:
-        this.downloadPictures();
+        this.downloadPhotos();
         break;
       case ActionTypes.EditTags:
         this.editTags();
@@ -216,18 +216,17 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     this.store.dispatch(new photoAction.SelectManyPhotos(photos));
   }
 
-  private downloadPictures(): void {
-    console.log('GalleryExplorerComponent downloadPictures: ',)
+  private downloadPhotos(): void {
     this.photoService.download(this.downloads)
       .subscribe((blob) => {
-        saveAs(blob, 'pictures.zip')
+        saveAs(blob, 'photos.zip')
         this.store.dispatch(new photoAction.DeselectAllDownloads())
       })
   }
 
   private editTags(): void {
     const dialogRef = this.dialog.open(GalleryEditImageTagsComponent, {
-      data: {tags: this.computeAvailableTagsOfPictures()},
+      data: {tags: this.computeAvailableTagsOfPhotos()},
       width: '800px',
       // minHeight: '400px',
       // maxHeight: '600px',
@@ -235,7 +234,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
       autoFocus: false
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.updateTagsOfSelectedPictures(result);
+      this.updateTagsOfSelectedPhotos(result);
     });
   }
 
@@ -261,7 +260,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     });
   }
 
-  private computeAvailableTagsOfPictures(): string[] {
+  private computeAvailableTagsOfPhotos(): string[] {
     const res: string[] = [];
     for (const pic of this.selection) {
       res.push(...pic.tags);
@@ -269,7 +268,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     return Array.from(new Set(res));
   }
 
-  private updateTagsOfSelectedPictures(res: DialogResult): void {
+  private updateTagsOfSelectedPhotos(res: DialogResult): void {
     if (!res) {
       return;
     }

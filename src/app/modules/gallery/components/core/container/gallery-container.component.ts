@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { Location } from "@angular/common";
-import { Store } from "@ngxs/store";
 
 interface LinkAndName {
   link: string;
@@ -27,7 +26,6 @@ export class GalleryContainerComponent implements OnInit {
 
   constructor(private router: Router,
               private location: Location,
-              private store: Store,
   ) { }
 
   ngOnInit(): void {

@@ -7,7 +7,7 @@ import { Order } from "@app/common/constants/order.constant";
 import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
 import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
 
-const PICTURE_BASE_URL = `${environment.apiUrl}/photos`;
+const PHOTO_BASE_URL = `${environment.apiUrl}/photos`;
 const DOWNLOAD_BASE_URL = `${environment.apiUrl}/download`;
 
 @Injectable({
@@ -18,12 +18,12 @@ export class PhotoService {
   constructor(private http: HttpClient) { }
 
   loadMetaData(): Observable<PhotoMetaDataDto> {
-    return this.http.get<PhotoMetaDataDto>(PICTURE_BASE_URL + '/meta');
+    return this.http.get<PhotoMetaDataDto>(PHOTO_BASE_URL + '/meta');
   }
 
   getPhotos(take: number, from: number): Observable<PhotoDto> {
     console.log('PhotoService getPhotos: ', take, from)
-    return this.http.get<PhotoDto>(PICTURE_BASE_URL, {
+    return this.http.get<PhotoDto>(PHOTO_BASE_URL, {
       params: {
         order: Order.ASC,
         from: from,
@@ -33,7 +33,7 @@ export class PhotoService {
   }
 
   // getById(id: string): Observable<Photo> {
-  //   return this.http.get<Photo>(`${PICTURE_BASE_URL}/${id}`);
+  //   return this.http.get<Photo>(`${PHOTO_BASE_URL}/${id}`);
   // }
 
   create(file: File, tags: string[], created: number): Observable<Photo> {
@@ -42,22 +42,22 @@ export class PhotoService {
     formData.append('image', file);
     formData.append('tags', stringify);
     formData.append('created', created.toString());
-    return this.http.post<Photo>(PICTURE_BASE_URL + '/file', formData);
+    return this.http.post<Photo>(PHOTO_BASE_URL + '/file', formData);
   }
 
   // todo use PhotoUpdate as return result
-  updateTagsOfPicture(id: string, tags: string[]): Observable<string[]> {
+  updateTagsOfPhoto(id: string, tags: string[]): Observable<string[]> {
     const dto = {tags: tags}
-    return this.http.patch<string[]>(`${PICTURE_BASE_URL}/${id}`, dto);
+    return this.http.patch<string[]>(`${PHOTO_BASE_URL}/${id}`, dto);
   }
 
   delete(id: string): Observable<PhotoUpdate> {
-    return this.http.delete<PhotoUpdate>(`${PICTURE_BASE_URL}/${id}`);
+    return this.http.delete<PhotoUpdate>(`${PHOTO_BASE_URL}/${id}`);
   }
 
   setRating(photo: Photo, rate: number): Observable<PhotoUpdate> {
     const dto = {rating: rate}
-    return this.http.patch<PhotoUpdate>(`${PICTURE_BASE_URL}/${photo.id}`, dto);
+    return this.http.patch<PhotoUpdate>(`${PHOTO_BASE_URL}/${photo.id}`, dto);
   }
 
   download(photos: Photo[]): Observable<Blob> {
