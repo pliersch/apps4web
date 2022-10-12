@@ -8,6 +8,7 @@ import { TabNoHeaderDirective } from "@modules/share/directives/tab-no-header.di
 import { ImageFallbackDirective } from "@modules/share/directives/image-fallback-directive";
 import { MatButtonLoadingDirective } from "@modules/share/directives/mat-button-loading.directive";
 import { LazyImageDirective } from './directives/lazy-image.directive';
+import { MatListRemovePaddingDirective } from "@modules/share/directives/mat-list-remove-padding.directive";
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { LazyImageDirective } from './directives/lazy-image.directive';
     ButtonGroupComponent,
     ImageFallbackDirective,
     MatButtonLoadingDirective,
+    MatListRemovePaddingDirective,
     LazyImageDirective
   ],
   exports: [
@@ -25,7 +27,8 @@ import { LazyImageDirective } from './directives/lazy-image.directive';
     ButtonGroupComponent,
     ImageFallbackDirective,
     MatButtonLoadingDirective,
-    LazyImageDirective
+    LazyImageDirective,
+    MatListRemovePaddingDirective
   ],
   imports: [
     CommonModule

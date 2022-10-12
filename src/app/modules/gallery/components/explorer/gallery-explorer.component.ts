@@ -8,7 +8,7 @@ import * as photoAction from "@gallery/store/photos/photo.actions";
 import { AreaSelection, AreaSelectionHandler } from "@gallery/components/explorer/area-selection";
 import {
   GalleryEditImageTagsComponent
-} from "@gallery/components/explorer/edit-image-tags/gallery-edit-image-tags.component";
+} from "@gallery/components/explorer/edit-tags-dialog/gallery-edit-image-tags.component";
 import { MatDialog } from "@angular/material/dialog";
 import { PhotoService } from "@gallery/services/photo.service";
 import { NgScrollbar } from "ngx-scrollbar";
@@ -21,12 +21,19 @@ import {
   GalleryNewTagCategoryComponent
 } from "@gallery/components/explorer/new-tag-category/gallery-new-tag-category.component";
 import { GalleryEditTagsComponent } from "@gallery/components/explorer/edit-tags/gallery-edit-tags.component";
+import {
+  GalleryDeletePhotoComponent
+} from "@gallery/components/explorer/delete-photo-dialog/gallery-delete-photo.component";
 
-export interface DialogData {
+export interface DeletePhotoDialogData {
+  photo: Photo;
+}
+
+export interface EditTagsDialogData {
   tags: string[];
 }
 
-export interface DialogResult {
+export interface EditTagsDialogResult {
   addedTags: string[];
   removedTags: string[];
 }
@@ -192,7 +199,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   onSelectForDelete($event: Photo): void {
-    this.store.dispatch(new photoAction.DeletePhoto($event.id));
+    this.openDeletePhotoDialog($event);
   }
 
   isDownload(photo: Photo): boolean {
@@ -222,6 +229,20 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
         saveAs(blob, 'photos.zip')
         this.store.dispatch(new photoAction.DeselectAllDownloads())
       })
+  }
+
+  private openDeletePhotoDialog($event: Photo): void {
+    const dialogRef = this.dialog.open(GalleryDeletePhotoComponent, {
+      data: {photo: $event},
+      width: '300px',
+      restoreFocus: false,
+      autoFocus: false
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.store.dispatch(new photoAction.DeletePhoto($event.id));
+      }
+    });
   }
 
   private editTags(): void {
@@ -268,7 +289,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     return Array.from(new Set(res));
   }
 
-  private updateTagsOfSelectedPhotos(res: DialogResult): void {
+  private updateTagsOfSelectedPhotos(res: EditTagsDialogResult): void {
     if (!res) {
       return;
     }

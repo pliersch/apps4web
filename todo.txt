@@ -30,3 +30,9 @@ NGXS
           component: HomeComponent
         }
       ];
+
+so gehts doch ohne Konstanten
+export interface DialogData {
+  animal: 'panda' | 'unicorn' | 'lion';
+}
+https://material.angular.io/components/dialog/examples
