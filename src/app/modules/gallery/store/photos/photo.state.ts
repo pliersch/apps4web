@@ -1,6 +1,6 @@
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { Injectable } from "@angular/core";
-import { catchError, map, mergeMap, tap } from "rxjs/operators";
+import { catchError, map } from "rxjs/operators";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import { Photo, PhotoUpdate } from "@gallery/store/photos/photo.model";
@@ -15,27 +15,24 @@ import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto"
 
 export interface PhotoStateModel {
   photos: Photo[];
+  currentPhoto: Photo;
   selectedPhotos: Photo[];
   downloads: Photo[];
+  loadedPhotos: number;
+  availablePhotos: number;
   tagFilter: string[];
   filterRating: number;
   filterFrom: number;
   filterTo: number;
   newDataAvailable: boolean;
-  availablePhotos: number;
-  loadedPhotosCount: number;
-  selectedPhotosCount: number;
-  filteredPhotosCount: number;
   // comparePhotos: Photo[];
   // exportPhotos: Photo[];
-  currentPhoto: Photo;
-  allPhotosLoaded: boolean;
   loaded: boolean;
   loading: boolean;
 }
 
 @State<PhotoStateModel>({
-  name: 'photos', // todo maybe photos?
+  name: 'photos',
   defaults: {
     photos: [],
     downloads: [],
@@ -43,14 +40,11 @@ export interface PhotoStateModel {
     currentPhoto: {id: '0', index: -1, tags: [], rating: 0, isSelected: false, fileName: '', recordDate: new Date()},
     newDataAvailable: true,
     availablePhotos: 0,
-    loadedPhotosCount: 0,
-    selectedPhotosCount: 0,
-    filteredPhotosCount: 0,
+    loadedPhotos: 0,
     tagFilter: [],
     filterRating: 0,
     filterFrom: -1,
     filterTo: -1,
-    allPhotosLoaded: false,
     loaded: false,
     loading: false,
   }
@@ -79,7 +73,6 @@ export class PhotoState {
   @Selector([PhotoState.getPhotosByTags, PhotoState.getFilterRating, PhotoState.getFilterFrom, PhotoState.getFilterTo])
   static getFilteredPhotos(photos: Photo[], filterRating: number, filterFrom: number, filterTo: number): Photo[] {
     let filteredPhotos = filterByRating(photos, filterRating);
-    console.log('PhotoState getFilteredPhotos: ', filterFrom, filterTo)
     if (filterFrom > -1 || filterTo > -1) {
       filteredPhotos = filterByYear(filteredPhotos, filterFrom, filterTo);
     }
@@ -136,7 +129,12 @@ export class PhotoState {
 
   @Selector()
   static getDownloads(state: PhotoStateModel): Photo[] {
-    return state.downloads
+    return state.downloads;
+  }
+
+  @Selector()
+  static getLoadedPhotos(state: PhotoStateModel): number {
+    return state.loadedPhotos;
   }
 
   // @Selector([PhotoState])
@@ -232,14 +230,14 @@ export class PhotoState {
   loadPhotosSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosSuccess): void {
     console.log('PhotoState loadPhotosSuccess: ',)
     const state = ctx.getState();
-    let index = state.loadedPhotosCount;
+    let index = state.loadedPhotos;
     for (const photo of action.dto.photos) {
       photo.recordDate = new Date(Number(photo.recordDate));
       photo.index = index++;
     }
     const photos: Photo[] = [...state.photos, ...action.dto.photos]
     ctx.patchState({
-      loadedPhotosCount: index,
+      loadedPhotos: index,
       photos: photos, loaded: true, loading: false, currentPhoto: photos[0]
     });
   }

@@ -29,20 +29,18 @@ export class GalleryResolver implements PushMessageListener, Resolve<Subscriptio
       observable = this.initStore();
       this.isInit = false;
     }
-
     this.handleChanges()
     return observable;
   }
 
   private initStore(): Observable<Subscription> {
-    return of(Subscription.EMPTY).pipe(
+    return of(Subscription.EMPTY).pipe( // yes, I know. but more readable ;)
       concatMap(() => this.store.dispatch(new LoadMetaData())),
       concatMap(() => this.store.dispatch(new LoadTags())),
       concatMap(() => this.store.dispatch(new LoadPhotos(60))));
   }
 
   onServerPushMessage(event: PushMessageEvent): void {
-    console.log('GalleryResolver onServerPushMessage: ', event.type)
     switch (event.type) {
       case PushMessageEvent.PHOTOS_ADDED:
         this.photosAdded = true;

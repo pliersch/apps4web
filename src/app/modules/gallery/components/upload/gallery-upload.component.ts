@@ -7,7 +7,6 @@ import { LoadTags } from "@gallery/store/tags/tag.action";
 import { AddPhoto } from "@gallery/store/photos/photo.actions";
 import { TagService } from "@gallery/services/tag.service";
 import { PhotoService } from "@gallery/services/photo.service";
-import { formatEnglish } from "@app/util/date-util";
 
 const PLACEHOLDER_URL = 'assets/svg/image-placeholder.svg';
 
@@ -62,7 +61,6 @@ export class GalleryUploadComponent implements OnInit {
     }
     this.imgFiles = Array.from(files);
     for (const file of this.imgFiles) {
-      console.log('GalleryUploadComponent onChange: ', file)
       this.actions.push(new AddPhoto(file, this.selectedTags, file.lastModified));
       const reader = new FileReader();
       reader.onload = (e: any): void => {

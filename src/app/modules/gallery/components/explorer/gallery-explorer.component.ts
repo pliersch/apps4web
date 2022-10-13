@@ -66,6 +66,10 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   allPhotosCount$: Observable<number>;
   allPhotosCount: number;
 
+  @Select(PhotoState.getLoadedPhotos)
+  loadedPhotos$: Observable<number>;
+  loadedPhotos: number;
+
   @Select(PhotoState.getFilteredPhotos)
   photos$: Observable<Photo[]>;
   photos: Photo[];
@@ -110,6 +114,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     this.actionBarService.setActions(this.actions);
     this.subscription = this.selection$.subscribe(res => this.selection = res);
     this.subscription = this.downloads$.subscribe(res => this.downloads = res);
+    this.subscription = this.loadedPhotos$.subscribe(res => this.loadedPhotos = res);
     this.subscription.add(this.currentPhoto$.subscribe(res => this.currentPhoto = res));
     this.subscription.add(this.isAuthenticated$.subscribe(res => this.isAuthenticated = res));
     this.subscription.add(this.allPhotosCount$.subscribe(count => this.allPhotosCount = count));
@@ -135,21 +140,23 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     this.actionBarService.removeActions();
   }
 
-  observeScrollContent(): void {
-    const element = this.scrollbarRef.nativeElement.querySelector('.ng-scroll-content');
-    this.resizeObserver = new ResizeObserver(res => {
-      this.absoluteHeight = res[0].contentRect.height;
-    });
-    this.resizeObserver.observe(element!);
-  }
-
   setCurrent(photo: Photo): void {
     this.store.dispatch(new photoAction.SetCurrentPhoto(photo))
     this.currentPhoto = photo;
   }
 
+  observeScrollContent(): void {
+    const element = this.scrollbarRef.nativeElement.querySelector('.ng-scroll-content');
+    this.resizeObserver = new ResizeObserver(res => {
+      this.absoluteHeight = res[0].contentRect.height;
+      // console.log('GalleryExplorerComponent observeScrollContent: ', this.absoluteHeight)
+    });
+    this.resizeObserver.observe(element!);
+  }
+
   requestNextPhotos(element: Element): void {
     const currentHeight = element.clientHeight + element.scrollTop /* + element.scrollTop*/;
+    // console.log('GalleryExplorerComponent requestNextPhotos: ', currentHeight, this.absoluteHeight)
     if (currentHeight + 180 > this.absoluteHeight && !this.isRequesting) {
       this.isRequesting = true;
       this.store.dispatch(new photoAction.LoadPhotos(60));

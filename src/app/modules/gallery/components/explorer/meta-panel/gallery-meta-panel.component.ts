@@ -8,14 +8,15 @@ import { Component, Input } from '@angular/core';
 export class GalleryMetaPanelComponent {
 
   @Input()
-  allPhotosCount: number;
+  availablePhotos: number;
+
+  @Input()
+  loadedPhotos: number;
 
   @Input()
   selectedPhotosCount: number;
 
   @Input()
   filteredPhotosCount: number;
-
-  constructor() { }
 
 }
