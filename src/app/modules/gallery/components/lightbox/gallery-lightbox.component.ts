@@ -1,15 +1,13 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { GalleryVerticalScrollerComponent }
-  from '@gallery/components/share/vertical-scroller/gallery-vertical-scroller.component';
-import { GalleryHorizontalScrollerComponent }
-  from '@gallery/components/share/horizontal-scroller/gallery-horizontal-scroller.component';
-import { AlertService } from '@app/services/alert.service';
 import {
-  ClearPhotoSelection,
-  LoadPhotos,
-  TogglePhotoSelection
-} from "@gallery/store/photos/photo.actions";
+  GalleryVerticalScrollerComponent
+} from '@gallery/components/share/vertical-scroller/gallery-vertical-scroller.component';
+import {
+  GalleryHorizontalScrollerComponent
+} from '@gallery/components/share/horizontal-scroller/gallery-horizontal-scroller.component';
+import { AlertService } from '@app/services/alert.service';
+import { ClearPhotoSelection, TogglePhotoSelection } from "@gallery/store/photos/photo.actions";
 import { Photo } from "@gallery/store/photos/photo.model";
 import { Action, ActionProvider } from "@modules/action-bar/actions";
 import { ActionBarService } from "@modules/action-bar/action-bar.service";
@@ -54,7 +52,6 @@ export class GalleryLightboxComponent implements OnInit, OnDestroy, ActionProvid
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new LoadPhotos(60));
     this.actionBarService.setActions(this.actions);
   }
 

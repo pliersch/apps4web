@@ -11,6 +11,7 @@ import { AlertService } from "@app/services/alert.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
 import { ServerSentService } from "@app/common/services/server-sent.service";
+import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
 
 export interface PhotoStateModel {
   photos: Photo[];
@@ -159,52 +160,36 @@ export class PhotoState {
   //////////////////////////////////////////////////////////
 
   @Action(photoAction.LoadMetaData)
-  loadMetaData(ctx: StateContext<PhotoStateModel>): Observable<void> {
-    ctx.patchState({loading: true});
-    return this.photoService.loadMetaData().pipe(tap((metaDto) => {
-        ctx.patchState({
-          availablePhotos: metaDto.count, loading: false
-        })
-      }),
-      mergeMap(() => {
-        return ctx.dispatch(new photoAction.LoadMetaDataSuccess({count: 4}))
-      }),
-      catchError(err => {
-          return ctx.dispatch(new photoAction.LoadMetaDataFail(err))
-        }
-      ));
+  loadMetaData(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaData): Observable<Subscription> {
+    return this.photoService.loadMetaData().pipe(
+      map((metaDto: PhotoMetaDataDto) =>
+        asapScheduler.schedule(() =>
+          ctx.dispatch(new photoAction.LoadMetaDataSuccess(metaDto))
+        )
+      ),
+      catchError(error =>
+        of(
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new photoAction.LoadMetaDataFail(error))
+          )
+        )
+      )
+    );
   }
 
-  // @Action(photoAction.LoadMetaDataAction)
-  // loadMetaData(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataAction): Observable<Subscription> {
-  //   return this.photoService.loadMetaData().pipe(
-  //     map((metaDto: PhotoMetaDataDto) =>
-  //       asapScheduler.schedule(() =>
-  //         ctx.dispatch(new photoAction.LoadMetaDataSuccessAction(metaDto))
-  //       )
-  //     ),
-  //     catchError(error =>
-  //       of(
-  //         asapScheduler.schedule(() =>
-  //           ctx.dispatch(new photoAction.LoadMetaDataFailAction(error))
-  //         )
-  //       )
-  //     )
-  //   );
-  // }
-  //
-  // @Action(photoAction.LoadMetaDataSuccessAction)
-  // loadMetaDataSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataSuccessAction): void {
-  //   ctx.patchState({
-  //     allPhotosCount: action.dto.count, loading: false
-  //   });
-  // }
-  //
-  // @Action(photoAction.LoadMetaDataFailAction)
-  // loadMetaDataFail(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataFailAction): void {
-  //   ctx.dispatch({loaded: false, loading: false});
-  //   this.alertService.error('load meta data fail');
-  // }
+  @Action(photoAction.LoadMetaDataSuccess)
+  loadMetaDataSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataSuccess): void {
+    console.log('PhotoState loadMetaDataSuccess: ',)
+    ctx.patchState({
+      availablePhotos: action.dto.count, loading: false
+    });
+  }
+
+  @Action(photoAction.LoadMetaDataFail)
+  loadMetaDataFail(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataFail): void {
+    ctx.dispatch({loaded: false, loading: false});
+    this.alertService.error('load meta data fail');
+  }
 
   // region loading
   //////////////////////////////////////////////////////////
@@ -245,6 +230,7 @@ export class PhotoState {
 
   @Action(photoAction.LoadPhotosSuccess)
   loadPhotosSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosSuccess): void {
+    console.log('PhotoState loadPhotosSuccess: ',)
     const state = ctx.getState();
     let index = state.loadedPhotosCount;
     for (const photo of action.dto.photos) {

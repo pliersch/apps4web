@@ -1,15 +1,12 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { GalleryVerticalScrollerComponent }
-  from "@gallery/components/share/vertical-scroller/gallery-vertical-scroller.component";
-import { Select, Store } from "@ngxs/store";
 import {
-  LoadPhotos,
-  SetCurrentPhoto,
-  SetNextPhoto,
-  SetPreviousPhoto
-} from "@gallery/store/photos/photo.actions";
-import { GalleryHorizontalScrollerComponent }
-  from "@gallery/components/share/horizontal-scroller/gallery-horizontal-scroller.component";
+  GalleryVerticalScrollerComponent
+} from "@gallery/components/share/vertical-scroller/gallery-vertical-scroller.component";
+import { Select, Store } from "@ngxs/store";
+import { SetCurrentPhoto, SetNextPhoto, SetPreviousPhoto } from "@gallery/store/photos/photo.actions";
+import {
+  GalleryHorizontalScrollerComponent
+} from "@gallery/components/share/horizontal-scroller/gallery-horizontal-scroller.component";
 import { getPhotoUrl } from "@gallery/store/photos/photo.tools";
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { Observable, Subscription } from "rxjs";
@@ -49,7 +46,6 @@ export class GallerySlideshowComponent implements OnInit, AfterViewInit, OnDestr
   constructor(private store: Store) { }
 
   ngOnInit(): void {
-    this.store.dispatch(new LoadPhotos(60));
     this.subscription =
       this.currentPhoto$.subscribe(res => {
         if (res) {
