@@ -32,7 +32,7 @@ export interface PhotoStateModel {
 }
 
 @State<PhotoStateModel>({
-  name: 'photos',
+  name: 'PhotoState',
   defaults: {
     photos: [],
     downloads: [],

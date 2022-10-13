@@ -19,7 +19,7 @@ export interface TagStateModel {
 }
 
 @State<TagStateModel>({
-  name: 'tags',
+  name: 'TagState',
   defaults: {
     tags: [],
     activeTags: [],
