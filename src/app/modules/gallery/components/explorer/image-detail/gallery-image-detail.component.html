@@ -1,21 +1,9 @@
 <mat-card class="card">
-  <mat-card-header>
-    <mat-card-title>Details</mat-card-title>
-  </mat-card-header>
+  <mat-card-title style="font-size:15px">Details</mat-card-title>
   <mat-card-content>
-    <mat-list dense>
-      <mat-list-item>
-        <span matLine style="font-size:10px"> Name </span>
-        <h2 matLine style="font-size:16px"> {{currentPhoto.fileName}} </h2>
-      </mat-list-item>
-      <mat-list-item>
-        <span matLine style="font-size:10px"> Date </span>
-        <h2 matLine style="font-size:16px"> {{currentPhoto.recordDate | date}} </h2>
-      </mat-list-item>
-      <mat-list-item>
-        <app-gallery-rating></app-gallery-rating>
-      </mat-list-item>
-    </mat-list>
+    <span> Name: {{currentPhoto.fileName}}</span><br>
+    <span> Date: {{currentPhoto.recordDate | date}}</span>
+    <app-gallery-rating></app-gallery-rating>
     <mat-chip-list>
       <mat-chip selected *ngFor="let tag of currentPhoto.tags">
         {{tag}}
