@@ -1,19 +1,30 @@
-<mat-form-field appearance="fill">
-  <mat-label>Von</mat-label>
-  <mat-select (selectionChange)='onChangeFrom($event)'>
-    <mat-option>X</mat-option>
-    <mat-option *ngFor='let year of fromYears' [value]='year'>
-      {{year}}
-    </mat-option>
-  </mat-select>
+<mat-card class="card" style="padding-bottom:0!important;">
+  <mat-card-title style="font-size:15px">Rating</mat-card-title>
 
-</mat-form-field>
-<mat-form-field appearance="fill">
-  <mat-label>Bis</mat-label>
-  <mat-select (selectionChange)='onChangeTo($event)'>
-    <mat-option>X</mat-option>
-    <mat-option *ngFor='let year of fromYears' [value]='year'>
-      {{year}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+  <mat-card-content>
+    <div class="flex-row">
+      <mat-form-field appearance="fill">
+        <mat-label>Von</mat-label>
+        <mat-select (selectionChange)='onChangeFrom($event)'>
+          <mat-option>X</mat-option>
+          <mat-option *ngFor='let year of fromYears' [value]='year'>
+            {{year}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <span class="spacer"></span>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Bis</mat-label>
+        <mat-select (selectionChange)='onChangeTo($event)'>
+          <mat-option>X</mat-option>
+          <mat-option *ngFor='let year of fromYears' [value]='year'>
+            {{year}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </mat-card-content>
+
+</mat-card>
