@@ -24,7 +24,6 @@ export class SigninComponent implements OnInit {
   constructor(private store: Store) { }
 
   ngOnInit(): void {
-    console.log('SigninComponent ngOnInit: ',)
     this.user$.subscribe(user => this.user = user);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore

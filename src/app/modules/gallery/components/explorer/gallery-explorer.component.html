@@ -9,7 +9,7 @@
     <app-gallery-date-filter></app-gallery-date-filter>
     <app-gallery-action-panel [actions]="actions" (actionEvent)="onAction($event)"
                               class="m5"></app-gallery-action-panel>
-    <app-gallery-image-detail class="m5" [currentPhoto]="currentPhoto"></app-gallery-image-detail>
+    <app-gallery-image-detail class="m5" [currentPhoto$]="currentPhoto$"></app-gallery-image-detail>
     <app-gallery-meta-panel class="m5"
                             [selectedPhotosCount]="selection.length"
                             [filteredPhotosCount]="photos.length"
@@ -22,9 +22,9 @@
       <ng-scrollbar #scrollbar>
         <div class="images-wrapper">
           <app-image-control *ngFor="let photo of (photos$ | async)" class="selection-item"
-                             [selected]="currentPhoto === photo" [download]="isDownload(photo)"
+                             [selected]="currentPhoto.id === photo.id"
                              (click)="setCurrent(photo)" [photo]="photo"
-                             [hasRights]="true"
+                             [hasRights]="true" [download]="isDownload(photo)"
                              (deleteEvent)="onSelectForDelete($event)"
                              (previewEvent)="onSelectForPreview($event)"
                              (editEvent)="onSelectForEdit($event)"

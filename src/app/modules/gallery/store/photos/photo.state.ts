@@ -79,10 +79,9 @@ export class PhotoState {
     return filteredPhotos;
   }
 
-  @Selector()
-  static newDataAvailable(state: PhotoStateModel): Photo {
-    return state.currentPhoto;
-  }
+  // @Selector()
+  // static newDataAvailable(state: PhotoStateModel): Photo {
+  // }
 
   @Selector()
   static getCurrentPhoto(state: PhotoStateModel): Photo {
@@ -591,6 +590,11 @@ export class PhotoState {
     ctx.setState(
       patch({
         photos: updateItem<Photo>(action.photo.index, patch({rating: action.rate})),
+      })
+    );
+    ctx.setState(
+      patch({
+        currentPhoto: ctx.getState().photos[action.photo.index]
       })
     );
   }

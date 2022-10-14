@@ -1,6 +1,6 @@
 <mat-card class="card">
   <mat-card-title style="font-size:15px">Details</mat-card-title>
-  <mat-card-content>
+  <mat-card-content *ngIf="currentPhoto$ | async; let currentPhoto">
     <span> Name: {{currentPhoto.fileName}}</span><br>
     <span> Date: {{currentPhoto.recordDate | date}}</span>
     <app-gallery-rating></app-gallery-rating>

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Photo } from '@gallery/store/photos/photo.model';
+import { Observable } from "rxjs";
 
 @Component({
   selector: 'app-gallery-image-detail',
@@ -10,6 +11,6 @@ import { Photo } from '@gallery/store/photos/photo.model';
 export class GalleryImageDetailComponent {
 
   @Input()
-  currentPhoto: Photo;
+  currentPhoto$: Observable<Photo>;
 
 }

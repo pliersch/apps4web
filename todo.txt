@@ -1,8 +1,10 @@
 NGXS
-- ngxs impl router state! (app/stores/router.state)
-- ngxs: schauen, ob selectOnce möglich ist
-- ngxs: unsubscription prüfen
-- ngxs impl: state properties loaded & loading
+- impl router state! (app/stores/router.state)
+- schauen, ob selectOnce möglich ist
+- unsubscription prüfen
+- impl: state properties loaded & loading
+- currentPhoto seltsam/buggy setzen/updaten überprüfen evtl mit index auf photos lösen
+  -> currentPhoto = photos[currentIndex]
 
 - chat und gallery nutzen denselben service (photoservice)
 - gallery versuchen gemeinsamen code der pages in gallery-container zu extrahieren

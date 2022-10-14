@@ -142,7 +142,6 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
 
   setCurrent(photo: Photo): void {
     this.store.dispatch(new photoAction.SetCurrentPhoto(photo))
-    this.currentPhoto = photo;
   }
 
   observeScrollContent(): void {
