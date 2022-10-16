@@ -638,11 +638,6 @@ export class PhotoState {
     );
   }
 
-  @Action(photoAction.ClearTagFilter)
-  clearTagFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.ClearTagFilter): void {
-    ctx.patchState({tagFilter: []});
-  }
-
   @Action(photoAction.SetRatingFilter)
   setRatingFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.SetRatingFilter): void {
     ctx.patchState({
@@ -665,10 +660,9 @@ export class PhotoState {
   }
 
   @Action(photoAction.ClearFilter)
-  clearFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.ClearFilter): void {
+  clearFilter(ctx: StateContext<PhotoStateModel>): void {
     ctx.patchState({
-      filterTo: -1, filterFrom: -1, filterRating: 0
+      filterTo: -1, filterFrom: -1, filterRating: 0, tagFilter: []
     });
-    // ctx.dispatch(new ClearTagFilter())
   }
 }

@@ -233,21 +233,16 @@ export class SetRatingFail {
 // filtering
 
 export class AddTagFilter {
-  static readonly type = '[Gallery] Add Filter';
+  static readonly type = '[Gallery] Add Tag Filter';
 
   constructor(public filter: string) {
   }
 }
 
 export class RemoveTagFilter {
-  static readonly type = '[Gallery] Remove Filter';
+  static readonly type = '[Gallery] Remove Tag Filter';
 
   constructor(public filter: string) { }
-}
-
-export class ClearTagFilter {
-  static readonly type = '[Gallery] Clear Filter';
-
 }
 
 export class SetRatingFilter {
@@ -278,6 +273,6 @@ export class ClearFilter {
 // server sent
 
 export class SetNewPhotosAvailable {
-  static readonly type = '[Gallery] Set New Data Available';
+  static readonly type = '[Gallery] Set New Photos Available';
 
 }

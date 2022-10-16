@@ -48,18 +48,6 @@ export function filterByYear(photos: Photo[], from: number, to: number): Photo[]
   return result;
 }
 
-// export function computeAvailableYears(photos: Photo[]): number[] {
-//   let years: number[] = [];
-//   for (const photo of photos) {
-//     years.push(new Date(photo.recordDate).getFullYear());
-//   }
-//   years = Array.from(new Set(years))
-//   years.sort(function (a, b) {
-//     return a - b;
-//   });
-//   return years;
-// }
-
 export function getPhotoUrl(fileName: string): string {
   // fileName = fileName.slice(0, fileName.lastIndexOf('.') - 1);
   return BASE_URL + 'full/' + fileName;

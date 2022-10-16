@@ -1,11 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Tag } from '@gallery/store/tags/tag.model';
 import { MatDialogRef } from '@angular/material/dialog';
-import {
-  GalleryEditTagDetailComponent
-} from '@gallery/components/explorer/edit-tags/edit-tag-detail/gallery-edit-tag-detail.component';
-import { MatSelectionList } from '@angular/material/list';
 import { arrayUtil } from '@app/util/array-utils';
 import { Select, Store } from "@ngxs/store";
 import { TagState } from "@gallery/store/tags/tag.state";
@@ -18,13 +14,13 @@ import { DeleteTag, UpdateTag } from "@gallery/store/tags/tag.action";
 })
 export class GalleryEditTagsComponent implements OnInit {
 
-  // TODO no "find in files" ?!?
-  @ViewChild(GalleryEditTagDetailComponent)
-  editDetailComponent!: GalleryEditTagDetailComponent;
-
-  // TODO no "find in files" ?!?
-  @ViewChild(MatSelectionList)
-  selectionList!: MatSelectionList;
+  // no "find in files" ?!?
+  // @ViewChild(GalleryEditTagDetailComponent)
+  // editDetailComponent!: GalleryEditTagDetailComponent;
+  //
+  // no "find in files" ?!?
+  // @ViewChild(MatSelectionList)
+  // selectionList!: MatSelectionList;
 
   @Select(TagState.getTags)
   tags$: Observable<Tag[]>;
@@ -102,10 +98,8 @@ export class GalleryEditTagsComponent implements OnInit {
     if (this.hasChanges) {
       for (let i = 0; i < this.copies.length; i++) {
         if (!arrayUtil.sameElements(this.tags[i].entries, this.copies[i].entries)) {
-          // const tagUpdate: Update<Tag> = this.createTagUpdate(this.copies[i]);
           // todo use "updateTags" (many) !!!
           this.store.dispatch(new UpdateTag(this.copies[i]));
-          // this.store.dispatch(updateTag({tagUpdate: tagUpdate}));
         }
       }
     }

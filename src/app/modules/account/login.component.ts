@@ -6,7 +6,6 @@ import { first } from 'rxjs/operators';
 import { AlertService } from "@app/services/alert.service";
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { GoogleLoginProvider, SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { AccountService } from "@modules/account/services/account.service";
 
 @Component({
@@ -15,11 +14,9 @@ import { AccountService } from "@modules/account/services/account.service";
 })
 export class LoginComponent implements OnInit {
 
-  user: SocialUser;
   loggedIn: boolean;
 
   constructor(
-    private authService: SocialAuthService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -47,11 +44,6 @@ export class LoginComponent implements OnInit {
   email = new FormControl('', [Validators.required, Validators.email]);
 
   ngOnInit(): void {
-    this.authService.authState.subscribe((user) => {
-      this.user = user;
-      this.loggedIn = user != null;
-    });
-
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -63,18 +55,6 @@ export class LoginComponent implements OnInit {
       return 'You must enter a value';
     }
     return this.email.hasError('email') ? 'Not a valid email' : '';
-  }
-
-  signInWithGoogle(): void {
-    const googleLoginOptions = {
-      scope: 'profile email'
-    };
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID, googleLoginOptions).then((account) => {
-      this.loggedIn = account != null;
-      if (this.loggedIn) {
-        void this.router.navigateByUrl('/');
-      }
-    });
   }
 
   onSubmit(): void {
