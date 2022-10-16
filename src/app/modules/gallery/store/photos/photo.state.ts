@@ -4,9 +4,8 @@ import { catchError, map } from "rxjs/operators";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import { Photo, PhotoUpdate } from "@gallery/store/photos/photo.model";
-import { insertItem, patch, removeItem, updateItem } from "@ngxs/store/operators";
+import { append, insertItem, patch, removeItem, updateItem } from "@ngxs/store/operators";
 import { filterByRating, filterByTags, filterByYear } from "@gallery/store/photos/photo.tools";
-import { TagState } from "@gallery/store/tags/tag.state";
 import { AlertService } from "@app/services/alert.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
@@ -62,7 +61,7 @@ export class PhotoState {
     return state.photos;
   }
 
-  @Selector([PhotoState.getPhotos, TagState.getActiveTags])
+  @Selector([PhotoState.getPhotos, PhotoState.getActiveTags])
   static getPhotosByTags(photos: Photo[], activeTags: string[]): Photo[] {
     if (activeTags.length == 0) {
       return photos;
@@ -70,12 +69,22 @@ export class PhotoState {
     return filterByTags(photos, activeTags);
   }
 
+  @Selector([PhotoState.getPhotosByTags, PhotoState.getFilterRating])
+  static getPhotosByTagsAndRating(photos: Photo[], rating: number): Photo[] {
+    const result: Photo[] = [];
+    for (const photo of photos) {
+      if (photo.rating >= rating) {
+        result.push(photo);
+      }
+    }
+    return result;
+  }
+
   @Selector([PhotoState.getPhotosByTags, PhotoState.getFilterRating, PhotoState.getFilterFrom, PhotoState.getFilterTo])
   static getFilteredPhotos(photos: Photo[], filterRating: number, filterFrom: number, filterTo: number): Photo[] {
     let filteredPhotos = filterByRating(photos, filterRating);
-    if (filterFrom > -1 || filterTo > -1) {
-      filteredPhotos = filterByYear(filteredPhotos, filterFrom, filterTo);
-    }
+    console.log('PhotoState getFilteredPhotos: ',)
+    filteredPhotos = filterByYear(filteredPhotos, filterFrom, filterTo);
     return filteredPhotos;
   }
 
@@ -109,6 +118,11 @@ export class PhotoState {
   @Selector()
   static getAvailablePhotos(state: PhotoStateModel): number {
     return state.availablePhotos;
+  }
+
+  @Selector()
+  static getActiveTags(state: PhotoStateModel): string[] {
+    return state.tagFilter;
   }
 
   @Selector()
@@ -146,9 +160,9 @@ export class PhotoState {
   //////////////////////////////////////////////////////////
 
   @Action(photoAction.SetNewPhotosAvailable)
-  setNewDataAvailable(ctx: StateContext<PhotoStateModel>): void {
+  setNewPhotosAvailable(ctx: StateContext<PhotoStateModel>): void {
     ctx.patchState({
-      newDataAvailable: true
+      newDataAvailable: true // todo rename
     });
   }
 
@@ -206,7 +220,6 @@ export class PhotoState {
     if (count == 0) {
       return of(Subscription.EMPTY);
     }
-    console.log('PhotoState loadPhotos: XXXXXXXXXXXXXXXXXXXXXX',)
     return this.photoService.getPhotos(count, from)
       .pipe(
         map((dto: PhotoDto) =>
@@ -227,7 +240,6 @@ export class PhotoState {
 
   @Action(photoAction.LoadPhotosSuccess)
   loadPhotosSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosSuccess): void {
-    console.log('PhotoState loadPhotosSuccess: ',)
     const state = ctx.getState();
     let index = state.loadedPhotos;
     for (const photo of action.dto.photos) {
@@ -236,8 +248,7 @@ export class PhotoState {
     }
     const photos: Photo[] = [...state.photos, ...action.dto.photos]
     ctx.patchState({
-      loadedPhotos: index,
-      photos: photos, loaded: true, loading: false, currentPhoto: photos[0]
+      loadedPhotos: index, photos: photos, loaded: true, loading: false, currentPhoto: photos[0]
     });
   }
 
@@ -606,8 +617,31 @@ export class PhotoState {
   }
 
   //////////////////////////////////////////////////////////
-  //          set rating filter
+  //          filter
   //////////////////////////////////////////////////////////
+
+  @Action(photoAction.AddTagFilter)
+  addTagFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.AddTagFilter): void {
+    ctx.setState(
+      patch({
+        tagFilter: append([action.filter])
+      })
+    );
+  }
+
+  @Action(photoAction.RemoveTagFilter)
+  removeTagFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.RemoveTagFilter): void {
+    ctx.setState(
+      patch({
+        tagFilter: removeItem<string>(name => name === action.filter)
+      })
+    );
+  }
+
+  @Action(photoAction.ClearTagFilter)
+  clearTagFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.ClearTagFilter): void {
+    ctx.patchState({tagFilter: []});
+  }
 
   @Action(photoAction.SetRatingFilter)
   setRatingFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.SetRatingFilter): void {
@@ -615,10 +649,6 @@ export class PhotoState {
       filterRating: action.rate
     });
   }
-
-  //////////////////////////////////////////////////////////
-  //          set year filter
-  //////////////////////////////////////////////////////////
 
   @Action(photoAction.SetFromYearFilter)
   setFromYearFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.SetFromYearFilter): void {
@@ -632,5 +662,13 @@ export class PhotoState {
     ctx.patchState({
       filterTo: action.year
     });
+  }
+
+  @Action(photoAction.ClearFilter)
+  clearFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.ClearFilter): void {
+    ctx.patchState({
+      filterTo: -1, filterFrom: -1, filterRating: 0
+    });
+    // ctx.dispatch(new ClearTagFilter())
   }
 }

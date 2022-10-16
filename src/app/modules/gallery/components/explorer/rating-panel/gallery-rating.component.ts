@@ -20,7 +20,6 @@ export class GalleryRatingComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentPhoto$.subscribe(res => {
-      console.log('GalleryRatingComponent : ',)
       this.currentPhoto = res;
     });
   }

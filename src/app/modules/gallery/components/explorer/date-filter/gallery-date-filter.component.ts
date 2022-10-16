@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Select, Store } from "@ngxs/store";
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { Observable } from "rxjs";
-import { Photo } from "@gallery/store/photos/photo.model";
 import { SetFromYearFilter, SetToYearFilter } from "@gallery/store/photos/photo.actions";
 import { MatSelectChange } from "@angular/material/select";
+import { Photo } from "@gallery/store/photos/photo.model";
 
 @Component({
   selector: 'app-gallery-date-filter',
@@ -13,22 +13,48 @@ import { MatSelectChange } from "@angular/material/select";
 })
 export class GalleryDateFilterComponent implements OnInit {
 
-  @Select(PhotoState.getPhotosByTags)
+  @Select(PhotoState.getPhotosByTagsAndRating)
   photos$: Observable<Photo[]>;
+  years: number[];
 
-  fromYears: number[];
-  toYears: number[];
+  @Select(PhotoState.getFilterFrom)
+  yearFrom$: Observable<number>;
 
-  constructor(private store: Store) {
-  }
+  @Select(PhotoState.getFilterTo)
+  yearTo$: Observable<number>;
+
+  selectedFrom = '';
+  selectedTo = '';
+
+  constructor(private store: Store) { }
 
   ngOnInit(): void {
-    this.photos$.subscribe({
-      next: (photos) => this.updateAvailableYears(photos)
+    this.photos$.subscribe((photos) => {
+      this.years = this.computeAvailableYears(photos);
     })
+    this.yearFrom$.subscribe((year) => {
+      if (year === -1) {
+        this.selectedFrom = ''
+      }
+    });
+    this.yearTo$.subscribe((year) => {
+      if (year === -1) {
+        this.selectedTo = ''
+      }
+    });
   }
 
-  private updateAvailableYears(photos: Photo[]): void {
+  onChangeFrom($event: MatSelectChange): void {
+    const year: number = $event.value === undefined ? this.years[0] : $event.value;
+    this.store.dispatch(new SetFromYearFilter(year));
+  }
+
+  onChangeTo($event: MatSelectChange): void {
+    const year: number = $event.value === undefined ? this.years[this.years.length - 1] : $event.value;
+    this.store.dispatch(new SetToYearFilter(year));
+  }
+
+  computeAvailableYears(photos: Photo[]): number[] {
     let years: number[] = [];
     for (const photo of photos) {
       years.push(new Date(photo.recordDate).getFullYear());
@@ -37,17 +63,7 @@ export class GalleryDateFilterComponent implements OnInit {
     years.sort(function (a, b) {
       return a - b;
     });
-    this.fromYears = years.slice(0);
-    this.toYears = years.slice(0);
+    return years;
   }
 
-  onChangeFrom($event: MatSelectChange): void {
-    const year: number = $event.value === undefined ? this.fromYears[0] : $event.value;
-    this.store.dispatch(new SetFromYearFilter(year));
-  }
-
-  onChangeTo($event: MatSelectChange): void {
-    const year: number = $event.value === undefined ? this.toYears[this.toYears.length - 1] : $event.value;
-    this.store.dispatch(new SetToYearFilter(year));
-  }
 }

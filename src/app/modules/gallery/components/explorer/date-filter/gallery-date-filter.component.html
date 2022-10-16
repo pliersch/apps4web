@@ -5,9 +5,9 @@
     <div class="flex-row">
       <mat-form-field appearance="fill">
         <mat-label>Von</mat-label>
-        <mat-select (selectionChange)='onChangeFrom($event)'>
+        <mat-select [(value)]="selectedFrom" (selectionChange)='onChangeFrom($event)'>
           <mat-option>X</mat-option>
-          <mat-option *ngFor='let year of fromYears' [value]='year'>
+          <mat-option *ngFor='let year of years' [value]='year'>
             {{year}}
           </mat-option>
         </mat-select>
@@ -17,9 +17,9 @@
 
       <mat-form-field appearance="fill">
         <mat-label>Bis</mat-label>
-        <mat-select (selectionChange)='onChangeTo($event)'>
+        <mat-select [(value)]="selectedTo" (selectionChange)='onChangeTo($event)'>
           <mat-option>X</mat-option>
-          <mat-option *ngFor='let year of fromYears' [value]='year'>
+          <mat-option *ngFor='let year of years' [value]='year'>
             {{year}}
           </mat-option>
         </mat-select>

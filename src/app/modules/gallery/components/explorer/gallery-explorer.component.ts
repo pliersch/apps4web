@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { saveAs } from 'file-saver';
 import * as photoAction from "@gallery/store/photos/photo.actions";
+import { ClearFilter } from "@gallery/store/photos/photo.actions";
 import { AreaSelection, AreaSelectionHandler } from "@gallery/components/explorer/area-selection";
 import {
   GalleryEditImageTagsComponent
@@ -207,6 +208,10 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     this.openDeletePhotoDialog($event);
   }
 
+  onClickClearFilter(): void {
+    this.store.dispatch(new ClearFilter())
+  }
+
   isDownload(photo: Photo): boolean {
     return this.downloads.includes(photo);
   }
@@ -306,5 +311,4 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
       this.store.dispatch(new photoAction.SetTagsOfPhoto(photo, tags));
     }
   }
-
 }

@@ -3,7 +3,8 @@ import { Observable } from 'rxjs';
 import { Tag } from '@gallery/store/tags/tag.model';
 import { Select, Store } from '@ngxs/store';
 import { TagState } from "@gallery/store/tags/tag.state";
-import { AddTagFilter, RemoveTagFilter } from "@gallery/store/tags/tag.action";
+import { AddTagFilter, RemoveTagFilter } from "@gallery/store/photos/photo.actions";
+import { PhotoState } from "@gallery/store/photos/photo.state";
 
 @Component({
   selector: 'app-gallery-filter-panel',
@@ -15,7 +16,7 @@ export class GalleryFilterPanelComponent {
   @Select(TagState.getTags)
   tags$: Observable<Tag[]>;
 
-  @Select(TagState.getActiveTags)
+  @Select(PhotoState.getActiveTags)
   activeTags$: Observable<string[]>;
 
   tags: Tag[] = [];

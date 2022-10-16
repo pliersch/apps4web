@@ -7,6 +7,10 @@
     </div>
     <app-gallery-rating-filter class="m5"></app-gallery-rating-filter>
     <app-gallery-date-filter class="m5"></app-gallery-date-filter>
+    <button mat-raised-button color="primary"
+            type="button" (click)="onClickClearFilter()">
+      <mat-icon> clear</mat-icon>
+    </button>
     <app-gallery-action-panel [actions]="actions" (actionEvent)="onAction($event)"
                               class="m5"></app-gallery-action-panel>
     <app-gallery-image-detail class="m5" [currentPhoto$]="currentPhoto$"></app-gallery-image-detail>

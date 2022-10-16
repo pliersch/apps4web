@@ -26,6 +26,19 @@ export function filterByRating(photos: Photo[], rate: number): Photo[] {
 export function filterByYear(photos: Photo[], from: number, to: number): Photo[] {
   const result = [];
   let year: number;
+  console.log('filterByYear filterByYear: ', from, to)
+  if (from === -1 && to === -1) {
+    return photos;
+  }
+  if (to === -1) {
+    for (const photo of photos) {
+      year = photo.recordDate.getFullYear();
+      if (year >= from) {
+        result.push(photo);
+      }
+    }
+    return result;
+  }
   for (const photo of photos) {
     year = photo.recordDate.getFullYear();
     if (year >= from && year <= to) {
@@ -34,6 +47,18 @@ export function filterByYear(photos: Photo[], from: number, to: number): Photo[]
   }
   return result;
 }
+
+// export function computeAvailableYears(photos: Photo[]): number[] {
+//   let years: number[] = [];
+//   for (const photo of photos) {
+//     years.push(new Date(photo.recordDate).getFullYear());
+//   }
+//   years = Array.from(new Set(years))
+//   years.sort(function (a, b) {
+//     return a - b;
+//   });
+//   return years;
+// }
 
 export function getPhotoUrl(fileName: string): string {
   // fileName = fileName.slice(0, fileName.lastIndexOf('.') - 1);

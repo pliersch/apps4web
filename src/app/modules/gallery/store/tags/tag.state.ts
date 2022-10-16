@@ -4,14 +4,13 @@ import { Injectable } from "@angular/core";
 import * as tagActions from "@gallery/store/tags/tag.action";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import { catchError, map } from "rxjs/operators";
-import { append, patch, removeItem, updateItem } from "@ngxs/store/operators";
+import { patch, updateItem } from "@ngxs/store/operators";
 import { TagService } from "@gallery/services/tag.service";
 import { AlertService } from "@app/services/alert.service";
 import { PhotoStateModel } from "@gallery/store/photos/photo.state";
 
 export interface TagStateModel {
   tags: Tag[];
-  activeTags: string[];
   allTagsLoaded: boolean;
   loaded: boolean;
   loading: boolean;
@@ -22,7 +21,6 @@ export interface TagStateModel {
   name: 'TagState',
   defaults: {
     tags: [],
-    activeTags: [],
     allTagsLoaded: false,
     loaded: false,
     loading: false,
@@ -36,11 +34,6 @@ export class TagState {
   @Selector()
   static getTags(state: TagStateModel): Tag[] {
     return state.tags;
-  }
-
-  @Selector()
-  static getActiveTags(state: TagStateModel): string[] {
-    return state.activeTags;
   }
 
   constructor(private tagService: TagService,
@@ -97,8 +90,8 @@ export class TagState {
   //////////////////////////////////////////////////////////
 
   @Action(tagActions.SetNewTagsAvailable)
-  setNewDataAvailable(ctx: StateContext<PhotoStateModel>): void {
-    console.log('TagState setNewDataAvailable: ',)
+  setNewTagsAvailable(ctx: StateContext<PhotoStateModel>): void {
+    console.log('TagState setNewTagsAvailable: ',)
     ctx.patchState({
       newDataAvailable: true
     });
@@ -218,33 +211,6 @@ export class TagState {
   deleteTagsFail({dispatch}: StateContext<TagStateModel>, action: tagActions.DeleteTagFail): void {
     this.alertService.error('Delete tag fail');
     dispatch({loaded: false, loading: false});
-  }
-
-  //////////////////////////////////////////////////////////
-  //          filter photos
-  //////////////////////////////////////////////////////////
-
-  @Action(tagActions.AddTagFilter)
-  addFilter(ctx: StateContext<TagStateModel>, action: tagActions.AddTagFilter): void {
-    ctx.setState(
-      patch({
-        activeTags: append([action.filter])
-      })
-    );
-  }
-
-  @Action(tagActions.RemoveTagFilter)
-  removeFilter(ctx: StateContext<TagStateModel>, action: tagActions.RemoveTagFilter): void {
-    ctx.setState(
-      patch({
-        activeTags: removeItem<string>(name => name === action.filter)
-      })
-    );
-  }
-
-  @Action(tagActions.ClearTagFilter)
-  clearFilter(ctx: StateContext<TagStateModel>, action: tagActions.ClearTagFilter): void {
-    ctx.patchState({activeTags: []});
   }
 
 }

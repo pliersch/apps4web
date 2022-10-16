@@ -232,6 +232,24 @@ export class SetRatingFail {
 
 // filtering
 
+export class AddTagFilter {
+  static readonly type = '[Gallery] Add Filter';
+
+  constructor(public filter: string) {
+  }
+}
+
+export class RemoveTagFilter {
+  static readonly type = '[Gallery] Remove Filter';
+
+  constructor(public filter: string) { }
+}
+
+export class ClearTagFilter {
+  static readonly type = '[Gallery] Clear Filter';
+
+}
+
 export class SetRatingFilter {
   static readonly type = '[Gallery] Set Rating Filter';
 
@@ -250,6 +268,11 @@ export class SetToYearFilter {
 
   constructor(public year: number) {
   }
+}
+
+export class ClearFilter {
+  static readonly type = '[Gallery] Clear Filter';
+
 }
 
 // server sent
