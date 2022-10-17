@@ -401,13 +401,12 @@ export class PhotoState {
 
   @Action(photoAction.TogglePhotoDownload)
   toggleDownload(ctx: StateContext<PhotoStateModel>, action: photoAction.TogglePhotoDownload): void {
-    const downloads = ctx.getState().downloads;
-    const isDownload = downloads.includes(action.photo);
+    const isDownload = ctx.getState().downloads.includes(action.photo);
     ctx.setState(
       patch({
         downloads:
           isDownload
-            ? removeItem<Photo>(action.photo.index)
+            ? removeItem<Photo>(photo => photo?.index === action.photo.index)
             : insertItem<Photo>(action.photo)
       })
     );
