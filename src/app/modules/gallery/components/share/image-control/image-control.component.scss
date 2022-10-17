@@ -1,11 +1,10 @@
 .image-container {
+  position: relative;
   display: flex;
-  margin: 14px;
+  margin: 10px;
   border: 1px solid #00000000;
-  //background: black;
 
   &:hover {
-    //cursor: pointer;
     border-color: darkgray;
   }
 
@@ -27,7 +26,18 @@ img {
 
 button {
   &.active {
-    color: green;
+    color: yellow;
   }
 }
 
+.action-container {
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.mat-mini-fab.mat-primary {
+  background-color: #000000ad !important;
+}
