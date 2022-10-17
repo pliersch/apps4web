@@ -640,6 +640,9 @@ export class PhotoState {
 
   @Action(photoAction.SetRatingFilter)
   setRatingFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.SetRatingFilter): void {
+    if (action.rate === ctx.getState().filterRating) {
+      action.rate = 0;
+    }
     ctx.patchState({
       filterRating: action.rate
     });

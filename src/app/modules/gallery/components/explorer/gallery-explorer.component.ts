@@ -178,7 +178,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
         this.downloadPhotos();
         break;
       case ActionTypes.EditTags:
-        this.editTags();
+        // this.editTags();
         break;
       case ActionTypes.NewTag:
         this.openNewTagDialog();
@@ -190,9 +190,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   onSelectForEdit($event: Photo): void {
-    this.store.dispatch(new photoAction.TogglePhotoDownload($event)).subscribe(() =>
-      this.editTags()
-    ).unsubscribe()
+    this.editTags([$event]);
   }
 
   onSelectForDownload($event: Photo): void {
@@ -255,9 +253,9 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     });
   }
 
-  private editTags(): void {
+  private editTags(photos: Photo[]): void {
     const dialogRef = this.dialog.open(GalleryEditImageTagsComponent, {
-      data: {tags: this.computeAvailableTagsOfPhotos()},
+      data: {tags: this.computeAvailableTagsOfPhotos(photos)},
       width: '800px',
       // minHeight: '400px',
       // maxHeight: '600px',
@@ -291,9 +289,9 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     });
   }
 
-  private computeAvailableTagsOfPhotos(): string[] {
+  private computeAvailableTagsOfPhotos(photos: Photo[]): string[] {
     const res: string[] = [];
-    for (const pic of this.selection) {
+    for (const pic of photos) {
       res.push(...pic.tags);
     }
     return Array.from(new Set(res));
