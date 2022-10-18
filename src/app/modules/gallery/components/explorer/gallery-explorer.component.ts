@@ -46,7 +46,8 @@ enum ActionTypes {
   Download,
   EditTags,
   NewTag,
-  ManageTags
+  ManageTags,
+  SwitchPhotoControl
 }
 
 @Component({
@@ -92,6 +93,8 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   private isRequesting: boolean;
   private resizeObserver: ResizeObserver;
 
+  switchControl = false;
+
   private areaSelection: AreaSelection;
   actions: Action[] = [
     {name: ActionTypes.SelectAll, icon: 'done_all', tooltip: 'select all', handler: this},
@@ -101,6 +104,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     {name: ActionTypes.EditTags, icon: 'edit', tooltip: 'edit tags', handler: this},
     {name: ActionTypes.NewTag, icon: 'playlist_add', tooltip: 'new tag', handler: this},
     {name: ActionTypes.ManageTags, icon: 'list', tooltip: 'manage tags', handler: this},
+    {name: ActionTypes.SwitchPhotoControl, icon: 'autorenew', tooltip: 'switch control', handler: this},
   ]
   private subscription: Subscription;
 
@@ -185,6 +189,9 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
         break;
       case ActionTypes.ManageTags:
         this.openEditTagDialog();
+        break;
+      case ActionTypes.SwitchPhotoControl:
+        this.switchControl = !this.switchControl;
         break;
     }
   }

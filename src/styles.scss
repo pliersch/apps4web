@@ -1,11 +1,13 @@
 @use '@angular/material' as mat;
 @import 'styles/containers.scss';
-@import 'styles/roboto.scss';
+//@import 'styles/roboto.scss';
 @import 'styles/material-icons.scss';
 @import 'styles/themes';
 @import 'styles/scrollbar';
 @import 'styles/colors';
 @import 'styles/flex-layout';
+
+@import url('https://fonts.googleapis.com/css2?family=Michroma&family=Montserrat:wght@100;200&display=swap');
 
 @include mat.core();
 
@@ -16,8 +18,13 @@ html, body {
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  //font-family: Montserrat, sans-serif;
+  //font-family: Roboto, "Helvetica Neue", sans-serif;
   overflow: hidden;
+
+  //* {
+  //  font-family: Montserrat, "Helvetica Neue", sans-serif !important;
+  //}
 }
 
 * {

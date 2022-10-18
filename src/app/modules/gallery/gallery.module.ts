@@ -36,6 +36,7 @@ import { GalleryEditTagsComponent } from './components/explorer/edit-tags/galler
 import { NgxsModule } from "@ngxs/store";
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { ImageControlComponent } from './components/share/image-control/image-control.component';
+import { ImageControl2Component } from './components/share/image-control2/image-control2.component';
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { ActionBarModule } from "@modules/action-bar/action-bar.module";
 import { TagState } from "@gallery/store/tags/tag.state";
@@ -72,6 +73,7 @@ import { GalleryDeletePhotoComponent } from './components/explorer/delete-photo-
     GalleryEditTagDetailComponent,
     GalleryEditTagsComponent,
     ImageControlComponent,
+    ImageControl2Component,
     GalleryNewTagCategoryComponent,
     GalleryEditImageTagsComponent,
     GalleryMetaPanelComponent,

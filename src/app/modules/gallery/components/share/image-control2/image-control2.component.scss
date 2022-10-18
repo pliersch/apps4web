@@ -1,0 +1,32 @@
+.image-container {
+  display: flex;
+  margin: 14px;
+  border: 1px solid #00000000;
+  //background: black;
+
+  &:hover {
+    //cursor: pointer;
+    border-color: darkgray;
+  }
+
+  &.active {
+    border-color: darkgray;
+    //border-color: var(--primary-color);
+  }
+}
+
+img {
+  width: 230px;
+  height: 150px;
+  object-fit: contain;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+button {
+  &.active {
+    color: green;
+  }
+}
