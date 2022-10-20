@@ -22,19 +22,21 @@
                             [filteredPhotosCount]="photos.length"
                             [loadedPhotos]="loadedPhotos"
                             [availablePhotos]="allPhotosCount"></app-gallery-meta-panel>
+
   </div>
   <div class="column-max-width">
     <div class="scrollbar-container">
       <ng-scrollbar #scrollbar>
         <div class="images-wrapper">
-          <app-image-control *ngFor="let photo of (photos$ | async)" class="selection-item"
-                             [selected]="currentPhoto.id === photo.id"
-                             (click)="setCurrent(photo)" [photo]="photo"
-                             [hasRights]="true" [download]="isDownload(photo)"
-                             (deleteEvent)="onSelectForDelete($event)"
-                             (previewEvent)="onSelectForPreview($event)"
-                             (editEvent)="onSelectForEdit($event)"
-                             (downloadEvent)="onSelectForDownload($event)"></app-image-control>
+          <app-image-control2 *ngFor="let photo of (photos$ | async)" class="selection-item"
+                              [selected]="currentPhoto.id === photo.id"
+                              (click)="setCurrent(photo)" [photo]="photo"
+                              [hasRights]="true" [download]="isDownload(photo)"
+                              (deleteEvent)="onSelectForDelete($event)"
+                              (previewEvent)="onSelectForPreview($event)"
+                              (editEvent)="onSelectForEdit($event)"
+                              (downloadEvent)="onSelectForDownload($event)"></app-image-control2>
+
         </div>
       </ng-scrollbar>
     </div>

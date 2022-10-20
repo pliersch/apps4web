@@ -54,6 +54,7 @@ import { GalleryRatingFilterComponent } from './components/explorer/rating-filte
 import { GalleryRatingComponent } from './components/explorer/rating-panel/gallery-rating.component';
 import { GalleryDateFilterComponent } from './components/explorer/date-filter/gallery-date-filter.component';
 import { GalleryDeletePhotoComponent } from './components/explorer/delete-photo-dialog/gallery-delete-photo.component';
+import { GalleryEditorComponent } from "@gallery/components/editor/gallery-editor.component";
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { GalleryDeletePhotoComponent } from './components/explorer/delete-photo-
     GalleryRatingComponent,
     GalleryDateFilterComponent,
     GalleryDeletePhotoComponent,
+    GalleryEditorComponent,
   ],
   imports: [
     CommonModule,

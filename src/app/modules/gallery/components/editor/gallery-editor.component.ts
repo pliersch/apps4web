@@ -3,7 +3,6 @@ import { Photo } from '@gallery/store/photos/photo.model';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
 import { PhotoState } from "@gallery/store/photos/photo.state";
-import { saveAs } from 'file-saver';
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import { ClearFilter } from "@gallery/store/photos/photo.actions";
 import { AreaSelection, AreaSelectionHandler } from "@gallery/components/explorer/area-selection";
@@ -43,15 +42,17 @@ enum ActionTypes {
   SelectAll,
   DeselectAll,
   ToggleSelection,
-  Download,
+  EditTags,
+  NewTag,
+  ManageTags,
 }
 
 @Component({
-  selector: 'app-gallery-explorer',
-  templateUrl: './gallery-explorer.component.html',
-  styleUrls: ['./gallery-explorer.component.scss']
+  selector: 'app-gallery-editor',
+  templateUrl: './gallery-editor.component.html',
+  styleUrls: ['./gallery-editor.component.scss']
 })
-export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestroy, ActionProvider, AreaSelectionHandler {
+export class GalleryEditorComponent implements OnInit, AfterViewInit, OnDestroy, ActionProvider, AreaSelectionHandler {
 
   @ViewChild('scrollbar')
   scrollbarRef: NgScrollbar;
@@ -89,12 +90,16 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   private isRequesting: boolean;
   private resizeObserver: ResizeObserver;
 
+  switchControl = false;
+
   private areaSelection: AreaSelection;
   actions: Action[] = [
     {name: ActionTypes.SelectAll, icon: 'done_all', tooltip: 'select all', handler: this},
     {name: ActionTypes.DeselectAll, icon: 'remove_done', tooltip: 'deselect all', handler: this},
     {name: ActionTypes.ToggleSelection, icon: 'published_with_changes', tooltip: 'toggle selection', handler: this},
-    {name: ActionTypes.Download, icon: 'download', tooltip: 'download', handler: this},
+    {name: ActionTypes.EditTags, icon: 'edit', tooltip: 'edit tags', handler: this},
+    {name: ActionTypes.NewTag, icon: 'playlist_add', tooltip: 'new tag', handler: this},
+    {name: ActionTypes.ManageTags, icon: 'list', tooltip: 'manage tags', handler: this},
   ]
   private subscription: Subscription;
 
@@ -168,8 +173,14 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
       case ActionTypes.ToggleSelection:
         this.store.dispatch(new photoAction.ToggleAllDownload());
         break;
-      case ActionTypes.Download:
-        this.downloadPhotos();
+      case ActionTypes.EditTags:
+        this.editTags(this.selection);
+        break;
+      case ActionTypes.NewTag:
+        this.openNewTagDialog();
+        break;
+      case ActionTypes.ManageTags:
+        this.openEditTagDialog();
         break;
     }
   }
@@ -214,14 +225,6 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
       }
     }
     this.store.dispatch(new photoAction.SelectManyPhotos(photos));
-  }
-
-  private downloadPhotos(): void {
-    this.photoService.download(this.downloads)
-      .subscribe((blob) => {
-        saveAs(blob, 'photos.zip')
-        this.store.dispatch(new photoAction.DeselectAllDownloads())
-      })
   }
 
   private openDeletePhotoDialog($event: Photo): void {

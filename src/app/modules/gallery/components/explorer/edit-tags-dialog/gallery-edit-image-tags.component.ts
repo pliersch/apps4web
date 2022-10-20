@@ -19,6 +19,7 @@ export class GalleryEditImageTagsComponent implements OnInit {
   removedTags: string[] = [];
   tagCtrl = new UntypedFormControl();
   separatorKeysCodes: number[] = [ENTER, COMMA];
+  changed = false;
 
   constructor(public dialogRef: MatDialogRef<GalleryEditImageTagsComponent>,
               @Inject(MAT_DIALOG_DATA) public data: EditTagsDialogData) { }
@@ -34,6 +35,7 @@ export class GalleryEditImageTagsComponent implements OnInit {
         this.data.tags.push(value); // todo these 2 lines looks weird
         this.addedTags.push(value); // hmm?
         event.chipInput!.clear();
+        this.changed = true;
       }
     }
   }
@@ -43,6 +45,7 @@ export class GalleryEditImageTagsComponent implements OnInit {
     if (index >= 0) {
       this.data.tags.splice(index, 1);
       this.removedTags.push(tag);
+      this.changed = true;
     }
   }
 

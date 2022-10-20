@@ -25,7 +25,7 @@
 <mat-dialog-actions>
   <span class="spacer"></span>
   <button mat-raised-button (click)="onCancel()">Cancel</button>
-  <button mat-raised-button type="submit" class="mat-primary"
+  <button mat-raised-button type="submit" class="mat-primary" [disabled]="!changed"
           (click)="onSave()" [mat-dialog-close]="addedTags">Ok
   </button>
 </mat-dialog-actions>

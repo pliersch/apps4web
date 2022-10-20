@@ -92,14 +92,20 @@ export class ClearPhotoSelection {
 
 // selections
 
-export class SelectAllPhotos {
-  static readonly type = '[Gallery] Select All Photos Download';
+export class SelectPhoto {
+  static readonly type = '[Gallery] Select Photo Download';
+
+  constructor(public photos: Photo[]) { }
 }
 
 export class SelectManyPhotos {
   static readonly type = '[Gallery] Select Many Photos Download';
 
   constructor(public photos: Photo[]) { }
+}
+
+export class SelectAllPhotos {
+  static readonly type = '[Gallery] Select All Photos Download';
 }
 
 export class DeselectAllPhotos {
