@@ -5,7 +5,7 @@
     <button mat-icon-button (click)="onClickPreview()">
       <mat-icon>visibility</mat-icon>
     </button>
-    <button mat-icon-button (click)="onClickDownload()" [class.active]="download">
+    <button mat-icon-button (click)="onClickGroupEdit()" [class.active]="edit">
       <mat-icon>check_circle</mat-icon>
     </button>
     <button mat-icon-button [disabled]="!hasRights" (click)="onClickEdit()">

@@ -16,7 +16,7 @@ export class ImageControl2Component {
   selected: boolean;
 
   @Input()
-  download: boolean;
+  edit: boolean;
 
   @Input()
   hasRights: boolean;
@@ -25,7 +25,7 @@ export class ImageControl2Component {
   editEvent = new EventEmitter<Photo>();
 
   @Output()
-  downloadEvent = new EventEmitter<Photo>();
+  groupEditEvent = new EventEmitter<Photo>();
 
   @Output()
   deleteEvent = new EventEmitter<Photo>();
@@ -34,8 +34,8 @@ export class ImageControl2Component {
   previewEvent = new EventEmitter<Photo>();
 
 
-  onClickDownload(): void {
-    this.downloadEvent.emit(this.photo);
+  onClickGroupEdit(): void {
+    this.groupEditEvent.emit(this.photo);
   }
 
   getThumbUrl(fileName: string): string {

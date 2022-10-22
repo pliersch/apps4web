@@ -5,7 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { saveAs } from 'file-saver';
 import * as photoAction from "@gallery/store/photos/photo.actions";
-import { ClearFilter } from "@gallery/store/photos/photo.actions";
+import { ClearFilter, DeselectAllDownloads, SelectAllDownloads } from "@gallery/store/photos/photo.actions";
 import { AreaSelection, AreaSelectionHandler } from "@gallery/components/explorer/area-selection";
 import {
   GalleryEditImageTagsComponent
@@ -76,7 +76,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   currentPhoto$: Observable<Photo>;
   currentPhoto: Photo;
 
-  @Select(PhotoState.getSelectedPhotos)
+  @Select(PhotoState.getEditPhotos)
   selection$: Observable<Photo[]>;
   selection: Photo[];
 
@@ -160,10 +160,10 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   onAction(action: Action): void {
     switch (action.name) {
       case ActionTypes.SelectAll:
-        this.store.dispatch(new photoAction.SelectAllPhotos());
+        this.store.dispatch(new photoAction.SelectAllDownloads());
         break;
       case ActionTypes.DeselectAll:
-        this.store.dispatch(new photoAction.DeselectAllPhotos());
+        this.store.dispatch(new photoAction.DeselectAllDownloads());
         break;
       case ActionTypes.ToggleSelection:
         this.store.dispatch(new photoAction.ToggleAllDownload());
@@ -213,7 +213,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
         console.log('GalleryExplorerComponent err why cant find the id?: ', fileName)
       }
     }
-    this.store.dispatch(new photoAction.SelectManyPhotos(photos));
+    this.store.dispatch(new photoAction.SelectManyPhotosEdit(photos));
   }
 
   private downloadPhotos(): void {

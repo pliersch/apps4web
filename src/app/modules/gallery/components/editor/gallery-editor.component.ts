@@ -4,7 +4,7 @@ import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import * as photoAction from "@gallery/store/photos/photo.actions";
-import { ClearFilter } from "@gallery/store/photos/photo.actions";
+import { ClearFilter, TogglePhotoGroupEdit } from "@gallery/store/photos/photo.actions";
 import { AreaSelection, AreaSelectionHandler } from "@gallery/components/explorer/area-selection";
 import {
   GalleryEditImageTagsComponent
@@ -77,13 +77,9 @@ export class GalleryEditorComponent implements OnInit, AfterViewInit, OnDestroy,
   currentPhoto$: Observable<Photo>;
   currentPhoto: Photo;
 
-  @Select(PhotoState.getSelectedPhotos)
+  @Select(PhotoState.getEditPhotos)
   selection$: Observable<Photo[]>;
   selection: Photo[];
-
-  @Select(PhotoState.getDownloads)  // todo look for pipe to remove field downloads
-  downloads$: Observable<Photo[]>;
-  downloads: Photo[];
 
   showFilter = true;
   absoluteHeight = 0;
@@ -113,7 +109,6 @@ export class GalleryEditorComponent implements OnInit, AfterViewInit, OnDestroy,
   ngOnInit(): void {
     this.actionBarService.setActions(this.actions);
     this.subscription = this.selection$.subscribe(res => this.selection = res);
-    this.subscription = this.downloads$.subscribe(res => this.downloads = res);
     this.subscription = this.loadedPhotos$.subscribe(res => this.loadedPhotos = res);
     this.subscription.add(this.currentPhoto$.subscribe(res => this.currentPhoto = res));
     this.subscription.add(this.isAuthenticated$.subscribe(res => this.isAuthenticated = res));
@@ -165,10 +160,10 @@ export class GalleryEditorComponent implements OnInit, AfterViewInit, OnDestroy,
   onAction(action: Action): void {
     switch (action.name) {
       case ActionTypes.SelectAll:
-        this.store.dispatch(new photoAction.SelectAllPhotos());
+        this.store.dispatch(new photoAction.SelectAllPhotosEdit());
         break;
       case ActionTypes.DeselectAll:
-        this.store.dispatch(new photoAction.DeselectAllPhotos());
+        this.store.dispatch(new photoAction.DeselectAllPhotosEdit());
         break;
       case ActionTypes.ToggleSelection:
         this.store.dispatch(new photoAction.ToggleAllDownload());
@@ -189,8 +184,8 @@ export class GalleryEditorComponent implements OnInit, AfterViewInit, OnDestroy,
     this.editTags([$event]);
   }
 
-  onSelectForDownload($event: Photo): void {
-    this.store.dispatch(new photoAction.TogglePhotoDownload($event));
+  onSelectGroupEdit($event: Photo): void {
+    this.store.dispatch(new photoAction.TogglePhotoGroupEdit($event));
   }
 
   onSelectForPreview($event: Photo): void {
@@ -206,8 +201,8 @@ export class GalleryEditorComponent implements OnInit, AfterViewInit, OnDestroy,
     this.store.dispatch(new ClearFilter())
   }
 
-  isDownload(photo: Photo): boolean {
-    return this.downloads.includes(photo);
+  isSelectForEdit(photo: Photo): boolean {
+    return this.selection.includes(photo);
   }
 
   private initializeSelectionArea(): void {
@@ -224,7 +219,7 @@ export class GalleryEditorComponent implements OnInit, AfterViewInit, OnDestroy,
         console.log('GalleryExplorerComponent err why cant find the id?: ', fileName)
       }
     }
-    this.store.dispatch(new photoAction.SelectManyPhotos(photos));
+    this.store.dispatch(new photoAction.SelectManyPhotosEdit(photos));
   }
 
   private openDeletePhotoDialog($event: Photo): void {

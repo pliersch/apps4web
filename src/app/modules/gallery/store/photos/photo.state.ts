@@ -15,7 +15,7 @@ import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto"
 export interface PhotoStateModel {
   photos: Photo[];
   currentPhoto: Photo;
-  selectedPhotos: Photo[];
+  editPhotos: Photo[];
   downloads: Photo[];
   loadedPhotos: number;
   availablePhotos: number;
@@ -35,7 +35,7 @@ export interface PhotoStateModel {
   defaults: {
     photos: [],
     downloads: [],
-    selectedPhotos: [],
+    editPhotos: [],
     currentPhoto: {id: '0', index: -1, tags: [], rating: 0, isSelected: false, fileName: '', recordDate: new Date()},
     newDataAvailable: true,
     availablePhotos: 0,
@@ -111,8 +111,8 @@ export class PhotoState {
   }
 
   @Selector()
-  static getSelectedPhotos(state: PhotoStateModel): Photo[] {
-    return state.selectedPhotos;
+  static getEditPhotos(state: PhotoStateModel): Photo[] {
+    return state.editPhotos;
   }
 
   @Selector()
@@ -396,6 +396,53 @@ export class PhotoState {
   }
 
   //////////////////////////////////////////////////////////
+  //          manage
+  //////////////////////////////////////////////////////////
+
+  @Action(photoAction.TogglePhotoGroupEdit)
+  toggleGroupEdit(ctx: StateContext<PhotoStateModel>, action: photoAction.TogglePhotoGroupEdit): void {
+    const contains = ctx.getState().editPhotos.includes(action.photo);
+    console.log('PhotoState toggleGroupEdit: ', action.photo, contains)
+    ctx.setState(
+      patch({
+        editPhotos:
+          contains
+            ? removeItem<Photo>(photo => photo?.index === action.photo.index)
+            : insertItem<Photo>(action.photo)
+      })
+    );
+  }
+
+  @Action(photoAction.SelectAllPhotosEdit)
+  selectAllPhotos(ctx: StateContext<PhotoStateModel>): void {
+    const state = ctx.getState();
+    ctx.setState(
+      patch({
+        editPhotos: state.photos
+      })
+    );
+  }
+
+  @Action(photoAction.SelectManyPhotosEdit)
+  selectManyPhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.SelectManyPhotosEdit): void {
+    ctx.setState(
+      patch({
+        editPhotos: action.photos
+      })
+    );
+  }
+
+  @Action(photoAction.DeselectAllPhotosEdit)
+  deselectAllPhotos(ctx: StateContext<PhotoStateModel>): void {
+    const photos: Photo[] = [];
+    ctx.setState(
+      patch({
+        editPhotos: photos // WTF !!! empty array thrown an error
+      })
+    );
+  }
+
+  //////////////////////////////////////////////////////////
   //          download
   //////////////////////////////////////////////////////////
 
@@ -412,42 +459,17 @@ export class PhotoState {
     );
   }
 
-  @Action(photoAction.SelectAllPhotos)
-  selectAllPhotos(ctx: StateContext<PhotoStateModel>): void {
+  @Action(photoAction.SelectAllDownloads)
+  selectAllDownload(ctx: StateContext<PhotoStateModel>): void {
     const state = ctx.getState();
-    ctx.setState(
-      patch({
-        selectedPhotos: state.photos
-      })
-    );
-  }
-
-  @Action(photoAction.SelectManyPhotos)
-  selectManyPhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.SelectManyPhotos): void {
-    ctx.setState(
-      patch({
-        selectedPhotos: action.photos
-      })
-    );
-  }
-
-  @Action(photoAction.DeselectAllPhotos)
-  deselectAllPhotos(ctx: StateContext<PhotoStateModel>): void {
-    const photos: Photo[] = [];
-    ctx.setState(
-      patch({
-        selectedPhotos: photos // WTF !!! empty array thrown an error
-      })
-    );
+    ctx.setState(patch({downloads: state.photos}));
   }
 
   @Action(photoAction.DeselectAllDownloads)
   deselectAllDownloads(ctx: StateContext<PhotoStateModel>): void {
     const photos: Photo[] = [];
     ctx.setState(
-      patch({
-        downloads: photos // WTF !!! empty array thrown an error
-      })
+      patch({downloads: photos}) // WTF !!! empty array thrown an error
     );
   }
 

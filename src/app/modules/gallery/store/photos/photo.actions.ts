@@ -90,38 +90,42 @@ export class ClearPhotoSelection {
   static readonly type = '[Gallery] Clear Photo Selection';
 }
 
-// selections
+// manage / edit
 
-export class SelectPhoto {
-  static readonly type = '[Gallery] Select Photo Download';
+export class TogglePhotoGroupEdit {
+  static readonly type = '[Gallery] Toggle Photo Group Edit';
+
+  constructor(public photo: Photo) { }
+}
+
+export class SelectManyPhotosEdit {
+  static readonly type = '[Gallery] Select Many Photos Edit';
 
   constructor(public photos: Photo[]) { }
 }
 
-export class SelectManyPhotos {
-  static readonly type = '[Gallery] Select Many Photos Download';
-
-  constructor(public photos: Photo[]) { }
+export class SelectAllPhotosEdit {
+  static readonly type = '[Gallery] Select All Photos Edit';
 }
 
-export class SelectAllPhotos {
-  static readonly type = '[Gallery] Select All Photos Download';
-}
-
-export class DeselectAllPhotos {
-  static readonly type = '[Gallery] Clear Selection';
+export class DeselectAllPhotosEdit {
+  static readonly type = '[Gallery] De-Select All Photos Edit';
 }
 
 // downloads
-
-export class ToggleAllDownload {
-  static readonly type = '[Gallery] Toggle Photos Download';
-}
 
 export class TogglePhotoDownload {
   static readonly type = '[Gallery] Toggle Photo Download';
 
   constructor(public photo: Photo) { }
+}
+
+export class ToggleAllDownload {
+  static readonly type = '[Gallery] Toggle Photos Download';
+}
+
+export class SelectAllDownloads {
+  static readonly type = '[Gallery] Select All Download';
 }
 
 export class DeselectAllDownloads {
