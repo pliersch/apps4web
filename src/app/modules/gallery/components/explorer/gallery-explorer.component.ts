@@ -5,10 +5,6 @@ import { Observable, Subscription } from 'rxjs';
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { saveAs } from 'file-saver';
 import * as photoAction from "@gallery/store/photos/photo.actions";
-import { AreaSelection, AreaSelectionHandler } from "@gallery/components/explorer/area-selection";
-import {
-  GalleryEditImageTagsComponent
-} from "@gallery/components/explorer/edit-tags-dialog/gallery-edit-image-tags.component";
 import { MatDialog } from "@angular/material/dialog";
 import { PhotoService } from "@gallery/services/photo.service";
 import { NgScrollbar } from "ngx-scrollbar";
@@ -17,26 +13,7 @@ import { Router } from "@angular/router";
 import { AuthState } from "@modules/google-signin/store/auth.state";
 import { Action, ActionProvider } from "@modules/action-bar/actions";
 import { ActionBarService } from "@modules/action-bar/action-bar.service";
-import {
-  GalleryNewTagCategoryComponent
-} from "@gallery/components/explorer/new-tag-category/gallery-new-tag-category.component";
-import { GalleryEditTagsComponent } from "@gallery/components/explorer/edit-tags/gallery-edit-tags.component";
-import {
-  GalleryDeletePhotoComponent
-} from "@gallery/components/explorer/delete-photo-dialog/gallery-delete-photo.component";
 
-export interface DeletePhotoDialogData {
-  photo: Photo;
-}
-
-export interface EditTagsDialogData {
-  tags: string[];
-}
-
-export interface EditTagsDialogResult {
-  addedTags: string[];
-  removedTags: string[];
-}
 
 enum ActionTypes {
   SelectAll,
@@ -51,7 +28,7 @@ enum ActionTypes {
   templateUrl: './gallery-explorer.component.html',
   styleUrls: ['./gallery-explorer.component.scss']
 })
-export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestroy, ActionProvider, AreaSelectionHandler {
+export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestroy, ActionProvider {
 
   @ViewChild('scrollbar')
   scrollbarRef: NgScrollbar;
@@ -89,7 +66,6 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   private isRequesting: boolean;
   private resizeObserver: ResizeObserver;
 
-  private areaSelection: AreaSelection;
   actions: Action[] = [
     {name: ActionTypes.SelectAll, icon: 'done_all', tooltip: 'select all', handler: this},
     {name: ActionTypes.Add, icon: 'add', tooltip: 'add', handler: this},
@@ -119,7 +95,6 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
         this.photos = res;
         this.isRequesting = false;
       }));
-    this.initializeSelectionArea();
   }
 
   ngAfterViewInit(): void {
@@ -129,6 +104,10 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
         this.requestNextPhotos(e.target as Element);
       })
     ).subscribe();
+    // const element = this.scrollbarRef.nativeElement.querySelector('.ng-scroll-content');
+    // if (element) {
+    //   this.requestNextPhotos(element);
+    // }
   }
 
   ngOnDestroy(): void {
@@ -151,7 +130,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
 
   requestNextPhotos(element: Element): void {
     const currentHeight = element.clientHeight + element.scrollTop /* + element.scrollTop*/;
-    // console.log('GalleryExplorerComponent requestNextPhotos: ', currentHeight, this.absoluteHeight)
+    console.log('GalleryExplorerComponent requestNextPhotos: ', currentHeight, this.absoluteHeight)
     if (currentHeight + 180 > this.absoluteHeight && !this.isRequesting) {
       this.isRequesting = true;
       this.store.dispatch(new photoAction.LoadPhotos(60));
@@ -164,7 +143,6 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
         this.store.dispatch(new photoAction.SelectAllDownloads());
         break;
       case ActionTypes.Add:
-        console.log('GalleryExplorerComponent onAction: ADD',)
         this.store.dispatch(new photoAction.AddToDownload(this.photos));
         break;
       case ActionTypes.DeselectAll:
@@ -179,10 +157,6 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     }
   }
 
-  onSelectForEdit($event: Photo): void {
-    this.editTags([$event]);
-  }
-
   onSelectForDownload($event: Photo): void {
     this.store.dispatch(new photoAction.TogglePhotoDownload($event));
   }
@@ -192,9 +166,6 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     void this.router.navigate(['gallery/slideshow']);
   }
 
-  onSelectForDelete($event: Photo): void {
-    this.openDeletePhotoDialog($event);
-  }
 
   onClickClearFilter(): void {
     this.store.dispatch(new photoAction.ClearFilter())
@@ -204,99 +175,11 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     return this.downloads.includes(photo);
   }
 
-  private initializeSelectionArea(): void {
-    this.areaSelection = new AreaSelection(this);
-  }
-
-  onSelectionFinish(photoFileNames: string[]): void {
-    const photos: Photo[] = [];
-    for (const fileName of photoFileNames) {
-      const photo = this.photos.find(img => img.fileName == fileName);
-      if (photo) {
-        photos.push(photo);
-      } else {
-        console.log('GalleryExplorerComponent err why cant find the id?: ', fileName)
-      }
-    }
-    this.store.dispatch(new photoAction.SelectManyPhotosEdit(photos));
-  }
-
   private downloadPhotos(): void {
     this.photoService.download(this.downloads)
       .subscribe((blob) => {
         saveAs(blob, 'photos.zip')
         this.store.dispatch(new photoAction.DeselectAllDownloads())
       })
-  }
-
-  private openDeletePhotoDialog($event: Photo): void {
-    const dialogRef = this.dialog.open(GalleryDeletePhotoComponent, {
-      data: {photo: $event},
-      width: '300px',
-      restoreFocus: false,
-      autoFocus: false
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.store.dispatch(new photoAction.DeletePhoto($event.id));
-      }
-    });
-  }
-
-  private editTags(photos: Photo[]): void {
-    const dialogRef = this.dialog.open(GalleryEditImageTagsComponent, {
-      data: {tags: this.computeAvailableTagsOfPhotos(photos)},
-      width: '800px',
-      // minHeight: '400px',
-      // maxHeight: '600px',
-      restoreFocus: false,
-      autoFocus: false
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      this.updateTagsOfSelectedPhotos(result);
-    });
-  }
-
-  private computeAvailableTagsOfPhotos(photos: Photo[]): string[] {
-    const res: string[] = [];
-    for (const pic of photos) {
-      res.push(...pic.tags);
-    }
-    return Array.from(new Set(res));
-  }
-
-  private openNewTagDialog(): void {
-    this.dialog.open(GalleryNewTagCategoryComponent, {
-      // minWidth: '600px',
-      width: '500px',
-      // minHeight: '400px',
-      // maxHeight: '600px',
-      restoreFocus: false,
-      autoFocus: false
-    });
-  }
-
-  private openEditTagDialog(): void {
-    this.dialog.open(GalleryEditTagsComponent, {
-      // minWidth: '600px',
-      width: '800px',
-      // minHeight: '400px',
-      // maxHeight: '600px',
-      restoreFocus: false,
-      autoFocus: false
-    });
-  }
-
-  private updateTagsOfSelectedPhotos(res: EditTagsDialogResult): void {
-    if (!res) {
-      return;
-    }
-    for (const photo of this.selection) {
-      let tags: string[] = [];
-      tags = photo.tags.filter(x => !res.removedTags.includes(x));
-      tags = tags.filter(x => !res.addedTags.includes(x))
-        .concat(res.addedTags.filter(x => !tags.includes(x)));
-      this.store.dispatch(new photoAction.SetTagsOfPhoto(photo, tags));
-    }
   }
 }

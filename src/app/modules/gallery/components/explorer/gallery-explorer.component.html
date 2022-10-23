@@ -31,9 +31,7 @@
                              [selected]="currentPhoto.id === photo.id"
                              (click)="setCurrent(photo)" [photo]="photo"
                              [hasRights]="true" [download]="isDownload(photo)"
-                             (deleteEvent)="onSelectForDelete($event)"
                              (previewEvent)="onSelectForPreview($event)"
-                             (editEvent)="onSelectForEdit($event)"
                              (downloadEvent)="onSelectForDownload($event)"></app-image-control>
         </div>
       </ng-scrollbar>

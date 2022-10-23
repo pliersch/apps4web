@@ -4,7 +4,7 @@ import { Observable, of } from "rxjs";
 import { UntypedFormControl } from "@angular/forms";
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import { MatChipInputEvent } from "@angular/material/chips";
-import { EditTagsDialogData } from "@gallery/components/explorer/gallery-explorer.component";
+import { EditTagsDialogData } from "@gallery/components/editor/gallery-editor.component";
 
 @Component({
   selector: 'app-gallery-edit-image-tags',

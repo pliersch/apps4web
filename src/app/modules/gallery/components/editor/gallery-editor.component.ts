@@ -4,8 +4,6 @@ import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import * as photoAction from "@gallery/store/photos/photo.actions";
-import { ClearFilter, TogglePhotoGroupEdit } from "@gallery/store/photos/photo.actions";
-import { AreaSelection, AreaSelectionHandler } from "@gallery/components/explorer/area-selection";
 import {
   GalleryEditImageTagsComponent
 } from "@gallery/components/explorer/edit-tags-dialog/gallery-edit-image-tags.component";
@@ -52,7 +50,7 @@ enum ActionTypes {
   templateUrl: './gallery-editor.component.html',
   styleUrls: ['./gallery-editor.component.scss']
 })
-export class GalleryEditorComponent implements OnInit, AfterViewInit, OnDestroy, ActionProvider, AreaSelectionHandler {
+export class GalleryEditorComponent implements OnInit, AfterViewInit, OnDestroy, ActionProvider {
 
   @ViewChild('scrollbar')
   scrollbarRef: NgScrollbar;
@@ -88,7 +86,6 @@ export class GalleryEditorComponent implements OnInit, AfterViewInit, OnDestroy,
 
   switchControl = false;
 
-  private areaSelection: AreaSelection;
   actions: Action[] = [
     {name: ActionTypes.SelectAll, icon: 'done_all', tooltip: 'select all', handler: this},
     {name: ActionTypes.DeselectAll, icon: 'remove_done', tooltip: 'deselect all', handler: this},
@@ -118,7 +115,6 @@ export class GalleryEditorComponent implements OnInit, AfterViewInit, OnDestroy,
         this.photos = res;
         this.isRequesting = false;
       }));
-    this.initializeSelectionArea();
   }
 
   ngAfterViewInit(): void {
@@ -198,15 +194,11 @@ export class GalleryEditorComponent implements OnInit, AfterViewInit, OnDestroy,
   }
 
   onClickClearFilter(): void {
-    this.store.dispatch(new ClearFilter())
+    this.store.dispatch(new photoAction.ClearFilter())
   }
 
   isSelectForEdit(photo: Photo): boolean {
     return this.selection.includes(photo);
-  }
-
-  private initializeSelectionArea(): void {
-    this.areaSelection = new AreaSelection(this);
   }
 
   onSelectionFinish(photoFileNames: string[]): void {

@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { DeletePhotoDialogData } from "@gallery/components/explorer/gallery-explorer.component";
+import { DeletePhotoDialogData } from "@gallery/components/editor/gallery-editor.component";
 
 @Component({
   selector: 'app-gallery-delete-photo',
