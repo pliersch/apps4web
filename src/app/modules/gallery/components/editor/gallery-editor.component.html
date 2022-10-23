@@ -22,7 +22,6 @@
                             [filteredPhotosCount]="photos.length"
                             [loadedPhotos]="loadedPhotos"
                             [availablePhotos]="allPhotosCount"></app-gallery-meta-panel>
-
   </div>
   <div class="column-max-width">
     <div class="scrollbar-container">
@@ -36,7 +35,6 @@
                               (previewEvent)="onSelectForPreview($event)"
                               (editEvent)="onSelectForEdit($event)"
                               (groupEditEvent)="onSelectGroupEdit($event)"></app-image-control2>
-
         </div>
       </ng-scrollbar>
     </div>

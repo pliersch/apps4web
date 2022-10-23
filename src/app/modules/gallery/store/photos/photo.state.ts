@@ -14,6 +14,7 @@ import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto"
 
 export interface PhotoStateModel {
   photos: Photo[];
+  filteredPhotos: Photo[];
   currentPhoto: Photo;
   editPhotos: Photo[];
   downloads: Photo[];
@@ -34,6 +35,7 @@ export interface PhotoStateModel {
   name: 'PhotoState',
   defaults: {
     photos: [],
+    filteredPhotos: [],
     downloads: [],
     editPhotos: [],
     currentPhoto: {id: '0', index: -1, tags: [], rating: 0, isSelected: false, fileName: '', recordDate: new Date()},
@@ -87,10 +89,6 @@ export class PhotoState {
     filteredPhotos = filterByYear(filteredPhotos, filterFrom, filterTo);
     return filteredPhotos;
   }
-
-  // @Selector()
-  // static newDataAvailable(state: PhotoStateModel): Photo {
-  // }
 
   @Selector()
   static getCurrentPhoto(state: PhotoStateModel): Photo {
@@ -325,6 +323,7 @@ export class PhotoState {
 
   @Action(photoAction.AddPhotoFail)
   addPhotoFail(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoFail): void {
+    console.log(action.error)
     ctx.dispatch({loaded: false, loading: false});
     this.alertService.error('Upload fail');
   }
@@ -461,8 +460,15 @@ export class PhotoState {
 
   @Action(photoAction.SelectAllDownloads)
   selectAllDownload(ctx: StateContext<PhotoStateModel>): void {
+    const filteredPhotos = this._getFilteredPhotos(ctx.getState());
+    ctx.setState(patch({downloads: filteredPhotos}));
+  }
+
+  @Action(photoAction.AddToDownload)
+  addToDownload(ctx: StateContext<PhotoStateModel>, action: photoAction.AddToDownload): void {
     const state = ctx.getState();
-    ctx.setState(patch({downloads: state.photos}));
+    const photos: Photo[] = [...state.downloads, ...action.photos]
+    ctx.setState(patch({downloads: photos}));
   }
 
   @Action(photoAction.DeselectAllDownloads)
@@ -475,9 +481,9 @@ export class PhotoState {
 
   @Action(photoAction.ToggleAllDownload)
   togglePhotosDownload(ctx: StateContext<PhotoStateModel>): void {
-    const photos = ctx.getState().photos;
+    const filteredPhotos = this._getFilteredPhotos(ctx.getState());
     const downloads = ctx.getState().downloads;
-    const difference = photos.filter(x => !downloads.includes(x));
+    const difference = filteredPhotos.filter(x => !downloads.includes(x));
     ctx.setState(
       patch({downloads: difference})
     );
@@ -688,5 +694,15 @@ export class PhotoState {
     ctx.patchState({
       filterTo: -1, filterFrom: -1, filterRating: 0, tagFilter: []
     });
+  }
+
+  // Helper. Look for better solution
+
+  _getFilteredPhotos(state: PhotoStateModel): Photo[] {
+    return PhotoState.getFilteredPhotos(
+      PhotoState.getPhotosByTags(PhotoState.getPhotos(state), PhotoState.getActiveTags(state)),
+      PhotoState.getFilterRating(state),
+      PhotoState.getFilterFrom(state),
+      PhotoState.getFilterTo(state));
   }
 }

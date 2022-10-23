@@ -5,7 +5,6 @@ import { Observable, Subscription } from 'rxjs';
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { saveAs } from 'file-saver';
 import * as photoAction from "@gallery/store/photos/photo.actions";
-import { ClearFilter, DeselectAllDownloads, SelectAllDownloads } from "@gallery/store/photos/photo.actions";
 import { AreaSelection, AreaSelectionHandler } from "@gallery/components/explorer/area-selection";
 import {
   GalleryEditImageTagsComponent
@@ -41,6 +40,7 @@ export interface EditTagsDialogResult {
 
 enum ActionTypes {
   SelectAll,
+  Add,
   DeselectAll,
   ToggleSelection,
   Download,
@@ -92,6 +92,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   private areaSelection: AreaSelection;
   actions: Action[] = [
     {name: ActionTypes.SelectAll, icon: 'done_all', tooltip: 'select all', handler: this},
+    {name: ActionTypes.Add, icon: 'add', tooltip: 'add', handler: this},
     {name: ActionTypes.DeselectAll, icon: 'remove_done', tooltip: 'deselect all', handler: this},
     {name: ActionTypes.ToggleSelection, icon: 'published_with_changes', tooltip: 'toggle selection', handler: this},
     {name: ActionTypes.Download, icon: 'download', tooltip: 'download', handler: this},
@@ -162,6 +163,10 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
       case ActionTypes.SelectAll:
         this.store.dispatch(new photoAction.SelectAllDownloads());
         break;
+      case ActionTypes.Add:
+        console.log('GalleryExplorerComponent onAction: ADD',)
+        this.store.dispatch(new photoAction.AddToDownload(this.photos));
+        break;
       case ActionTypes.DeselectAll:
         this.store.dispatch(new photoAction.DeselectAllDownloads());
         break;
@@ -192,7 +197,7 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   onClickClearFilter(): void {
-    this.store.dispatch(new ClearFilter())
+    this.store.dispatch(new photoAction.ClearFilter())
   }
 
   isDownload(photo: Photo): boolean {

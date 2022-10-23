@@ -128,6 +128,12 @@ export class SelectAllDownloads {
   static readonly type = '[Gallery] Select All Download';
 }
 
+export class AddToDownload {
+  static readonly type = '[Gallery] Add To Download';
+
+  constructor(public photos: Photo[]) { }
+}
+
 export class DeselectAllDownloads {
   static readonly type = '[Gallery] Clear Download';
 }
