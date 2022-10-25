@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Photo } from '@gallery/store/photos/photo.model';
-import { Subscription } from 'rxjs';
 import { saveAs } from 'file-saver';
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import { Action, ActionProvider } from "@modules/action-bar/actions";
@@ -21,7 +20,7 @@ enum ActionTypes {
 })
 export class GalleryExplorerComponent extends AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestroy, ActionProvider {
 
-  actions: Action[] = [
+  actions = [
     {name: ActionTypes.SelectAll, icon: 'done_all', tooltip: 'select all', handler: this},
     {name: ActionTypes.Add, icon: 'add', tooltip: 'add', handler: this},
     {name: ActionTypes.DeselectAll, icon: 'remove_done', tooltip: 'deselect all', handler: this},
@@ -34,17 +33,7 @@ export class GalleryExplorerComponent extends AbstractExplorerComponent implemen
   }
 
   ngOnInit(): void {
-    this.actionBarService.setActions(this.actions);
-    this.subscription = this.downloads$.subscribe(res => this.downloads = res);
-    this.subscription = this.loadedPhotos$.subscribe(res => this.loadedPhotos = res);
-    this.subscription.add(this.currentPhoto$.subscribe(res => this.currentPhoto = res));
-    this.subscription.add(this.isAuthenticated$.subscribe(res => this.isAuthenticated = res));
-    this.subscription.add(this.allPhotosCount$.subscribe(count => this.allPhotosCount = count));
-    this.subscription.add(
-      this.photos$.subscribe(res => {
-        this.photos = res;
-        this.isRequesting = false;
-      }));
+    super.ngOnInit();
   }
 
   ngAfterViewInit(): void {
@@ -52,12 +41,7 @@ export class GalleryExplorerComponent extends AbstractExplorerComponent implemen
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-    this.actionBarService.removeActions();
-  }
-
-  setCurrent(photo: Photo): void {
-    this.store.dispatch(new photoAction.SetCurrentPhoto(photo))
+    super.ngOnDestroy();
   }
 
   onAction(action: Action): void {

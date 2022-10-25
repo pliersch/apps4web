@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Photo } from '@gallery/store/photos/photo.model';
-import { Subscription } from 'rxjs';
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import {
   GalleryEditImageTagsComponent
@@ -44,7 +43,7 @@ enum ActionTypes {
 })
 export class GalleryEditorComponent extends AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestroy, ActionProvider {
 
-  actions: Action[] = [
+  actions = [
     {name: ActionTypes.SelectAll, icon: 'done_all', tooltip: 'select all', handler: this},
     {name: ActionTypes.DeselectAll, icon: 'remove_done', tooltip: 'deselect all', handler: this},
     {name: ActionTypes.ToggleSelection, icon: 'published_with_changes', tooltip: 'toggle selection', handler: this},
@@ -58,17 +57,7 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
   }
 
   ngOnInit(): void {
-    this.actionBarService.setActions(this.actions);
-    this.subscription = this.selection$.subscribe(res => this.selection = res);
-    this.subscription = this.loadedPhotos$.subscribe(res => this.loadedPhotos = res);
-    this.subscription.add(this.currentPhoto$.subscribe(res => this.currentPhoto = res));
-    this.subscription.add(this.isAuthenticated$.subscribe(res => this.isAuthenticated = res));
-    this.subscription.add(this.allPhotosCount$.subscribe(count => this.allPhotosCount = count));
-    this.subscription.add(
-      this.photos$.subscribe(res => {
-        this.photos = res;
-        this.isRequesting = false;
-      }));
+    super.ngOnInit();
   }
 
   ngAfterViewInit(): void {
@@ -76,12 +65,7 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-    this.actionBarService.removeActions();
-  }
-
-  setCurrent(photo: Photo): void {
-    this.store.dispatch(new photoAction.SetCurrentPhoto(photo))
+    super.ngOnDestroy();
   }
 
   onAction(action: Action): void {

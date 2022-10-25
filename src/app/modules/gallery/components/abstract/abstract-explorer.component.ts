@@ -13,6 +13,7 @@ import { NgScrollbar } from "ngx-scrollbar";
 import { tap } from "rxjs/operators";
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import { GALLERY_CONSTANTS } from "@gallery/const";
+import { Action } from "@modules/action-bar/actions";
 
 
 @Component({
@@ -59,6 +60,7 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   protected router: Router
   public dialog: MatDialog
   protected store: Store
+  protected actions: Action[]
 
   protected absoluteHeight = 0;
   protected isRequesting: boolean;
@@ -75,7 +77,18 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   ngOnInit(): void {
-    console.log('AbstractExplorerComponent ngOnInit: ',)
+    this.actionBarService.setActions(this.actions);
+    this.subscription = this.selection$.subscribe(res => this.selection = res);
+    this.subscription = this.downloads$.subscribe(res => this.downloads = res);
+    this.subscription = this.loadedPhotos$.subscribe(res => this.loadedPhotos = res);
+    this.subscription.add(this.currentPhoto$.subscribe(res => this.currentPhoto = res));
+    this.subscription.add(this.isAuthenticated$.subscribe(res => this.isAuthenticated = res));
+    this.subscription.add(this.allPhotosCount$.subscribe(count => this.allPhotosCount = count));
+    this.subscription.add(
+      this.photos$.subscribe(res => {
+        this.photos = res;
+        this.isRequesting = false;
+      }));
   }
 
   ngAfterViewInit(): void {
@@ -107,8 +120,13 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
     }
   }
 
+  setCurrent(photo: Photo): void {
+    this.store.dispatch(new photoAction.SetCurrentPhoto(photo))
+  }
+
   ngOnDestroy(): void {
-    console.log('AbstractExplorerComponent ngOnDestroy: ',)
+    this.subscription.unsubscribe();
+    this.actionBarService.removeActions();
   }
 
 }
