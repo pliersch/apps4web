@@ -1,7 +1,7 @@
 import { State } from "@ngxs/store";
 import { Injectable } from "@angular/core";
 import { SocialAuthService, SocialUser } from "@abacritt/angularx-social-login";
-import { AlertService } from "@app/services/alert.service";
+import { AlertService } from "@app/common/services/alert.service";
 
 export interface AuthStateModel {
   user: SocialUser | null;

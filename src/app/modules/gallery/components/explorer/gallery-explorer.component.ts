@@ -73,7 +73,6 @@ export class GalleryExplorerComponent extends AbstractExplorerComponent implemen
     void this.router.navigate(['gallery/slideshow']);
   }
 
-
   onClickClearFilter(): void {
     this.store.dispatch(new photoAction.ClearFilter())
   }

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators, } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { AlertService } from "@app/services/alert.service";
+import { AlertService } from "@app/common/services/alert.service";
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AccountService } from "@modules/account/services/account.service";

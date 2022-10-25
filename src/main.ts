@@ -1,9 +1,9 @@
-import {enableProdMode} from '@angular/core';
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import {AppModule} from '@app/app.module';
-import {environment} from '@environments/environment';
-import {AppInjectorService} from "@app/services/app-injector.service";
+import { AppModule } from '@app/app.module';
+import { environment } from '@environments/environment';
+import { AppInjectorService } from "@app/common/services/app-injector.service";
 
 if (environment.production) {
   enableProdMode();

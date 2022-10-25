@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, OnDestroy } from '@angular/core';
-import { Action } from "@app/models/actions";
-import { ActionBarService } from "@app/services/action-bar.service";
 import { Location } from "@angular/common";
-import { AppInjectorService } from "@app/services/app-injector.service";
+import { AppInjectorService } from "@app/common/services/app-injector.service";
+import { ActionBarService } from "@modules/action-bar/action-bar.service";
+import { Action } from "@modules/action-bar/actions";
 
 @Component({
   selector: 'app-module',

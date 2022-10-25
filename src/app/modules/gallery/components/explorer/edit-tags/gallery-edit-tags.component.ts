@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Tag } from '@gallery/store/tags/tag.model';
 import { MatDialogRef } from '@angular/material/dialog';
-import { arrayUtil } from '@app/util/array-utils';
+import { arrayUtil } from '@app/common/util/array-utils';
 import { Select, Store } from "@ngxs/store";
 import { TagState } from "@gallery/store/tags/tag.state";
 import { DeleteTag, UpdateTag } from "@gallery/store/tags/tag.action";

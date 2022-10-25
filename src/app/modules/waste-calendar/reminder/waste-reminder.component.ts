@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, Renderer2, ViewChild } from '@angular
 import wasteFile from "@assets/json/abfall.json";
 import { WasteDate, WasteEvent, WasteKey } from "@modules/waste-calendar/waste-dates";
 import { MatCalendar } from "@angular/material/datepicker";
-import { formatGermanDayAndMonth, parseGerman, parseGerman2 } from "@app/util/date-util";
+import { formatGermanDayAndMonth, parseGerman, parseGerman2 } from "@app/common/util/date-util";
 import differenceInDays from 'date-fns/differenceInDays'
 import { de } from 'date-fns/locale'
 import { DateAdapter } from "@angular/material/core";

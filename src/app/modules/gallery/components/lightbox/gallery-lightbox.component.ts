@@ -6,7 +6,7 @@ import {
 import {
   GalleryHorizontalScrollerComponent
 } from '@gallery/components/share/horizontal-scroller/gallery-horizontal-scroller.component';
-import { AlertService } from '@app/services/alert.service';
+import { AlertService } from '@app/common/services/alert.service';
 import { ClearPhotoSelection, TogglePhotoSelection } from "@gallery/store/photos/photo.actions";
 import { Photo } from "@gallery/store/photos/photo.model";
 import { Action, ActionProvider } from "@modules/action-bar/actions";

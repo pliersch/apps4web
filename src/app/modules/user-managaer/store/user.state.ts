@@ -1,7 +1,7 @@
 import { User } from "@modules/user-managaer/store/user";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { Injectable } from "@angular/core";
-import { AlertService } from "@app/services/alert.service";
+import { AlertService } from "@app/common/services/alert.service";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import { LoadUsers, LoadUsersFail, LoadUsersSuccess } from "@modules/user-managaer/store/user.actions";

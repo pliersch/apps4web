@@ -1,18 +1,18 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {ChatToolbarComponent} from "@modules/chat/chat-toolbar/chat-toolbar.component";
-import {Select, Store} from "@ngxs/store";
-import {LoadChat, MessagesFilter, SendMessage} from "@modules/chat/store/chat.actions";
-import {Message} from "@modules/chat/models/message";
-import {randomIntFromInterval} from "@app/util/math.utils";
-import {Observable} from "rxjs";
-import {ChatState} from "@modules/chat/store/chat.state";
-import {ChatService} from "@modules/chat/store/chat.service";
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { ChatToolbarComponent } from "@modules/chat/chat-toolbar/chat-toolbar.component";
+import { Select, Store } from "@ngxs/store";
+import { LoadChat, MessagesFilter, SendMessage } from "@modules/chat/store/chat.actions";
+import { Message } from "@modules/chat/models/message";
+import { randomIntFromInterval } from "@app/common/util/math.utils";
+import { Observable } from "rxjs";
+import { ChatState } from "@modules/chat/store/chat.state";
+import { ChatService } from "@modules/chat/store/chat.service";
 // TODO extract to animation module?!
-import {animate, style, transition, trigger} from "@angular/animations";
-import {ViewportScroller} from "@angular/common";
-import {NgScrollbar} from "ngx-scrollbar";
-import {ChatImage} from "@modules/chat/models/chat-image";
-import {EventBusService, EventData} from "@app/services/event-bus.service";
+import { animate, style, transition, trigger } from "@angular/animations";
+import { ViewportScroller } from "@angular/common";
+import { NgScrollbar } from "ngx-scrollbar";
+import { ChatImage } from "@modules/chat/models/chat-image";
+import { EventBusService, EventData } from "@app/common/services/event-bus.service";
 
 @Component({
   selector: 'app-chat',

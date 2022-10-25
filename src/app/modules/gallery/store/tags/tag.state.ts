@@ -6,7 +6,7 @@ import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import { patch, updateItem } from "@ngxs/store/operators";
 import { TagService } from "@gallery/services/tag.service";
-import { AlertService } from "@app/services/alert.service";
+import { AlertService } from "@app/common/services/alert.service";
 import { PhotoStateModel } from "@gallery/store/photos/photo.state";
 
 export interface TagStateModel {

@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AppInjectorService } from "@app/services/app-injector.service";
+import { AppInjectorService } from "@app/common/services/app-injector.service";
 import { ActionBarService } from "@modules/action-bar/action-bar.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { Router } from "@angular/router";

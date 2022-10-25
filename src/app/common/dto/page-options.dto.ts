@@ -1,4 +1,4 @@
-import { Order } from "@app/common/constants/order.constant";
+import { Order } from "@app/common/const/order.constant";
 
 export class PageOptionsDto {
 

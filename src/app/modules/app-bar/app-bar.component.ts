@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from "rxjs";
-import { constants } from "@app/const/const";
+import { constants } from "@app/common/const/const";
 
 @Component({
   selector: 'app-appbar',

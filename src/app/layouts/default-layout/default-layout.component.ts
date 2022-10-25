@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Store } from "@ngxs/store";
 import { ThemeState } from "@modules/themes/stores/theme-state";
-import { constants } from "@app/const/const";
+import { constants } from "@app/common/const/const";
 
 @Component({
   selector: 'app-default-layout',

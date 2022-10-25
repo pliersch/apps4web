@@ -6,7 +6,7 @@ import * as photoAction from "@gallery/store/photos/photo.actions";
 import { Photo, PhotoUpdate } from "@gallery/store/photos/photo.model";
 import { append, insertItem, patch, removeItem, updateItem } from "@ngxs/store/operators";
 import { filterByRating, filterByTags, filterByYear } from "@gallery/store/photos/photo.tools";
-import { AlertService } from "@app/services/alert.service";
+import { AlertService } from "@app/common/services/alert.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
 import { ServerSentService } from "@app/common/services/server-sent.service";

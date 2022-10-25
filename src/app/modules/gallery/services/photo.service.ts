@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { Photo, PhotoUpdate } from '@gallery/store/photos/photo.model';
-import { Order } from "@app/common/constants/order.constant";
+import { Order } from "@app/common/const/order.constant";
 import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
 import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
 
