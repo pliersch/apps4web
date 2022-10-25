@@ -22,6 +22,7 @@ import { GalleryEditTagsComponent } from "@gallery/components/explorer/edit-tags
 import {
   GalleryDeletePhotoComponent
 } from "@gallery/components/explorer/delete-photo-dialog/gallery-delete-photo.component";
+import { GALLERY_CONSTANTS } from "@gallery/const";
 
 export interface DeletePhotoDialogData {
   photo: Photo;
@@ -149,7 +150,7 @@ export class GalleryEditorComponent implements OnInit, AfterViewInit, OnDestroy,
     // console.log('GalleryExplorerComponent requestNextPhotos: ', currentHeight, this.absoluteHeight)
     if (currentHeight + 180 > this.absoluteHeight && !this.isRequesting) {
       this.isRequesting = true;
-      this.store.dispatch(new photoAction.LoadPhotos(60));
+      this.store.dispatch(new photoAction.LoadPhotos(GALLERY_CONSTANTS.PHOTO_LOAD_COUNT));
     }
   }
 

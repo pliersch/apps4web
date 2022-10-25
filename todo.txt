@@ -20,6 +20,8 @@ NGXS
 - sharemodule prüfen (wird in anderen modulen importiert) macht es sinn(größe, geschwindigkeit)?
 - gallery pages einführen?
 - optimize photo-obj im frontend sind createDateTime, lastChangedDateTime und lastChangedBy unnötig
+- gallery request new photos auch bei resize des viewports? wenn kleiner viewport, und dann großer wird
+  request nicht ausgeführt. eigentlich kein use-case
 
 - typeORM updates werden nicht genutzt
   - https://stackoverflow.com/questions/47792808/typeorm-update-item-and-return-it

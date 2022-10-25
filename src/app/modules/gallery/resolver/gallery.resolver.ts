@@ -5,6 +5,7 @@ import { Store } from "@ngxs/store";
 import { LoadMetaData, LoadPhotos } from "@gallery/store/photos/photo.actions";
 import { PushMessageEvent, PushMessageListener, ServerSentService } from "@app/common/services/server-sent.service";
 import { LoadTags, SetNewTagsAvailable } from "@gallery/store/tags/tag.action";
+import { GALLERY_CONSTANTS } from "@gallery/const";
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,7 @@ export class GalleryResolver implements PushMessageListener, Resolve<Subscriptio
     return of(Subscription.EMPTY).pipe( // yes, I know. but more readable ;)
       concatMap(() => this.store.dispatch(new LoadMetaData())),
       concatMap(() => this.store.dispatch(new LoadTags())),
-      concatMap(() => this.store.dispatch(new LoadPhotos(60))));
+      concatMap(() => this.store.dispatch(new LoadPhotos(GALLERY_CONSTANTS.PHOTO_LOAD_COUNT))));
   }
 
   onServerPushMessage(event: PushMessageEvent): void {

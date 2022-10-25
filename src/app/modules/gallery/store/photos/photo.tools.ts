@@ -1,6 +1,7 @@
 import { Photo } from "@gallery/store/photos/photo.model";
+import { GALLERY_CONSTANTS } from "@gallery/const";
 
-const BASE_URL = 'http://localhost:3000/images/gallery/';
+const BASE_URL = GALLERY_CONSTANTS.PHOTO_DOWNLOAD_BASE_URL;
 
 export function filterByTags(photos: Photo[], tags: string[]): Photo[] {
   const result = [];
@@ -26,7 +27,7 @@ export function filterByRating(photos: Photo[], rate: number): Photo[] {
 export function filterByYear(photos: Photo[], from: number, to: number): Photo[] {
   const result = [];
   let year: number;
-  console.log('filterByYear filterByYear: ', from, to)
+  // console.log('filterByYear filterByYear: ', from, to)
   if (from === -1 && to === -1) {
     return photos;
   }

@@ -33,13 +33,13 @@ export class GalleryDateFilterComponent implements OnInit {
       this.years = this.computeAvailableYears(photos);
     })
     this.yearFrom$.subscribe((year) => {
-      console.log('GalleryDateFilterComponent : ', year)
+      // console.log('GalleryDateFilterComponent : ', year)
       if (year === -1) {
         this.selectedFrom = ''
       }
     });
     this.yearTo$.subscribe((year) => {
-      console.log('GalleryDateFilterComponent : ', year)
+      // console.log('GalleryDateFilterComponent : ', year)
       if (year === -1) {
         this.selectedTo = ''
       }

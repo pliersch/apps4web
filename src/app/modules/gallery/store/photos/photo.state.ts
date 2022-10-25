@@ -85,7 +85,7 @@ export class PhotoState {
   @Selector([PhotoState.getPhotosByTags, PhotoState.getFilterRating, PhotoState.getFilterFrom, PhotoState.getFilterTo])
   static getFilteredPhotos(photos: Photo[], filterRating: number, filterFrom: number, filterTo: number): Photo[] {
     let filteredPhotos = filterByRating(photos, filterRating);
-    console.log('PhotoState getFilteredPhotos: ',)
+    // console.log('PhotoState getFilteredPhotos: ',)
     filteredPhotos = filterByYear(filteredPhotos, filterFrom, filterTo);
     return filteredPhotos;
   }
@@ -188,7 +188,7 @@ export class PhotoState {
 
   @Action(photoAction.LoadMetaDataSuccess)
   loadMetaDataSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataSuccess): void {
-    console.log('PhotoState loadMetaDataSuccess: ',)
+    // console.log('PhotoState loadMetaDataSuccess: ',)
     ctx.patchState({
       availablePhotos: action.dto.count, loading: false
     });

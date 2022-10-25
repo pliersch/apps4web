@@ -13,6 +13,7 @@ import { Router } from "@angular/router";
 import { AuthState } from "@modules/google-signin/store/auth.state";
 import { Action, ActionProvider } from "@modules/action-bar/actions";
 import { ActionBarService } from "@modules/action-bar/action-bar.service";
+import { GALLERY_CONSTANTS } from "@gallery/const";
 
 
 enum ActionTypes {
@@ -66,6 +67,8 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   private isRequesting: boolean;
   private resizeObserver: ResizeObserver;
 
+  private viewportHeight: number;
+
   actions: Action[] = [
     {name: ActionTypes.SelectAll, icon: 'done_all', tooltip: 'select all', handler: this},
     {name: ActionTypes.Add, icon: 'add', tooltip: 'add', handler: this},
@@ -104,10 +107,10 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
         this.requestNextPhotos(e.target as Element);
       })
     ).subscribe();
-    // const element = this.scrollbarRef.nativeElement.querySelector('.ng-scroll-content');
-    // if (element) {
-    //   this.requestNextPhotos(element);
-    // }
+    const element = this.scrollbarRef.nativeElement.querySelector('.ng-scroll-content');
+    this.absoluteHeight = element!.clientHeight + element!.scrollTop;
+    const element1 = this.scrollbarRef.nativeElement.querySelector('.ng-scroll-viewport');
+    this.requestNextPhotos(element1!);
   }
 
   ngOnDestroy(): void {
@@ -123,17 +126,15 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
     const element = this.scrollbarRef.nativeElement.querySelector('.ng-scroll-content');
     this.resizeObserver = new ResizeObserver(res => {
       this.absoluteHeight = res[0].contentRect.height;
-      // console.log('GalleryExplorerComponent observeScrollContent: ', this.absoluteHeight)
     });
     this.resizeObserver.observe(element!);
   }
 
   requestNextPhotos(element: Element): void {
-    const currentHeight = element.clientHeight + element.scrollTop /* + element.scrollTop*/;
-    console.log('GalleryExplorerComponent requestNextPhotos: ', currentHeight, this.absoluteHeight)
+    const currentHeight = element.clientHeight + element.scrollTop;
     if (currentHeight + 180 > this.absoluteHeight && !this.isRequesting) {
       this.isRequesting = true;
-      this.store.dispatch(new photoAction.LoadPhotos(60));
+      this.store.dispatch(new photoAction.LoadPhotos(GALLERY_CONSTANTS.PHOTO_LOAD_COUNT));
     }
   }
 
