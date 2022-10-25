@@ -1,8 +1,9 @@
-import {Injectable, Injector} from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
+// https://devblogs.microsoft.com/premier-developer/angular-how-to-simplify-components-with-typescript-inheritance/
 export class AppInjectorService {
 
   private static injector: Injector;

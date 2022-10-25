@@ -1,20 +1,14 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Photo } from '@gallery/store/photos/photo.model';
-import { Select, Store } from '@ngxs/store';
+import { Select } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import {
   GalleryEditImageTagsComponent
 } from "@gallery/components/explorer/edit-tags-dialog/gallery-edit-image-tags.component";
-import { MatDialog } from "@angular/material/dialog";
-import { PhotoService } from "@gallery/services/photo.service";
-import { NgScrollbar } from "ngx-scrollbar";
 import { tap } from "rxjs/operators";
-import { Router } from "@angular/router";
-import { AuthState } from "@modules/google-signin/store/auth.state";
 import { Action, ActionProvider } from "@modules/action-bar/actions";
-import { ActionBarService } from "@modules/action-bar/action-bar.service";
 import {
   GalleryNewTagCategoryComponent
 } from "@gallery/components/explorer/new-tag-category/gallery-new-tag-category.component";
@@ -23,6 +17,7 @@ import {
   GalleryDeletePhotoComponent
 } from "@gallery/components/explorer/delete-photo-dialog/gallery-delete-photo.component";
 import { GALLERY_CONSTANTS } from "@gallery/const";
+import { AbstractExplorerComponent } from "@gallery/components/abstract/abstract-explorer.component";
 
 export interface DeletePhotoDialogData {
   photo: Photo;
@@ -51,30 +46,8 @@ enum ActionTypes {
   templateUrl: './gallery-editor.component.html',
   styleUrls: ['./gallery-editor.component.scss']
 })
-export class GalleryEditorComponent implements OnInit, AfterViewInit, OnDestroy, ActionProvider {
+export class GalleryEditorComponent extends AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestroy, ActionProvider {
 
-  @ViewChild('scrollbar')
-  scrollbarRef: NgScrollbar;
-
-  @Select(AuthState.isAuthenticated)
-  isAuthenticated$: Observable<boolean>;
-  isAuthenticated: boolean;
-
-  @Select(PhotoState.getAvailablePhotos)
-  allPhotosCount$: Observable<number>;
-  allPhotosCount: number;
-
-  @Select(PhotoState.getLoadedPhotos)
-  loadedPhotos$: Observable<number>;
-  loadedPhotos: number;
-
-  @Select(PhotoState.getFilteredPhotos)
-  photos$: Observable<Photo[]>;
-  photos: Photo[];
-
-  @Select(PhotoState.getCurrentPhoto)
-  currentPhoto$: Observable<Photo>;
-  currentPhoto: Photo;
 
   @Select(PhotoState.getEditPhotos)
   selection$: Observable<Photo[]>;
@@ -84,8 +57,6 @@ export class GalleryEditorComponent implements OnInit, AfterViewInit, OnDestroy,
   absoluteHeight = 0;
   private isRequesting: boolean;
   private resizeObserver: ResizeObserver;
-
-  switchControl = false;
 
   actions: Action[] = [
     {name: ActionTypes.SelectAll, icon: 'done_all', tooltip: 'select all', handler: this},
@@ -97,11 +68,8 @@ export class GalleryEditorComponent implements OnInit, AfterViewInit, OnDestroy,
   ]
   private subscription: Subscription;
 
-  constructor(private actionBarService: ActionBarService,
-              private photoService: PhotoService,
-              private router: Router,
-              public dialog: MatDialog,
-              private store: Store) {
+  constructor() {
+    super()
   }
 
   ngOnInit(): void {

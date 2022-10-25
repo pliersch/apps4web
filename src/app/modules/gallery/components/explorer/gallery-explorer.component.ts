@@ -1,20 +1,14 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Photo } from '@gallery/store/photos/photo.model';
-import { Select, Store } from '@ngxs/store';
+import { Select } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { saveAs } from 'file-saver';
 import * as photoAction from "@gallery/store/photos/photo.actions";
-import { MatDialog } from "@angular/material/dialog";
-import { PhotoService } from "@gallery/services/photo.service";
-import { NgScrollbar } from "ngx-scrollbar";
 import { tap } from "rxjs/operators";
-import { Router } from "@angular/router";
-import { AuthState } from "@modules/google-signin/store/auth.state";
 import { Action, ActionProvider } from "@modules/action-bar/actions";
-import { ActionBarService } from "@modules/action-bar/action-bar.service";
 import { GALLERY_CONSTANTS } from "@gallery/const";
-
+import { AbstractExplorerComponent } from "@gallery/components/abstract/abstract-explorer.component";
 
 enum ActionTypes {
   SelectAll,
@@ -29,34 +23,8 @@ enum ActionTypes {
   templateUrl: './gallery-explorer.component.html',
   styleUrls: ['./gallery-explorer.component.scss']
 })
-export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestroy, ActionProvider {
+export class GalleryExplorerComponent extends AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestroy, ActionProvider {
 
-  @ViewChild('scrollbar')
-  scrollbarRef: NgScrollbar;
-
-  @Select(AuthState.isAuthenticated)
-  isAuthenticated$: Observable<boolean>;
-  isAuthenticated: boolean;
-
-  @Select(PhotoState.getAvailablePhotos)
-  allPhotosCount$: Observable<number>;
-  allPhotosCount: number;
-
-  @Select(PhotoState.getLoadedPhotos)
-  loadedPhotos$: Observable<number>;
-  loadedPhotos: number;
-
-  @Select(PhotoState.getFilteredPhotos)
-  photos$: Observable<Photo[]>;
-  photos: Photo[];
-
-  @Select(PhotoState.getCurrentPhoto)
-  currentPhoto$: Observable<Photo>;
-  currentPhoto: Photo;
-
-  @Select(PhotoState.getEditPhotos)
-  selection$: Observable<Photo[]>;
-  selection: Photo[];
 
   @Select(PhotoState.getDownloads)  // todo look for pipe to remove field downloads
   downloads$: Observable<Photo[]>;
@@ -67,8 +35,6 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   private isRequesting: boolean;
   private resizeObserver: ResizeObserver;
 
-  private viewportHeight: number;
-
   actions: Action[] = [
     {name: ActionTypes.SelectAll, icon: 'done_all', tooltip: 'select all', handler: this},
     {name: ActionTypes.Add, icon: 'add', tooltip: 'add', handler: this},
@@ -78,16 +44,12 @@ export class GalleryExplorerComponent implements OnInit, AfterViewInit, OnDestro
   ]
   private subscription: Subscription;
 
-  constructor(private actionBarService: ActionBarService,
-              private photoService: PhotoService,
-              private router: Router,
-              public dialog: MatDialog,
-              private store: Store) {
+  constructor() {
+    super()
   }
 
   ngOnInit(): void {
     this.actionBarService.setActions(this.actions);
-    this.subscription = this.selection$.subscribe(res => this.selection = res);
     this.subscription = this.downloads$.subscribe(res => this.downloads = res);
     this.subscription = this.loadedPhotos$.subscribe(res => this.loadedPhotos = res);
     this.subscription.add(this.currentPhoto$.subscribe(res => this.currentPhoto = res));
