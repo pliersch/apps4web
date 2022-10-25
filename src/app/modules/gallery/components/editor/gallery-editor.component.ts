@@ -1,13 +1,10 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Photo } from '@gallery/store/photos/photo.model';
-import { Select } from '@ngxs/store';
-import { Observable, Subscription } from 'rxjs';
-import { PhotoState } from "@gallery/store/photos/photo.state";
+import { Subscription } from 'rxjs';
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import {
   GalleryEditImageTagsComponent
 } from "@gallery/components/explorer/edit-tags-dialog/gallery-edit-image-tags.component";
-import { tap } from "rxjs/operators";
 import { Action, ActionProvider } from "@modules/action-bar/actions";
 import {
   GalleryNewTagCategoryComponent
@@ -16,7 +13,6 @@ import { GalleryEditTagsComponent } from "@gallery/components/explorer/edit-tags
 import {
   GalleryDeletePhotoComponent
 } from "@gallery/components/explorer/delete-photo-dialog/gallery-delete-photo.component";
-import { GALLERY_CONSTANTS } from "@gallery/const";
 import { AbstractExplorerComponent } from "@gallery/components/abstract/abstract-explorer.component";
 
 export interface DeletePhotoDialogData {
@@ -48,16 +44,6 @@ enum ActionTypes {
 })
 export class GalleryEditorComponent extends AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestroy, ActionProvider {
 
-
-  @Select(PhotoState.getEditPhotos)
-  selection$: Observable<Photo[]>;
-  selection: Photo[];
-
-  showFilter = true;
-  absoluteHeight = 0;
-  private isRequesting: boolean;
-  private resizeObserver: ResizeObserver;
-
   actions: Action[] = [
     {name: ActionTypes.SelectAll, icon: 'done_all', tooltip: 'select all', handler: this},
     {name: ActionTypes.DeselectAll, icon: 'remove_done', tooltip: 'deselect all', handler: this},
@@ -66,7 +52,6 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
     {name: ActionTypes.NewTag, icon: 'playlist_add', tooltip: 'new tag', handler: this},
     {name: ActionTypes.ManageTags, icon: 'list', tooltip: 'manage tags', handler: this},
   ]
-  private subscription: Subscription;
 
   constructor() {
     super()
@@ -87,12 +72,7 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
   }
 
   ngAfterViewInit(): void {
-    this.observeScrollContent();
-    this.scrollbarRef.verticalScrolled.pipe(
-      tap((e: Event) => {
-        this.requestNextPhotos(e.target as Element);
-      })
-    ).subscribe();
+    super.ngAfterViewInit();
   }
 
   ngOnDestroy(): void {
@@ -102,24 +82,6 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
 
   setCurrent(photo: Photo): void {
     this.store.dispatch(new photoAction.SetCurrentPhoto(photo))
-  }
-
-  observeScrollContent(): void {
-    const element = this.scrollbarRef.nativeElement.querySelector('.ng-scroll-content');
-    this.resizeObserver = new ResizeObserver(res => {
-      this.absoluteHeight = res[0].contentRect.height;
-      // console.log('GalleryExplorerComponent observeScrollContent: ', this.absoluteHeight)
-    });
-    this.resizeObserver.observe(element!);
-  }
-
-  requestNextPhotos(element: Element): void {
-    const currentHeight = element.clientHeight + element.scrollTop /* + element.scrollTop*/;
-    // console.log('GalleryExplorerComponent requestNextPhotos: ', currentHeight, this.absoluteHeight)
-    if (currentHeight + 180 > this.absoluteHeight && !this.isRequesting) {
-      this.isRequesting = true;
-      this.store.dispatch(new photoAction.LoadPhotos(GALLERY_CONSTANTS.PHOTO_LOAD_COUNT));
-    }
   }
 
   onAction(action: Action): void {
