@@ -5,7 +5,7 @@ import { PhotoService } from "@gallery/services/photo.service";
 import { Router } from "@angular/router";
 import { MatDialog } from "@angular/material/dialog";
 import { Select, Store } from "@ngxs/store";
-import { AuthState } from "@modules/google-signin/store/auth.state";
+import { SigninState } from "@modules/google-signin/store/signin.state";
 import { Observable, Subscription } from "rxjs";
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { Photo } from "@gallery/store/photos/photo.model";
@@ -26,7 +26,7 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   @ViewChild('scrollbar')
   scrollbarRef: NgScrollbar;
 
-  @Select(AuthState.isAuthenticated)
+  @Select(SigninState.isAuthenticated)
   isAuthenticated$: Observable<boolean>;
   isAuthenticated: boolean;
 

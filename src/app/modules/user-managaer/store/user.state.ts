@@ -6,6 +6,7 @@ import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import { LoadUsers, LoadUsersFail, LoadUsersSuccess } from "@modules/user-managaer/store/user.actions";
 import { AuthService } from "@modules/account/services/auth.service";
+import { Role } from "@modules/user-managaer/store/role";
 
 export interface UserStateModel {
   users: Array<User>;
@@ -36,15 +37,17 @@ export class UserState {
 
   @Action(LoadUsers)
   loadUsers(ctx: StateContext<UserStateModel>, action: LoadUsers): Observable<Subscription> {
+    const user: User = {
+      givenName: 'Foo',
+      lastName: 'Bar',
+      email: 'xy@foo.de',
+      role: Role.User,
+      photoUrl: 'nope',
+      id: 1
+    }
+
     return of([
-      new User(
-        'id_test',//this.user.id,
-        'Doc',
-        'Pat',//this.user.givenName,
-        'Test',//this.user.lastName,
-        'foo@test.de',//this.user.email,
-        'admin'
-      ),
+      user,
     ])
       .pipe(
         map((users: User[]) =>

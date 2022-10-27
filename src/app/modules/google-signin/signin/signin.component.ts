@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { SocialUser } from "@modules/google-signin/social-user.model";
+import { GoogleUser } from "@modules/google-signin/google-user.model";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
-import { AuthState } from "@modules/google-signin/store/auth.state";
+import { SigninState } from "@modules/google-signin/store/signin.state";
 import {
-  LoginWithGoogle,
-  LoginWithGoogleFail,
-  LogoutWithGoogle
-} from "@modules/google-signin/store/auth.actions";
+  SigninWithGoogle,
+  SigninWithGoogleFail,
+  SignoutWithGoogle
+} from "@modules/google-signin/store/signin.actions";
 import { CredentialResponse } from "google-one-tap";
 
 @Component({
@@ -17,9 +17,9 @@ import { CredentialResponse } from "google-one-tap";
 })
 export class SigninComponent implements OnInit {
 
-  @Select(AuthState.user)
-  user$: Observable<SocialUser>;
-  user: SocialUser | null;
+  @Select(SigninState.user)
+  user$: Observable<GoogleUser>;
+  user: GoogleUser | null;
 
   constructor(private store: Store) { }
 
@@ -52,19 +52,17 @@ export class SigninComponent implements OnInit {
     };
   }
 
-  handleCredentialResponse(response: any): void {
-    // const socialUser = this.createSocialUser(response.credential)
+  handleCredentialResponse(response: CredentialResponse): void {
     const user = this.decodeCredentialResponse(response);
-    // console.log('SigninComponent handleCredentialResponse: ', socialUser)
     if (user) {
-      this.store.dispatch(new LoginWithGoogle(user));
+      this.store.dispatch(new SigninWithGoogle(user));
     } else {
-      this.store.dispatch(new LoginWithGoogleFail('Login fail'));
+      this.store.dispatch(new SigninWithGoogleFail('Login fail'));
     }
 
   }
 
-  decodeCredentialResponse(response: CredentialResponse): SocialUser | null {
+  decodeCredentialResponse(response: CredentialResponse): GoogleUser | null {
     let decodedToken: any | null = null;
     try {
       decodedToken = JSON.parse(atob(response?.credential.split('.')[1]));
@@ -77,14 +75,14 @@ export class SigninComponent implements OnInit {
     return this.createSocialUser(decodedToken);
   }
 
-  private createSocialUser(decodedToken: any): SocialUser {
-    const user = new SocialUser();
-    user.id = decodedToken.sub;
+  private createSocialUser(decodedToken: any): GoogleUser {
+    const user = new GoogleUser();
+    // user.id = decodedToken.sub;
     user.authToken = decodedToken.authToken;
     user.name = decodedToken.name;
     user.email = decodedToken.email;
     user.photoUrl = decodedToken.picture;
-    user.firstName = decodedToken.given_name;
+    user.givenName = decodedToken.given_name;
     user.lastName = decodedToken.family_name;
     return user;
   }
@@ -93,6 +91,6 @@ export class SigninComponent implements OnInit {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     google.accounts.id.disableAutoSelect();
-    this.store.dispatch(new LogoutWithGoogle());
+    this.store.dispatch(new SignoutWithGoogle());
   }
 }

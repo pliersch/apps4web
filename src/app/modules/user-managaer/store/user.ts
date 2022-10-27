@@ -1,10 +1,10 @@
-export class User {
-  constructor(
-    public id: string,
-    public title: string,
-    public givenName: string,
-    public lastName: string,
-    public email: string,
-    public role: string,
-  ) {}
+import { Role } from "@modules/user-managaer/store/role";
+
+export interface User {
+  id: number,
+  givenName: string,
+  lastName: string,
+  email: string,
+  role: Role,
+  photoUrl: string;
 }

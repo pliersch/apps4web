@@ -1,10 +1,9 @@
-export class SocialUser {
-  provider: string;
+export class GoogleUser {
   id: string;
   email: string;
   name: string;
   photoUrl: string;
-  firstName: string;
+  givenName: string;
   lastName: string;
   authToken: string;
 

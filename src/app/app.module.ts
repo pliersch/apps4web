@@ -26,7 +26,7 @@ import { ErrorInterceptor } from "@app/common/helpers/error.interceptor";
 import { ThemeState } from "@modules/themes/stores/theme-state";
 import { RecipesModule } from "@modules/recipes/recipes.module";
 import { GoogleSigninModule } from "@modules/google-signin/google-signin.module";
-import { AuthState } from "@modules/google-signin/store/auth.state";
+import { SigninState } from "@modules/google-signin/store/signin.state";
 
 const ngxsConfig: NgxsModuleOptions = {
   developmentMode: !environment.production,
@@ -65,7 +65,7 @@ const ngxsConfig: NgxsModuleOptions = {
     // NgScrollbarModule,
     MaterialModule,
     // AuthModule,
-    NgxsModule.forRoot([ThemeState, AuthState], ngxsConfig),
+    NgxsModule.forRoot([ThemeState, SigninState], ngxsConfig),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     // NgxsLoggerPluginModule.forRoot(),
     WasteCalendarModule,

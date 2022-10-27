@@ -1,7 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { Store } from "@ngxs/store";
-import { AuthState } from "@modules/google-signin/store/auth.state";
+import { SigninState } from "@modules/google-signin/store/signin.state";
 
 @Injectable({providedIn: 'root'})
 export class AuthGuard implements CanActivate {
@@ -10,7 +10,7 @@ export class AuthGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (this.store.selectSnapshot(AuthState.isAuthenticated)) {
+    if (this.store.selectSnapshot(SigninState.isAuthenticated)) {
       return true;
     }
     this.router.navigate(['/account/login'], {queryParams: {returnUrl: state.url}});
