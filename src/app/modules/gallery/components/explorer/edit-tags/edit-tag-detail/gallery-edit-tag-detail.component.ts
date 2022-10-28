@@ -1,9 +1,9 @@
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {UntypedFormControl} from '@angular/forms';
-import {MatChipInputEvent} from '@angular/material/chips';
-import {Observable, of} from 'rxjs';
-import {Tag} from '@gallery/store/tags/tag.model';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { UntypedFormControl } from '@angular/forms';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { Observable, of } from 'rxjs';
+import { Tag, TagCategory } from '@gallery/store/tags/tag.model';
 
 @Component({
   selector: 'app-gallery-edit-tag-detail',
@@ -13,15 +13,15 @@ import {Tag} from '@gallery/store/tags/tag.model';
 export class GalleryEditTagDetailComponent implements OnChanges {
 
   @Input()
-  tag: Tag;
+  tag: TagCategory;
 
   @Output()
   tagChangesEvent = new EventEmitter<never>();
   @Output()
-  deleteEvent = new EventEmitter<Tag>();
+  deleteEvent = new EventEmitter<TagCategory>();
 
-  entries: string[];
-  observable: Observable<string[]>;
+  entries: Tag[];
+  observable: Observable<Tag[]>;
   separatorKeysCodes: number[] = [ENTER, COMMA];
   tagCtrl = new UntypedFormControl();
 
@@ -31,19 +31,18 @@ export class GalleryEditTagDetailComponent implements OnChanges {
   }
 
   add(event: MatChipInputEvent): void {
-    const input = event.input;
+    const input = event.chipInput;
     const value = event.value;
     if ((value || '').trim()) {
-      this.entries.push(value.trim());
+      this.entries.push({name: value.trim()});
       this.emitStateChange();
     }
     if (input) {
-      input.value = '';
+      input.clear();
     }
   }
 
-  remove(entry: string): void {
-    console.log('remove', entry);
+  remove(entry: Tag): void {
     const index = this.entries.indexOf(entry);
     if (index >= 0) {
       this.entries.splice(index, 1);
@@ -55,7 +54,7 @@ export class GalleryEditTagDetailComponent implements OnChanges {
     this.tagChangesEvent.emit();
   }
 
-  onClickDelete(tag: Tag): void {
+  onClickDelete(tag: TagCategory): void {
     this.deleteEvent.emit(tag);
   }
 }

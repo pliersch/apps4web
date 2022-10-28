@@ -1,5 +1,5 @@
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { Tag } from "@gallery/store/tags/tag.model";
+import { Tag, TagCategory } from "@gallery/store/tags/tag.model";
 import { Injectable } from "@angular/core";
 import * as tagActions from "@gallery/store/tags/tag.action";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
@@ -10,7 +10,7 @@ import { AlertService } from "@app/common/services/alert.service";
 import { PhotoStateModel } from "@gallery/store/photos/photo.state";
 
 export interface TagStateModel {
-  tags: Tag[];
+  tags: TagCategory[];
   allTagsLoaded: boolean;
   loaded: boolean;
   loading: boolean;
@@ -32,7 +32,7 @@ export interface TagStateModel {
 export class TagState {
 
   @Selector()
-  static getTags(state: TagStateModel): Tag[] {
+  static getTags(state: TagStateModel): TagCategory[] {
     return state.tags;
   }
 
@@ -53,7 +53,7 @@ export class TagState {
     ctx.patchState({loading: true});
     return this.tagService.getAll()
       .pipe(
-        map((tags: Tag[]) =>
+        map((tags: TagCategory[]) =>
           asapScheduler.schedule(() =>
             ctx.dispatch(new tagActions.LoadTagsSuccess(tags))
           )
@@ -70,11 +70,11 @@ export class TagState {
 
   @Action(tagActions.LoadTagsSuccess)
   loadTagsSuccess({patchState}: StateContext<TagStateModel>, action: tagActions.LoadTagsSuccess): void {
-    const sortedTags: Tag[] = action.tags.sort((tag1, tag2) => {
+    const sortedTags: TagCategory[] = action.tags.sort((tag1, tag2) => {
       return (tag1.priority > tag2.priority) ? 1 : -1;
     });
     for (const tag of sortedTags) {
-      tag.entries = tag.entries.sort((e1: string, e2: string) => e1.localeCompare(e2));
+      tag.entries = tag.entries.sort((e1: Tag, e2: Tag) => e1.name.localeCompare(e2.name));
     }
     patchState({tags: sortedTags, loaded: true, loading: false, newDataAvailable: false});
   }
@@ -109,7 +109,7 @@ export class TagState {
     ctx.patchState({loading: true});
     return this.tagService.create(action.tag)
       .pipe(
-        map((tag: Tag) =>
+        map((tag: TagCategory) =>
           asapScheduler.schedule(() =>
             ctx.dispatch(new tagActions.AddTagSuccess(tag))
           )
@@ -127,7 +127,7 @@ export class TagState {
   @Action(tagActions.AddTagSuccess)
   addTagSuccess(ctx: StateContext<TagStateModel>, action: tagActions.AddTagSuccess): void {
     const state = ctx.getState();
-    const tags: Tag[] = [...state.tags, action.tag]
+    const tags: TagCategory[] = [...state.tags, action.tag]
     ctx.patchState({tags: tags, loaded: true, loading: false});
   }
 
@@ -164,7 +164,7 @@ export class TagState {
   updateTagSuccess(ctx: StateContext<TagStateModel>, action: tagActions.UpdateTagSuccess): void {
     ctx.setState(
       patch({
-        tags: updateItem<Tag>(tag => tag!.id === action.tag.id,
+        tags: updateItem<TagCategory>(tag => tag!.id === action.tag.id,
           patch({entries: action.tag.entries}))
       })
     );
@@ -185,7 +185,7 @@ export class TagState {
     ctx.patchState({loading: true});
     return this.tagService.delete(action.id)
       .pipe(
-        map((tag: Tag) =>
+        map((tag: TagCategory) =>
           asapScheduler.schedule(() =>
             ctx.dispatch(new tagActions.DeleteTagSuccess(tag))
           )

@@ -6,6 +6,7 @@ import { Photo, PhotoUpdate } from '@gallery/store/photos/photo.model';
 import { Order } from "@app/common/const/order.constant";
 import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
 import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
+import { Tag } from "@gallery/store/tags/tag.model";
 
 const PHOTO_BASE_URL = `${environment.apiUrl}/photos`;
 const DOWNLOAD_BASE_URL = `${environment.apiUrl}/download`;
@@ -36,7 +37,7 @@ export class PhotoService {
   //   return this.http.get<Photo>(`${PHOTO_BASE_URL}/${id}`);
   // }
 
-  create(file: File, tags: string[], created: number): Observable<Photo> {
+  create(file: File, tags: Tag[], created: number): Observable<Photo> {
     const stringify = JSON.stringify(tags);
     const formData = new FormData();
     formData.append('image', file);
@@ -46,7 +47,7 @@ export class PhotoService {
   }
 
   // todo use PhotoUpdate as return result
-  updateTagsOfPhoto(id: string, tags: string[]): Observable<string[]> {
+  updateTagsOfPhoto(id: string, tags: Tag[]): Observable<string[]> {
     const dto = {tags: tags}
     return this.http.patch<string[]>(`${PHOTO_BASE_URL}/${id}`, dto);
   }

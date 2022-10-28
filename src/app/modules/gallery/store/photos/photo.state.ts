@@ -11,6 +11,7 @@ import { PhotoService } from "@gallery/services/photo.service";
 import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
 import { ServerSentService } from "@app/common/services/server-sent.service";
 import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
+import { Tag } from "@gallery/store/tags/tag.model";
 
 export interface PhotoStateModel {
   photos: Photo[];
@@ -20,7 +21,7 @@ export interface PhotoStateModel {
   downloads: Photo[];
   loadedPhotos: number;
   availablePhotos: number;
-  tagFilter: string[];
+  tagFilter: Tag[];
   filterRating: number;
   filterFrom: number;
   filterTo: number;
@@ -64,7 +65,7 @@ export class PhotoState {
   }
 
   @Selector([PhotoState.getPhotos, PhotoState.getActiveTags])
-  static getPhotosByTags(photos: Photo[], activeTags: string[]): Photo[] {
+  static getPhotosByTags(photos: Photo[], activeTags: Tag[]): Photo[] {
     if (activeTags.length == 0) {
       return photos;
     }
@@ -119,7 +120,7 @@ export class PhotoState {
   }
 
   @Selector()
-  static getActiveTags(state: PhotoStateModel): string[] {
+  static getActiveTags(state: PhotoStateModel): Tag[] {
     return state.tagFilter;
   }
 
@@ -660,7 +661,7 @@ export class PhotoState {
   removeTagFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.RemoveTagFilter): void {
     ctx.setState(
       patch({
-        tagFilter: removeItem<string>(name => name === action.filter)
+        tagFilter: removeItem<Tag>(name => name === action.filter)
       })
     );
   }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Tag } from '@gallery/store/tags/tag.model';
+import { Tag, TagCategory } from '@gallery/store/tags/tag.model';
 import { Select, Store } from '@ngxs/store';
 import { TagState } from "@gallery/store/tags/tag.state";
 import { AddTagFilter, RemoveTagFilter } from "@gallery/store/photos/photo.actions";
@@ -14,18 +14,18 @@ import { PhotoState } from "@gallery/store/photos/photo.state";
 export class GalleryFilterPanelComponent {
 
   @Select(TagState.getTags)
-  tags$: Observable<Tag[]>;
+  categories$: Observable<TagCategory[]>;
+  categories: TagCategory[] = [];
 
   @Select(PhotoState.getActiveTags)
-  activeTags$: Observable<string[]>;
+  activeTags$: Observable<Tag[]>;
+  activeTags: Tag[] = [];
 
-  tags: Tag[] = [];
-  activeTags: string[] = [];
   step = 0;
 
   constructor(private store: Store) {
-    this.tags$.subscribe(tags => {
-      this.tags = tags;
+    this.categories$.subscribe(tags => {
+      this.categories = tags;
     });
     this.activeTags$.subscribe(tags => {
       this.activeTags = tags;
@@ -36,7 +36,7 @@ export class GalleryFilterPanelComponent {
     this.step = index;
   }
 
-  onSelectionChange(entry: string): void {
+  onSelectionChange(entry: Tag): void {
     if (this.isTagActivated(entry)) {
       this.store.dispatch(new RemoveTagFilter(entry));
     } else {
@@ -44,7 +44,7 @@ export class GalleryFilterPanelComponent {
     }
   }
 
-  isTagActivated(entry: string): boolean {
+  isTagActivated(entry: Tag): boolean {
     return this.activeTags.includes(entry);
   }
 

@@ -1,9 +1,10 @@
 import { Photo } from "@gallery/store/photos/photo.model";
 import { GALLERY_CONSTANTS } from "@gallery/const";
+import { Tag } from "@gallery/store/tags/tag.model";
 
 const BASE_URL = GALLERY_CONSTANTS.PHOTO_DOWNLOAD_BASE_URL;
 
-export function filterByTags(photos: Photo[], tags: string[]): Photo[] {
+export function filterByTags(photos: Photo[], tags: Tag[]): Photo[] {
   const result = [];
   for (const photo of photos) {
     const some = tags.every(r => photo.tags.includes(r));

@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/co
 import { Select, Store } from "@ngxs/store";
 import { TagState } from "@gallery/store/tags/tag.state";
 import { Observable, of } from "rxjs";
-import { Tag } from "@gallery/store/tags/tag.model";
+import { Tag, TagCategory } from "@gallery/store/tags/tag.model";
 import { LoadTags } from "@gallery/store/tags/tag.action";
 import { AddPhoto } from "@gallery/store/photos/photo.actions";
 import { TagService } from "@gallery/services/tag.service";
@@ -22,11 +22,11 @@ export class GalleryUploadComponent implements OnInit {
   input!: ElementRef;
 
   @Select(TagState.getTags)
-  tags$: Observable<Tag[]>;
-  tags: Tag[];
+  categories$: Observable<TagCategory[]>;
+  categories: TagCategory[];
 
-  tagEntries$: Observable<string[]>;
-  selectedTags: string[] = [];
+  tags$: Observable<Tag[]>;
+  selectedTags: Tag[] = [];
 
   imgUrls: string[] = [PLACEHOLDER_URL];
   imgFiles: File[];
@@ -41,10 +41,10 @@ export class GalleryUploadComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(new LoadTags());
-    this.tags$.subscribe(tags => {
-      this.tags = tags;
+    this.categories$.subscribe(tags => {
+      this.categories = tags;
       for (const tag of tags) {
-        this.allCategories.push(tag.tagName);
+        this.allCategories.push(tag.name);
       }
     });
   }
@@ -79,15 +79,15 @@ export class GalleryUploadComponent implements OnInit {
     }
   }
 
-  onCategorySelect(tag: Tag): void {
-    this.tagEntries$ = of(tag.entries);
+  onCategorySelect(tag: TagCategory): void {
+    this.tags$ = of(tag.entries);
   }
 
-  isSelected(tag: string): boolean {
+  isSelected(tag: Tag): boolean {
     return this.selectedTags.includes(tag);
   }
 
-  onSelectChip(tag: string): void {
+  onSelectChip(tag: Tag): void {
     this.selectedTags.includes(tag) ?
       this.selectedTags = this.selectedTags.filter(item => item !== tag) :
       this.selectedTags.push(tag);

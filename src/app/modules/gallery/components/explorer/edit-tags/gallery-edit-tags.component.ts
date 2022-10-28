@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Tag } from '@gallery/store/tags/tag.model';
+import { TagCategory } from '@gallery/store/tags/tag.model';
 import { MatDialogRef } from '@angular/material/dialog';
 import { arrayUtil } from '@app/common/util/array-utils';
 import { Select, Store } from "@ngxs/store";
@@ -23,10 +23,10 @@ export class GalleryEditTagsComponent implements OnInit {
   // selectionList!: MatSelectionList;
 
   @Select(TagState.getTags)
-  tags$: Observable<Tag[]>;
-  tags: Tag[] = [];
-  copies: Tag[] = [];
-  currentTag: Tag;
+  tags$: Observable<TagCategory[]>;
+  tags: TagCategory[] = [];
+  copies: TagCategory[] = [];
+  currentTag: TagCategory;
   currentIndex = 0;
   hasChanges = false;
 
@@ -37,7 +37,7 @@ export class GalleryEditTagsComponent implements OnInit {
   ngOnInit(): void {
     this.tags$.subscribe(tagArray => {
       this.tags = tagArray;
-      this.copies = JSON.parse(JSON.stringify(tagArray)) as Tag[];
+      this.copies = JSON.parse(JSON.stringify(tagArray)) as TagCategory[];
       this.hasChanges = false;
       this.computeCurrentTag();
     });
@@ -55,7 +55,7 @@ export class GalleryEditTagsComponent implements OnInit {
     }
   }
 
-  onSelectCategory(tag: Tag): void {
+  onSelectCategory(tag: TagCategory): void {
     this.currentIndex = this.copies.findIndex((x) => x.id === tag.id);
     this.currentTag = this.copies[this.currentIndex];
   }
@@ -86,7 +86,7 @@ export class GalleryEditTagsComponent implements OnInit {
     this.hasChanges = !this.tagsAreIdentical();
   }
 
-  onDeleteCategory($event: Tag): void {
+  onDeleteCategory($event: TagCategory): void {
     this.store.dispatch(new DeleteTag($event.id!));
   }
 

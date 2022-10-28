@@ -1,9 +1,9 @@
 <mat-accordion class="example-headers-align">
-  <mat-expansion-panel *ngFor="let tag of tags$ | async; let i = index"
+  <mat-expansion-panel *ngFor="let tag of categories$ | async; let i = index"
                        [expanded]="step === i" (opened)="setStep(i)" hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        {{ tag.tagName}}
+        {{ tag.name}}
       </mat-panel-title>
     </mat-expansion-panel-header>
 

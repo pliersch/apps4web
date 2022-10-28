@@ -2,6 +2,7 @@ import { Photo, PhotoUpdate } from "@gallery/store/photos/photo.model";
 import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
 import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
 import { HttpErrorResponse } from '@angular/common/http';
+import { Tag } from "@gallery/store/tags/tag.model";
 
 // meta data
 
@@ -47,7 +48,7 @@ export class LoadPhotosFail {
 export class AddPhoto {
   static readonly type = '[Gallery] Add Photo';
 
-  constructor(public photo: File, public tags: string[], public created: number) { }
+  constructor(public photo: File, public tags: Tag[], public created: number) { }
 }
 
 export class AddPhotoSuccess {
@@ -163,14 +164,14 @@ export class DeletePhotoFail {
 export class SetTagsOfPhoto {
   static readonly type = '[Gallery] Set Tags Of Photo';
 
-  constructor(public photo: Photo, public tags: string[]) {
+  constructor(public photo: Photo, public tags: Tag[]) {
   }
 }
 
 export class SetTagsOfPhotoSuccess {
   static readonly type = '[Gallery] Set Tags Of Photo success';
 
-  constructor(public photo: Photo, public tags: string[]) { }
+  constructor(public photo: Photo, public tags: Tag[]) { }
 }
 
 export class SetTagsOfPhotoFail {
@@ -251,14 +252,14 @@ export class SetRatingFail {
 export class AddTagFilter {
   static readonly type = '[Gallery] Add Tag Filter';
 
-  constructor(public filter: string) {
+  constructor(public filter: Tag) {
   }
 }
 
 export class RemoveTagFilter {
   static readonly type = '[Gallery] Remove Tag Filter';
 
-  constructor(public filter: string) { }
+  constructor(public filter: Tag) { }
 }
 
 export class SetRatingFilter {

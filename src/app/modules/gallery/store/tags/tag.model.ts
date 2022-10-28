@@ -1,10 +1,15 @@
-export interface Tag {
-  id?: string;
-  tagName: string;
+export interface TagCategory {
+  id?: string; // todo remove "?" create category and get id from backend
+  name: string;
   priority: number;
-  entries: string[];
+  entries: Tag[];
+}
+
+export interface Tag {
+  id?: number;
+  name: string;
 }
 
 export interface TagUpdate {
-  entries: string[];
+  entries: Tag[];
 }

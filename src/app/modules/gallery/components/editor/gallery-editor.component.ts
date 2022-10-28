@@ -13,6 +13,7 @@ import {
   GalleryDeletePhotoComponent
 } from "@gallery/components/explorer/delete-photo-dialog/gallery-delete-photo.component";
 import { AbstractExplorerComponent } from "@gallery/components/abstract/abstract-explorer.component";
+import { Tag } from "@gallery/store/tags/tag.model";
 
 export interface DeletePhotoDialogData {
   photo: Photo;
@@ -23,8 +24,8 @@ export interface EditTagsDialogData {
 }
 
 export interface EditTagsDialogResult {
-  addedTags: string[];
-  removedTags: string[];
+  addedTags: Tag[];
+  removedTags: Tag[];
 }
 
 enum ActionTypes {
@@ -157,8 +158,8 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
     });
   }
 
-  private computeAvailableTagsOfPhotos(photos: Photo[]): string[] {
-    const res: string[] = [];
+  private computeAvailableTagsOfPhotos(photos: Photo[]): Tag[] {
+    const res: Tag[] = [];
     for (const pic of photos) {
       res.push(...pic.tags);
     }
@@ -192,7 +193,7 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
       return;
     }
     for (const photo of this.selection) {
-      let tags: string[] = [];
+      let tags: Tag[] = [];
       tags = photo.tags.filter(x => !res.removedTags.includes(x));
       tags = tags.filter(x => !res.addedTags.includes(x))
         .concat(res.addedTags.filter(x => !tags.includes(x)));

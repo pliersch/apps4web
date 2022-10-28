@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Tag } from "@gallery/store/tags/tag.model";
+import { TagCategory } from "@gallery/store/tags/tag.model";
 
 // load tags
 export class LoadTags {
@@ -9,7 +9,7 @@ export class LoadTags {
 export class LoadTagsSuccess {
   static readonly type = '[Gallery] Load Tags success';
 
-  constructor(public tags: Tag[]) {
+  constructor(public tags: TagCategory[]) {
   }
 }
 
@@ -25,14 +25,14 @@ export class LoadTagsFail {
 export class AddTag {
   static readonly type = '[Gallery] Add Tag';
 
-  constructor(public tag: Tag) {
+  constructor(public tag: TagCategory) {
   }
 }
 
 export class AddTagSuccess {
   static readonly type = '[Gallery] Add Tag success';
 
-  constructor(public tag: Tag) {
+  constructor(public tag: TagCategory) {
   }
 }
 
@@ -48,14 +48,14 @@ export class AddTagFail {
 export class UpdateTag {
   static readonly type = '[Gallery] Update Tag';
 
-  constructor(public tag: Tag) {
+  constructor(public tag: TagCategory) {
   }
 }
 
 export class UpdateTagSuccess {
   static readonly type = '[Gallery] Update Tag success';
 
-  constructor(public tag: Tag) {
+  constructor(public tag: TagCategory) {
   }
 }
 
@@ -78,7 +78,7 @@ export class DeleteTag {
 export class DeleteTagSuccess {
   static readonly type = '[Gallery] Delete Tag success';
 
-  constructor(public tag: Tag) {
+  constructor(public tag: TagCategory) {
   }
 }
 

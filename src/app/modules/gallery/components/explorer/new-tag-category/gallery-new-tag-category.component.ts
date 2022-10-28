@@ -3,7 +3,7 @@ import { UntypedFormBuilder, Validators } from "@angular/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import { Store } from "@ngxs/store";
 import { AddTag } from "@gallery/store/tags/tag.action";
-import { Tag } from "@gallery/store/tags/tag.model";
+import { Tag, TagCategory } from "@gallery/store/tags/tag.model";
 
 @Component({
   selector: 'app-new-tag-category',
@@ -27,20 +27,20 @@ export class GalleryNewTagCategoryComponent {
               public dialogRef: MatDialogRef<GalleryNewTagCategoryComponent>) { }
 
   onSave(): void {
-    const category: string = this.form.get('category')!.value;
+    const name: string = this.form.get('category')!.value;
     const tags: string = this.form.get('tags')!.value;
     const entries: string[] = tags.split(',');
     const priority: number = this.form.get('priority')!.value;
-    const result: string[] = [];
+    const result: Tag[] = [];
     entries.forEach(entry => {
-      result.push(entry.trim());
+      result.push({name: entry.trim()});
     });
-    const tag: Tag = {
-      tagName: category,
+    const category: TagCategory = {
+      name: name,
       entries: result,
       priority: priority
     }
-    this.store.dispatch(new AddTag(tag));
+    this.store.dispatch(new AddTag(category));
     this.dialogRef.close();
   }
 

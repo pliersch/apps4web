@@ -9,7 +9,7 @@
             <mat-list-option *ngFor="let tag of tags$ | async; let i = index"
                              [selected]="currentTag.id === tag.id"
                              [value]="tag" (click)="onSelectCategory(tag)">
-              {{tag.tagName}}
+              {{tag.name}}
             </mat-list-option>
           </mat-selection-list>
         </ng-scrollbar>
