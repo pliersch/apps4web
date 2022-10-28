@@ -13,7 +13,7 @@ import { PhotoState } from "@gallery/store/photos/photo.state";
 })
 export class GalleryFilterPanelComponent {
 
-  @Select(TagState.getTags)
+  @Select(TagState.getTagCategories)
   categories$: Observable<TagCategory[]>;
   categories: TagCategory[] = [];
 

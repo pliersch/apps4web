@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { UntypedFormBuilder, Validators } from "@angular/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import { Store } from "@ngxs/store";
-import { AddTag } from "@gallery/store/tags/tag.action";
+import { AddCategory } from "@gallery/store/tags/tag.action";
 import { Tag, TagCategory } from "@gallery/store/tags/tag.model";
 
 @Component({
@@ -40,7 +40,7 @@ export class GalleryNewTagCategoryComponent {
       entries: result,
       priority: priority
     }
-    this.store.dispatch(new AddTag(category));
+    this.store.dispatch(new AddCategory(category));
     this.dialogRef.close();
   }
 

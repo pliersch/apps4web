@@ -21,7 +21,7 @@ export class GalleryUploadComponent implements OnInit {
   @ViewChild('fileInput')
   input!: ElementRef;
 
-  @Select(TagState.getTags)
+  @Select(TagState.getTagCategories)
   categories$: Observable<TagCategory[]>;
   categories: TagCategory[];
 

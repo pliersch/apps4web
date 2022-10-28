@@ -5,7 +5,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { arrayUtil } from '@app/common/util/array-utils';
 import { Select, Store } from "@ngxs/store";
 import { TagState } from "@gallery/store/tags/tag.state";
-import { DeleteTag, UpdateTag } from "@gallery/store/tags/tag.action";
+import { DeleteCategory, UpdateCategory } from "@gallery/store/tags/tag.action";
 
 @Component({
   selector: 'app-gallery-edit-tags',
@@ -22,7 +22,7 @@ export class GalleryEditTagsComponent implements OnInit {
   // @ViewChild(MatSelectionList)
   // selectionList!: MatSelectionList;
 
-  @Select(TagState.getTags)
+  @Select(TagState.getTagCategories)
   tags$: Observable<TagCategory[]>;
   tags: TagCategory[] = [];
   copies: TagCategory[] = [];
@@ -87,7 +87,7 @@ export class GalleryEditTagsComponent implements OnInit {
   }
 
   onDeleteCategory($event: TagCategory): void {
-    this.store.dispatch(new DeleteTag($event.id!));
+    this.store.dispatch(new DeleteCategory($event.id!));
   }
 
   onNewTag(): void {
@@ -99,7 +99,7 @@ export class GalleryEditTagsComponent implements OnInit {
       for (let i = 0; i < this.copies.length; i++) {
         if (!arrayUtil.sameElements(this.tags[i].entries, this.copies[i].entries)) {
           // todo use "updateTags" (many) !!!
-          this.store.dispatch(new UpdateTag(this.copies[i]));
+          this.store.dispatch(new UpdateCategory(this.copies[i]));
         }
       }
     }

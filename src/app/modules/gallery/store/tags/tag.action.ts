@@ -9,7 +9,7 @@ export class LoadTags {
 export class LoadTagsSuccess {
   static readonly type = '[Gallery] Load Tags success';
 
-  constructor(public tags: TagCategory[]) {
+  constructor(public categories: TagCategory[]) {
   }
 }
 
@@ -20,70 +20,70 @@ export class LoadTagsFail {
   }
 }
 
-// add tag
+// add category
 
-export class AddTag {
-  static readonly type = '[Gallery] Add Tag';
+export class AddCategory {
+  static readonly type = '[Gallery] Add Category';
 
-  constructor(public tag: TagCategory) {
+  constructor(public category: TagCategory) {
   }
 }
 
-export class AddTagSuccess {
-  static readonly type = '[Gallery] Add Tag success';
+export class AddCategorySuccess {
+  static readonly type = '[Gallery] Add Category success';
 
-  constructor(public tag: TagCategory) {
+  constructor(public category: TagCategory) {
   }
 }
 
-export class AddTagFail {
-  static readonly type = '[Gallery] Add Tag fail';
+export class AddCategoryFail {
+  static readonly type = '[Gallery] Add Category fail';
 
   constructor(public error: HttpErrorResponse) {
   }
 }
 
-// update tag
+// update category
 
-export class UpdateTag {
-  static readonly type = '[Gallery] Update Tag';
+export class UpdateCategory {
+  static readonly type = '[Gallery] Update Category';
 
-  constructor(public tag: TagCategory) {
+  constructor(public category: TagCategory) {
   }
 }
 
-export class UpdateTagSuccess {
-  static readonly type = '[Gallery] Update Tag success';
+export class UpdateCategorySuccess {
+  static readonly type = '[Gallery] Update Category success';
 
-  constructor(public tag: TagCategory) {
+  constructor(public category: TagCategory) {
   }
 }
 
-export class UpdateTagFail {
-  static readonly type = '[Gallery] Update Tag fail';
+export class UpdateCategoryFail {
+  static readonly type = '[Gallery] Update Category fail';
 
   constructor(public error: HttpErrorResponse) {
   }
 }
 
-// delete tag
+// delete category
 
-export class DeleteTag {
-  static readonly type = '[Gallery] Delete Tag';
+export class DeleteCategory {
+  static readonly type = '[Gallery] Delete Category';
 
   constructor(public id: string) {
   }
 }
 
-export class DeleteTagSuccess {
-  static readonly type = '[Gallery] Delete Tag success';
+export class DeleteCategorySuccess {
+  static readonly type = '[Gallery] Delete Category success';
 
-  constructor(public tag: TagCategory) {
+  constructor(public category: TagCategory) {
   }
 }
 
-export class DeleteTagFail {
-  static readonly type = '[Gallery] Delete Tag fail';
+export class DeleteCategoryFail {
+  static readonly type = '[Gallery] Delete Category fail';
 
   constructor(public error: HttpErrorResponse) {
   }

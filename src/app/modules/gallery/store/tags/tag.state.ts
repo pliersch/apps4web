@@ -10,7 +10,7 @@ import { AlertService } from "@app/common/services/alert.service";
 import { PhotoStateModel } from "@gallery/store/photos/photo.state";
 
 export interface TagStateModel {
-  tags: TagCategory[];
+  categories: TagCategory[];
   allTagsLoaded: boolean;
   loaded: boolean;
   loading: boolean;
@@ -20,7 +20,7 @@ export interface TagStateModel {
 @State<TagStateModel>({
   name: 'TagState',
   defaults: {
-    tags: [],
+    categories: [],
     allTagsLoaded: false,
     loaded: false,
     loading: false,
@@ -32,8 +32,8 @@ export interface TagStateModel {
 export class TagState {
 
   @Selector()
-  static getTags(state: TagStateModel): TagCategory[] {
-    return state.tags;
+  static getTagCategories(state: TagStateModel): TagCategory[] {
+    return state.categories;
   }
 
   constructor(private tagService: TagService,
@@ -45,7 +45,7 @@ export class TagState {
   //////////////////////////////////////////////////////////
 
   @Action(tagActions.LoadTags)
-  loadTags(ctx: StateContext<TagStateModel>, action: tagActions.LoadTags): Observable<Subscription> {
+  loadTags(ctx: StateContext<TagStateModel>): Observable<Subscription> {
     const state = ctx.getState();
     if (!state.newDataAvailable) {
       return of(Subscription.EMPTY);
@@ -70,13 +70,13 @@ export class TagState {
 
   @Action(tagActions.LoadTagsSuccess)
   loadTagsSuccess({patchState}: StateContext<TagStateModel>, action: tagActions.LoadTagsSuccess): void {
-    const sortedTags: TagCategory[] = action.tags.sort((tag1, tag2) => {
+    const sortedTags: TagCategory[] = action.categories.sort((tag1, tag2) => {
       return (tag1.priority > tag2.priority) ? 1 : -1;
     });
     for (const tag of sortedTags) {
       tag.entries = tag.entries.sort((e1: Tag, e2: Tag) => e1.name.localeCompare(e2.name));
     }
-    patchState({tags: sortedTags, loaded: true, loading: false, newDataAvailable: false});
+    patchState({categories: sortedTags, loaded: true, loading: false, newDataAvailable: false});
   }
 
   @Action(tagActions.LoadTagsFail)
@@ -104,35 +104,35 @@ export class TagState {
   //          add
   //////////////////////////////////////////////////////////
 
-  @Action(tagActions.AddTag)
-  addTag(ctx: StateContext<TagStateModel>, action: tagActions.AddTag): Observable<Subscription> {
+  @Action(tagActions.AddCategory)
+  addTag(ctx: StateContext<TagStateModel>, action: tagActions.AddCategory): Observable<Subscription> {
     ctx.patchState({loading: true});
-    return this.tagService.create(action.tag)
+    return this.tagService.create(action.category)
       .pipe(
         map((tag: TagCategory) =>
           asapScheduler.schedule(() =>
-            ctx.dispatch(new tagActions.AddTagSuccess(tag))
+            ctx.dispatch(new tagActions.AddCategorySuccess(tag))
           )
         ),
         catchError(error =>
           of(
             asapScheduler.schedule(() =>
-              ctx.dispatch(new tagActions.AddTagFail(error))
+              ctx.dispatch(new tagActions.AddCategoryFail(error))
             )
           )
         )
       );
   }
 
-  @Action(tagActions.AddTagSuccess)
-  addTagSuccess(ctx: StateContext<TagStateModel>, action: tagActions.AddTagSuccess): void {
+  @Action(tagActions.AddCategorySuccess)
+  addTagSuccess(ctx: StateContext<TagStateModel>, action: tagActions.AddCategorySuccess): void {
     const state = ctx.getState();
-    const tags: TagCategory[] = [...state.tags, action.tag]
-    ctx.patchState({tags: tags, loaded: true, loading: false});
+    const tags: TagCategory[] = [...state.categories, action.category]
+    ctx.patchState({categories: tags, loaded: true, loading: false});
   }
 
-  @Action(tagActions.AddTagFail)
-  addTagFail({dispatch}: StateContext<TagStateModel>, action: tagActions.AddTagFail): void {
+  @Action(tagActions.AddCategoryFail)
+  addTagFail({dispatch}: StateContext<TagStateModel>, action: tagActions.AddCategoryFail): void {
     this.alertService.error('Add tag fail');
     dispatch({loaded: false, loading: false});
   }
@@ -141,37 +141,37 @@ export class TagState {
   //          update
   //////////////////////////////////////////////////////////
 
-  @Action(tagActions.UpdateTag)
-  updateTag(ctx: StateContext<TagStateModel>, action: tagActions.UpdateTag): Observable<Subscription> {
-    return this.tagService.update(action.tag.id!, {entries: action.tag.entries})
+  @Action(tagActions.UpdateCategory)
+  updateTag(ctx: StateContext<TagStateModel>, action: tagActions.UpdateCategory): Observable<Subscription> {
+    return this.tagService.update(action.category.id!, {entries: action.category.entries})
       .pipe(
         map((res: any) =>
           asapScheduler.schedule(() =>
-            ctx.dispatch(new tagActions.UpdateTagSuccess(action.tag))
+            ctx.dispatch(new tagActions.UpdateCategorySuccess(action.category))
           )
         ),
         catchError(error =>
           of(
             asapScheduler.schedule(() =>
-              ctx.dispatch(new tagActions.UpdateTagFail(error))
+              ctx.dispatch(new tagActions.UpdateCategoryFail(error))
             )
           )
         )
       );
   }
 
-  @Action(tagActions.UpdateTagSuccess)
-  updateTagSuccess(ctx: StateContext<TagStateModel>, action: tagActions.UpdateTagSuccess): void {
+  @Action(tagActions.UpdateCategorySuccess)
+  updateTagSuccess(ctx: StateContext<TagStateModel>, action: tagActions.UpdateCategorySuccess): void {
     ctx.setState(
       patch({
-        tags: updateItem<TagCategory>(tag => tag!.id === action.tag.id,
-          patch({entries: action.tag.entries}))
+        categories: updateItem<TagCategory>(tag => tag!.id === action.category.id,
+          patch({entries: action.category.entries}))
       })
     );
   }
 
-  @Action(tagActions.UpdateTagFail)
-  updateTagFail({dispatch}: StateContext<TagStateModel>, action: tagActions.UpdateTagFail): void {
+  @Action(tagActions.UpdateCategoryFail)
+  updateTagFail({dispatch}: StateContext<TagStateModel>, action: tagActions.UpdateCategoryFail): void {
     this.alertService.error('Update tag fail');
     dispatch({loaded: false, loading: false});
   }
@@ -180,35 +180,35 @@ export class TagState {
   //          delete
   //////////////////////////////////////////////////////////
 
-  @Action(tagActions.DeleteTag)
-  deleteTags(ctx: StateContext<TagStateModel>, action: tagActions.DeleteTag): Observable<Subscription> {
+  @Action(tagActions.DeleteCategory)
+  deleteTags(ctx: StateContext<TagStateModel>, action: tagActions.DeleteCategory): Observable<Subscription> {
     ctx.patchState({loading: true});
     return this.tagService.delete(action.id)
       .pipe(
         map((tag: TagCategory) =>
           asapScheduler.schedule(() =>
-            ctx.dispatch(new tagActions.DeleteTagSuccess(tag))
+            ctx.dispatch(new tagActions.DeleteCategorySuccess(tag))
           )
         ),
         catchError(error =>
           of(
             asapScheduler.schedule(() =>
-              ctx.dispatch(new tagActions.DeleteTagFail(error))
+              ctx.dispatch(new tagActions.DeleteCategoryFail(error))
             )
           )
         )
       );
   }
 
-  @Action(tagActions.DeleteTagSuccess)
-  deleteTagsSuccess({patchState}: StateContext<TagStateModel>, action: tagActions.DeleteTagSuccess): void {
-    console.log('TagState loadTagsSuccess: BUT NOT IMPL !!!', action.tag)
+  @Action(tagActions.DeleteCategorySuccess)
+  deleteTagsSuccess({patchState}: StateContext<TagStateModel>, action: tagActions.DeleteCategorySuccess): void {
+    console.log('TagState loadTagsSuccess: BUT NOT IMPL !!!', action.category)
     // TODO !!!
     // patchState({tags: action.tags, loaded: true, loading: false});
   }
 
-  @Action(tagActions.DeleteTagFail)
-  deleteTagsFail({dispatch}: StateContext<TagStateModel>, action: tagActions.DeleteTagFail): void {
+  @Action(tagActions.DeleteCategoryFail)
+  deleteTagsFail({dispatch}: StateContext<TagStateModel>, action: tagActions.DeleteCategoryFail): void {
     this.alertService.error('Delete tag fail');
     dispatch({loaded: false, loading: false});
   }
