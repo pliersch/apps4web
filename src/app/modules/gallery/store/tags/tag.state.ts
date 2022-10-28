@@ -74,7 +74,7 @@ export class TagState {
       return (tag1.priority > tag2.priority) ? 1 : -1;
     });
     for (const tag of sortedTags) {
-      tag.entries = tag.entries.sort((e1: Tag, e2: Tag) => e1.name.localeCompare(e2.name));
+      tag.tags = tag.tags.sort((e1: Tag, e2: Tag) => e1.name.localeCompare(e2.name));
     }
     patchState({categories: sortedTags, loaded: true, loading: false, newDataAvailable: false});
   }
@@ -143,7 +143,7 @@ export class TagState {
 
   @Action(tagActions.UpdateCategory)
   updateTag(ctx: StateContext<TagStateModel>, action: tagActions.UpdateCategory): Observable<Subscription> {
-    return this.tagService.update(action.category.id!, {entries: action.category.entries})
+    return this.tagService.update(action.category.id!, {entries: action.category.tags})
       .pipe(
         map((res: any) =>
           asapScheduler.schedule(() =>
@@ -165,7 +165,7 @@ export class TagState {
     ctx.setState(
       patch({
         categories: updateItem<TagCategory>(tag => tag!.id === action.category.id,
-          patch({entries: action.category.entries}))
+          patch({tags: action.category.tags}))
       })
     );
   }

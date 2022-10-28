@@ -37,7 +37,7 @@ export class GalleryNewTagCategoryComponent {
     });
     const category: TagCategory = {
       name: name,
-      entries: result,
+      tags: result,
       priority: priority
     }
     this.store.dispatch(new AddCategory(category));

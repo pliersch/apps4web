@@ -12,14 +12,14 @@
   <div>
     <mat-form-field class="full-width">
       <input matInput
-        placeholder="New tag..."
-        [formControl]="tagCtrl"
-        [matChipInputFor]="chipList"
-        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-        (matChipInputTokenEnd)="add($event)">
+             placeholder="New tag..."
+             [formControl]="tagCtrl"
+             [matChipInputFor]="chipList"
+             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+             (matChipInputTokenEnd)="add($event)">
     </mat-form-field>
   </div>
-  <button mat-icon-button (click)="onClickDelete(tag)">
+  <button mat-icon-button (click)="onClickDelete(category)">
     <mat-icon>delete</mat-icon>
   </button>
 

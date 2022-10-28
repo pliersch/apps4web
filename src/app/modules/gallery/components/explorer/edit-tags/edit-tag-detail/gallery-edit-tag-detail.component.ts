@@ -13,28 +13,28 @@ import { Tag, TagCategory } from '@gallery/store/tags/tag.model';
 export class GalleryEditTagDetailComponent implements OnChanges {
 
   @Input()
-  tag: TagCategory;
+  category: TagCategory;
 
   @Output()
   tagChangesEvent = new EventEmitter<never>();
   @Output()
   deleteEvent = new EventEmitter<TagCategory>();
 
-  entries: Tag[];
+  tags: Tag[];
   observable: Observable<Tag[]>;
   separatorKeysCodes: number[] = [ENTER, COMMA];
   tagCtrl = new UntypedFormControl();
 
   ngOnChanges(/*changes: SimpleChanges*/): void {
-    this.entries = this.tag.entries;
-    this.observable = of(this.entries);
+    this.tags = this.category?.tags;
+    this.observable = of(this.tags);
   }
 
   add(event: MatChipInputEvent): void {
     const input = event.chipInput;
     const value = event.value;
     if ((value || '').trim()) {
-      this.entries.push({name: value.trim()});
+      this.tags.push({name: value.trim()});
       this.emitStateChange();
     }
     if (input) {
@@ -43,9 +43,9 @@ export class GalleryEditTagDetailComponent implements OnChanges {
   }
 
   remove(entry: Tag): void {
-    const index = this.entries.indexOf(entry);
+    const index = this.tags.indexOf(entry);
     if (index >= 0) {
-      this.entries.splice(index, 1);
+      this.tags.splice(index, 1);
       this.emitStateChange();
     }
   }

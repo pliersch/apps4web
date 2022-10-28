@@ -80,7 +80,7 @@ export class GalleryUploadComponent implements OnInit {
   }
 
   onCategorySelect(tag: TagCategory): void {
-    this.tags$ = of(tag.entries);
+    this.tags$ = of(tag.tags);
   }
 
   isSelected(tag: Tag): boolean {

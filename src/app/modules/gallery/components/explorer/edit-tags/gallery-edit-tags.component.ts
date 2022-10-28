@@ -23,10 +23,10 @@ export class GalleryEditTagsComponent implements OnInit {
   // selectionList!: MatSelectionList;
 
   @Select(TagState.getTagCategories)
-  tags$: Observable<TagCategory[]>;
-  tags: TagCategory[] = [];
+  categories$: Observable<TagCategory[]>;
+  categories: TagCategory[] = [];
   copies: TagCategory[] = [];
-  currentTag: TagCategory;
+  currentCategory: TagCategory;
   currentIndex = 0;
   hasChanges = false;
 
@@ -35,29 +35,29 @@ export class GalleryEditTagsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.tags$.subscribe(tagArray => {
-      this.tags = tagArray;
-      this.copies = JSON.parse(JSON.stringify(tagArray)) as TagCategory[];
+    this.categories$.subscribe(res => {
+      this.categories = res;
+      this.copies = JSON.parse(JSON.stringify(res)) as TagCategory[];
       this.hasChanges = false;
-      this.computeCurrentTag();
+      this.computeCurrentCategory();
     });
   }
 
-  computeCurrentTag(): void {
-    if (!this.currentTag) {
-      this.currentTag = this.copies[0];
+  computeCurrentCategory(): void {
+    if (!this.currentCategory) {
+      this.currentCategory = this.copies[0];
     } else {
-      const index: number = this.copies.findIndex((x) => x.id === this.currentTag.id);
+      const index: number = this.copies.findIndex((x) => x.id === this.currentCategory.id);
       if (index === -1) {
         const max: number = Math.max(this.currentIndex - 1, 0);
-        this.currentTag = this.copies[max];
+        this.currentCategory = this.copies[max];
       }
     }
   }
 
   onSelectCategory(tag: TagCategory): void {
     this.currentIndex = this.copies.findIndex((x) => x.id === tag.id);
-    this.currentTag = this.copies[this.currentIndex];
+    this.currentCategory = this.copies[this.currentIndex];
   }
 
   close(): void {
@@ -75,7 +75,7 @@ export class GalleryEditTagsComponent implements OnInit {
 
   tagsAreIdentical(): boolean {
     for (let i = 0; i < this.copies.length; i++) {
-      if (!arrayUtil.sameElements(this.tags[i].entries, this.copies[i].entries)) {
+      if (!arrayUtil.sameElements(this.categories[i].tags, this.copies[i].tags)) {
         return false;
       }
     }
@@ -97,7 +97,7 @@ export class GalleryEditTagsComponent implements OnInit {
   private updateStore(): void {
     if (this.hasChanges) {
       for (let i = 0; i < this.copies.length; i++) {
-        if (!arrayUtil.sameElements(this.tags[i].entries, this.copies[i].entries)) {
+        if (!arrayUtil.sameElements(this.categories[i].tags, this.copies[i].tags)) {
           // todo use "updateTags" (many) !!!
           this.store.dispatch(new UpdateCategory(this.copies[i]));
         }
