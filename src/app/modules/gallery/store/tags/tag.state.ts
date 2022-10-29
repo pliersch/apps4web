@@ -70,13 +70,14 @@ export class TagState {
 
   @Action(tagActions.LoadTagsSuccess)
   loadTagsSuccess({patchState}: StateContext<TagStateModel>, action: tagActions.LoadTagsSuccess): void {
-    const sortedTags: TagCategory[] = action.categories.sort((tag1, tag2) => {
-      return (tag1.priority > tag2.priority) ? 1 : -1;
-    });
-    for (const tag of sortedTags) {
-      tag.tags = tag.tags.sort((e1: Tag, e2: Tag) => e1.name.localeCompare(e2.name));
+    const sortedCategories: TagCategory[] =
+      action.categories.sort((category1, category2) => {
+        return (category1.priority > category2.priority) ? 1 : -1;
+      });
+    for (const category of sortedCategories) {
+      category.tags = category.tags.sort((t1: Tag, t2: Tag) => t1.name.localeCompare(t2.name));
     }
-    patchState({categories: sortedTags, loaded: true, loading: false, newDataAvailable: false});
+    patchState({categories: sortedCategories, loaded: true, loading: false, newDataAvailable: false});
   }
 
   @Action(tagActions.LoadTagsFail)

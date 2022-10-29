@@ -1,10 +1,9 @@
 import { State } from "@ngxs/store";
 import { Injectable } from "@angular/core";
-import { SocialAuthService, SocialUser } from "@abacritt/angularx-social-login";
 import { AlertService } from "@app/common/services/alert.service";
 
 export interface AuthStateModel {
-  user: SocialUser | null;
+  user: /*SocialUser |*/ null;
 }
 
 @State<AuthStateModel>({
@@ -28,7 +27,6 @@ export class AuthState {
   // }
 
   constructor(/*private authService: AuthService,*/
-              private socialAuthService: SocialAuthService,
               private alertService: AlertService) {
   }
 

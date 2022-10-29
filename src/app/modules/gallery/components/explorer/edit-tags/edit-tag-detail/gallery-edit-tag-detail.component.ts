@@ -26,7 +26,7 @@ export class GalleryEditTagDetailComponent implements OnChanges {
   tagCtrl = new UntypedFormControl();
 
   ngOnChanges(/*changes: SimpleChanges*/): void {
-    this.tags = this.category?.tags;
+    this.tags = this.category.tags || [];
     this.observable = of(this.tags);
   }
 
@@ -54,7 +54,7 @@ export class GalleryEditTagDetailComponent implements OnChanges {
     this.tagChangesEvent.emit();
   }
 
-  onClickDelete(tag: TagCategory): void {
-    this.deleteEvent.emit(tag);
+  onClickDelete(category: TagCategory): void {
+    this.deleteEvent.emit(category);
   }
 }
