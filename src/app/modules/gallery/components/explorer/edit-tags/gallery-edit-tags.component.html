@@ -30,7 +30,7 @@
 <mat-dialog-actions>
   <span class="spacer"></span>
   <button mat-raised-button class="mat-primary"
-          [disabled]="!hasChanges" (click)="apply()">Apply
+          [disabled]="!changes" (click)="apply()">Apply
   </button>
   <button mat-raised-button (click)="close()">Cancel</button>
   <button mat-raised-button color="primary" (click)="save()">Ok</button>

@@ -11,9 +11,9 @@
   <div>
     <mat-chip-list #chipList>
       <mat-chip
-        *ngFor="let tag of tags"
+        *ngFor="let tag of tagNames"
         (removed)="remove(tag)">
-        {{tag.name}}
+        {{tag}}
         <mat-icon matChipRemove>cancel</mat-icon>
       </mat-chip>
     </mat-chip-list>

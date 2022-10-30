@@ -29,7 +29,7 @@ export class GalleryEditTagsComponent implements OnInit {
   copies: TagCategory[] = [];
   currentCategory: TagCategory;
   currentIndex = 0;
-  hasChanges = false;
+  changes: Changes | undefined = undefined;
 
 
   constructor(private store: Store,
@@ -40,7 +40,6 @@ export class GalleryEditTagsComponent implements OnInit {
     this.categories$.subscribe(res => {
       this.categories = res;
       this.copies = JSON.parse(JSON.stringify(res)) as TagCategory[];
-      this.hasChanges = false;
       this.computeCurrentCategory();
     });
   }
@@ -87,7 +86,7 @@ export class GalleryEditTagsComponent implements OnInit {
   onEntriesChanged($event: Changes): void {
     console.log('GalleryEditTagsComponent onEntriesChanged: ', $event)
     // this.hasChanges = !this.tagsAreIdentical();
-    this.hasChanges = !!$event
+    this.changes = $event;
   }
 
   onDeleteCategory($event: TagCategory): void {
@@ -104,7 +103,7 @@ export class GalleryEditTagsComponent implements OnInit {
   }
 
   private updateStore(): void {
-    if (this.hasChanges) {
+    if (!!this.changes) {
       for (let i = 0; i < this.copies.length; i++) {
         if (!arrayUtil.sameElements(this.categories[i].tags, this.copies[i].tags)) {
           // todo use "updateTags" (many) !!!
@@ -112,7 +111,7 @@ export class GalleryEditTagsComponent implements OnInit {
           this.store.dispatch(new UpdateCategory(this.copies[i]));
         }
       }
-      this.hasChanges = false;
+      this.changes = undefined;
     }
   }
 
