@@ -1,15 +1,18 @@
 <div>
   <div class="row-max-width">
+    <!--    <form>-->
     <mat-form-field class="flex-1" appearance="fill">
       <input matInput #txtVal [value]="category.name" placeholder="Kategorie Name"
+
              (keyup)="onChangeName(txtVal.value)">
       <mat-icon matSuffix>edit</mat-icon>
     </mat-form-field>
+    <!--    </form>-->
   </div>
   <div>
     <mat-chip-list #chipList>
       <mat-chip
-        *ngFor="let tag of tags$ | async"
+        *ngFor="let tag of tags"
         (removed)="remove(tag)">
         {{tag.name}}
         <mat-icon matChipRemove>cancel</mat-icon>
@@ -17,16 +20,21 @@
     </mat-chip-list>
   </div>
   <div>
-    <mat-form-field class="full-width">
-      <input matInput
-             placeholder="New tag..."
-             [formControl]="tagCtrl"
-             [matChipInputFor]="chipList"
-             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-             (matChipInputTokenEnd)="add($event)">
-    </mat-form-field>
+    <form>
+      <mat-form-field class="full-width">
+        <input matInput [formControl]="tagCtrl" [errorStateMatcher]="matcher"
+               placeholder="New tag..."
+               [matChipInputFor]="chipList"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               (matChipInputTokenEnd)="add($event)">
+        <mat-hint style="color: red" *ngIf="nameExists">Error Message</mat-hint>
+        <mat-error *ngIf="tagCtrl.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </form>
   </div>
-  <button mat-icon-button (click)="onClickDelete(category)">
+  <button mat-icon-button (click)="onClickDeleteTag(category)">
     <mat-icon>delete</mat-icon>
   </button>
 

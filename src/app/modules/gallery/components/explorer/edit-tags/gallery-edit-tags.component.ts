@@ -85,6 +85,7 @@ export class GalleryEditTagsComponent implements OnInit {
   }
 
   onEntriesChanged($event: Changes): void {
+    console.log('GalleryEditTagsComponent onEntriesChanged: ', $event)
     // this.hasChanges = !this.tagsAreIdentical();
     this.hasChanges = !!$event
   }
@@ -111,6 +112,7 @@ export class GalleryEditTagsComponent implements OnInit {
           this.store.dispatch(new UpdateCategory(this.copies[i]));
         }
       }
+      this.hasChanges = false;
     }
   }
 
