@@ -6,10 +6,16 @@ export interface TagCategory {
 }
 
 export interface Tag {
-  id?: number;
+  id?: string;
+  categoryId?: string;
   name: string;
 }
 
 export interface TagUpdate {
-  entries: Tag[];
+  name: string;
+}
+
+export interface TagCategoryUpdate {
+  name?: string;
+  priority?: number;
 }

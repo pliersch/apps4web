@@ -11,6 +11,9 @@ import { AddressFormComponent } from './address-form/address-form.component';
     AddressFormComponent,
     // SelectionJsComponent,
   ],
+  exports: [
+    AddressFormComponent
+  ],
   imports: [
     CommonModule,
     MaterialModule,

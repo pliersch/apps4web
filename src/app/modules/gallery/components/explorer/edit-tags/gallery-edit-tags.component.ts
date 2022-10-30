@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TagCategory } from '@gallery/store/tags/tag.model';
+import { Tag, TagCategory } from '@gallery/store/tags/tag.model';
 import { MatDialogRef } from '@angular/material/dialog';
 import { arrayUtil } from '@app/common/util/array-utils';
 import { Select, Store } from "@ngxs/store";
 import { TagState } from "@gallery/store/tags/tag.state";
 import { DeleteCategory, UpdateCategory } from "@gallery/store/tags/tag.action";
+import { Changes } from "@gallery/components/explorer/edit-tags/edit-tag-detail/gallery-edit-tag-detail.component";
 
 @Component({
   selector: 'app-gallery-edit-tags',
@@ -29,6 +30,7 @@ export class GalleryEditTagsComponent implements OnInit {
   currentCategory: TagCategory;
   currentIndex = 0;
   hasChanges = false;
+
 
   constructor(private store: Store,
               public dialogRef: MatDialogRef<GalleryEditTagsComponent>) {
@@ -82,8 +84,9 @@ export class GalleryEditTagsComponent implements OnInit {
     return true;
   }
 
-  onEntriesChanged(): void {
-    this.hasChanges = !this.tagsAreIdentical();
+  onEntriesChanged($event: Changes): void {
+    // this.hasChanges = !this.tagsAreIdentical();
+    this.hasChanges = !!$event
   }
 
   onDeleteCategory($event: TagCategory): void {
@@ -91,6 +94,11 @@ export class GalleryEditTagsComponent implements OnInit {
   }
 
   onNewTag(): void {
+    this.currentCategory = {
+      tags: [],
+      name: '',
+      priority: 20
+    }
     console.log('new');
   }
 
@@ -99,6 +107,7 @@ export class GalleryEditTagsComponent implements OnInit {
       for (let i = 0; i < this.copies.length; i++) {
         if (!arrayUtil.sameElements(this.categories[i].tags, this.copies[i].tags)) {
           // todo use "updateTags" (many) !!!
+          console.log('GalleryEditTagsComponent updateStore: ',)
           this.store.dispatch(new UpdateCategory(this.copies[i]));
         }
       }

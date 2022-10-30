@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { TagCategory } from "@gallery/store/tags/tag.model";
+import { Tag, TagCategory } from "@gallery/store/tags/tag.model";
 
 // load tags
 export class LoadTags {
@@ -20,7 +20,7 @@ export class LoadTagsFail {
   }
 }
 
-// add category
+// add
 
 export class AddCategory {
   static readonly type = '[Gallery] Add Category';
@@ -43,7 +43,29 @@ export class AddCategoryFail {
   }
 }
 
-// update category
+export class AddTag {
+  static readonly type = '[Gallery] Add Tag';
+
+  constructor(public category: TagCategory,
+              public tag: Tag) {
+  }
+}
+
+export class AddTagSuccess {
+  static readonly type = '[Gallery] Add Tag success';
+
+  constructor(public tag: Tag) {
+  }
+}
+
+export class AddTagFail {
+  static readonly type = '[Gallery] Add Tag fail';
+
+  constructor(public error: HttpErrorResponse) {
+  }
+}
+
+// update
 
 export class UpdateCategory {
   static readonly type = '[Gallery] Update Category';
@@ -66,7 +88,28 @@ export class UpdateCategoryFail {
   }
 }
 
-// delete category
+export class UpdateTag {
+  static readonly type = '[Gallery] Update Tag';
+
+  constructor(public tag: Tag) {
+  }
+}
+
+export class UpdateTagSuccess {
+  static readonly type = '[Gallery] Update Tag success';
+
+  constructor(public tag: Tag) {
+  }
+}
+
+export class UpdateTagFail {
+  static readonly type = '[Gallery] Update Tag fail';
+
+  constructor(public error: HttpErrorResponse) {
+  }
+}
+
+// delete
 
 export class DeleteCategory {
   static readonly type = '[Gallery] Delete Category';

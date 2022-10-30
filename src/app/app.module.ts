@@ -27,6 +27,7 @@ import { ThemeState } from "@modules/themes/stores/theme-state";
 import { RecipesModule } from "@modules/recipes/recipes.module";
 import { GoogleSigninModule } from "@modules/google-signin/google-signin.module";
 import { SigninState } from "@modules/google-signin/store/signin.state";
+import { SamplesModule } from "@modules/samples/samples.module";
 
 const ngxsConfig: NgxsModuleOptions = {
   developmentMode: !environment.production,
@@ -70,7 +71,8 @@ const ngxsConfig: NgxsModuleOptions = {
     // NgxsLoggerPluginModule.forRoot(),
     WasteCalendarModule,
     RecipesModule,
-    GoogleSigninModule
+    GoogleSigninModule,
+    SamplesModule
   ],
   exports: [],
   providers: [

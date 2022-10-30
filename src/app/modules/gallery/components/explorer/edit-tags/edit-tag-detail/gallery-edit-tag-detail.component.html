@@ -1,10 +1,17 @@
-<div id="wrapper">
+<div>
+  <div class="row-max-width">
+    <mat-form-field class="flex-1" appearance="fill">
+      <input matInput #txtVal [value]="category.name" placeholder="Kategorie Name"
+             (keyup)="onChangeName(txtVal.value)">
+      <mat-icon matSuffix>edit</mat-icon>
+    </mat-form-field>
+  </div>
   <div>
     <mat-chip-list #chipList>
       <mat-chip
-        *ngFor="let tag of observable | async"
+        *ngFor="let tag of tags$ | async"
         (removed)="remove(tag)">
-        {{tag}}
+        {{tag.name}}
         <mat-icon matChipRemove>cancel</mat-icon>
       </mat-chip>
     </mat-chip-list>
