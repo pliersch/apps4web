@@ -1,22 +1,13 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { FormControl, FormGroupDirective, NgForm, UntypedFormControl, Validators } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Tag, TagCategory } from '@gallery/store/tags/tag.model';
-import { ErrorStateMatcher } from "@angular/material/core";
 
 export interface Changes {
   name: string;
   addedTags: Tag[];
   removedTags: Tag[];
-}
-
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    console.log('MyErrorStateMatcher isErrorState: ', control?.value)
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
 }
 
 @Component({
@@ -34,13 +25,9 @@ export class GalleryEditTagDetailComponent implements OnChanges {
   @Output()
   deleteEvent = new EventEmitter<TagCategory>();
 
-  tagCtrl = new FormControl('', [Validators.required]);
-
-  matcher = new MyErrorStateMatcher();
-
   tags: Tag[];
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  // tagCtrl = new UntypedFormControl();
+  tagCtrl = new UntypedFormControl();
 
   nameExists = false;
 
@@ -64,7 +51,7 @@ export class GalleryEditTagDetailComponent implements OnChanges {
 
     if ((name || '').trim()) {
 
-      if (this.category.tags.find(tag => tag.name === name)) {
+      if (this.tags.find(tag => tag.name === name)) {
         this.nameExists = true;
       } else {
         const tag: Tag = {name: name}
@@ -78,16 +65,19 @@ export class GalleryEditTagDetailComponent implements OnChanges {
     }
   }
 
-  remove(entry: Tag): void {
-    const index = this.tags.indexOf(entry);
-    if (index >= 0) {
-      // this.changes.removedTags.splice(index, 1);
-      this.changes.removedTags.push(entry);
-      this.emitStateChange();
+  remove(tag: Tag): void {
+    this.tags = this.tags.filter(item => item !== tag)
+    this.changes.removedTags.push(tag);
+    this.emitStateChange();
+  }
+
+  onEditTagName($event: string): void {
+    for (const tag of this.tags) {
+      this.nameExists = $event === tag.name;
     }
   }
 
-  onChangeName($event: string): void {
+  onChangeCategoryName($event: string): void {
     if (this.category.name != $event) {
       this.changes.name = $event;
     } else {
@@ -105,5 +95,6 @@ export class GalleryEditTagDetailComponent implements OnChanges {
     } else {
       this.tagChangesEvent.emit(undefined);
     }
+    console.log('GalleryEditTagDetailComponent emitStateChange: ', this.changes)
   }
 }

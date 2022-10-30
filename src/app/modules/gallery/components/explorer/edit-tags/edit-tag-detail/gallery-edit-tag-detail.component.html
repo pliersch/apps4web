@@ -2,9 +2,8 @@
   <div class="row-max-width">
     <!--    <form>-->
     <mat-form-field class="flex-1" appearance="fill">
-      <input matInput #txtVal [value]="category.name" placeholder="Kategorie Name"
-
-             (keyup)="onChangeName(txtVal.value)">
+      <input matInput #categoryVal [value]="category.name" placeholder="Kategorie Name"
+             (keyup)="onChangeCategoryName(categoryVal.value)">
       <mat-icon matSuffix>edit</mat-icon>
     </mat-form-field>
     <!--    </form>-->
@@ -22,15 +21,13 @@
   <div>
     <form>
       <mat-form-field class="full-width">
-        <input matInput [formControl]="tagCtrl" [errorStateMatcher]="matcher"
+        <input #tagVal matInput [formControl]="tagCtrl"
                placeholder="New tag..."
                [matChipInputFor]="chipList"
                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-               (matChipInputTokenEnd)="add($event)">
-        <mat-hint style="color: red" *ngIf="nameExists">Error Message</mat-hint>
-        <mat-error *ngIf="tagCtrl.hasError('required')">
-          Email is <strong>required</strong>
-        </mat-error>
+               (matChipInputTokenEnd)="add($event)"
+               (keyup)="onEditTagName(tagVal.value)">
+        <mat-hint style="color: red" *ngIf="nameExists">Tag existiert bereits</mat-hint>
       </mat-form-field>
     </form>
   </div>
