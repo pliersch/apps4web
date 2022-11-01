@@ -14,7 +14,7 @@
           </mat-selection-list>
         </ng-scrollbar>
       </div>
-      <button mat-raised-button color="primary" (click)="onNewTag()">New</button>
+      <button mat-raised-button color="primary" [disabled]="dirtyState" (click)="onNewTag()">New</button>
     </div>
     <!--    <mat-divider [vertical]="true"></mat-divider>-->
     <div class="col-s-9">
@@ -30,7 +30,7 @@
 <mat-dialog-actions>
   <span class="spacer"></span>
   <button mat-raised-button class="mat-primary"
-          [disabled]="!changes" (click)="apply()">Apply
+          [disabled]="!hasChanges" (click)="apply()">Apply
   </button>
   <button mat-raised-button (click)="close()">Cancel</button>
   <button mat-raised-button color="primary" (click)="save()">Ok</button>

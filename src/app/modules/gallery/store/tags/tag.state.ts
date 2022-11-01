@@ -108,7 +108,7 @@ export class TagState {
   @Action(tagActions.AddCategory)
   addCategory(ctx: StateContext<TagStateModel>, action: tagActions.AddCategory): Observable<Subscription> {
     ctx.patchState({loading: true});
-    return this.tagService.createCategory(action.category)
+    return this.tagService.createCategory(action.dto)
       .pipe(
         map((tag: TagCategory) =>
           asapScheduler.schedule(() =>
@@ -138,58 +138,17 @@ export class TagState {
     dispatch({loaded: false, loading: false});
   }
 
-  @Action(tagActions.AddTag)
-  addTag(ctx: StateContext<TagStateModel>, action: tagActions.AddTag): Observable<Subscription> {
-    ctx.patchState({loading: true});
-    return this.tagService.createTag(action.tag)
-      .pipe(
-        map((tag: Tag) =>
-          asapScheduler.schedule(() =>
-            ctx.dispatch(new tagActions.AddTagSuccess(tag))
-          )
-        ),
-        catchError(error =>
-          of(
-            asapScheduler.schedule(() =>
-              ctx.dispatch(new tagActions.AddTagFail(error))
-            )
-          )
-        )
-      );
-  }
-
-  @Action(tagActions.AddTagSuccess)
-  addTagSuccess(ctx: StateContext<TagStateModel>, action: tagActions.AddTagSuccess): void {
-    const tag = action.tag;
-    const state = ctx.getState();
-    const changedCategory =
-      state.categories.find((category) => category.id == tag.categoryId);
-    changedCategory!.tags.push(action.tag);
-
-    ctx.setState(
-      patch({
-        categories: updateItem<TagCategory>(category => category?.id === tag.categoryId, changedCategory!)
-      })
-    );
-  }
-
-  @Action(tagActions.AddTagFail)
-  addTagFail({dispatch}: StateContext<TagStateModel>): void {
-    this.alertService.error('Add tag fail');
-    dispatch({loaded: false, loading: false});
-  }
-
   //////////////////////////////////////////////////////////
   //          update
   //////////////////////////////////////////////////////////
 
-  @Action(tagActions.UpdateTag)
-  updateTag(ctx: StateContext<TagStateModel>, action: tagActions.UpdateTag): Observable<Subscription> {
-    return this.tagService.updateTag(action.tag.id!, action.tag)
+  @Action(tagActions.UpdateCategory)
+  updateCategory(ctx: StateContext<TagStateModel>, action: tagActions.UpdateCategory): Observable<Subscription> {
+    return this.tagService.updateCategory(action.dto)
       .pipe(
         map((res: any) =>
           asapScheduler.schedule(() =>
-            ctx.dispatch(new tagActions.UpdateTagSuccess(action.tag))
+            ctx.dispatch(new tagActions.UpdateCategorySuccess(action.dto))
           )
         ),
         catchError(error =>
@@ -202,8 +161,8 @@ export class TagState {
       );
   }
 
-  @Action(tagActions.UpdateTagSuccess)
-  updateTagSuccess(ctx: StateContext<TagStateModel>, action: tagActions.UpdateTagSuccess): void {
+  @Action(tagActions.UpdateCategorySuccess)
+  updateCategorySuccess(ctx: StateContext<TagStateModel>, action: tagActions.UpdateCategorySuccess): void {
     // ctx.setState(
     //   patch({
     //     categories: updateItem<TagCategory>(tag => tag!.id === action.category.id,
@@ -212,10 +171,9 @@ export class TagState {
     // );
   }
 
-  @Action(tagActions.UpdateTagFail)
-  updateTagFail({dispatch}: StateContext<TagStateModel>): void {
+  @Action(tagActions.UpdateCategoryFail)
+  updateCategoryFail({dispatch}: StateContext<TagStateModel>): void {
     this.alertService.error('Update tag fail');
-    dispatch({loaded: false, loading: false});
   }
 
   //////////////////////////////////////////////////////////

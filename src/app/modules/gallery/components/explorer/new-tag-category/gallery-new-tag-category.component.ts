@@ -3,7 +3,7 @@ import { UntypedFormBuilder, Validators } from "@angular/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import { Store } from "@ngxs/store";
 import { AddCategory } from "@gallery/store/tags/tag.action";
-import { Tag, TagCategory } from "@gallery/store/tags/tag.model";
+import { CreteTagCategoryDto, Tag, TagCategory } from "@gallery/store/tags/tag.model";
 
 @Component({
   selector: 'app-new-tag-category',
@@ -31,13 +31,10 @@ export class GalleryNewTagCategoryComponent {
     const tags: string = this.form.get('tags')!.value;
     const entries: string[] = tags.split(',');
     const priority: number = this.form.get('priority')!.value;
-    const result: Tag[] = [];
-    entries.forEach(entry => {
-      result.push({name: entry.trim()});
-    });
-    const category: TagCategory = {
+    entries.forEach(entry => entry.trim());
+    const category: CreteTagCategoryDto = {
       name: name,
-      tags: result,
+      tags: entries,
       priority: priority
     }
     this.store.dispatch(new AddCategory(category));

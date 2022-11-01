@@ -4,7 +4,7 @@ import { UntypedFormControl } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { TagCategory } from '@gallery/store/tags/tag.model';
 
-export interface Changes {
+export interface TagChanges {
   name: string;
   addedTagNames: string[];
   removedTagNames: string[];
@@ -21,7 +21,7 @@ export class GalleryEditTagDetailComponent implements OnChanges {
   category: TagCategory;
 
   @Output()
-  tagChangesEvent = new EventEmitter<Changes>();
+  tagChangesEvent = new EventEmitter<TagChanges | null>();
   @Output()
   deleteEvent = new EventEmitter<TagCategory>();
 
@@ -31,13 +31,14 @@ export class GalleryEditTagDetailComponent implements OnChanges {
 
   nameExists = false;
 
-  changes: Changes = {
-    name: '',
-    addedTagNames: [],
-    removedTagNames: []
-  }
+  changes: TagChanges;
 
   ngOnChanges(/*changes: SimpleChanges*/): void {
+    this.changes = {
+      name: '',
+      addedTagNames: [],
+      removedTagNames: []
+    }
     this.tagNames = [];
     for (const tag of this.category.tags) {
       this.tagNames.push(tag.name);
@@ -85,17 +86,17 @@ export class GalleryEditTagDetailComponent implements OnChanges {
   }
 
   emitStateChange(): void {
-    this.compareAddedAndRemovedTags(this.changes);
+    this.cleanUpAddedAndRemovedTags(this.changes);
     if (this.changes.name !== ''
       || this.changes.removedTagNames.length > 0
       || this.changes.addedTagNames.length > 0) {
       this.tagChangesEvent.emit(this.changes);
     } else {
-      this.tagChangesEvent.emit(undefined);
+      this.tagChangesEvent.emit(null);
     }
   }
 
-  compareAddedAndRemovedTags(changes: Changes): void {
+  cleanUpAddedAndRemovedTags(changes: TagChanges): void {
     const intersection = changes.addedTagNames.filter(x => changes.removedTagNames.includes(x));
     for (const tagName of intersection) {
       changes.addedTagNames = changes.addedTagNames.filter(item => item !== tagName)

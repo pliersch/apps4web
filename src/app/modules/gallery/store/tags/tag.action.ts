@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Tag, TagCategory } from "@gallery/store/tags/tag.model";
+import { CreteTagCategoryDto, TagCategory, UpdateTagCategoryDto } from "@gallery/store/tags/tag.model";
 
 // load tags
 export class LoadTags {
@@ -25,7 +25,7 @@ export class LoadTagsFail {
 export class AddCategory {
   static readonly type = '[Gallery] Add Category';
 
-  constructor(public category: TagCategory) {
+  constructor(public dto: CreteTagCategoryDto) {
   }
 }
 
@@ -43,67 +43,24 @@ export class AddCategoryFail {
   }
 }
 
-export class AddTag {
-  static readonly type = '[Gallery] Add Tag';
-
-  constructor(public category: TagCategory,
-              public tag: Tag) {
-  }
-}
-
-export class AddTagSuccess {
-  static readonly type = '[Gallery] Add Tag success';
-
-  constructor(public tag: Tag) {
-  }
-}
-
-export class AddTagFail {
-  static readonly type = '[Gallery] Add Tag fail';
-
-  constructor(public error: HttpErrorResponse) {
-  }
-}
-
 // update
 
 export class UpdateCategory {
   static readonly type = '[Gallery] Update Category';
 
-  constructor(public category: TagCategory) {
+  constructor(public dto: UpdateTagCategoryDto) {
   }
 }
 
 export class UpdateCategorySuccess {
   static readonly type = '[Gallery] Update Category success';
 
-  constructor(public category: TagCategory) {
+  constructor(public category: UpdateTagCategoryDto) {
   }
 }
 
 export class UpdateCategoryFail {
   static readonly type = '[Gallery] Update Category fail';
-
-  constructor(public error: HttpErrorResponse) {
-  }
-}
-
-export class UpdateTag {
-  static readonly type = '[Gallery] Update Tag';
-
-  constructor(public tag: Tag) {
-  }
-}
-
-export class UpdateTagSuccess {
-  static readonly type = '[Gallery] Update Tag success';
-
-  constructor(public tag: Tag) {
-  }
-}
-
-export class UpdateTagFail {
-  static readonly type = '[Gallery] Update Tag fail';
 
   constructor(public error: HttpErrorResponse) {
   }
