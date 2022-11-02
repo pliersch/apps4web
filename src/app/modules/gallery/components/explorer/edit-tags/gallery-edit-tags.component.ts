@@ -61,11 +61,13 @@ export class GalleryEditTagsComponent implements OnInit {
   }
 
   apply(): void {
-    this.updateStore();
+    if (this.hasChanges) {
+      this.updateStore();
+    }
   }
 
   save(): void {
-    this.updateStore();
+    this.apply();
     this.dialogRef.close();
   }
 
@@ -87,7 +89,6 @@ export class GalleryEditTagsComponent implements OnInit {
       element.action = CrudAction.update;
     }
     element.tagChanges = $event;
-    console.log('GalleryEditTagsComponent onEntriesChanged: ', element)
   }
 
   onDeleteCategory($event: TagCategory): void {
@@ -115,7 +116,7 @@ export class GalleryEditTagsComponent implements OnInit {
     this.store.dispatch(new tagActions.AddCategory({
       name: changes.category.name,
       priority: 20,
-      tags: changes.tagChanges?.addedTagNames // todo don't send empty array
+      tags: changes.tagChanges?.addedTagNames
     }));
   }
 
@@ -125,8 +126,8 @@ export class GalleryEditTagsComponent implements OnInit {
       id: changes.category.id!,
       name: changes.category.name,
       // priority: 20,
-      addedNames: changes.tagChanges?.addedTagNames, // todo don't send empty array
-      removedTagIds: idsOfDeletedTags // todo don't send empty array
+      addedNames: changes.tagChanges?.addedTagNames,
+      removedTagIds: idsOfDeletedTags
     }));
   }
 
@@ -135,11 +136,13 @@ export class GalleryEditTagsComponent implements OnInit {
   }
 
   private findIdsOfDeletedTags(changes: Changes): string[] {
-    const tagNames = changes.tagChanges!.removedTagNames;
-    const tags = changes.category.tags;
     const result: string[] = [];
-    for (const name of tagNames) {
-      result.push(tags.find(tag => tag.name === name)!.id);
+    const tagNames = changes.tagChanges?.removedTagNames;
+    if (tagNames) {
+      const tags = changes.category.tags;
+      for (const name of tagNames) {
+        result.push(tags.find(tag => tag.name === name)!.id);
+      }
     }
     return result;
   }
