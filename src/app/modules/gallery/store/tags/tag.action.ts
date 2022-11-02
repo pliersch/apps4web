@@ -1,5 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { CreteTagCategoryDto, TagCategory, UpdateTagCategoryDto } from "@gallery/store/tags/tag.model";
+import {
+  CreteTagCategoryDto,
+  TagCategory,
+  UpdateTagCategoryDto,
+  UpdateTagGroupResultDto
+} from "@gallery/store/tags/tag.model";
 
 // load tags
 export class LoadTags {
@@ -55,7 +60,7 @@ export class UpdateCategory {
 export class UpdateCategorySuccess {
   static readonly type = '[Gallery] Update Category success';
 
-  constructor(public category: UpdateTagCategoryDto) {
+  constructor(public dto: UpdateTagGroupResultDto) {
   }
 }
 

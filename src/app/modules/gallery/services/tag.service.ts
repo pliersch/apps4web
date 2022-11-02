@@ -2,7 +2,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environment';
-import { CreteTagCategoryDto, TagCategory, UpdateTagCategoryDto } from '@gallery/store/tags/tag.model';
+import {
+  CreteTagCategoryDto,
+  TagCategory,
+  UpdateTagCategoryDto,
+  UpdateTagGroupResultDto
+} from '@gallery/store/tags/tag.model';
 
 const tagUrl = `${environment.apiUrl}/tags`;
 
@@ -19,9 +24,9 @@ export class TagService {
     return this.http.post<TagCategory>(tagUrl, category);
   }
 
-  updateCategory(update: UpdateTagCategoryDto): Observable<TagCategory> {
+  updateCategory(update: UpdateTagCategoryDto): Observable<UpdateTagGroupResultDto> {
     console.log('TagService updateCategory: ', update)
-    return this.http.patch<TagCategory>(`${tagUrl}/${update.id}`, update);
+    return this.http.patch<UpdateTagGroupResultDto>(`${tagUrl}/${update.id}`, update);
   }
 
   deleteCategory(id: string): Observable<any> {

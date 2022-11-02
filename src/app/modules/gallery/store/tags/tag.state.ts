@@ -1,5 +1,5 @@
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { Tag, TagCategory } from "@gallery/store/tags/tag.model";
+import { Tag, TagCategory, UpdateTagGroupResultDto } from "@gallery/store/tags/tag.model";
 import { Injectable } from "@angular/core";
 import * as tagActions from "@gallery/store/tags/tag.action";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
@@ -146,9 +146,9 @@ export class TagState {
   updateCategory(ctx: StateContext<TagStateModel>, action: tagActions.UpdateCategory): Observable<Subscription> {
     return this.tagService.updateCategory(action.dto)
       .pipe(
-        map((res: any) =>
+        map((res: UpdateTagGroupResultDto) =>
           asapScheduler.schedule(() =>
-            ctx.dispatch(new tagActions.UpdateCategorySuccess(action.dto))
+            ctx.dispatch(new tagActions.UpdateCategorySuccess(res))
           )
         ),
         catchError(error =>
@@ -163,12 +163,24 @@ export class TagState {
 
   @Action(tagActions.UpdateCategorySuccess)
   updateCategorySuccess(ctx: StateContext<TagStateModel>, action: tagActions.UpdateCategorySuccess): void {
-    // ctx.setState(
-    //   patch({
-    //     categories: updateItem<TagCategory>(tag => tag!.id === action.category.id,
-    //       patch({tags: action.category.tags}))
-    //   })
-    // );
+    const state = ctx.getState();
+    const tagCategory = state.categories.find(c => c.id === action.dto.id)!;
+    let result: Tag[];
+    const removedTagIds = action.dto.removedTagIds || [];
+    const removedTags: Tag[] = tagCategory.tags.filter(tag => removedTagIds.includes(tag.id));
+    console.log('TagState updateCategorySuccess: ', removedTags)
+
+    const addedTags = action.dto.addedTags || [];
+    result = [...tagCategory.tags, ...addedTags];
+
+    // let difference = tagCategory.tags.filter(x => !arr2.includes(x));
+    //
+    ctx.setState(
+      patch({
+        categories: updateItem<TagCategory>(tag => tag!.id === action.dto.id,
+          patch({tags: result}))
+      })
+    );
   }
 
   @Action(tagActions.UpdateCategoryFail)

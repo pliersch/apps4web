@@ -16,12 +16,20 @@ export interface UpdateTagCategoryDto {
   name?: string;
   priority?: number;
   addedNames?: string[];
-  removedTagIds?: string[]; // todo use id's
+  removedTagIds?: string[];
+}
+
+export interface UpdateTagGroupResultDto {
+  id: string;
+  name?: string;
+  priority?: number;
+  addedTags: Tag[];
+  removedTagIds?: string[];
 }
 
 export interface Tag {
   id: string;
-  categoryId?: string;
+  categoryId?: string; // todo don't need in frontend?!
   name: string;
 }
 
