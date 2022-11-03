@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import {
   CreteTagCategoryDto,
   TagCategory,
-  UpdateTagCategoryDto,
+  UpdateTagGroupDto,
   UpdateTagGroupResultDto
 } from "@gallery/store/tags/tag.model";
 
@@ -53,7 +53,7 @@ export class AddCategoryFail {
 export class UpdateCategory {
   static readonly type = '[Gallery] Update Category';
 
-  constructor(public dto: UpdateTagCategoryDto) {
+  constructor(public dto: UpdateTagGroupDto) {
   }
 }
 

@@ -34,7 +34,7 @@ export class GalleryNewTagCategoryComponent {
     entries.forEach(entry => entry.trim());
     const category: CreteTagCategoryDto = {
       name: name,
-      tags: entries,
+      tagNames: entries,
       priority: priority
     }
     this.store.dispatch(new AddCategory(category));

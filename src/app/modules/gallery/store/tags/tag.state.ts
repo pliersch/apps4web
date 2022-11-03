@@ -163,18 +163,13 @@ export class TagState {
 
   @Action(tagActions.UpdateCategorySuccess)
   updateCategorySuccess(ctx: StateContext<TagStateModel>, action: tagActions.UpdateCategorySuccess): void {
-    console.log('TagState updateCategorySuccess: ', action.dto)
+    // console.log('TagState updateCategorySuccess: ', action.dto)
     const state = ctx.getState();
     const tagCategory = state.categories.find(c => c.id === action.dto.id)!;
-    let result: Tag[];
     const removedTagIds = action.dto.removedTagIds || [];
-    const removedTags: Tag[] = tagCategory.tags.filter(tag => !removedTagIds.includes(tag.id));
-    console.log('TagState updateCategorySuccess: ', removedTags)
-    result = removedTags;
+    const result: Tag[] = tagCategory.tags.filter(tag => !removedTagIds.includes(tag.id));
     const addedTags = action.dto.addedTags || [];
-    // result = [...tagCategory.tags, ...addedTags];
     result.push(...addedTags)
-    console.log('TagState updateCategorySuccess remove: ', result)
     ctx.setState(
       patch({
         categories: updateItem<TagCategory>(tag => tag!.id === action.dto.id,
@@ -184,7 +179,8 @@ export class TagState {
   }
 
   @Action(tagActions.UpdateCategoryFail)
-  updateCategoryFail({dispatch}: StateContext<TagStateModel>): void {
+  updateCategoryFail(action: tagActions.UpdateCategoryFail): void {
+    console.log('TagState updateCategoryFail: ', action.error)
     this.alertService.error('Update tag fail');
   }
 

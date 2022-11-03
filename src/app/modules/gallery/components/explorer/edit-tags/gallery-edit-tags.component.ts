@@ -114,9 +114,9 @@ export class GalleryEditTagsComponent implements OnInit {
 
   private createCategory(changes: Changes): void {
     this.store.dispatch(new tagActions.AddCategory({
-      name: changes.category.name,
+      name: changes.tagChanges!.name,
       priority: 20,
-      tags: changes.tagChanges?.addedTagNames
+      tagNames: changes.tagChanges?.addedTagNames
     }));
   }
 

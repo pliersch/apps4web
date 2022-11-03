@@ -5,7 +5,7 @@ import { environment } from '@environments/environment';
 import {
   CreteTagCategoryDto,
   TagCategory,
-  UpdateTagCategoryDto,
+  UpdateTagGroupDto,
   UpdateTagGroupResultDto
 } from '@gallery/store/tags/tag.model';
 
@@ -24,7 +24,7 @@ export class TagService {
     return this.http.post<TagCategory>(tagUrl, category);
   }
 
-  updateCategory(update: UpdateTagCategoryDto): Observable<UpdateTagGroupResultDto> {
+  updateCategory(update: UpdateTagGroupDto): Observable<UpdateTagGroupResultDto> {
     console.log('TagService updateCategory: ', update)
     return this.http.patch<UpdateTagGroupResultDto>(`${tagUrl}/${update.id}`, update);
   }

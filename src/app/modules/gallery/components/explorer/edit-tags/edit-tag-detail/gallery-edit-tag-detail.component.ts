@@ -82,6 +82,7 @@ export class GalleryEditTagDetailComponent implements OnChanges {
 
   onChangeCategoryName($event: string): void {
     this.changes.name = this.category.name === $event ? '' : $event;
+    console.log('GalleryEditTagDetailComponent onChangeCategoryName: ', this.changes.name)
     this.emitStateChange();
   }
 
