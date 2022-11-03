@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import {
-  CreteTagCategoryDto,
-  TagCategory,
+  CreteTagGroupDto,
+  TagGroup,
   UpdateTagGroupDto,
   UpdateTagGroupResultDto
 } from "@gallery/store/tags/tag.model";
@@ -14,7 +14,7 @@ export class LoadTags {
 export class LoadTagsSuccess {
   static readonly type = '[Gallery] Load Tags success';
 
-  constructor(public categories: TagCategory[]) {
+  constructor(public groups: TagGroup[]) {
   }
 }
 
@@ -27,22 +27,22 @@ export class LoadTagsFail {
 
 // add
 
-export class AddCategory {
-  static readonly type = '[Gallery] Add Category';
+export class AddTagGroup {
+  static readonly type = '[Gallery] Add TagGroup';
 
-  constructor(public dto: CreteTagCategoryDto) {
+  constructor(public dto: CreteTagGroupDto) {
   }
 }
 
-export class AddCategorySuccess {
-  static readonly type = '[Gallery] Add Category success';
+export class AddTagGroupSuccess {
+  static readonly type = '[Gallery] Add TagGroup success';
 
-  constructor(public category: TagCategory) {
+  constructor(public tagGroup: TagGroup) {
   }
 }
 
-export class AddCategoryFail {
-  static readonly type = '[Gallery] Add Category fail';
+export class AddTagGroupFail {
+  static readonly type = '[Gallery] Add TagGroup fail';
 
   constructor(public error: HttpErrorResponse) {
   }
@@ -50,22 +50,22 @@ export class AddCategoryFail {
 
 // update
 
-export class UpdateCategory {
-  static readonly type = '[Gallery] Update Category';
+export class UpdateTagGroup {
+  static readonly type = '[Gallery] Update TagGroup';
 
   constructor(public dto: UpdateTagGroupDto) {
   }
 }
 
-export class UpdateCategorySuccess {
-  static readonly type = '[Gallery] Update Category success';
+export class UpdateTagGroupSuccess {
+  static readonly type = '[Gallery] Update TagGroup success';
 
   constructor(public dto: UpdateTagGroupResultDto) {
   }
 }
 
-export class UpdateCategoryFail {
-  static readonly type = '[Gallery] Update Category fail';
+export class UpdateTagGroupFail {
+  static readonly type = '[Gallery] Update TagGroup fail';
 
   constructor(public error: HttpErrorResponse) {
   }
@@ -73,22 +73,22 @@ export class UpdateCategoryFail {
 
 // delete
 
-export class DeleteCategory {
-  static readonly type = '[Gallery] Delete Category';
+export class DeleteTagGroup {
+  static readonly type = '[Gallery] Delete TagGroup';
 
   constructor(public id: string) {
   }
 }
 
-export class DeleteCategorySuccess {
-  static readonly type = '[Gallery] Delete Category success';
+export class DeleteTagGroupSuccess {
+  static readonly type = '[Gallery] Delete TagGroup success';
 
-  constructor(public category: TagCategory) {
+  constructor(public tagGroup: TagGroup) {
   }
 }
 
-export class DeleteCategoryFail {
-  static readonly type = '[Gallery] Delete Category fail';
+export class DeleteTagGroupFail {
+  static readonly type = '[Gallery] Delete TagGroup fail';
 
   constructor(public error: HttpErrorResponse) {
   }

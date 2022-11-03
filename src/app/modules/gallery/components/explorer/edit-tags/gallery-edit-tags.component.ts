@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TagCategory } from '@gallery/store/tags/tag.model';
+import { TagGroup } from '@gallery/store/tags/tag.model';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Select, Store } from "@ngxs/store";
 import { TagState } from "@gallery/store/tags/tag.state";
 import * as tagActions from "@gallery/store/tags/tag.action";
 import { TagChanges } from "@gallery/components/explorer/edit-tags/edit-tag-detail/gallery-edit-tag-detail.component";
+import { AddTagGroup } from "@gallery/store/tags/tag.action";
 
 interface Changes {
-  category: TagCategory;
+  tagGroup: TagGroup;
   tagChanges: TagChanges | null;
   action: CrudAction;
 }
@@ -28,10 +29,10 @@ export enum CrudAction {
 })
 export class GalleryEditTagsComponent implements OnInit {
 
-  @Select(TagState.getTagCategories)
-  categories$: Observable<TagCategory[]>;
-  categories: TagCategory[] = [];
-  currentCategory: TagCategory;
+  @Select(TagState.getTagGroups)
+  tagGroups$: Observable<TagGroup[]>;
+  tagGroups: TagGroup[] = [];
+  currentGroup: TagGroup;
   hasChanges: boolean;
   changes: Changes[];
   dirtyState = false;
@@ -41,18 +42,18 @@ export class GalleryEditTagsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.categories$.subscribe(res => {
-      this.categories = res;
-      this.currentCategory = this.categories[0];
+    this.tagGroups$.subscribe(res => {
+      this.tagGroups = res;
+      this.currentGroup = this.tagGroups[0];
       this.changes = [];
-      for (const category of this.categories) {
-        this.changes.push({category: category, tagChanges: null, action: CrudAction.none});
+      for (const tagGroup of this.tagGroups) {
+        this.changes.push({tagGroup: tagGroup, tagChanges: null, action: CrudAction.none});
       }
     });
   }
 
-  onSelectCategory(tag: TagCategory): void {
-    this.currentCategory = this.categories.find((x) => x.id === tag.id)!;
+  onSelectTagGroups(tag: TagGroup): void {
+    this.currentGroup = this.tagGroups.find((x) => x.id === tag.id)!;
     this.dirtyState = false;
   }
 
@@ -72,74 +73,74 @@ export class GalleryEditTagsComponent implements OnInit {
   }
 
   onNewTag(): void {
-    const newCategory: TagCategory = {
+    const newGroup: TagGroup = {
       tags: [],
       name: '',
       priority: 20
     }
-    this.currentCategory = newCategory;
-    this.changes.push({category: newCategory, tagChanges: null, action: CrudAction.create})
+    this.currentGroup = newGroup;
+    this.changes.push({tagGroup: newGroup, tagChanges: null, action: CrudAction.create})
     // this.dirtyState = true;
   }
 
   onEntriesChanged($event: TagChanges | null): void {
     this.hasChanges = !!$event;
-    const element = this.changes.find(change => change.category === this.currentCategory)!;
+    const element = this.changes.find(change => change.tagGroup === this.currentGroup)!;
     if (element.action === CrudAction.none) {
       element.action = CrudAction.update;
     }
     element.tagChanges = $event;
   }
 
-  onDeleteCategory($event: TagCategory): void {
-    this.store.dispatch(new tagActions.DeleteCategory($event.id!));
+  onDeleteGroup($event: TagGroup): void {
+    this.store.dispatch(new tagActions.DeleteTagGroup($event.id!));
   }
 
   private updateStore(): void {
     for (const change of this.changes) {
       switch (change.action) {
         case CrudAction.create:
-          this.createCategory(change);
+          this.createGroup(change);
           break;
         case CrudAction.update:
-          this.updateCategory(change);
+          this.updateGroup(change);
           break;
         case CrudAction.remove:
-          this.deleteCategory(change);
+          this.deleteGroup(change);
           break;
       }
     }
     this.hasChanges = false;
   }
 
-  private createCategory(changes: Changes): void {
-    this.store.dispatch(new tagActions.AddCategory({
+  private createGroup(changes: Changes): void {
+    this.store.dispatch(new tagActions.AddTagGroup({
       name: changes.tagChanges!.name,
       priority: 20,
       tagNames: changes.tagChanges?.addedTagNames
     }));
   }
 
-  private updateCategory(changes: Changes): void {
+  private updateGroup(changes: Changes): void {
     const idsOfDeletedTags = this.findIdsOfDeletedTags(changes);
-    this.store.dispatch(new tagActions.UpdateCategory({
-      id: changes.category.id!,
-      name: changes.category.name,
+    this.store.dispatch(new tagActions.UpdateTagGroup({
+      id: changes.tagGroup.id!,
+      name: changes.tagGroup.name,
       // priority: 20,
       addedNames: changes.tagChanges?.addedTagNames,
       removedTagIds: idsOfDeletedTags
     }));
   }
 
-  private deleteCategory(changes: Changes): void {
-    this.store.dispatch(new tagActions.DeleteCategory(changes.category.id!));
+  private deleteGroup(changes: Changes): void {
+    this.store.dispatch(new tagActions.DeleteTagGroup(changes.tagGroup.id!));
   }
 
   private findIdsOfDeletedTags(changes: Changes): string[] {
     const result: string[] = [];
     const tagNames = changes.tagChanges?.removedTagNames;
     if (tagNames) {
-      const tags = changes.category.tags;
+      const tags = changes.tagGroup.tags;
       for (const name of tagNames) {
         result.push(tags.find(tag => tag.name === name)!.id);
       }

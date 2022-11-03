@@ -1,9 +1,9 @@
-<h1 mat-dialog-title>New Tag Category</h1>
+<h1 mat-dialog-title>New Tag Group</h1>
 <mat-dialog-content style="overflow: hidden;">
   <form [formGroup]="form" novalidate (ngSubmit)="onSave()" class="example-form">
     <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Category</mat-label>
-      <input matInput placeholder="Ex. people" formControlName="category"
+      <mat-label>Group</mat-label>
+      <input matInput placeholder="Ex. people" formControlName="group"
              autocomplete="off" (input)="detectChanges()">
     </mat-form-field>
 

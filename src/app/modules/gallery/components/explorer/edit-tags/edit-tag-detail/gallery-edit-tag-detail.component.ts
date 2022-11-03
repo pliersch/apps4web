@@ -2,7 +2,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { TagCategory } from '@gallery/store/tags/tag.model';
+import { TagGroup } from '@gallery/store/tags/tag.model';
 
 export interface TagChanges {
   name: string;
@@ -18,12 +18,12 @@ export interface TagChanges {
 export class GalleryEditTagDetailComponent implements OnChanges {
 
   @Input()
-  category: TagCategory;
+  tagGroup: TagGroup;
 
   @Output()
   tagChangesEvent = new EventEmitter<TagChanges | null>();
   @Output()
-  deleteEvent = new EventEmitter<TagCategory>();
+  deleteEvent = new EventEmitter<TagGroup>();
 
   tagNames: string[];
   separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -40,13 +40,13 @@ export class GalleryEditTagDetailComponent implements OnChanges {
       removedTagNames: []
     }
     this.tagNames = [];
-    for (const tag of this.category.tags) {
+    for (const tag of this.tagGroup.tags) {
       this.tagNames.push(tag.name);
     }
   }
 
-  onClickDeleteTag(category: TagCategory): void {
-    this.deleteEvent.emit(category);
+  onClickDeleteTag(group: TagGroup): void {
+    this.deleteEvent.emit(group);
   }
 
   add(event: MatChipInputEvent): void {
@@ -80,9 +80,9 @@ export class GalleryEditTagDetailComponent implements OnChanges {
     }
   }
 
-  onChangeCategoryName($event: string): void {
-    this.changes.name = this.category.name === $event ? '' : $event;
-    console.log('GalleryEditTagDetailComponent onChangeCategoryName: ', this.changes.name)
+  onChangeGroupName($event: string): void {
+    this.changes.name = this.tagGroup.name === $event ? '' : $event;
+    console.log('GalleryEditTagDetailComponent onChangeGroupName: ', this.changes.name)
     this.emitStateChange();
   }
 

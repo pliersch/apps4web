@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/co
 import { Select, Store } from "@ngxs/store";
 import { TagState } from "@gallery/store/tags/tag.state";
 import { Observable, of } from "rxjs";
-import { Tag, TagCategory } from "@gallery/store/tags/tag.model";
+import { Tag, TagGroup } from "@gallery/store/tags/tag.model";
 import { LoadTags } from "@gallery/store/tags/tag.action";
 import { AddPhoto } from "@gallery/store/photos/photo.actions";
 import { TagService } from "@gallery/services/tag.service";
@@ -21,16 +21,16 @@ export class GalleryUploadComponent implements OnInit {
   @ViewChild('fileInput')
   input!: ElementRef;
 
-  @Select(TagState.getTagCategories)
-  categories$: Observable<TagCategory[]>;
-  categories: TagCategory[];
+  @Select(TagState.getTagGroups)
+  tagGroups$: Observable<TagGroup[]>;
+  tagGroups: TagGroup[];
 
   tags$: Observable<Tag[]>;
   selectedTags: Tag[] = [];
 
   imgUrls: string[] = [PLACEHOLDER_URL];
   imgFiles: File[];
-  allCategories: string[] = [];
+  allTagGroups: string[] = [];
   actions: AddPhoto[] = [];
 
   constructor(private renderer: Renderer2,
@@ -41,10 +41,10 @@ export class GalleryUploadComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(new LoadTags());
-    this.categories$.subscribe(tags => {
-      this.categories = tags;
+    this.tagGroups$.subscribe(tags => {
+      this.tagGroups = tags;
       for (const tag of tags) {
-        this.allCategories.push(tag.name);
+        this.allTagGroups.push(tag.name);
       }
     });
   }
@@ -79,7 +79,7 @@ export class GalleryUploadComponent implements OnInit {
     }
   }
 
-  onCategorySelect(tag: TagCategory): void {
+  onGroupSelect(tag: TagGroup): void {
     this.tags$ = of(tag.tags);
   }
 

@@ -6,9 +6,9 @@
         <ng-scrollbar class="dark-scrollbar" [autoWidthDisabled]="false"
                       track="vertical" visibility="always">
           <mat-selection-list appNoPaddingTop multiple="false">
-            <mat-list-option *ngFor="let tag of categories$ | async; let i = index"
-                             [selected]="currentCategory.id === tag.id"
-                             [value]="tag" (click)="onSelectCategory(tag)">
+            <mat-list-option *ngFor="let tag of tagGroups$ | async; let i = index"
+                             [selected]="currentGroup.id === tag.id"
+                             [value]="tag" (click)="onSelectTagGroups(tag)">
               {{tag.name}}
             </mat-list-option>
           </mat-selection-list>
@@ -20,8 +20,8 @@
     <div class="col-s-9">
       <app-gallery-edit-tag-detail class="full-width chips-container"
                                    (tagChangesEvent)="onEntriesChanged($event)"
-                                   (deleteEvent)="onDeleteCategory($event)"
-                                   [category]="currentCategory">
+                                   (deleteEvent)="onDeleteGroup($event)"
+                                   [tagGroup]="currentGroup">
       </app-gallery-edit-tag-detail>
     </div>
   </div>

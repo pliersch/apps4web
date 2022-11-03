@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environment';
 import {
-  CreteTagCategoryDto,
-  TagCategory,
+  CreteTagGroupDto,
+  TagGroup,
   UpdateTagGroupDto,
   UpdateTagGroupResultDto
 } from '@gallery/store/tags/tag.model';
@@ -16,20 +16,20 @@ export class TagService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<TagCategory[]> {
-    return this.http.get<TagCategory[]>(tagUrl);
+  getAll(): Observable<TagGroup[]> {
+    return this.http.get<TagGroup[]>(tagUrl);
   }
 
-  createCategory(category: CreteTagCategoryDto): Observable<TagCategory> {
-    return this.http.post<TagCategory>(tagUrl, category);
+  createTagGroup(dto: CreteTagGroupDto): Observable<TagGroup> {
+    return this.http.post<TagGroup>(tagUrl, dto);
   }
 
-  updateCategory(update: UpdateTagGroupDto): Observable<UpdateTagGroupResultDto> {
-    console.log('TagService updateCategory: ', update)
+  updateTagGroup(update: UpdateTagGroupDto): Observable<UpdateTagGroupResultDto> {
+    // console.log('TagService updateTagGroup: ', update)
     return this.http.patch<UpdateTagGroupResultDto>(`${tagUrl}/${update.id}`, update);
   }
 
-  deleteCategory(id: string): Observable<any> {
+  deleteTagGroup(id: string): Observable<any> {
     return this.http.delete(`${tagUrl}/${id}`);
   }
 

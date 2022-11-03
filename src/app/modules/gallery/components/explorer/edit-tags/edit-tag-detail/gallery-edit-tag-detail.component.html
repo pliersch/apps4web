@@ -2,8 +2,8 @@
   <div class="row-max-width">
     <!--    <form>-->
     <mat-form-field class="flex-1" appearance="fill">
-      <input matInput #categoryVal [value]="category.name" placeholder="Kategorie Name"
-             (keyup)="onChangeCategoryName(categoryVal.value)">
+      <input matInput #groupVal [value]="tagGroup.name" placeholder="Kategorie Name"
+             (keyup)="onChangeGroupName(groupVal.value)">
       <mat-icon matSuffix>edit</mat-icon>
     </mat-form-field>
     <!--    </form>-->
@@ -31,7 +31,7 @@
       </mat-form-field>
     </form>
   </div>
-  <button mat-icon-button (click)="onClickDeleteTag(category)">
+  <button mat-icon-button (click)="onClickDeleteTag(tagGroup)">
     <mat-icon>delete</mat-icon>
   </button>
 

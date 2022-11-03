@@ -42,8 +42,8 @@ import { ActionBarModule } from "@modules/action-bar/action-bar.module";
 import { TagState } from "@gallery/store/tags/tag.state";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import {
-  GalleryNewTagCategoryComponent
-} from './components/explorer/new-tag-category/gallery-new-tag-category.component';
+  GalleryNewTagGroupComponent
+} from './components/explorer/new-tag-group/gallery-new-tag-group.component';
 import {
   GalleryEditImageTagsComponent
 } from './components/explorer/edit-tags-dialog/gallery-edit-image-tags.component';
@@ -75,7 +75,7 @@ import { GalleryEditorComponent } from "./components/editor/gallery-editor.compo
     GalleryEditTagsComponent,
     ImageControlComponent,
     ImageControl2Component,
-    GalleryNewTagCategoryComponent,
+    GalleryNewTagGroupComponent,
     GalleryEditImageTagsComponent,
     GalleryMetaPanelComponent,
     GallerySlideshowComponent,

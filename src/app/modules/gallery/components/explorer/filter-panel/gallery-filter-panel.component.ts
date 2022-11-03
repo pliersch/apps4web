@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Tag, TagCategory } from '@gallery/store/tags/tag.model';
+import { Tag, TagGroup } from '@gallery/store/tags/tag.model';
 import { Select, Store } from '@ngxs/store';
 import { TagState } from "@gallery/store/tags/tag.state";
 import { AddTagFilter, RemoveTagFilter } from "@gallery/store/photos/photo.actions";
@@ -13,9 +13,9 @@ import { PhotoState } from "@gallery/store/photos/photo.state";
 })
 export class GalleryFilterPanelComponent {
 
-  @Select(TagState.getTagCategories)
-  categories$: Observable<TagCategory[]>;
-  categories: TagCategory[] = [];
+  @Select(TagState.getTagGroups)
+  tagGroups$: Observable<TagGroup[]>;
+  tagGroups: TagGroup[] = [];
 
   @Select(PhotoState.getActiveTags)
   activeTags$: Observable<Tag[]>;
@@ -24,8 +24,8 @@ export class GalleryFilterPanelComponent {
   step = 0;
 
   constructor(private store: Store) {
-    this.categories$.subscribe(tags => {
-      this.categories = tags;
+    this.tagGroups$.subscribe(tags => {
+      this.tagGroups = tags;
     });
     this.activeTags$.subscribe(tags => {
       this.activeTags = tags;

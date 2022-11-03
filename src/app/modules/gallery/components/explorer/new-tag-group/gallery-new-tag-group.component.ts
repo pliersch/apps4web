@@ -2,18 +2,18 @@ import { Component } from '@angular/core';
 import { UntypedFormBuilder, Validators } from "@angular/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import { Store } from "@ngxs/store";
-import { AddCategory } from "@gallery/store/tags/tag.action";
-import { CreteTagCategoryDto, Tag, TagCategory } from "@gallery/store/tags/tag.model";
+import { AddTagGroup } from "@gallery/store/tags/tag.action";
+import { CreteTagGroupDto } from "@gallery/store/tags/tag.model";
 
 @Component({
-  selector: 'app-new-tag-category',
-  templateUrl: './gallery-new-tag-category.component.html',
-  styleUrls: ['./gallery-new-tag-category.component.scss']
+  selector: 'app-new-tag-group',
+  templateUrl: './gallery-new-tag-group.component.html',
+  styleUrls: ['./gallery-new-tag-group.component.scss']
 })
-export class GalleryNewTagCategoryComponent {
+export class GalleryNewTagGroupComponent {
 
   form = this.fb.group({
-    category: [null, Validators.required],
+    group: [null, Validators.required],
     tags: [null, Validators.required],
     priority: [{
       value: 1,
@@ -24,20 +24,20 @@ export class GalleryNewTagCategoryComponent {
 
   constructor(private fb: UntypedFormBuilder,
               private store: Store,
-              public dialogRef: MatDialogRef<GalleryNewTagCategoryComponent>) { }
+              public dialogRef: MatDialogRef<GalleryNewTagGroupComponent>) { }
 
   onSave(): void {
-    const name: string = this.form.get('category')!.value;
+    const name: string = this.form.get('group')!.value;
     const tags: string = this.form.get('tags')!.value;
     const entries: string[] = tags.split(',');
     const priority: number = this.form.get('priority')!.value;
     entries.forEach(entry => entry.trim());
-    const category: CreteTagCategoryDto = {
+    const dto: CreteTagGroupDto = {
       name: name,
       tagNames: entries,
       priority: priority
     }
-    this.store.dispatch(new AddCategory(category));
+    this.store.dispatch(new AddTagGroup(dto));
     this.dialogRef.close();
   }
 
@@ -46,8 +46,8 @@ export class GalleryNewTagCategoryComponent {
   }
 
   detectChanges(): void {
-    const category: string = this.form.get('category')!.value;
-    if (!(category && category.length > 2)) {
+    const group: string = this.form.get('group')!.value;
+    if (!(group && group.length > 2)) {
       this.isValid = false;
       return;
     }

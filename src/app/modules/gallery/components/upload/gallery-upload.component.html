@@ -12,9 +12,9 @@
                 <ng-scrollbar class="dark-scrollbar" [autoWidthDisabled]="false"
                               track="vertical" visibility="always">
                   <mat-selection-list appNoPaddingTop multiple="false">
-                    <mat-list-option *ngFor="let category of categories$ | async; let i = index"
-                                     [value]="category" (click)="onCategorySelect(category)">
-                      {{category.name}}
+                    <mat-list-option *ngFor="let group of tagGroups$ | async; let i = index"
+                                     [value]="group" (click)="onGroupSelect(group)">
+                      {{group.name}}
                     </mat-list-option>
                   </mat-selection-list>
                 </ng-scrollbar>

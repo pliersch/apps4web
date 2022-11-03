@@ -6,8 +6,8 @@ import {
 } from "@gallery/components/explorer/edit-tags-dialog/gallery-edit-image-tags.component";
 import { Action, ActionProvider } from "@modules/action-bar/actions";
 import {
-  GalleryNewTagCategoryComponent
-} from "@gallery/components/explorer/new-tag-category/gallery-new-tag-category.component";
+  GalleryNewTagGroupComponent
+} from "@gallery/components/explorer/new-tag-group/gallery-new-tag-group.component";
 import { GalleryEditTagsComponent } from "@gallery/components/explorer/edit-tags/gallery-edit-tags.component";
 import {
   GalleryDeletePhotoComponent
@@ -167,7 +167,7 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
   }
 
   private openNewTagDialog(): void {
-    this.dialog.open(GalleryNewTagCategoryComponent, {
+    this.dialog.open(GalleryNewTagGroupComponent, {
       // minWidth: '600px',
       width: '500px',
       // minHeight: '400px',

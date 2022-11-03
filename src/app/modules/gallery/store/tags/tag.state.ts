@@ -1,5 +1,5 @@
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { Tag, TagCategory, UpdateTagGroupResultDto } from "@gallery/store/tags/tag.model";
+import { Tag, TagGroup, UpdateTagGroupResultDto } from "@gallery/store/tags/tag.model";
 import { Injectable } from "@angular/core";
 import * as tagActions from "@gallery/store/tags/tag.action";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
@@ -10,7 +10,7 @@ import { AlertService } from "@app/common/services/alert.service";
 import { PhotoStateModel } from "@gallery/store/photos/photo.state";
 
 export interface TagStateModel {
-  categories: TagCategory[];
+  tagGroups: TagGroup[];
   allTagsLoaded: boolean;
   loaded: boolean;
   loading: boolean;
@@ -20,7 +20,7 @@ export interface TagStateModel {
 @State<TagStateModel>({
   name: 'TagState',
   defaults: {
-    categories: [],
+    tagGroups: [],
     allTagsLoaded: false,
     loaded: false,
     loading: false,
@@ -32,8 +32,8 @@ export interface TagStateModel {
 export class TagState {
 
   @Selector()
-  static getTagCategories(state: TagStateModel): TagCategory[] {
-    return state.categories;
+  static getTagGroups(state: TagStateModel): TagGroup[] {
+    return state.tagGroups;
   }
 
   constructor(private tagService: TagService,
@@ -53,7 +53,7 @@ export class TagState {
     ctx.patchState({loading: true});
     return this.tagService.getAll()
       .pipe(
-        map((tags: TagCategory[]) =>
+        map((tags: TagGroup[]) =>
           asapScheduler.schedule(() =>
             ctx.dispatch(new tagActions.LoadTagsSuccess(tags))
           )
@@ -70,14 +70,14 @@ export class TagState {
 
   @Action(tagActions.LoadTagsSuccess)
   loadTagsSuccess({patchState}: StateContext<TagStateModel>, action: tagActions.LoadTagsSuccess): void {
-    const sortedCategories: TagCategory[] =
-      action.categories.sort((category1, category2) => {
-        return (category1.priority > category2.priority) ? 1 : -1;
+    const sortedTagGroups: TagGroup[] =
+      action.groups.sort((group1, group2) => {
+        return (group1.priority > group2.priority) ? 1 : -1;
       });
-    for (const category of sortedCategories) {
-      category.tags = category.tags.sort((t1: Tag, t2: Tag) => t1.name.localeCompare(t2.name));
+    for (const group of sortedTagGroups) {
+      group.tags = group.tags.sort((t1: Tag, t2: Tag) => t1.name.localeCompare(t2.name));
     }
-    patchState({categories: sortedCategories, loaded: true, loading: false, newDataAvailable: false});
+    patchState({tagGroups: sortedTagGroups, loaded: true, loading: false, newDataAvailable: false});
   }
 
   @Action(tagActions.LoadTagsFail)
@@ -105,82 +105,82 @@ export class TagState {
   //          add
   //////////////////////////////////////////////////////////
 
-  @Action(tagActions.AddCategory)
-  addCategory(ctx: StateContext<TagStateModel>, action: tagActions.AddCategory): Observable<Subscription> {
+  @Action(tagActions.AddTagGroup)
+  addGroup(ctx: StateContext<TagStateModel>, action: tagActions.AddTagGroup): Observable<Subscription> {
     ctx.patchState({loading: true});
-    return this.tagService.createCategory(action.dto)
+    return this.tagService.createTagGroup(action.dto)
       .pipe(
-        map((tag: TagCategory) =>
+        map((tag: TagGroup) =>
           asapScheduler.schedule(() =>
-            ctx.dispatch(new tagActions.AddCategorySuccess(tag))
+            ctx.dispatch(new tagActions.AddTagGroupSuccess(tag))
           )
         ),
         catchError(error =>
           of(
             asapScheduler.schedule(() =>
-              ctx.dispatch(new tagActions.AddCategoryFail(error))
+              ctx.dispatch(new tagActions.AddTagGroupFail(error))
             )
           )
         )
       );
   }
 
-  @Action(tagActions.AddCategorySuccess)
-  addCategorySuccess(ctx: StateContext<TagStateModel>, action: tagActions.AddCategorySuccess): void {
+  @Action(tagActions.AddTagGroupSuccess)
+  addGroupSuccess(ctx: StateContext<TagStateModel>, action: tagActions.AddTagGroupSuccess): void {
     const state = ctx.getState();
-    const tags: TagCategory[] = [...state.categories, action.category]
-    ctx.patchState({categories: tags, loaded: true, loading: false});
+    const tags: TagGroup[] = [...state.tagGroups, action.tagGroup]
+    ctx.patchState({tagGroups: tags, loaded: true, loading: false});
   }
 
-  @Action(tagActions.AddCategoryFail)
-  addCategoryFail({dispatch}: StateContext<TagStateModel>, action: tagActions.AddCategoryFail): void {
+  @Action(tagActions.AddTagGroupFail)
+  addGroupFail(action: tagActions.AddTagGroupFail): void {
     this.alertService.error('Add tag fail');
-    dispatch({loaded: false, loading: false});
+    console.log('TagState addGroupFail: ', action.error)
   }
 
   //////////////////////////////////////////////////////////
   //          update
   //////////////////////////////////////////////////////////
 
-  @Action(tagActions.UpdateCategory)
-  updateCategory(ctx: StateContext<TagStateModel>, action: tagActions.UpdateCategory): Observable<Subscription> {
-    return this.tagService.updateCategory(action.dto)
+  @Action(tagActions.UpdateTagGroup)
+  updateGroup(ctx: StateContext<TagStateModel>, action: tagActions.UpdateTagGroup): Observable<Subscription> {
+    return this.tagService.updateTagGroup(action.dto)
       .pipe(
         map((res: UpdateTagGroupResultDto) =>
           asapScheduler.schedule(() =>
-            ctx.dispatch(new tagActions.UpdateCategorySuccess(res))
+            ctx.dispatch(new tagActions.UpdateTagGroupSuccess(res))
           )
         ),
         catchError(error =>
           of(
             asapScheduler.schedule(() =>
-              ctx.dispatch(new tagActions.UpdateCategoryFail(error))
+              ctx.dispatch(new tagActions.UpdateTagGroupFail(error))
             )
           )
         )
       );
   }
 
-  @Action(tagActions.UpdateCategorySuccess)
-  updateCategorySuccess(ctx: StateContext<TagStateModel>, action: tagActions.UpdateCategorySuccess): void {
-    // console.log('TagState updateCategorySuccess: ', action.dto)
+  @Action(tagActions.UpdateTagGroupSuccess)
+  updateGroupSuccess(ctx: StateContext<TagStateModel>, action: tagActions.UpdateTagGroupSuccess): void {
+    // console.log('TagState updateGroupSuccess: ', action.dto)
     const state = ctx.getState();
-    const tagCategory = state.categories.find(c => c.id === action.dto.id)!;
+    const tagGroup = state.tagGroups.find(c => c.id === action.dto.id)!;
     const removedTagIds = action.dto.removedTagIds || [];
-    const result: Tag[] = tagCategory.tags.filter(tag => !removedTagIds.includes(tag.id));
+    const result: Tag[] = tagGroup.tags.filter(tag => !removedTagIds.includes(tag.id));
     const addedTags = action.dto.addedTags || [];
     result.push(...addedTags)
     ctx.setState(
       patch({
-        categories: updateItem<TagCategory>(tag => tag!.id === action.dto.id,
+        tagGroups: updateItem<TagGroup>(tag => tag!.id === action.dto.id,
           patch({tags: result}))
       })
     );
   }
 
-  @Action(tagActions.UpdateCategoryFail)
-  updateCategoryFail(action: tagActions.UpdateCategoryFail): void {
-    console.log('TagState updateCategoryFail: ', action.error)
+  @Action(tagActions.UpdateTagGroupFail)
+  updateGroupFail(action: tagActions.UpdateTagGroupFail): void {
+    console.log('TagState updateGroupFail: ', action.error)
     this.alertService.error('Update tag fail');
   }
 
@@ -188,37 +188,37 @@ export class TagState {
   //          delete
   //////////////////////////////////////////////////////////
 
-  @Action(tagActions.DeleteCategory)
-  deleteCategory(ctx: StateContext<TagStateModel>, action: tagActions.DeleteCategory): Observable<Subscription> {
+  @Action(tagActions.DeleteTagGroup)
+  deleteGroup(ctx: StateContext<TagStateModel>, action: tagActions.DeleteTagGroup): Observable<Subscription> {
     ctx.patchState({loading: true});
-    return this.tagService.deleteCategory(action.id)
+    return this.tagService.deleteTagGroup(action.id)
       .pipe(
-        map((tag: TagCategory) =>
+        map((tag: TagGroup) =>
           asapScheduler.schedule(() =>
-            ctx.dispatch(new tagActions.DeleteCategorySuccess(tag))
+            ctx.dispatch(new tagActions.DeleteTagGroupSuccess(tag))
           )
         ),
         catchError(error =>
           of(
             asapScheduler.schedule(() =>
-              ctx.dispatch(new tagActions.DeleteCategoryFail(error))
+              ctx.dispatch(new tagActions.DeleteTagGroupFail(error))
             )
           )
         )
       );
   }
 
-  @Action(tagActions.DeleteCategorySuccess)
-  deleteTagsSuccess({patchState}: StateContext<TagStateModel>, action: tagActions.DeleteCategorySuccess): void {
-    console.log('TagState loadTagsSuccess: BUT NOT IMPL !!!', action.category)
+  @Action(tagActions.DeleteTagGroupSuccess)
+  deleteGroupSuccess({patchState}: StateContext<TagStateModel>, action: tagActions.DeleteTagGroupSuccess): void {
+    console.log('TagState loadTagsSuccess: BUT NOT IMPL !!!', action.tagGroup)
     // TODO !!!
     // patchState({tags: action.tags, loaded: true, loading: false});
   }
 
-  @Action(tagActions.DeleteCategoryFail)
-  deleteTagsFail({dispatch}: StateContext<TagStateModel>, action: tagActions.DeleteCategoryFail): void {
+  @Action(tagActions.DeleteTagGroupFail)
+  deleteGroupFail(action: tagActions.DeleteTagGroupFail): void {
     this.alertService.error('Delete tag fail');
-    dispatch({loaded: false, loading: false});
+    console.log('TagState deleteGroupFail: ', action.error)
   }
 
 }

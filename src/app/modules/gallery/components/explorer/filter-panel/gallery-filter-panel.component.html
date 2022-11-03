@@ -1,14 +1,14 @@
 <mat-accordion class="example-headers-align">
-  <mat-expansion-panel *ngFor="let category of categories$ | async; let i = index"
+  <mat-expansion-panel *ngFor="let group of tagGroups$ | async; let i = index"
                        [expanded]="step === i" (opened)="setStep(i)" hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        {{ category.name}}
+        {{ group.name}}
       </mat-panel-title>
     </mat-expansion-panel-header>
 
     <mat-selection-list dense>
-      <mat-list-option *ngFor="let tag of category.tags" [selected]="isTagActivated(tag)"
+      <mat-list-option *ngFor="let tag of group.tags" [selected]="isTagActivated(tag)"
                        [value]="tag" (click)="onSelectionChange(tag)">
         {{tag.name}}
       </mat-list-option>
