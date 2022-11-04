@@ -1,21 +1,21 @@
 <h1 mat-dialog-title>New Tag Group</h1>
-<mat-dialog-content style="overflow: hidden;">
+<mat-dialog-content>
   <form [formGroup]="form" novalidate (ngSubmit)="onSave()" class="example-form">
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Group</mat-label>
-      <input matInput placeholder="Ex. people" formControlName="group"
+      <input matInput placeholder=" Ex. people" appFocus formControlName="group"
              autocomplete="off" (input)="detectChanges()">
     </mat-form-field>
 
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Tags</mat-label>
-      <input matInput placeholder="Ex. Peter, Paul, Mary" formControlName="tags"
+      <input matInput placeholder=" Ex. Peter, Paul, Mary" formControlName="tags"
              autocomplete="nope" (input)="detectChanges()">
     </mat-form-field>
 
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Priority</mat-label>
-      <input matInput placeholder="Integer 1-10 (sort order)" formControlName="tags"
+      <input matInput placeholder=" Integer 1-10 (sort order)" formControlName="tags"
              autocomplete="nope" (input)="detectChanges()">
     </mat-form-field>
   </form>

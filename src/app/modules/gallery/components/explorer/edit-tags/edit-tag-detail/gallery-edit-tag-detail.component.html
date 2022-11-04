@@ -22,7 +22,7 @@
     <form>
       <mat-form-field class="full-width">
         <input #tagVal matInput [formControl]="tagCtrl"
-               placeholder="New tag..."
+               placeholder="New tag..." appFocus
                [matChipInputFor]="chipList"
                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                (matChipInputTokenEnd)="add($event)"

@@ -9,6 +9,7 @@ import { ImageFallbackDirective } from "@modules/share/directives/image-fallback
 import { MatButtonLoadingDirective } from "@modules/share/directives/mat-button-loading.directive";
 import { LazyImageDirective } from './directives/lazy-image.directive';
 import { MatListRemovePaddingDirective } from "@modules/share/directives/mat-list-remove-padding.directive";
+import { FocusDirective } from './directives/focus.directive';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { MatListRemovePaddingDirective } from "@modules/share/directives/mat-lis
     ImageFallbackDirective,
     MatButtonLoadingDirective,
     MatListRemovePaddingDirective,
-    LazyImageDirective
+    LazyImageDirective,
+    FocusDirective
   ],
   exports: [
     CardNoHeaderImgMarginFixDirective,
@@ -28,7 +30,8 @@ import { MatListRemovePaddingDirective } from "@modules/share/directives/mat-lis
     ImageFallbackDirective,
     MatButtonLoadingDirective,
     LazyImageDirective,
-    MatListRemovePaddingDirective
+    MatListRemovePaddingDirective,
+    FocusDirective
   ],
   imports: [
     CommonModule
