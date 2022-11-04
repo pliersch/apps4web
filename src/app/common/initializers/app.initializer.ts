@@ -1,10 +1,12 @@
 import { filter, take } from 'rxjs/operators';
 import { Store } from "@ngxs/store";
+import { LoadUsers } from "@modules/user-managaer/store/user.actions";
 
 export function initApplication(store: Store,
                                 /*userService: UserService*/): () => Promise<unknown> {
   return () => new Promise(resolve => {
     // console.log('initApplication: APP_INITIALIZER ')
+    store.dispatch(new LoadUsers()) // todo execute after login
     resolve(true);
     // authService.authState.subscribe((authUser) => {
     //     if (authUser) {

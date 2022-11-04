@@ -7,14 +7,17 @@ import { catchError, map } from "rxjs/operators";
 import { LoadUsers, LoadUsersFail, LoadUsersSuccess } from "@modules/user-managaer/store/user.actions";
 import { AuthService } from "@modules/account/services/auth.service";
 import { Role } from "@modules/user-managaer/store/role";
+import { Status } from "@modules/user-managaer/store/status";
 
 export interface UserStateModel {
+  user: User | null, // todo remove null and use 'guest'
   users: Array<User>;
 }
 
 @State<UserStateModel>({
   name: 'users',
   defaults: {
+    user: null,
     users: [],
   }
 })
@@ -38,12 +41,14 @@ export class UserState {
   @Action(LoadUsers)
   loadUsers(ctx: StateContext<UserStateModel>, action: LoadUsers): Observable<Subscription> {
     const user: User = {
-      givenName: 'Foo',
-      lastName: 'Bar',
-      email: 'xy@foo.de',
-      role: Role.User,
-      photoUrl: 'nope',
-      id: 1
+      id: '1826f1d2-6203-4865-9478-1750cf5060c1',
+      givenName: 'Patrick',
+      lastName: 'Liersch',
+      email: 'hourby@gmail.com',
+      status: Status.accept,
+      role: Role.Admin,
+      photoUrl: '',
+      lastLogin: new Date()
     }
 
     return of([
@@ -71,7 +76,7 @@ export class UserState {
   }
 
   @Action(LoadUsersFail)
-  loadUsersFail({dispatch}: StateContext<UserStateModel>, action: LoadUsersFail): void {
+  loadUsersFail(action: LoadUsersFail): void {
     this.alertService.error('cant load users')
     console.log(action.error)
   }

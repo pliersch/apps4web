@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { GoogleUser } from "@modules/google-signin/google-user.model";
 import { User } from "@modules/user-managaer/store/user";
+import { GoogleUser } from "@modules/google-signin/google-user.model";
 
 export class Login {
   static readonly type = '[Auth] Login';
