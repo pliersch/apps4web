@@ -1,5 +1,5 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, Renderer2, SimpleChanges } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { TagGroup } from '@gallery/store/tags/tag.model';
@@ -28,12 +28,18 @@ export class GalleryEditTagDetailComponent implements OnChanges {
   tagNames: string[];
   separatorKeysCodes: number[] = [ENTER, COMMA];
   tagCtrl = new UntypedFormControl();
-
   nameExists = false;
-
   changes: TagChanges;
 
-  ngOnChanges(/*changes: SimpleChanges*/): void {
+
+  constructor(private renderer: Renderer2) {
+  }
+
+  ngOnChanges(simpleChanges: SimpleChanges): void {
+    if (simpleChanges.tagGroup.currentValue.name === '') {
+      this.renderer.selectRootElement('input').focus()
+    }
+    console.log('GalleryEditTagDetailComponent ngOnChanges: ',)
     this.changes = {
       name: '',
       addedTagNames: [],

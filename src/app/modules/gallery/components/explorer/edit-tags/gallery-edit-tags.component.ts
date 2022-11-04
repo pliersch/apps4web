@@ -6,7 +6,6 @@ import { Select, Store } from "@ngxs/store";
 import { TagState } from "@gallery/store/tags/tag.state";
 import * as tagActions from "@gallery/store/tags/tag.action";
 import { TagChanges } from "@gallery/components/explorer/edit-tags/edit-tag-detail/gallery-edit-tag-detail.component";
-import { AddTagGroup } from "@gallery/store/tags/tag.action";
 
 interface Changes {
   tagGroup: TagGroup;
@@ -14,7 +13,7 @@ interface Changes {
   action: CrudAction;
 }
 
-// TODO move to 'common'. will use
+// TODO move to 'common'. but what about none?
 export enum CrudAction {
   create,
   update,

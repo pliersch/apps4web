@@ -10,20 +10,34 @@ import { Role } from "@modules/user-managaer/store/role";
 import { Status } from "@modules/user-managaer/store/status";
 
 export interface UserStateModel {
-  user: User | null, // todo remove null and use 'guest'
+  user: User;
   users: Array<User>;
 }
 
 @State<UserStateModel>({
-  name: 'users',
+  name: 'UserState',
   defaults: {
-    user: null,
+    user: {
+      id: 'not set',
+      givenName: 'Gast',
+      lastName: 'not set',
+      email: 'not set',
+      status: Status.accept,
+      role: Role.Guest,
+      photoUrl: 'not set',
+      lastLogin: new Date()
+    },
     users: [],
   }
 })
 
 @Injectable()
 export class UserState {
+
+  @Selector()
+  static getUser(state: UserStateModel): User {
+    return state.user;
+  }
 
   @Selector()
   static getUsers(state: UserStateModel): User[] {
@@ -72,7 +86,7 @@ export class UserState {
 
   @Action(LoadUsersSuccess)
   loadUsersSuccess({patchState}: StateContext<UserStateModel>, action: LoadUsersSuccess): void {
-    patchState({users: action.payload});
+    patchState({users: action.payload, user: action.payload[0]});
   }
 
   @Action(LoadUsersFail)

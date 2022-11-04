@@ -65,9 +65,9 @@ export class SigninState {
   }
 
   @Action(authActions.SigninWithGoogleFail)
-  loginWithGoogleFail(ctx: StateContext<SigninStateModel>, action: authActions.SigninWithGoogleFail): void {
+  loginWithGoogleFail(action: authActions.SigninWithGoogleFail): void {
+    console.log('SigninState loginWithGoogleFail: ', action.error)
     this.alertService.error('Login with Google fail');
-    ctx.dispatch({loaded: false, loading: false});
   }
 
   // @Action(authActions.LoginWithGoogle)

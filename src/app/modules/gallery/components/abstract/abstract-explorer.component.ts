@@ -14,6 +14,8 @@ import { tap } from "rxjs/operators";
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import { GALLERY_CONSTANTS } from "@gallery/const";
 import { Action } from "@modules/action-bar/actions";
+import { UserState } from "@modules/user-managaer/store/user.state";
+import { User } from "@modules/user-managaer/store/user";
 
 
 @Component({
@@ -31,8 +33,8 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   isAuthenticated: boolean;
 
   @Select(PhotoState.getAvailablePhotos)
-  allPhotosCount$: Observable<number>;
-  allPhotosCount: number;
+  availablePhotos$: Observable<number>;
+  availablePhotos: number;
 
   @Select(PhotoState.getLoadedPhotos)
   loadedPhotos$: Observable<number>;
@@ -53,6 +55,10 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   @Select(PhotoState.getEditPhotos)
   selection$: Observable<Photo[]>;
   selection: Photo[];
+
+  @Select(UserState.getUser)
+  user$: Observable<User>;
+  user: User;
 
   protected subscription: Subscription;
   protected actionBarService: ActionBarService
@@ -78,12 +84,13 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
 
   ngOnInit(): void {
     this.actionBarService.setActions(this.actions);
-    this.subscription = this.selection$.subscribe(res => this.selection = res);
-    this.subscription = this.downloads$.subscribe(res => this.downloads = res);
-    this.subscription = this.loadedPhotos$.subscribe(res => this.loadedPhotos = res);
+    this.subscription = this.user$.subscribe(res => this.user = res);
+    this.subscription.add(this.selection$.subscribe(res => this.selection = res));
+    this.subscription.add(this.downloads$.subscribe(res => this.downloads = res));
+    this.subscription.add(this.loadedPhotos$.subscribe(res => this.loadedPhotos = res));
     this.subscription.add(this.currentPhoto$.subscribe(res => this.currentPhoto = res));
     this.subscription.add(this.isAuthenticated$.subscribe(res => this.isAuthenticated = res));
-    this.subscription.add(this.allPhotosCount$.subscribe(count => this.allPhotosCount = count));
+    this.subscription.add(this.availablePhotos$.subscribe(count => this.availablePhotos = count));
     this.subscription.add(
       this.photos$.subscribe(res => {
         this.photos = res;
@@ -113,6 +120,9 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   requestNextPhotos(element: Element): void {
+    if (this.availablePhotos === this.loadedPhotos) {
+      return;
+    }
     const currentHeight = element.clientHeight + element.scrollTop;
     if (currentHeight + 180 > this.absoluteHeight && !this.isRequesting) {
       this.isRequesting = true;

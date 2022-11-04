@@ -1,12 +1,11 @@
 <div>
   <div class="row-max-width">
-    <!--    <form>-->
     <mat-form-field class="flex-1" appearance="fill">
-      <input matInput #groupVal [value]="tagGroup.name" placeholder="Kategorie Name"
+      <mat-label>Kategorie Name</mat-label>
+      <input matInput #groupVal [value]="tagGroup.name"
              (keyup)="onChangeGroupName(groupVal.value)">
       <mat-icon matSuffix>edit</mat-icon>
     </mat-form-field>
-    <!--    </form>-->
   </div>
   <div>
     <mat-chip-list #chipList>
@@ -20,10 +19,10 @@
   </div>
   <div>
     <form>
-      <mat-form-field class="full-width">
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>New Tag</mat-label>
         <input #tagVal matInput [formControl]="tagCtrl"
-               placeholder="New tag..." appFocus
-               [matChipInputFor]="chipList"
+               [matChipInputFor]="chipList" appFocus
                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                (matChipInputTokenEnd)="add($event)"
                (keyup)="onEditTagName(tagVal.value)">
