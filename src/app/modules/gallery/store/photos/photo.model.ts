@@ -8,7 +8,6 @@ export interface Photo {
   // createDateTime: Date;
   recordDate: Date;
   // baseUrl: string;
-  isSelected: boolean; // todo move to seperated array
   rating: number;
 }
 

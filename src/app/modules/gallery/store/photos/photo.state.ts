@@ -19,6 +19,7 @@ export interface PhotoStateModel {
   currentPhoto: Photo;
   editPhotos: Photo[];
   downloads: Photo[];
+  comparePhotos: Photo[];
   loadedPhotos: number;
   availablePhotos: number;
   tagFilter: Tag[];
@@ -26,8 +27,6 @@ export interface PhotoStateModel {
   filterFrom: number;
   filterTo: number;
   newDataAvailable: boolean;
-  // comparePhotos: Photo[];
-  // exportPhotos: Photo[];
   loaded: boolean;
   loading: boolean;
 }
@@ -37,9 +36,10 @@ export interface PhotoStateModel {
   defaults: {
     photos: [],
     filteredPhotos: [],
+    comparePhotos: [],
     downloads: [],
     editPhotos: [],
-    currentPhoto: {id: '0', index: -1, tags: [], rating: 0, isSelected: false, fileName: '', recordDate: new Date()},
+    currentPhoto: {id: '0', index: -1, tags: [], rating: 0, fileName: '', recordDate: new Date()},
     newDataAvailable: true,
     availablePhotos: 0,
     loadedPhotos: 0,
@@ -106,7 +106,7 @@ export class PhotoState {
 
   @Selector()
   static getComparePhotos(state: PhotoStateModel): Photo[] {
-    return state.photos.filter(photo => photo.isSelected);
+    return state.comparePhotos;
   }
 
   @Selector()
@@ -317,7 +317,7 @@ export class PhotoState {
       photos: [
         ...state.photos,
         action.photo,
-      ], loaded: true, loading: false
+      ],
     });
     this.alertService.success('Upload success');
   }
@@ -373,26 +373,22 @@ export class PhotoState {
 
   @Action(photoAction.TogglePhotoSelection)
   addToComparedPhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.TogglePhotoSelection): void {
-    // const state = ctx.getState();
-    const isSelected = !action.photo.isSelected;
+    const contains = ctx.getState().comparePhotos.includes(action.photo);
     ctx.setState(
       patch({
-        photos: updateItem<Photo>(action.photo.index, patch({isSelected: isSelected}))
+        comparePhotos:
+          contains
+            ? removeItem<Photo>(action.photo.index)
+            : insertItem<Photo>(action.photo)
       })
     );
   }
 
   @Action(photoAction.ClearPhotoSelection)
   clearComparedPhotos(ctx: StateContext<PhotoStateModel>): void {
-    // TODO what a fucking solution!!! unfortunately there is no method like "updateMany"
-    const comparePhotos = PhotoState.getComparePhotos(ctx.getState());
-    for (let i = 0; i < comparePhotos.length; i++) {
-      ctx.setState(
-        patch({
-          photos: updateItem<Photo>(photo => photo!.isSelected, patch({isSelected: false}))
-        })
-      );
-    }
+    ctx.patchState({
+      comparePhotos: [],
+    });
   }
 
   //////////////////////////////////////////////////////////

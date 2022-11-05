@@ -5,7 +5,7 @@
            [style.background-image]="'url(' + getThumbUrl(photo.fileName) + ')'"
            [class.active]="currentIndex === i"
            (click)="onSelectImage(photo)">
-        <div class="top-left" [class.hidden]="!photo.isSelected">
+        <div class="top-left" [class.visible]="(isCompared(photo) | async)">
           <button mat-icon-button>
             <mat-icon>visibility_off</mat-icon>
           </button>

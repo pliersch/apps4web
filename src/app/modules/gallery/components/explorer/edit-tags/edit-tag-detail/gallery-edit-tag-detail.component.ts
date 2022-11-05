@@ -39,7 +39,6 @@ export class GalleryEditTagDetailComponent implements OnChanges {
     if (simpleChanges.tagGroup.currentValue.name === '') {
       this.renderer.selectRootElement('input').focus()
     }
-    console.log('GalleryEditTagDetailComponent ngOnChanges: ',)
     this.changes = {
       name: '',
       addedTagNames: [],

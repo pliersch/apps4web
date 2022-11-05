@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Select } from '@ngxs/store';
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { getThumbUrl } from "@gallery/store/photos/photo.tools";
+import { map } from "rxjs/operators";
 
 @Component({
   selector: 'app-gallery-horizontal-scroller',
@@ -37,6 +38,12 @@ export class GalleryHorizontalScrollerComponent implements OnInit {
 
   onSelectImage(photo: Photo): void {
     this.selectEvent.emit(photo);
+  }
+
+  isCompared(photo: Photo): Observable<boolean> {
+    return this.comparePhotos$.pipe(
+      map(photos => photos.includes(photo))
+    );
   }
 
   onScroll($event: WheelEvent): void {

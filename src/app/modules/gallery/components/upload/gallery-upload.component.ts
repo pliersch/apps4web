@@ -50,7 +50,6 @@ export class GalleryUploadComponent implements OnInit {
   }
 
   openFile(): void {
-    // TODO look in chat upload. there is a better solution
     this.renderer.selectRootElement(this.input.nativeElement).click();
   }
 
