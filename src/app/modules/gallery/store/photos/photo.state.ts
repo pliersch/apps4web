@@ -280,7 +280,7 @@ export class PhotoState {
   }
 
   @Action(photoAction.SetPreviousPhoto)
-  setPreviousPhotoAction(ctx: StateContext<PhotoStateModel>, action: photoAction.SetPreviousPhoto): void {
+  setPreviousPhotoAction(ctx: StateContext<PhotoStateModel>): void {
     const photos = ctx.getState().photos;
     let index = photos.indexOf(ctx.getState().currentPhoto!);
     ctx.patchState({
@@ -294,7 +294,7 @@ export class PhotoState {
 
   @Action(photoAction.AddPhoto)
   addPhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhoto): Observable<Subscription> {
-    return this.photoService.create(action.photo, action.tags, action.created).pipe(
+    return this.photoService.create(action.photo, action.user.id, action.tags, action.created).pipe(
       map((photo: Photo) =>
         asapScheduler.schedule(() =>
           ctx.dispatch(new photoAction.AddPhotoSuccess(photo))

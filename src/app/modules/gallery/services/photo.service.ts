@@ -37,11 +37,12 @@ export class PhotoService {
   //   return this.http.get<Photo>(`${PHOTO_BASE_URL}/${id}`);
   // }
 
-  create(file: File, tags: Tag[], created: number): Observable<Photo> {
+  create(file: File, userId: string, tags: Tag[], created: number): Observable<Photo> {
     const stringify = JSON.stringify(tags);
     const formData = new FormData();
     formData.append('image', file);
     formData.append('tags', stringify);
+    formData.append('userid', userId);
     formData.append('created', created.toString());
     return this.http.post<Photo>(PHOTO_BASE_URL + '/file', formData);
   }

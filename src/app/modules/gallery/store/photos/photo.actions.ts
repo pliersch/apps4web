@@ -3,6 +3,7 @@ import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto"
 import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
 import { HttpErrorResponse } from '@angular/common/http';
 import { Tag } from "@gallery/store/tags/tag.model";
+import { User } from "@modules/user-managaer/store/user";
 
 // meta data
 
@@ -48,7 +49,7 @@ export class LoadPhotosFail {
 export class AddPhoto {
   static readonly type = '[Gallery] Add Photo';
 
-  constructor(public photo: File, public tags: Tag[], public created: number) { }
+  constructor(public photo: File, public user: User, public tags: Tag[], public created: number) { }
 }
 
 export class AddPhotoSuccess {

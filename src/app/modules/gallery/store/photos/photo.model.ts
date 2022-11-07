@@ -5,9 +5,8 @@ export interface Photo {
   index: number;
   fileName: string;
   tags: Tag[];
-  // createDateTime: Date;
+  // createDate: Date;
   recordDate: Date;
-  // baseUrl: string;
   rating: number;
 }
 

@@ -7,6 +7,8 @@ import { LoadTags } from "@gallery/store/tags/tag.action";
 import { AddPhoto } from "@gallery/store/photos/photo.actions";
 import { TagService } from "@gallery/services/tag.service";
 import { PhotoService } from "@gallery/services/photo.service";
+import { UserState } from "@modules/user-managaer/store/user.state";
+import { User } from "@modules/user-managaer/store/user";
 
 const PLACEHOLDER_URL = 'assets/svg/image-placeholder.svg';
 
@@ -25,6 +27,10 @@ export class GalleryUploadComponent implements OnInit {
   tagGroups$: Observable<TagGroup[]>;
   tagGroups: TagGroup[];
 
+  @Select(UserState.getUser)
+  user$: Observable<User>;
+  user: User;
+
   tags$: Observable<Tag[]>;
   selectedTags: Tag[] = [];
 
@@ -40,7 +46,8 @@ export class GalleryUploadComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new LoadTags());
+    // this.store.dispatch(new LoadTags());
+    this.user$.subscribe((user) => this.user = user);
     this.tagGroups$.subscribe(tags => {
       this.tagGroups = tags;
       for (const tag of tags) {
@@ -60,7 +67,7 @@ export class GalleryUploadComponent implements OnInit {
     }
     this.imgFiles = Array.from(files);
     for (const file of this.imgFiles) {
-      this.actions.push(new AddPhoto(file, this.selectedTags, file.lastModified));
+      this.actions.push(new AddPhoto(file, this.user, this.selectedTags, file.lastModified));
       const reader = new FileReader();
       reader.onload = (e: any): void => {
         this.imgUrls.push(e.target.result);
