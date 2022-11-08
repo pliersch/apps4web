@@ -11,7 +11,6 @@ import { PhotoStateModel } from "@gallery/store/photos/photo.state";
 
 export interface TagStateModel {
   tagGroups: TagGroup[];
-  allTagsLoaded: boolean;
   loaded: boolean;
   loading: boolean;
   newDataAvailable: boolean,
@@ -21,7 +20,6 @@ export interface TagStateModel {
   name: 'TagState',
   defaults: {
     tagGroups: [],
-    allTagsLoaded: false,
     loaded: false,
     loading: false,
     newDataAvailable: true,

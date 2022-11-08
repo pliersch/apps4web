@@ -55,7 +55,7 @@ export class UserState {
   @Action(LoadUsers)
   loadUsers(ctx: StateContext<UserStateModel>, action: LoadUsers): Observable<Subscription> {
     const user: User = {
-      id: '2b2bf66e-0b4c-4bcc-ad3b-bc277cc2f45d',
+      id: '676a2fc0-31e0-4902-980e-64ed6be8877a',
       givenName: 'Patrick',
       lastName: 'Liersch',
       email: 'hourby@gmail.com',
