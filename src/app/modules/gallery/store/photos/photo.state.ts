@@ -12,6 +12,7 @@ import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
 import { ServerSentService } from "@app/common/services/server-sent.service";
 import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
 import { Tag } from "@gallery/store/tags/tag.model";
+import { ClearPhotoComparison } from "@gallery/store/photos/photo.actions";
 
 export interface PhotoStateModel {
   photos: Photo[];
@@ -371,21 +372,21 @@ export class PhotoState {
   //          photos to compare
   //////////////////////////////////////////////////////////
 
-  @Action(photoAction.TogglePhotoSelection)
-  addToComparedPhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.TogglePhotoSelection): void {
+  @Action(photoAction.TogglePhotoComparison)
+  togglePhotoComparison(ctx: StateContext<PhotoStateModel>, action: photoAction.TogglePhotoComparison): void {
     const contains = ctx.getState().comparePhotos.includes(action.photo);
     ctx.setState(
       patch({
         comparePhotos:
           contains
-            ? removeItem<Photo>(action.photo.index)
+            ? removeItem<Photo>(photo => photo?.index === action.photo.index)
             : insertItem<Photo>(action.photo)
       })
     );
   }
 
-  @Action(photoAction.ClearPhotoSelection)
-  clearComparedPhotos(ctx: StateContext<PhotoStateModel>): void {
+  @Action(photoAction.ClearPhotoComparison)
+  clearPhotoComparison(ctx: StateContext<PhotoStateModel>): void {
     ctx.patchState({
       comparePhotos: [],
     });

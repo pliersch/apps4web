@@ -82,14 +82,14 @@ export class SetPreviousPhoto {
 
 // compare
 
-export class TogglePhotoSelection {
-  static readonly type = '[Gallery] Toggle Photo Selection';
+export class TogglePhotoComparison {
+  static readonly type = '[Gallery] Toggle Photo Comparison';
 
   constructor(public photo: Photo) { }
 }
 
-export class ClearPhotoSelection {
-  static readonly type = '[Gallery] Clear Photo Selection';
+export class ClearPhotoComparison {
+  static readonly type = '[Gallery] Clear Photo Comparison';
 }
 
 // manage / edit

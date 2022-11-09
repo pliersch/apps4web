@@ -12,13 +12,14 @@
   }
 
   .visible {
-    visibility: visible;
+    visibility: visible !important;
   }
 
   .top-left {
     position: absolute;
     top: 0;
     right: 4px;
+    visibility: hidden;
   }
 
   .item {

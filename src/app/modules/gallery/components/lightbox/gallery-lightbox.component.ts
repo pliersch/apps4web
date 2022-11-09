@@ -7,7 +7,7 @@ import {
   GalleryHorizontalScrollerComponent
 } from '@gallery/components/share/horizontal-scroller/gallery-horizontal-scroller.component';
 import { AlertService } from '@app/common/services/alert.service';
-import { ClearPhotoSelection, TogglePhotoSelection } from "@gallery/store/photos/photo.actions";
+import { ClearPhotoComparison, TogglePhotoComparison } from "@gallery/store/photos/photo.actions";
 import { Photo } from "@gallery/store/photos/photo.model";
 import { Action, ActionProvider } from "@modules/action-bar/actions";
 import { ActionBarService } from "@modules/action-bar/action-bar.service";
@@ -68,7 +68,7 @@ export class GalleryLightboxComponent implements OnInit, OnDestroy, ActionProvid
         this.switchView();
         break;
       case ActionTypes.ClearComparison:
-        this.store.dispatch(new ClearPhotoSelection());
+        this.store.dispatch(new ClearPhotoComparison());
         break;
     }
   }
@@ -78,7 +78,7 @@ export class GalleryLightboxComponent implements OnInit, OnDestroy, ActionProvid
   }
 
   onSelectImage(photo: Photo): void {
-    this.store.dispatch(new TogglePhotoSelection(photo));
+    this.store.dispatch(new TogglePhotoComparison(photo));
   }
 
 }

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Photo } from '@gallery/store/photos/photo.model';
 import { NgScrollbar } from 'ngx-scrollbar';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Select } from '@ngxs/store';
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { getThumbUrl } from "@gallery/store/photos/photo.tools";

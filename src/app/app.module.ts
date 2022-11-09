@@ -29,6 +29,7 @@ import { GoogleSigninModule } from "@modules/google-signin/google-signin.module"
 import { SigninState } from "@modules/google-signin/store/signin.state";
 import { SamplesModule } from "@modules/samples/samples.module";
 import { UserState } from "@modules/user-managaer/store/user.state";
+import { RadioModule } from "@modules/radio/radio.module";
 
 const ngxsConfig: NgxsModuleOptions = {
   developmentMode: !environment.production,
@@ -73,7 +74,8 @@ const ngxsConfig: NgxsModuleOptions = {
     WasteCalendarModule,
     RecipesModule,
     GoogleSigninModule,
-    SamplesModule
+    SamplesModule,
+    RadioModule
   ],
   exports: [],
   providers: [

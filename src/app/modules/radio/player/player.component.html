@@ -1,0 +1,36 @@
+<mat-card class="card component">
+  <mat-card-title>Radio Sender</mat-card-title>
+  <mat-tab-group>
+    <mat-tab label="Favoriten">
+      <ng-scrollbar class="dark-scrollbar" [autoHeightDisabled]="false" track="horizontal" visibility="always">
+        <div (wheel)="onScroll($event)">
+          <div class="thumbnail-list">
+            <div *ngFor="let radio of favorites;"
+                 class="thumbnail-item item" [class.active]="radio === current"
+                 [style.background-image]="'url(' + radio.logoUrl + ')'"
+                 (click)="onClickPlay(radio)">
+              <div class="info-container" [class.active]="radio === current">
+                <button mat-mini-fab color="primary">
+                  <mat-icon>volume_mute</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-scrollbar>
+
+      <!--            <div *ngFor="let radio of favorites" class="image-container" [class.active]="current === radio">-->
+      <!--              <img alt="thumbnail" draggable="false" [src]="radio.iconUrl">-->
+      <!--              <div class="info-container">-->
+      <!--                <button mat-mini-fab color="primary" (click)="onClickPlay(radio)">-->
+      <!--                  <mat-icon>play_arrow</mat-icon>-->
+      <!--                </button>-->
+      <!--                &lt;!&ndash;          <h4>{{ radio.name }}</h4>&ndash;&gt;-->
+      <!--              </div>-->
+      <!--            </div>-->
+    </mat-tab>
+    <mat-tab label="Klassik Radio"> Content 2</mat-tab>
+    <mat-tab label="Leer"> Content 3</mat-tab>
+  </mat-tab-group>
+  <audio #player></audio>
+</mat-card>
