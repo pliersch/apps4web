@@ -160,6 +160,24 @@ export class DeletePhotoFail {
   constructor(public error: HttpErrorResponse) { }
 }
 
+// export class DeletePhotos {
+//   static readonly type = '[Gallery] Delete Photos';
+//
+//   constructor(public ids: string[]) { }
+// }
+//
+// export class DeletePhotosSuccess {
+//   static readonly type = '[Gallery] Delete Photos success';
+//
+//   constructor(public photoUpdate: PhotoUpdate) { }
+// }
+//
+// export class DeletePhotosFail {
+//   static readonly type = '[Gallery] Delete Photos fail';
+//
+//   constructor(public error: HttpErrorResponse) { }
+// }
+
 // tags of photo
 
 export class SetTagsOfPhoto {

@@ -57,6 +57,11 @@ export class PhotoService {
     return this.http.delete<PhotoUpdate>(`${PHOTO_BASE_URL}/${id}`);
   }
 
+  // deletePhotos(ids: string[]): Observable<PhotoUpdate> {
+  //   const dto = {ids: ids}
+  //   return this.http.post<PhotoUpdate>(PHOTO_BASE_URL + '/delmany', dto);
+  // }
+
   setRating(photo: Photo, rate: number): Observable<PhotoUpdate> {
     const dto = {rating: rate}
     return this.http.patch<PhotoUpdate>(`${PHOTO_BASE_URL}/${photo.id}`, dto);

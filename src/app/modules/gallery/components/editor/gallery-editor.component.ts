@@ -33,6 +33,7 @@ enum ActionTypes {
   DeselectAll,
   ToggleSelection,
   EditTags,
+  DeleteMany,
   NewTag,
   ManageTags,
 }
@@ -49,6 +50,7 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
     {name: ActionTypes.DeselectAll, icon: 'remove_done', tooltip: 'deselect all', handler: this},
     {name: ActionTypes.ToggleSelection, icon: 'published_with_changes', tooltip: 'toggle selection', handler: this},
     {name: ActionTypes.EditTags, icon: 'edit', tooltip: 'edit tags', handler: this},
+    {name: ActionTypes.DeleteMany, icon: 'delete', tooltip: 'delete photos', handler: this},
     {name: ActionTypes.NewTag, icon: 'playlist_add', tooltip: 'new tag', handler: this},
     {name: ActionTypes.ManageTags, icon: 'list', tooltip: 'manage tags', handler: this},
   ]
@@ -80,6 +82,9 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
       case ActionTypes.ToggleSelection:
         this.store.dispatch(new photoAction.ToggleAllDownload());
         break;
+      case ActionTypes.DeleteMany:
+        this.deletePhotos();
+        break;
       case ActionTypes.EditTags:
         this.editTags(this.selection);
         break;
@@ -90,6 +95,15 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
         this.openEditTagDialog();
         break;
     }
+  }
+
+  deletePhotos(): void {
+    this.selection.forEach((photo) => {
+      this.store.dispatch([new photoAction.DeletePhoto(photo.id)]);
+    });
+    // const ids: string[] = [];
+    // this.selection.forEach((photo) => ids.push(photo.id));
+    // this.store.dispatch(new photoAction.DeletePhotos(ids));
   }
 
   onSelectForEdit($event: Photo): void {

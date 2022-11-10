@@ -12,7 +12,6 @@ import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
 import { ServerSentService } from "@app/common/services/server-sent.service";
 import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
 import { Tag } from "@gallery/store/tags/tag.model";
-import { ClearPhotoComparison } from "@gallery/store/photos/photo.actions";
 
 export interface PhotoStateModel {
   photos: Photo[];
@@ -367,6 +366,40 @@ export class PhotoState {
     console.log(action.error)
     this.alertService.error('Delete fail');
   }
+
+  // @Action(photoAction.DeletePhotos)
+  // deletePhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhotos): Observable<Subscription> {
+  //   return this.photoService.deletePhotos(action.ids).pipe(
+  //     // tap(console.log(action)),
+  //     map((update: PhotoUpdate) =>
+  //       asapScheduler.schedule(() =>
+  //         ctx.dispatch(new photoAction.DeletePhotosSuccess(update))
+  //       )
+  //     ),
+  //     catchError(error =>
+  //       of(
+  //         asapScheduler.schedule(() =>
+  //           ctx.dispatch(new photoAction.DeletePhotosFail(error))
+  //         )
+  //       )
+  //     )
+  //   );
+  // }
+  //
+  // @Action(photoAction.DeletePhotoSuccess)
+  // deletePhotosSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhotosSuccess): void {
+  //   ctx.setState(
+  //     patch({
+  //       photos: removeItem<Photo>(photo => photo!.id === action.photoUpdate.id)
+  //     })
+  //   );
+  // }
+  //
+  // @Action(photoAction.DeletePhotoFail)
+  // deletePhotosFail(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhotosFail): void {
+  //   console.log(action.error)
+  //   this.alertService.error('Delete fail');
+  // }
 
   //////////////////////////////////////////////////////////
   //          photos to compare
