@@ -1,13 +1,13 @@
-import { User } from "@modules/user-managaer/store/user";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { Injectable } from "@angular/core";
 import { AlertService } from "@app/common/services/alert.service";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import { catchError, map } from "rxjs/operators";
-import { LoadUsers, LoadUsersFail, LoadUsersSuccess } from "@modules/user-managaer/store/user.actions";
-import { AuthService } from "@modules/account/services/auth.service";
-import { Role } from "@modules/user-managaer/store/role";
-import { Status } from "@modules/user-managaer/store/status";
+import { AuthService } from "@account/services/auth.service";
+import { User } from "./user";
+import { Status } from "@modules/admin/modules/user/store/status";
+import { Role } from "@modules/admin/modules/user/store/role";
+import * as userActions from "@modules/admin/modules/user/store/user.actions";
 
 export interface UserStateModel {
   user: User;
@@ -52,8 +52,8 @@ export class UserState {
   //          load
   //////////////////////////////////////////////////////////
 
-  @Action(LoadUsers)
-  loadUsers(ctx: StateContext<UserStateModel>, action: LoadUsers): Observable<Subscription> {
+  @Action(userActions.LoadUsers)
+  loadUsers(ctx: StateContext<UserStateModel>, action: userActions.LoadUsers): Observable<Subscription> {
     const user: User = {
       id: '676a2fc0-31e0-4902-980e-64ed6be8877a',
       givenName: 'Patrick',
@@ -71,26 +71,26 @@ export class UserState {
       .pipe(
         map((users: User[]) =>
           asapScheduler.schedule(() =>
-            ctx.dispatch(new LoadUsersSuccess(users))
+            ctx.dispatch(new userActions.LoadUsersSuccess(users))
           )
         ),
         catchError(error =>
           of(
             asapScheduler.schedule(() =>
-              ctx.dispatch(new LoadUsersFail(error))
+              ctx.dispatch(new userActions.LoadUsersFail(error))
             )
           )
         )
       );
   }
 
-  @Action(LoadUsersSuccess)
-  loadUsersSuccess({patchState}: StateContext<UserStateModel>, action: LoadUsersSuccess): void {
+  @Action(userActions.LoadUsersSuccess)
+  loadUsersSuccess({patchState}: StateContext<UserStateModel>, action: userActions.LoadUsersSuccess): void {
     patchState({users: action.payload, user: action.payload[0]});
   }
 
-  @Action(LoadUsersFail)
-  loadUsersFail(action: LoadUsersFail): void {
+  @Action(userActions.LoadUsersFail)
+  loadUsersFail(action: userActions.LoadUsersFail): void {
     this.alertService.error('cant load users')
     console.log(action.error)
   }

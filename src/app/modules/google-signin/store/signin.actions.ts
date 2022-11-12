@@ -1,5 +1,5 @@
 import { GoogleUser } from "@modules/google-signin/google-user.model";
-import { User } from "@modules/user-managaer/store/user";
+import { User } from "@modules/admin/modules/user/store/user";
 
 export class SigninWithGoogle {
   static readonly type = '[Google Signin] Google Login';

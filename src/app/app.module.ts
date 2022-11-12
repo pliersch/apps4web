@@ -28,8 +28,8 @@ import { RecipesModule } from "@modules/recipes/recipes.module";
 import { GoogleSigninModule } from "@modules/google-signin/google-signin.module";
 import { SigninState } from "@modules/google-signin/store/signin.state";
 import { SamplesModule } from "@modules/samples/samples.module";
-import { UserState } from "@modules/user-managaer/store/user.state";
 import { RadioModule } from "@modules/radio/radio.module";
+import { UserState } from "@modules/admin/modules/user/store/user.state";
 
 const ngxsConfig: NgxsModuleOptions = {
   developmentMode: !environment.production,

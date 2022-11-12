@@ -4,9 +4,9 @@ import { AlertService } from "@app/common/services/alert.service";
 import * as authActions from "@modules/google-signin/store/signin.actions";
 import { GoogleUser } from "@modules/google-signin/google-user.model";
 import { SigninService } from "@modules/google-signin/services/signin.service";
-import { User } from "@modules/user-managaer/store/user";
 import { catchError, map } from "rxjs/operators";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
+import { User } from "@modules/admin/modules/user/store/user";
 
 export interface SigninStateModel {
   googleUser: GoogleUser | null;

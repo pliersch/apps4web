@@ -1,6 +1,6 @@
 import { filter, take } from 'rxjs/operators';
 import { Store } from "@ngxs/store";
-import { LoadUsers } from "@modules/user-managaer/store/user.actions";
+import { LoadUsers } from "@modules/admin/modules/user/store/user.actions";
 
 export function initApplication(store: Store,
                                 /*userService: UserService*/): () => Promise<unknown> {

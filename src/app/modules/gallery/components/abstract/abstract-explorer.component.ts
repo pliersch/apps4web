@@ -14,8 +14,8 @@ import { tap } from "rxjs/operators";
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import { GALLERY_CONSTANTS } from "@gallery/const";
 import { Action } from "@modules/action-bar/actions";
-import { UserState } from "@modules/user-managaer/store/user.state";
-import { User } from "@modules/user-managaer/store/user";
+import { UserState } from "@modules/admin/modules/user/store/user.state";
+import { User } from "@modules/admin/modules/user/store/user";
 
 
 @Component({
