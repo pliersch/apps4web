@@ -5,7 +5,7 @@ export const constants = {
     {route: '/dashboard', name: 'Home'},
     {route: '/gallery/explorer', name: 'Galerie'},
     {route: '/chat', name: 'Chat'},
-    // {route: '/admin', name: 'Admin'},
+    {route: '/admin', name: 'Admin'},
     // {route: '/auth', name: 'Auth'},
     // {route: '/recipes', name: 'Rezepte'},
     // {route: '/account', name: 'Account'},

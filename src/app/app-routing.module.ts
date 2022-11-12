@@ -3,10 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { DefaultLayoutComponent } from "./layouts/default-layout/default-layout.component";
 import { DashboardComponent } from "@modules/dashboard/dashboard.component";
 import { LegalNoticeComponent } from "@modules/legal-notice/legal-notice.component";
+import { AuthGuard } from "@account/helpers/auth.guard";
 
 // const authModule = () => import('@app/modules/auth/auth.module').then((x) => x.AuthModule);
 const chatModule = () => import('@app/modules/chat/chat.module').then((x) => x.ChatModule);
-// const adminModule = () => import('@app/modules/admin/admin.module').then((x) => x.AdminModule);
+const adminModule = () => import('@modules/user-managaer/user-manager.module').then((x) => x.UserManagerModule);
 // const doctorModule = () => import('@app/modules/doctor/doctor.module').then((x) => x.DoctorModule);
 // const accountModule = () => import('@app/modules/account/account.module').then((x) => x.AccountModule);
 // const recipesModule = () => import('@app/modules/recipes/recipes.module').then((x) => x.RecipesModule);
@@ -24,7 +25,7 @@ const routes: Routes = [{
     {path: 'impressum', component: LegalNoticeComponent},
     // {path: 'auth', loadChildren: authModule},
     {path: 'chat', loadChildren: chatModule},
-    // {path: 'admin', loadChildren: adminModule, canActivate: [AuthGuard]},
+    {path: 'admin', loadChildren: adminModule/*, canActivate: [AuthGuard]*/},
     // {path: 'waste', loadChildren: wasteModule},
     // {path: 'felix', loadChildren: doctorModule},
     {path: 'gallery', loadChildren: galleryModule},
