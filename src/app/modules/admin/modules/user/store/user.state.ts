@@ -61,7 +61,7 @@ export class UserState {
       email: 'hourby@gmail.com',
       status: Status.accept,
       role: Role.Admin,
-      photoUrl: '',
+      photoUrl: 'https://lh3.googleusercontent.com/a/ALm5wu187X0-pHnmB6dqNHa4dmgUfyb6mFTQbMIEYzc_4A=s96-c',
       lastLogin: new Date()
     }
 

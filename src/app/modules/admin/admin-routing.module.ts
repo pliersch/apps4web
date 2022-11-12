@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LayoutComponent } from "@modules/admin/layout.component";
+import { AdminLayoutComponent } from "@modules/admin/layout/admin-layout.component";
 
 const userModule = () => import('./modules/user/user.module').then((x) => x.UserModule);
 
 const routes: Routes = [
   {
-    path: '', component: LayoutComponent,
+    path: '', component: AdminLayoutComponent,
     children: [
       {path: 'user', loadChildren: userModule},
       // { path: 'accounts', loadChildren: accountsModule }
