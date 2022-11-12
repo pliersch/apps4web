@@ -55,6 +55,8 @@ import { GalleryRatingComponent } from './components/explorer/rating-panel/galle
 import { GalleryDateFilterComponent } from './components/explorer/date-filter/gallery-date-filter.component';
 import { GalleryDeletePhotoComponent } from './components/explorer/delete-photo-dialog/gallery-delete-photo.component';
 import { GalleryEditorComponent } from "./components/editor/gallery-editor.component";
+import { FormsModule } from "@angular/forms";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -99,6 +101,8 @@ import { GalleryEditorComponent } from "./components/editor/gallery-editor.compo
     MatButtonToggleModule,
     ActionBarModule,
     MatSlideToggleModule,
+    FormsModule,
+    MatCheckboxModule,
   ],
 })
 

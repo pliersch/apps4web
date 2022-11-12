@@ -294,7 +294,7 @@ export class PhotoState {
 
   @Action(photoAction.AddPhoto)
   addPhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhoto): Observable<Subscription> {
-    return this.photoService.create(action.photo, action.user.id, action.tags, action.created).pipe(
+    return this.photoService.create(action.photo, action.user.id, action.tags, action.created, action.isPrivate).pipe(
       map((photo: Photo) =>
         asapScheduler.schedule(() =>
           ctx.dispatch(new photoAction.AddPhotoSuccess(photo))

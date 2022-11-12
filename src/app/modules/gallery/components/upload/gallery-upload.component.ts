@@ -1,16 +1,13 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Select, Store } from "@ngxs/store";
 import { TagState } from "@gallery/store/tags/tag.state";
-import { Observable, of } from "rxjs";
+import { Observable } from "rxjs";
 import { Tag, TagGroup } from "@gallery/store/tags/tag.model";
-import { LoadTags } from "@gallery/store/tags/tag.action";
 import { AddPhoto } from "@gallery/store/photos/photo.actions";
 import { TagService } from "@gallery/services/tag.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { UserState } from "@modules/user-managaer/store/user.state";
 import { User } from "@modules/user-managaer/store/user";
-
-const PLACEHOLDER_URL = 'assets/svg/image-placeholder.svg';
 
 @Component({
   selector: 'app-gallery-upload',
@@ -26,18 +23,21 @@ export class GalleryUploadComponent implements OnInit {
   @Select(TagState.getTagGroups)
   tagGroups$: Observable<TagGroup[]>;
   tagGroups: TagGroup[];
+  copies: string[][];
+  index = 0;
 
   @Select(UserState.getUser)
   user$: Observable<User>;
   user: User;
 
-  tags$: Observable<Tag[]>;
-  selectedTags: Tag[] = [];
+  // tags: Tag[];
+  selectedTagNames: string[] = [];
 
-  imgUrls: string[] = [PLACEHOLDER_URL];
+  imgUrls: string[] = [];
   imgFiles: File[];
-  allTagGroups: string[] = [];
   actions: AddPhoto[] = [];
+  count = 0;
+  isPrivate = false;
 
   constructor(private renderer: Renderer2,
               private photoService: PhotoService,
@@ -46,14 +46,22 @@ export class GalleryUploadComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.store.dispatch(new LoadTags());
     this.user$.subscribe((user) => this.user = user);
-    this.tagGroups$.subscribe(tags => {
-      this.tagGroups = tags;
-      for (const tag of tags) {
-        this.allTagGroups.push(tag.name);
-      }
+    this.tagGroups$.subscribe((groups) => {
+      this.tagGroups = groups;
+      this.copyTags(groups);
     });
+  }
+
+  copyTags(groups: TagGroup[]): void {
+    this.copies = [];
+    for (const group of groups) {
+      const tagNames: string[] = [];
+      this.copies.push(tagNames);
+      for (const tag of group.tags) {
+        tagNames.push(tag.name);
+      }
+    }
   }
 
   openFile(): void {
@@ -66,8 +74,8 @@ export class GalleryUploadComponent implements OnInit {
       return;
     }
     this.imgFiles = Array.from(files);
+    this.count = this.imgFiles.length;
     for (const file of this.imgFiles) {
-      this.actions.push(new AddPhoto(file, this.user, this.selectedTags, file.lastModified));
       const reader = new FileReader();
       reader.onload = (e: any): void => {
         this.imgUrls.push(e.target.result);
@@ -81,22 +89,37 @@ export class GalleryUploadComponent implements OnInit {
 
   uploadImage(): void {
     if (this.imgFiles) {
+      for (const file of this.imgFiles) {
+        this.actions.push(
+          new AddPhoto(file, this.user, this.findTags(this.selectedTagNames), file.lastModified, !this.isPrivate));
+      }
       this.store.dispatch(this.actions);
     }
   }
 
-  onGroupSelect(tag: TagGroup): void {
-    this.tags$ = of(tag.tags);
+  onGroupSelect(index: number): void {
+    this.index = index;
   }
 
-  isSelected(tag: Tag): boolean {
-    return this.selectedTags.includes(tag);
+  onSelectChip(tagName: string): void {
+    this.selectedTagNames.push(tagName);
+    const index = this.copies[this.index].indexOf(tagName);
+    this.copies[this.index].splice(index, 1);
   }
 
-  onSelectChip(tag: Tag): void {
-    this.selectedTags.includes(tag) ?
-      this.selectedTags = this.selectedTags.filter(item => item !== tag) :
-      this.selectedTags.push(tag);
+  findTags(tagNames: string[]): Tag[] {
+    const flat: Tag[] = [];
+    const result: Tag[] = [];
+    for (const tagGroup of this.tagGroups) {
+      for (const tag of tagGroup.tags) {
+        flat.push(tag);
+      }
+    }
+    for (const tagName of tagNames) {
+      result.push(flat.find((tag) => tag.name === tagName)!);
+    }
+    console.log('GalleryUploadComponent findTags: ', result)
+    return result;
   }
 
 }

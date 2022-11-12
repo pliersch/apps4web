@@ -53,7 +53,9 @@ export class PlayerComponent implements OnInit, AfterViewInit {
 
   onClickPlay(radio: RadioStation): void {
     if (this.current === radio) {
-      this.audio.pause()
+      this.audio.src = ''
+      this.audio.load();
+      // this.audio = null;
       this.current = this.empty;
     } else {
       this.current = radio;

@@ -49,7 +49,11 @@ export class LoadPhotosFail {
 export class AddPhoto {
   static readonly type = '[Gallery] Add Photo';
 
-  constructor(public photo: File, public user: User, public tags: Tag[], public created: number) { }
+  constructor(public photo: File,
+              public user: User,
+              public tags: Tag[],
+              public created: number,
+              public isPrivate: boolean = false) { }
 }
 
 export class AddPhotoSuccess {

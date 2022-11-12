@@ -41,6 +41,7 @@ export class GalleryHorizontalScrollerComponent implements OnInit {
   }
 
   isCompared(photo: Photo): Observable<boolean> {
+    console.log('GalleryHorizontalScrollerComponent isCompared: ',)
     return this.comparePhotos$.pipe(
       map(photos => photos.includes(photo))
     );
