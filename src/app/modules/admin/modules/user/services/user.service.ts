@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { User } from "@modules/admin/modules/user/store/user";
 
-const baseUrl = `${environment.apiUrl}/users`;
+const baseUrl = `${environment.apiUrl}/user`;
 
 @Injectable({
   providedIn: 'root'

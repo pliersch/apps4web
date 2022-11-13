@@ -8,6 +8,7 @@ import { User } from "./user";
 import { Status } from "@modules/admin/modules/user/store/status";
 import { Role } from "@modules/admin/modules/user/store/role";
 import * as userActions from "@modules/admin/modules/user/store/user.actions";
+import { UserService } from "@modules/admin/modules/user/services/user.service";
 
 export interface UserStateModel {
   user: User;
@@ -44,7 +45,7 @@ export class UserState {
     return state.users;
   }
 
-  constructor(private authService: AuthService,
+  constructor(private userService: UserService,
               private alertService: AlertService) {
   }
 
@@ -54,20 +55,7 @@ export class UserState {
 
   @Action(userActions.LoadUsers)
   loadUsers(ctx: StateContext<UserStateModel>, action: userActions.LoadUsers): Observable<Subscription> {
-    const user: User = {
-      id: '676a2fc0-31e0-4902-980e-64ed6be8877a',
-      givenName: 'Patrick',
-      lastName: 'Liersch',
-      email: 'hourby@gmail.com',
-      status: Status.accept,
-      role: Role.Admin,
-      photoUrl: 'https://lh3.googleusercontent.com/a/ALm5wu187X0-pHnmB6dqNHa4dmgUfyb6mFTQbMIEYzc_4A=s96-c',
-      lastLogin: new Date()
-    }
-
-    return of([
-      user,
-    ])
+    return this.userService.getAll()
       .pipe(
         map((users: User[]) =>
           asapScheduler.schedule(() =>
@@ -86,6 +74,7 @@ export class UserState {
 
   @Action(userActions.LoadUsersSuccess)
   loadUsersSuccess({patchState}: StateContext<UserStateModel>, action: userActions.LoadUsersSuccess): void {
+    console.log('UserState loadUsersSuccess: ', action.payload)
     patchState({users: action.payload, user: action.payload[0]});
   }
 

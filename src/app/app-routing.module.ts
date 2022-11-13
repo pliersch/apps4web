@@ -12,7 +12,6 @@ const adminModule = () => import('@modules/admin/admin.module').then((x) => x.Ad
 // const accountModule = () => import('@app/modules/account/account.module').then((x) => x.AccountModule);
 // const recipesModule = () => import('@app/modules/recipes/recipes.module').then((x) => x.RecipesModule);
 // const samplesModule = () => import('@app/modules/samples/samples.module').then((x) => x.SamplesModule);
-const profileModule = () => import('@app/modules/profile/profile.module').then((x) => x.ProfileModule);
 const galleryModule = () => import('@app/modules/gallery/gallery.module').then((x) => x.GalleryModule);
 const threeModule = () => import('@app/modules/three/three.module').then((x) => x.ThreeModule);
 const googleSignInModule = () => import('@app/modules/google-signin/google-signin.module').then((x) => x.GoogleSigninModule);
@@ -32,7 +31,6 @@ const routes: Routes = [{
     // {path: 'account', loadChildren: accountModule},
     // {path: 'samples', loadChildren: samplesModule},
     // {path: 'recipes', loadChildren: recipesModule},
-    {path: 'profile', loadChildren: profileModule},
     {path: 'three', loadChildren: threeModule},
     {path: 'signin', loadChildren: googleSignInModule},
   ]

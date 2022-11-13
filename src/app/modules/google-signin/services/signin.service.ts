@@ -5,7 +5,7 @@ import { User } from "@modules/admin/modules/user/store/user";
 import { Observable } from "rxjs";
 import { GoogleUser } from "@modules/google-signin/google-user.model";
 
-const baseUrl = `${environment.apiUrl}/auth`;
+const baseUrl = `${environment.apiUrl}/user`;
 
 @Injectable({
   providedIn: 'root'

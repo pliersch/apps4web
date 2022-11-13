@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SigninComponent } from './signin/signin.component';
+import { SigninComponent } from './components/signin.component';
 import { MaterialModule } from "@app/shared/material/material.module";
 
 // const routes: Routes = [{

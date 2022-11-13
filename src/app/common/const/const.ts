@@ -10,7 +10,6 @@ export const constants = {
     // {route: '/recipes', name: 'Rezepte'},
     // {route: '/account', name: 'Account'},
     // {route: '/account/login', name: 'Login'},
-    {route: '/profile', name: 'Profil'},
     {route: '/three', name: 'Three'},
     // {route: '/felix', name: 'Felix'},
     // {route: '/samples/address', name: 'Adresse'},
