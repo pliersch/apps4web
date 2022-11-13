@@ -6,6 +6,7 @@ import { Select } from "@ngxs/store";
 import { UserState } from "@modules/admin/modules/user/store/user.state";
 import { Observable, Subscription } from "rxjs";
 import { User } from "@modules/admin/modules/user/store/user";
+import { Role } from "@modules/admin/modules/user/store/role";
 
 @Component({
   selector: 'app-user-overview',
@@ -23,7 +24,7 @@ export class UserOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   users: User[];
 
   subscription: Subscription;
-  displayedColumns: string[] = ['id', 'givenName', 'lastName', 'email', 'role', 'photoUrl', 'status', 'lastLogin'];
+  displayedColumns: string[] = ['givenName', 'lastName', 'email', 'role', 'photoUrl', 'status', 'lastLogin'];
   dataSource: MatTableDataSource<User>;
 
   constructor(private _liveAnnouncer: LiveAnnouncer) {}
@@ -34,6 +35,8 @@ export class UserOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscription = this.user$.subscribe(res => this.user = res);
     this.subscription.add(this.users$.subscribe(res => {
       this.users = res;
+      console.log('UserOverviewComponent : ', Role[Role.Admin])
+      console.log('UserOverviewComponent : ', Role[0])
       this.dataSource = new MatTableDataSource(res);
     }))
   }
@@ -53,6 +56,11 @@ export class UserOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       void this._liveAnnouncer.announce('Sorting cleared');
     }
+  }
+
+  getRole(element: any) {
+    console.log('UserOverviewComponent getRole: ', element)
+    return 'foo';
   }
 
   ngOnDestroy(): void {

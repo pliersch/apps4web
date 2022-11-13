@@ -1,20 +1,18 @@
-import {formatDate} from "@angular/common";
-import {WasteDate} from "@modules/waste-calendar/waste-dates";
+import { formatDate } from "@angular/common";
+import { WasteDate } from "@modules/waste-calendar/waste-dates";
 import parse from "date-fns/parse";
 import format from 'date-fns/format'
-import {de} from "date-fns/locale";
+import { de } from "date-fns/locale";
 
 /**
- *
- * @param date like '10. Juni 2022'
+ * @param date like 10. Juni 2022
  */
 export function parseGerman(date: string): Date {
   return parse(date, "do MMM yyyy", new Date(), {locale: de});
 }
 
 /**
- *
- * @param date like '04.14.2022'
+ * @param date like 04.14.2022
  */
 export function parseGerman2(date: string): Date {
   return parse(date, "MM.dd.yyyy", new Date(), {locale: de});
@@ -24,15 +22,25 @@ export function formatEnglish(date: Date): string {
   return formatDate(date, 'longDate', 'en-US');
 }
 
+/**
+ * @return string like 13.11.2000
+ */
+export function formatGerman(date: Date): string {
+  return format(date, 'dd.MM.yyyy', {locale: de});
+}
+
+/**
+ * @return string like 13. November
+ */
 export function formatGermanDayAndMonth(date: Date): string {
   return format(date, 'do MMMM', {locale: de});
 }
 
 export function formatDates(events: WasteDate[]): WasteDate[] {
-  let result: WasteDate[] = [];
+  const result: WasteDate[] = [];
   for (const event of events) {
-    let s1 = formatDate(new Date(event.date), 'longDate', 'en-US');
-    let wd: WasteDate = {
+    const s1 = formatDate(new Date(event.date), 'longDate', 'en-US');
+    const wd: WasteDate = {
       date: s1,
       type: event.type
     }
