@@ -8,14 +8,14 @@
     </mat-form-field>
   </div>
   <div>
-    <mat-chip-list #chipList>
+    <mat-chip-grid #chipList>
       <mat-chip
         *ngFor="let tag of tagNames"
         (removed)="remove(tag)">
         {{tag}}
         <mat-icon matChipRemove>cancel</mat-icon>
       </mat-chip>
-    </mat-chip-list>
+    </mat-chip-grid>
   </div>
   <div>
     <form>

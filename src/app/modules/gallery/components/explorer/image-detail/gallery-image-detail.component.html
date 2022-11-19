@@ -4,10 +4,10 @@
     <span> Name: {{currentPhoto.fileName}}</span><br>
     <span> Date: {{currentPhoto.recordDate | date}}</span>
     <app-gallery-rating></app-gallery-rating>
-    <mat-chip-list>
+    <mat-chip-grid>
       <mat-chip selected *ngFor="let tag of currentPhoto.tags">
         {{tag.name}}
       </mat-chip>
-    </mat-chip-list>
+    </mat-chip-grid>
   </mat-card-content>
 </mat-card>
