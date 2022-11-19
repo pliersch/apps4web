@@ -38,6 +38,17 @@ export class UserOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     }))
   }
 
+  addData(): void {
+    // const randomElementIndex = Math.floor(Math.random() * ELEMENT_DATA.length);
+    // this.dataToDisplay = [...this.dataToDisplay, ELEMENT_DATA[randomElementIndex]];
+    // this.dataSource.setData(this.dataToDisplay);
+  }
+
+  removeData(): void {
+    // this.dataToDisplay = this.dataToDisplay.slice(0, -1);
+    // this.dataSource.setData(this.dataToDisplay);
+  }
+
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
   }

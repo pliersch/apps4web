@@ -13,7 +13,7 @@ export interface SigninStateModel {
 }
 
 @State<SigninStateModel>({
-  name: 'googleSignin',
+  name: 'GoogleSigninState',
   defaults: {
     googleUser: null,
   }
@@ -37,7 +37,7 @@ export class SigninState {
   }
 
   @Action(authActions.SigninWithGoogle)
-  loginWithGoogle(ctx: StateContext<SigninStateModel>, action: authActions.SigninWithGoogle): Observable<Subscription> {
+  signinWithGoogle(ctx: StateContext<SigninStateModel>, action: authActions.SigninWithGoogle): Observable<Subscription> {
     ctx.patchState({googleUser: action.user});
 
     return this.signinService.signin(action.user).pipe(
@@ -57,17 +57,17 @@ export class SigninState {
   }
 
   @Action(authActions.SigninWithGoogleSuccess)
-  loginWithGoogleSuccess(ctx: StateContext<SigninStateModel>, action: authActions.SigninWithGoogleSuccess): void {
+  signinWithGoogleSuccess(ctx: StateContext<SigninStateModel>, action: authActions.SigninWithGoogleSuccess): void {
     if (action.user === null) {
       this.alertService.warn("You are not registered");
     }
-    console.log('AuthState loginWithGoogleSuccess: ', action.user)
+    console.log('SigninState signinWithGoogleSuccess: ', action.user)
   }
 
   @Action(authActions.SigninWithGoogleFail)
-  loginWithGoogleFail(action: authActions.SigninWithGoogleFail): void {
-    console.log('SigninState loginWithGoogleFail: ', action.error)
-    this.alertService.error('Login with Google fail');
+  signinWithGoogleFail(action: authActions.SigninWithGoogleFail): void {
+    console.log('SigninState signinWithGoogleFail: ', action.error)
+    this.alertService.error('Signin with Google fail');
   }
 
   // @Action(authActions.LoginWithGoogle)

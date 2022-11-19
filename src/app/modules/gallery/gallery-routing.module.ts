@@ -15,11 +15,11 @@ const routes: Routes = [
     children: [
       {path: '', component: GalleryExplorerComponent},
       // {path: 'home', component: GalleryHomeComponent},
-      {path: 'explorer', component: GalleryExplorerComponent},
-      {path: 'editor', component: GalleryEditorComponent},
-      {path: 'lightbox', component: GalleryLightboxComponent},
-      {path: 'slideshow', component: GallerySlideshowComponent},
-      {path: 'upload', component: GalleryUploadComponent},
+      {path: 'explorer', title: 'Explorer', component: GalleryExplorerComponent},
+      {path: 'editor', title: 'Editor', component: GalleryEditorComponent},
+      {path: 'lightbox', title: 'Lightbox', component: GalleryLightboxComponent},
+      {path: 'slideshow', title: 'Slideshow', component: GallerySlideshowComponent},
+      {path: 'upload', title: 'Upload', component: GalleryUploadComponent},
     ]
   }
 ];

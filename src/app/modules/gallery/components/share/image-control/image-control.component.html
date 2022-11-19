@@ -1,6 +1,6 @@
 <div class="image-container" [class.active]="selected">
-  <img alt="thumbnail" [id]="photo.fileName" draggable="false" appImgFallback
-       [src]="getThumbUrl(photo.fileName)" appImgLazyLoad loading="lazy">
+  <img alt="thumbnail" width="202" height="162" [id]="photo.fileName" draggable="false" appImgFallback
+       [ngSrc]="getThumbUrl(photo.fileName)">
   <div [class.visible]="download === true" class="info-container">
     <button mat-mini-fab color="primary" (click)="onClickDownload()">
       <mat-icon>download</mat-icon>

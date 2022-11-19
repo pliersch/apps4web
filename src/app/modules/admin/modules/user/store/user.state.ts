@@ -3,7 +3,6 @@ import { Injectable } from "@angular/core";
 import { AlertService } from "@app/common/services/alert.service";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import { catchError, map } from "rxjs/operators";
-import { AuthService } from "@account/services/auth.service";
 import { User } from "./user";
 import { Status } from "@modules/admin/modules/user/store/status";
 import { Role } from "@modules/admin/modules/user/store/role";
