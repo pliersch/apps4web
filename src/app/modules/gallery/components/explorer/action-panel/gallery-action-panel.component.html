@@ -3,7 +3,7 @@
   <mat-card-content>
     <mat-list dense>
       <mat-list-item *ngFor="let action of actions">
-        <p matLine>{{ action.tooltip }}</p>
+        <!--        <p matLine>{{ action.tooltip }}</p>-->
         <button mat-raised-button color="primary"
                 type="button" (click)="onClickAction(action)">
           <mat-icon> {{ action.icon }} </mat-icon>

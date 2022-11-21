@@ -1,6 +1,6 @@
 <section class="page">
   <header class="nav-bar">
-    <nav mat-tab-nav-bar>
+    <nav mat-tab-nav-bar [tabPanel]="tabPanel">
       <a mat-tab-link *ngFor="let item of linksAndNames"
          (click)="navigateUrl(item.link)"
          [active]="activeLink === item.link"> {{item.name}} </a>
@@ -8,7 +8,9 @@
   </header>
   <!--  <app-action-bar class="action-bar"></app-action-bar>-->
   <main>
-    <router-outlet></router-outlet>
+    <mat-tab-nav-panel #tabPanel>
+      <router-outlet></router-outlet>
+    </mat-tab-nav-panel>
   </main>
   <!--  <footer>Footer</footer>-->
 </section>

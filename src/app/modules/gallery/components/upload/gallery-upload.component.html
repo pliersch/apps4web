@@ -22,7 +22,7 @@
         <div class="col-s-9">
           <div class="row">
             <div>
-              <mat-chip-grid>
+              <mat-chip-listbox>
                 <mat-chip *ngFor="let tagName of copies[index]"
                           (click)="onSelectChip(tagName)"
                           (removed)="onSelectChip(tagName)">
@@ -31,7 +31,7 @@
                     <mat-icon>check_circle</mat-icon>
                   </button>
                 </mat-chip>
-              </mat-chip-grid>
+              </mat-chip-listbox>
             </div>
           </div>
           <div class="row">
@@ -46,14 +46,14 @@
             Fotos zum Upload: {{ count }}
           </div>
           <div class="row">
-            <mat-chip-grid>
+            <mat-chip-listbox>
               <mat-chip *ngFor="let tagName of selectedTagNames">
                 {{tagName}}
                 <button matChipRemove>
                   <mat-icon>cancel</mat-icon>
                 </button>
               </mat-chip>
-            </mat-chip-grid>
+            </mat-chip-listbox>
           </div>
         </div>
       </div>
