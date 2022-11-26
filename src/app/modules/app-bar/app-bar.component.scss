@@ -9,8 +9,15 @@ mat-nav-list.list-horizontal {
 }
 
 .active-route {
-  color: red;
-  //color: var(--secondary-color);
-  background: rgba(255, 255, 255, 0.04);
-  //background: green;
+  color: var(--primary-color-light) !important;
+  background-color: var(--mdc-filled-button-container-color, transparent) !important;
+  //background-color: var(--primary-color-dark) !important;
+  &.mat-mdc-unelevated-button:not(:disabled) {
+    background-color: var(--mdc-filled-button-container-color, transparent) !important;
+  }
+
+}
+
+.mat-mdc-unelevated-button:not(:disabled) {
+  background-color: var(--primary-color-dark) !important;
 }

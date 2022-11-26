@@ -1,7 +1,3 @@
-.new-tag-btn-align {
-  margin-top: 10px;
-}
-
 //.mat-expansion-panel-spacing {
 //  margin: 0;
 //}
@@ -10,3 +6,7 @@
 //  border-bottom-right-radius: 0px;
 //  border-bottom-left-radius: 0px;
 //}
+.mat-expansion-panel-header {
+  font-size: 16px;
+  font-weight: 400;
+}

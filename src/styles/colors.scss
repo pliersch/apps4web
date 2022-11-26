@@ -1,7 +1,7 @@
 :root {
   --primary-color: #333;
-  --primary-color-light: gray;
-  --primary-color-dark: #222;
+  --primary-color-light: rgba(255, 255, 255, 0.87);
+  --primary-color-dark: #212121;
   --color-primary-darker: hsl(from var(--primary-color) h s calc(60%));
   --color-primary-darkest: hsl(from var(--primary-color) h s calc(-10%));
   --secondary-color: #0804ee;

@@ -15,6 +15,7 @@ NGXS
 
 - chat und gallery nutzen denselben service (photoservice)
 - gallery versuchen gemeinsamen code der pages in gallery-container zu extrahieren
+- gallery evtl im ImageControl nur bei hover bzw. download cdk-overlay nutzen (also erst wenn nötig)
 - alt property für img
 - scroller(photo) haben feste werte
 - sharemodule prüfen (wird in anderen modulen importiert) macht es sinn(größe, geschwindigkeit)?

@@ -1,10 +1,12 @@
 <mat-card class="card component">
-  <mat-card-title>Abfall Kalender</mat-card-title>
+  <mat-card-header>
+    <mat-card-title>Abfall Kalender</mat-card-title>
+  </mat-card-header>
   <mat-calendar #calendar [(selected)]="selected"
                 (monthSelected)="onMonthSelected($event)"
                 (viewChanged)="onViewChanged()"
                 (selectedChange)="onSelectionChange($event)"></mat-calendar>
-  <mat-divider inset></mat-divider>
+  <mat-divider></mat-divider>
   <mat-list>
     <mat-list-item *ngFor="let event of nextEventsOfSelectedMonth">
       {{getCountdown(event)}}

@@ -1,17 +1,19 @@
-<mat-accordion class="example-headers-align">
-  <mat-expansion-panel *ngFor="let group of tagGroups$ | async; let i = index"
-                       [expanded]="step === i" (opened)="setStep(i)" hideToggle>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{ group.name}}
-      </mat-panel-title>
-    </mat-expansion-panel-header>
+<ng-scrollbar track="vertical">
+  <mat-accordion class="example-headers-align">
+    <mat-expansion-panel *ngFor="let group of tagGroups$ | async; let i = index"
+                         [expanded]="step === i" (opened)="setStep(i)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ group.name}}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
 
-    <mat-selection-list dense>
-      <mat-list-option *ngFor="let tag of group.tags" [selected]="isTagActivated(tag)"
-                       [value]="tag" (click)="onSelectionChange(tag)">
-        {{tag.name}}
-      </mat-list-option>
-    </mat-selection-list>
-  </mat-expansion-panel>
-</mat-accordion>
+      <mat-selection-list>
+        <mat-list-option *ngFor="let tag of group.tags" [selected]="isTagActivated(tag)"
+                         [value]="tag" (click)="onSelectionChange(tag)">
+          {{tag.name}}
+        </mat-list-option>
+      </mat-selection-list>
+    </mat-expansion-panel>
+  </mat-accordion>
+</ng-scrollbar>

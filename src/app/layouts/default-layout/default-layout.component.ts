@@ -17,7 +17,7 @@ export class DefaultLayoutComponent implements OnInit {
   @ViewChild(MatSidenav) drawer!: MatSidenav;
 
   appName: string = constants.appName;
-  theme: string = 'dark-theme';
+  theme = 'dark-theme';
   routes = constants.routes;
 
   constructor(private breakpointObserver: BreakpointObserver,

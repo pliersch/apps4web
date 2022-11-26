@@ -7,7 +7,7 @@
 @import 'styles/colors';
 @import 'styles/flex-layout';
 
-@import url('https://fonts.googleapis.com/css2?family=Michroma&family=Montserrat:wght@100;200&display=swap');
+//@import url('https://fonts.googleapis.com/css2?family=Michroma&family=Montserrat:wght@100;200&display=swap');
 
 @include mat.core();
 
@@ -18,19 +18,19 @@ html, body {
 
 body {
   margin: 0;
-  //font-family: Montserrat, sans-serif;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   overflow: hidden;
-
-  //* {
-  //  font-family: Montserrat, "Helvetica Neue", sans-serif !important;
-  //}
 }
 
 * {
   &:active,
   :focus {
     outline: none !important;
+  }
+
+  &.mdc-button__label {
+    font-weight: 500;
+    font-size: 16px;
   }
 }
 
