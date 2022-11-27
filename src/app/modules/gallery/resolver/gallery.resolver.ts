@@ -7,9 +7,7 @@ import { PushMessageEvent, PushMessageListener, ServerSentService } from "@app/c
 import { LoadTags, SetNewTagsAvailable } from "@gallery/store/tags/tag.action";
 import { GALLERY_CONSTANTS } from "@gallery/const";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class GalleryResolver implements PushMessageListener, Resolve<Subscription> {
 
   private isInit = true;

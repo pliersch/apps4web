@@ -1,14 +1,12 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Message} from "@modules/chat/models/message";
-import {environment} from "@environments/environment";
-import {Observable} from "rxjs";
+import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { Message } from "@modules/chat/models/message";
+import { environment } from "@environments/environment";
+import { Observable } from "rxjs";
 
 const BASE_URL = `${environment.apiUrl}/chat`;
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ChatService {
 
   constructor(private http: HttpClient) {

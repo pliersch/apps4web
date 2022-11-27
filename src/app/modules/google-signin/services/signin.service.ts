@@ -7,9 +7,7 @@ import { GoogleUser } from "@modules/google-signin/google-user.model";
 
 const baseUrl = `${environment.apiUrl}/user`;
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class SigninService {
 
   constructor(private http: HttpClient) {

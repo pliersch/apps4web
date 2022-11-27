@@ -59,6 +59,8 @@ import { FormsModule } from "@angular/forms";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { TagService } from "@gallery/services/tag.service";
 import { PhotoService } from "@gallery/services/photo.service";
+import { GalleryResolver } from "@gallery/resolver/gallery.resolver";
+import { ToggleExplorerViewService } from "@gallery/services/toggle-explorer-view.service";
 
 @NgModule({
   declarations: [
@@ -107,7 +109,7 @@ import { PhotoService } from "@gallery/services/photo.service";
     MatCheckboxModule,
     NgOptimizedImage,
   ],
-  providers: [TagService, PhotoService],
+  providers: [TagService, PhotoService, GalleryResolver, ToggleExplorerViewService],
 })
 
 export class GalleryModule {

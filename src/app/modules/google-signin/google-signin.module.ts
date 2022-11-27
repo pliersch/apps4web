@@ -2,10 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SigninComponent } from './components/signin.component';
 import { MaterialModule } from "@app/shared/material/material.module";
-
-// const routes: Routes = [{
-//   path: '', component: SigninComponent,
-// }];
+import { SigninService } from "@modules/google-signin/services/signin.service";
 
 @NgModule({
   declarations: [
@@ -18,6 +15,7 @@ import { MaterialModule } from "@app/shared/material/material.module";
     CommonModule,
     // RouterModule.forChild(routes),
     MaterialModule,
-  ]
+  ],
+  providers: [SigninService]
 })
 export class GoogleSigninModule {}
