@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AppInjectorService } from "@app/common/services/app-injector.service";
 import { ActionBarService } from "@modules/action-bar/action-bar.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { Router } from "@angular/router";
@@ -61,11 +60,6 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   user: User;
 
   protected subscription: Subscription;
-  protected actionBarService: ActionBarService
-  protected photoService: PhotoService
-  protected router: Router
-  public dialog: MatDialog
-  protected store: Store
   protected actions: Action[]
 
   protected absoluteHeight = 0;
@@ -73,13 +67,13 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   protected resizeObserver: ResizeObserver;
 
 
-  protected constructor() {
-    const injector = AppInjectorService.getInjector();
-    this.actionBarService = injector.get(ActionBarService);
-    this.photoService = injector.get(PhotoService);
-    this.router = injector.get(Router);
-    this.dialog = injector.get(MatDialog);
-    this.store = injector.get(Store);
+  constructor(
+    public actionBarService: ActionBarService,
+    public photoService: PhotoService,
+    public router: Router,
+    public dialog: MatDialog,
+    public store: Store,
+  ) {
   }
 
   ngOnInit(): void {

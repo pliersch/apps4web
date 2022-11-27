@@ -4,6 +4,11 @@ import { saveAs } from 'file-saver';
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import { Action, ActionProvider } from "@modules/action-bar/actions";
 import { AbstractExplorerComponent } from "@gallery/components/abstract/abstract-explorer.component";
+import { ActionBarService } from "@modules/action-bar/action-bar.service";
+import { PhotoService } from "@gallery/services/photo.service";
+import { Router } from "@angular/router";
+import { MatDialog } from "@angular/material/dialog";
+import { Store } from "@ngxs/store";
 
 enum ActionTypes {
   SelectAll,
@@ -28,8 +33,14 @@ export class GalleryExplorerComponent extends AbstractExplorerComponent implemen
     {name: ActionTypes.Download, icon: 'download', tooltip: 'download', handler: this},
   ]
 
-  constructor() {
-    super()
+  constructor(
+    public actionBarService: ActionBarService,
+    public photoService: PhotoService,
+    public router: Router,
+    public dialog: MatDialog,
+    public store: Store,
+  ) {
+    super(actionBarService, photoService, router, dialog, store);
   }
 
   ngOnInit(): void {

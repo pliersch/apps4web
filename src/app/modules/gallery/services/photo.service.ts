@@ -11,9 +11,7 @@ import { Tag } from "@gallery/store/tags/tag.model";
 const PHOTO_BASE_URL = `${environment.apiUrl}/photos`;
 const DOWNLOAD_BASE_URL = `${environment.apiUrl}/download`;
 
-@Injectable({
-  providedIn: 'any'
-})
+@Injectable()
 export class PhotoService {
 
   constructor(private http: HttpClient) { }

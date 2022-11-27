@@ -11,7 +11,7 @@ import {
 
 const tagUrl = `${environment.apiUrl}/tags`;
 
-@Injectable({providedIn: 'any'})
+@Injectable()
 export class TagService {
 
   constructor(private http: HttpClient) { }

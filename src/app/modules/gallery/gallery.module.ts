@@ -57,6 +57,8 @@ import { GalleryDeletePhotoComponent } from './components/explorer/delete-photo-
 import { GalleryEditorComponent } from "./components/editor/gallery-editor.component";
 import { FormsModule } from "@angular/forms";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { TagService } from "@gallery/services/tag.service";
+import { PhotoService } from "@gallery/services/photo.service";
 
 @NgModule({
   declarations: [
@@ -105,6 +107,7 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
     MatCheckboxModule,
     NgOptimizedImage,
   ],
+  providers: [TagService, PhotoService],
 })
 
 export class GalleryModule {

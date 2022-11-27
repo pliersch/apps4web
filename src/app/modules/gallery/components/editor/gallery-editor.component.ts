@@ -14,6 +14,11 @@ import {
 } from "@gallery/components/explorer/delete-photo-dialog/gallery-delete-photo.component";
 import { AbstractExplorerComponent } from "@gallery/components/abstract/abstract-explorer.component";
 import { Tag } from "@gallery/store/tags/tag.model";
+import { ActionBarService } from "@modules/action-bar/action-bar.service";
+import { PhotoService } from "@gallery/services/photo.service";
+import { Router } from "@angular/router";
+import { MatDialog } from "@angular/material/dialog";
+import { Store } from "@ngxs/store";
 
 export interface DeletePhotoDialogData {
   photo: Photo;
@@ -55,8 +60,14 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
     {name: ActionTypes.ManageTags, icon: 'list', tooltip: 'manage tags', handler: this},
   ]
 
-  constructor() {
-    super()
+  constructor(
+    public actionBarService: ActionBarService,
+    public photoService: PhotoService,
+    public router: Router,
+    public dialog: MatDialog,
+    public store: Store,
+  ) {
+    super(actionBarService, photoService, router, dialog, store);
   }
 
   ngOnInit(): void {
