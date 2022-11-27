@@ -7,8 +7,6 @@ import { Observable, of } from "rxjs";
 })
 export class ModuleResolverService implements Resolve<any> {
 
-  constructor() { }
-
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     console.log('ModuleResolverService resolve: ', route)
     console.log('ModuleResolverService resolve: ', state)
