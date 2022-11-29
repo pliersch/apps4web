@@ -1,25 +1,26 @@
-<h1 mat-dialog-title>Add / Remove tags from selected pictures</h1>
-<mat-dialog-content style="overflow: hidden;">
-  <div>
+<h1 mat-dialog-title>Edit photo(s)</h1>
+<mat-dialog-content>
+  <mat-form-field class="full-width">
+    <mat-label>Manage Tags of selected picture(s)</mat-label>
     <mat-chip-grid #chipList>
-      <mat-chip
-        *ngFor="let tag of observable | async"
-        (removed)="remove(tag)">
-        {{tag}}
-        <mat-icon matChipRemove>cancel</mat-icon>
-      </mat-chip>
+      <mat-chip-row *ngFor="let tag of tags" (removed)="remove(tag)">
+        {{tag.name}}
+        <button matChipRemove [attr.aria-label]="'remove ' + tag.name">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip-row>
     </mat-chip-grid>
-  </div>
-  <div>
-    <mat-form-field class="full-width">
-      <input matInput
-             placeholder="New tag..."
-             [formControl]="tagCtrl"
-             [matChipInputFor]="chipList"
-             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-             (matChipInputTokenEnd)="add($event)">
-    </mat-form-field>
-  </div>
+    <input placeholder="New tag..." [matChipInputFor]="chipList"
+           #tagInput [formControl]="tagCtrl" [matAutocomplete]="auto"
+           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+           (matChipInputTokenEnd)="add($event)">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let tag of filteredTags$ | async" [value]="tag">
+        {{tag.name}}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="tagCtrl.errors?.requireMatch">Value need match available options</mat-error>
+  </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions>
@@ -28,4 +29,5 @@
   <button mat-raised-button type="submit" class="mat-primary" [disabled]="!changed"
           (click)="onSave()" [mat-dialog-close]="addedTags">Ok
   </button>
+  <mat-error *ngIf="tagCtrl.errors?.requireMatch">Value need match available options</mat-error>
 </mat-dialog-actions>

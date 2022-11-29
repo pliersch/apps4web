@@ -4,6 +4,7 @@ export interface Photo {
   id: string;
   index: number;
   fileName: string;
+  isPrivate: boolean;
   tags: Tag[];
   // createDate: Date;
   recordDate: Date;

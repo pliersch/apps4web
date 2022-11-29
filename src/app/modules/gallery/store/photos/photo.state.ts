@@ -39,7 +39,7 @@ export interface PhotoStateModel {
     comparePhotos: [],
     downloads: [],
     editPhotos: [],
-    currentPhoto: {id: '0', index: -1, tags: [], rating: 0, fileName: '', recordDate: new Date()},
+    currentPhoto: {id: '0', index: -1, tags: [], isPrivate: false, rating: 0, fileName: '', recordDate: new Date()},
     newDataAvailable: true,
     availablePhotos: 0,
     loadedPhotos: 0,

@@ -34,6 +34,15 @@ export class TagState {
     return state.tagGroups;
   }
 
+  @Selector()
+  static getTags(state: TagStateModel): Tag[] {
+    const tags: Tag[] = [];
+    for (const tagGroup of state.tagGroups) {
+      tags.push(...tagGroup.tags);
+    }
+    return tags;
+  }
+
   constructor(private tagService: TagService,
               private alertService: AlertService) {
   }

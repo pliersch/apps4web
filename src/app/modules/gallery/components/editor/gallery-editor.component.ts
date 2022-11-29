@@ -18,18 +18,21 @@ import { ActionBarService } from "@modules/action-bar/action-bar.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { Router } from "@angular/router";
 import { MatDialog } from "@angular/material/dialog";
-import { Store } from "@ngxs/store";
+import { Select, Store } from "@ngxs/store";
+import { TagState } from "@gallery/store/tags/tag.state";
+import { Observable } from "rxjs";
 
 export interface DeletePhotoDialogData {
   photo: Photo;
 }
 
 export interface EditTagsDialogData {
-  tags: string[];
+  tags: Tag[];
+  availableTags: Tag[];
 }
 
 export interface EditTagsDialogResult {
-  addedTags: Tag[];
+  addedTagNames: string[];
   removedTags: Tag[];
 }
 
@@ -49,6 +52,10 @@ enum ActionTypes {
   styleUrls: ['./gallery-editor.component.scss']
 })
 export class GalleryEditorComponent extends AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestroy, ActionProvider {
+
+  @Select(TagState.getTags)
+  tags$: Observable<Tag[]>
+  tags: Tag[]
 
   actions = [
     {name: ActionTypes.SelectAll, icon: 'done_all', tooltip: 'select all', handler: this},
@@ -72,6 +79,7 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
 
   ngOnInit(): void {
     super.ngOnInit();
+    this.subscription.add(this.tags$.subscribe(res => this.tags = res));
   }
 
   ngAfterViewInit(): void {
@@ -170,8 +178,12 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
   }
 
   private editTags(photos: Photo[]): void {
+    const dialogData: EditTagsDialogData = {
+      tags: this.computeAvailableTagsOfPhotos(photos),
+      availableTags: this.tags
+    };
     const dialogRef = this.dialog.open(GalleryEditImageTagsComponent, {
-      data: {tags: this.computeAvailableTagsOfPhotos(photos)},
+      data: dialogData,
       width: '800px',
       // minHeight: '400px',
       // maxHeight: '600px',
@@ -218,11 +230,12 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
       return;
     }
     for (const photo of this.selection) {
-      let tags: Tag[] = [];
-      tags = photo.tags.filter(x => !res.removedTags.includes(x));
-      tags = tags.filter(x => !res.addedTags.includes(x))
-        .concat(res.addedTags.filter(x => !tags.includes(x)));
-      this.store.dispatch(new photoAction.SetTagsOfPhoto(photo, tags));
+      console.log('GalleryEditorComponent updateTagsOfSelectedPhotos: ', res)
+      // let tags: Tag[] = [];
+      // tags = photo.tags.filter(x => !res.removedTags.includes(x));
+      // tags = tags.filter(x => !res.addedTagNames.includes(x))
+      //   .concat(res.addedTagNames.filter(x => !tags.includes(x)));
+      // this.store.dispatch(new photoAction.SetTagsOfPhoto(photo, tags));
     }
   }
 }
