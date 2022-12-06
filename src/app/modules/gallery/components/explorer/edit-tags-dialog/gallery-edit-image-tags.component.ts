@@ -1,13 +1,34 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { Observable } from "rxjs";
-import { map, startWith } from 'rxjs/operators';
-import { COMMA, ENTER } from "@angular/cdk/keycodes";
-import { MatChipInputEvent } from "@angular/material/chips";
-import { EditTagsDialogData } from "@gallery/components/editor/gallery-editor.component";
-import { Tag } from "@gallery/store/tags/tag.model";
-import { FormControl, ValidationErrors, Validators } from "@angular/forms";
-import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
+import { Tag, TagGroup } from "@gallery/store/tags/tag.model";
+
+export interface EditPhotoPropertiesDialogData {
+  tags: Tag[];
+  availableTags: TagGroup[];
+}
+
+export interface EditPhotoPropertiesDialogResult {
+  addedTags: Tag[];
+  removedTags: Tag[];
+  private: boolean;
+}
+
+interface Changes {
+  addedTags: Tag[];
+  removedTags: Tag[];
+}
+
+interface CheckList {
+  items: CheckListItem[];
+  title: string
+}
+
+interface CheckListItem {
+  tag: Tag;
+  checked: boolean;
+  index: number;
+  indeterminate: boolean;
+}
 
 @Component({
   selector: 'app-gallery-edit-image-tags',
@@ -15,86 +36,76 @@ import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
   styleUrls: ['./gallery-edit-image-tags.component.scss']
 })
 
-export class GalleryEditImageTagsComponent implements OnInit {
-  @ViewChild('tagInput')
-  tagInput: ElementRef<HTMLInputElement>;
-  tags: Tag[];
-  availableTags: Tag[];
-  addedTags: string[] = [];
-  removedTags: Tag[] = [];
-  tagCtrl = new FormControl<string | Tag>('', [Validators.required, this.requireMatch.bind(this)]);
-  filteredTags$: Observable<Tag[]>;
-  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+export class GalleryEditImageTagsComponent {
+
+  tagGroups: TagGroup[];
+  originalTags: Tag[];
+  checkLists: CheckList[] = []
   changed = false;
+  private: boolean;
+  indeterminatePrivate = true;
 
   constructor(public dialogRef: MatDialogRef<GalleryEditImageTagsComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: EditTagsDialogData) { }
-
-  ngOnInit(): void {
-    this.tags = this.data.tags;
-    this.availableTags = this.data.availableTags;
-    this.filteredTags$ = this.tagCtrl.valueChanges.pipe(
-      startWith(''),
-      map(value => {
-        const name = typeof value === 'string' ? value : value?.name;
-        // console.log('GalleryEditImageTagsComponent : ', name)
-        return name ? this.filter(name as string) : this.availableTags.slice();
-      })
-    );
-  }
-
-  add(event: MatChipInputEvent): void {
-    const newName = (event.value || '').trim();
-    if (newName) {
-      if (!this.data.tags.find(x => x.name === newName)) {
-        this.data.tags.push({id: '0', name: newName, tagGroupId: '0'});
-        this.addedTags.push(newName);
-        event.chipInput!.clear();
-        this.changed = true;
+              @Inject(MAT_DIALOG_DATA) public data: EditPhotoPropertiesDialogData) {
+    this.tagGroups = this.data.availableTags;
+    this.originalTags = this.data.tags;
+    let count = 0;
+    let currentCheckList: CheckList;
+    for (const tagGroup of this.tagGroups) {
+      currentCheckList = {title: tagGroup.name, items: []};
+      this.checkLists.push(currentCheckList);
+      for (const tag of tagGroup.tags) {
+        currentCheckList.items.push({
+          tag: tag,
+          index: count++,
+          indeterminate: !!this.originalTags.find(tag2 => tag.name === tag2.name),
+          checked: false
+        })
       }
     }
   }
 
-  remove(tag: Tag): void {
-    const index = this.data.tags.indexOf(tag);
-    if (index >= 0) {
-      this.data.tags.splice(index, 1);
-      this.removedTags.push(tag);
-      this.changed = true;
-    }
-  }
-
-  selected(event: MatAutocompleteSelectedEvent): void {
-    // this.tags.push(event.option.viewValue);
-    this.tags.push({id: '0', name: event.option.viewValue, tagGroupId: '0'});
-    this.addedTags.push(event.option.viewValue);
-    this.tagInput.nativeElement.value = '';
-    this.tagCtrl.setValue(null);
-  }
-
   onSave(): void {
-    this.dialogRef.close({addedTags: this.addedTags, removedTags: this.removedTags});
+    const changes = this.findChangedTags();
+    const result: EditPhotoPropertiesDialogResult = {
+      addedTags: changes.addedTags,
+      removedTags: changes.removedTags,
+      private: this.private
+    }
+    this.dialogRef.close(result);
   }
 
   onCancel(): void {
     this.dialogRef.close();
   }
 
-  private requireMatch(control: FormControl): ValidationErrors | null {
-    const selection: any = control.value;
-    console.log('GalleryEditImageTagsComponent requireMatch: ', selection)
-    if (this.tags?.indexOf(selection) < 0) {
-      console.log('GalleryEditImageTagsComponent requireMatch: true',)
-      return {requireMatch: true};
+  onSelectionChange(item: CheckListItem): void {
+    if (item.indeterminate) {
+      item.indeterminate = false;
     }
-    console.log('GalleryEditImageTagsComponent requireMatch: false',)
-    return null;
+    const changes = this.findChangedTags();
+    this.changed = changes.addedTags.length > 0 || changes.removedTags.length > 0;
   }
 
-  private filter(tagName: string): Tag[] {
-    const filterValue = tagName.toLowerCase();
-    return this.availableTags.filter(tag => tag.name.toLowerCase().includes(filterValue));
+  private findChangedTags(): Changes {
+    const changes: Changes = {
+      addedTags: [],
+      removedTags: []
+    };
+    for (const checkList of this.checkLists) {
+      for (const item of checkList.items) {
+        const tag = this.originalTags.find(tag => tag.name === item.tag.name);
+        if (tag && item.checked) {
+          changes.addedTags.push(item.tag)
+        }
+        if (tag && !item.checked && !item.indeterminate) {
+          changes.removedTags.push(item.tag)
+        }
+        if (!tag && item.checked) {
+          changes.addedTags.push(item.tag)
+        }
+      }
+    }
+    return changes;
   }
-
-
 }

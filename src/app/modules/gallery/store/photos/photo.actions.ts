@@ -155,7 +155,7 @@ export class DeletePhoto {
 export class DeletePhotoSuccess {
   static readonly type = '[Gallery] Delete Photo success';
 
-  constructor(public photoUpdate: PhotoUpdate) { }
+  constructor(public id: string) { }
 }
 
 export class DeletePhotoFail {
@@ -203,50 +203,27 @@ export class SetTagsOfPhotoFail {
   constructor(public error: HttpErrorResponse) { }
 }
 
-/*
+export class UpdatePhotoTags {
+  static readonly type = '[Gallery] Update Photo Tags';
 
-export class AddTagsToPhoto {
-  static readonly type = '[Gallery] Add Tags To Photo';
-
-  constructor(public photo: Photo, public tags: string[]) {
+  constructor(public photo: Photo, public dto: PhotoUpdate) {
   }
 }
 
-export class AddTagsToPhotoSuccess {
-  static readonly type = '[Gallery] Add Tags To Photo success';
+export class UpdatePhotoTagsSuccess {
+  static readonly type = '[Gallery] Update Photo Tags success';
 
-  constructor(public photo: Photo, public tags: string[]) {
+  constructor(public photo: Photo, public tags: Tag[]) {
   }
 }
 
-export class AddTagsToPhotoFail {
-  static readonly type = '[Gallery] Add Tags To Photo fail';
+export class UpdatePhotoTagsFail {
+  static readonly type = '[Gallery] Update Photo Tags fail';
 
   constructor(public error: HttpErrorResponse) {
   }
 }
 
-export class RemoveTagsFromPhoto {
-  static readonly type = '[Gallery] Remove Tags From Photo';
-
-  constructor(public photo: Photo, public tags: string[]) {
-  }
-}
-
-export class RemoveTagsFromPhotoSuccess {
-  static readonly type = '[Gallery] Remove Tags From Photo success';
-
-  constructor(public photo: Photo, public tags: string[]) {
-  }
-}
-
-export class RemoveTagsFromPhotoFail {
-  static readonly type = '[Gallery] Remove Tags From Photo fail';
-
-  constructor(public error: HttpErrorResponse) {
-  }
-}
-*/
 
 // rating
 

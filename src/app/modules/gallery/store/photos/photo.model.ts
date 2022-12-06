@@ -12,7 +12,9 @@ export interface Photo {
 }
 
 export interface PhotoUpdate {
-  id: string;
-  tags?: string[];
+  // id: string;
+  addedTagIds?: string[];
+  removedTagIds?: string[];
+  private?: boolean
   rating?: number;
 }

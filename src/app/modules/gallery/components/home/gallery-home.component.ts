@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { Store } from '@ngxs/store';
+import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Photo } from '@gallery/store/photos/photo.model';
 import { getPhotoUrl, getPreviewUrl, getThumbUrl } from "@gallery/store/photos/photo.tools";
+import { PhotoState } from "@gallery/store/photos/photo.state";
 
 @Component({
   selector: 'app-gallery-home',
@@ -11,10 +12,11 @@ import { getPhotoUrl, getPreviewUrl, getThumbUrl } from "@gallery/store/photos/p
 })
 export class GalleryHomeComponent {
 
-  images: Observable<Photo[]> = this.store.select(state => state.gallery.photos);
+  @Select(PhotoState.getPhotos)
+  photos$: Observable<Photo[]>;
 
-  constructor(private store: Store) {
-  }
+  // constructor(private store: Store) {
+  // }
 
   getPhotoUrl(fileName: string): string {
     return getPhotoUrl(fileName);

@@ -1,33 +1,53 @@
 <h1 mat-dialog-title>Edit photo(s)</h1>
 <mat-dialog-content>
-  <mat-form-field class="full-width">
-    <mat-label>Manage Tags of selected picture(s)</mat-label>
-    <mat-chip-grid #chipList>
-      <mat-chip-row *ngFor="let tag of tags" (removed)="remove(tag)">
-        {{tag.name}}
-        <button matChipRemove [attr.aria-label]="'remove ' + tag.name">
-          <mat-icon>cancel</mat-icon>
-        </button>
-      </mat-chip-row>
-    </mat-chip-grid>
-    <input placeholder="New tag..." [matChipInputFor]="chipList"
-           #tagInput [formControl]="tagCtrl" [matAutocomplete]="auto"
-           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-           (matChipInputTokenEnd)="add($event)">
-    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-      <mat-option *ngFor="let tag of filteredTags$ | async" [value]="tag">
-        {{tag.name}}
-      </mat-option>
-    </mat-autocomplete>
-    <mat-error *ngIf="tagCtrl.errors?.requireMatch">Value need match available options</mat-error>
-  </mat-form-field>
+
+  <!--  <mat-chip-listbox>-->
+  <!--    <mat-chip-option *ngFor="let tag of this.formControl.value" color="accent" selected>-->
+  <!--      {{ tag.name }}-->
+  <!--    </mat-chip-option>-->
+  <!--  </mat-chip-listbox>-->
+
+  <div class="row">
+    <div class="col-6">
+      <!--      <mat-form-field appearance="fill">-->
+      <mat-label>Tags</mat-label>
+
+      <!--        <mat-select [formControl]="formControl" [compareWith]="compareTags" multiple-->
+      <!--                    (valueChange)="onSelectionChange($event)">-->
+      <!--          <mat-optgroup *ngFor="let group of tagGroups" [label]="group.name">-->
+      <!--            <mat-option *ngFor="let tag of group.tags" [value]="tag">-->
+      <!--              {{tag.name}}-->
+      <!--            </mat-option>-->
+      <!--          </mat-optgroup>-->
+      <!--        </mat-select>-->
+
+      <section class="example-section">
+          <span *ngFor="let checkList of checkLists; let i=index" class="example-list-section">
+              {{checkList.title}}
+            <span class="example-list-section">
+              <ul>
+                <li *ngFor="let item of checkList.items">
+                  <mat-checkbox [(ngModel)]="item.checked" (ngModelChange)="onSelectionChange(item)"
+                                [(indeterminate)]="item.indeterminate">
+                    {{item.tag.name}}
+                  </mat-checkbox>
+                </li>
+              </ul>
+            </span>
+          </span>
+      </section>
+
+      <!--      </mat-form-field>-->
+    </div>
+    <div class="col-2">
+      <mat-checkbox [(indeterminate)]="indeterminatePrivate" [(ngModel)]="private">privat</mat-checkbox>
+    </div>
+  </div>
 </mat-dialog-content>
 
 <mat-dialog-actions>
   <span class="spacer"></span>
   <button mat-raised-button (click)="onCancel()">Cancel</button>
-  <button mat-raised-button type="submit" class="mat-primary" [disabled]="!changed"
-          (click)="onSave()" [mat-dialog-close]="addedTags">Ok
+  <button mat-raised-button (click)="onSave()" type="submit" class="mat-primary" [disabled]="!changed">Ok
   </button>
-  <mat-error *ngIf="tagCtrl.errors?.requireMatch">Value need match available options</mat-error>
 </mat-dialog-actions>

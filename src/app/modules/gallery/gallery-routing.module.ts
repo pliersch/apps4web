@@ -7,14 +7,14 @@ import { GalleryUploadComponent } from '@app/modules/gallery/components/upload/g
 import { GallerySlideshowComponent } from "@gallery/components/slideshow/gallery-slideshow.component";
 import { GalleryResolver } from "@gallery/resolver/gallery.resolver";
 import { GalleryEditorComponent } from "@gallery/components/editor/gallery-editor.component";
-// import { GalleryHomeComponent } from '@app/modules/gallery/components/home/gallery-home.component';
+import { GalleryHomeComponent } from '@app/modules/gallery/components/home/gallery-home.component';
 
 const routes: Routes = [
   {
     path: '', component: GalleryContainerComponent, resolve: {meta: GalleryResolver},
     children: [
       {path: '', component: GalleryExplorerComponent},
-      // {path: 'home', component: GalleryHomeComponent},
+      {path: 'home', component: GalleryHomeComponent},
       {path: 'explorer', title: 'Explorer', component: GalleryExplorerComponent},
       {path: 'editor', title: 'Editor', component: GalleryEditorComponent},
       {path: 'lightbox', title: 'Lightbox', component: GalleryLightboxComponent},
