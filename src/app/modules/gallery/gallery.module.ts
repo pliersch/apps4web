@@ -61,6 +61,7 @@ import { TagService } from "@gallery/services/tag.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { GalleryResolver } from "@gallery/resolver/gallery.resolver";
 import { ToggleExplorerViewService } from "@gallery/services/toggle-explorer-view.service";
+import { ScrollerItemComponent } from './components/share/scroller-item/scroller-item.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +92,7 @@ import { ToggleExplorerViewService } from "@gallery/services/toggle-explorer-vie
     GalleryDateFilterComponent,
     GalleryDeletePhotoComponent,
     GalleryEditorComponent,
+    ScrollerItemComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,25 @@
+.item {
+  border: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  background-size: cover;
+  background-position: center center;
+  height: 120px;
+  width: 150px;
+
+  &.active {
+    border: 1px solid cornflowerblue;
+    box-sizing: border-box;
+  }
+}
+
+.visible {
+  visibility: visible !important;
+}
+
+.top-left {
+  position: absolute;
+  top: 0;
+  right: 4px;
+  visibility: hidden;
+}

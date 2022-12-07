@@ -1,11 +1,11 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Photo } from '@gallery/store/photos/photo.model';
 import { NgScrollbar } from 'ngx-scrollbar';
-import { Observable, tap } from 'rxjs';
-import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { Select, Store } from '@ngxs/store';
 import { PhotoState } from "@gallery/store/photos/photo.state";
-import { getThumbUrl } from "@gallery/store/photos/photo.tools";
-import { map } from "rxjs/operators";
+import { SetCurrentPhoto } from "@gallery/store/photos/photo.actions";
+import { ScrollerItemComponent } from "@gallery/components/share/scroller-item/scroller-item.component";
 
 @Component({
   selector: 'app-gallery-horizontal-scroller',
@@ -30,36 +30,46 @@ export class GalleryHorizontalScrollerComponent implements OnInit {
   @Output()
   selectEvent = new EventEmitter<Photo>();
 
+  private currentItem: ScrollerItemComponent;
+
+  constructor(private store: Store) { }
+
   ngOnInit(): void {
     this.currentIndex$.subscribe(res => {
       this.currentIndex = res;
     });
   }
 
-  onSelectImage(photo: Photo): void {
-    this.selectEvent.emit(photo);
+  onItemSelect($event: ScrollerItemComponent): void {
+    if (this.currentItem) {
+      this.currentItem.active = false;
+    }
+    this.currentItem = $event;
+    this.currentItem.active = true;
+    this.store.dispatch(new SetCurrentPhoto($event.photo));
+    this.selectEvent.emit($event.photo);
   }
 
-  isCompared(photo: Photo): Observable<boolean> {
-    console.log('GalleryHorizontalScrollerComponent isCompared: ',)
-    return this.comparePhotos$.pipe(
-      map(photos => photos.includes(photo))
-    );
-  }
+  // isCompared(photo: Photo): Observable<boolean> {
+  //   console.log('GalleryHorizontalScrollerComponent isCompared: ',)
+  //   return this.comparePhotos$.pipe(
+  //     map(photos => photos.includes(photo))
+  //   );
+  // }
 
   onScroll($event: WheelEvent): void {
     const scrollLeft = this.scrollbar.viewport.scrollLeft;
     if ($event.deltaY > 0) {
-      this.scrollToPosition(scrollLeft + 600);
+      this.scrollToPosition(scrollLeft + 450);
     } else {
-      this.scrollToPosition(scrollLeft - 600);
+      this.scrollToPosition(scrollLeft - 450);
     }
     $event.preventDefault();
   }
 
   scrollToIndex(index: number): void {
     void this.scrollbar.scrollTo({
-      left: index * 200
+      left: index * 150
     });
   }
 
@@ -67,9 +77,5 @@ export class GalleryHorizontalScrollerComponent implements OnInit {
     void this.scrollbar.scrollTo({
       left: position
     });
-  }
-
-  getThumbUrl(fileName: string): string {
-    return getThumbUrl(fileName);
   }
 }

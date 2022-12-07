@@ -3,7 +3,7 @@ import {
   GalleryVerticalScrollerComponent
 } from "@gallery/components/share/vertical-scroller/gallery-vertical-scroller.component";
 import { Select, Store } from "@ngxs/store";
-import { SetCurrentPhoto, SetNextPhoto, SetPreviousPhoto } from "@gallery/store/photos/photo.actions";
+import { SetNextPhoto, SetPreviousPhoto } from "@gallery/store/photos/photo.actions";
 import {
   GalleryHorizontalScrollerComponent
 } from "@gallery/components/share/horizontal-scroller/gallery-horizontal-scroller.component";
@@ -64,10 +64,6 @@ export class GallerySlideshowComponent implements OnInit, AfterViewInit, OnDestr
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-  }
-
-  onSelectImage($event: Photo): void {
-    this.store.dispatch(new SetCurrentPhoto($event))
   }
 
   nextSlide(): void {

@@ -1,16 +1,10 @@
 <ng-scrollbar class="dark-scrollbar" track="horizontal" visibility="always">
   <div (wheel)="onScroll($event)">
     <div class="thumbnail-list">
-      <div class="thumbnail-item item" *ngFor="let photo of (photos$ | async); let i = index"
-           [style.background-image]="'url(' + getThumbUrl(photo.fileName) + ')'"
-           [class.active]="currentIndex === i"
-           (click)="onSelectImage(photo)">
-        <div class="top-left" [class.visible]="(isCompared(photo) | async)">
-          <button mat-icon-button>
-            <mat-icon>visibility_off</mat-icon>
-          </button>
-        </div>
-      </div>
+      <app-scroller-item
+        class="thumbnail-item" *ngFor="let photo of (photos$ | async); let i = index"
+        [photo]="photo" (selectEvent)="onItemSelect($event)">
+      </app-scroller-item>
     </div>
   </div>
 </ng-scrollbar>
