@@ -45,8 +45,8 @@ import {
   GalleryNewTagGroupComponent
 } from './components/explorer/new-tag-group/gallery-new-tag-group.component';
 import {
-  GalleryEditImageTagsComponent
-} from './components/explorer/edit-tags-dialog/gallery-edit-image-tags.component';
+  GalleryEditPhotosComponent
+} from './components/editor/edit-photos-dialog/gallery-edit-photos.component';
 import { GalleryMetaPanelComponent } from './components/explorer/meta-panel/gallery-meta-panel.component';
 import { GallerySlideshowComponent } from './components/slideshow/gallery-slideshow.component';
 import { GalleryActionPanelComponent } from './components/explorer/action-panel/gallery-action-panel.component';
@@ -83,7 +83,7 @@ import { ScrollerItemComponent } from './components/share/scroller-item/scroller
     ImageControlComponent,
     ImageControl2Component,
     GalleryNewTagGroupComponent,
-    GalleryEditImageTagsComponent,
+    GalleryEditPhotosComponent,
     GalleryMetaPanelComponent,
     GallerySlideshowComponent,
     GalleryActionPanelComponent,

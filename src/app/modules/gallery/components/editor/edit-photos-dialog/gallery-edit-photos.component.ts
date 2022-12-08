@@ -32,11 +32,11 @@ interface CheckListItem {
 
 @Component({
   selector: 'app-gallery-edit-image-tags',
-  templateUrl: './gallery-edit-image-tags.component.html',
-  styleUrls: ['./gallery-edit-image-tags.component.scss']
+  templateUrl: './gallery-edit-photos.component.html',
+  styleUrls: ['./gallery-edit-photos.component.scss']
 })
 
-export class GalleryEditImageTagsComponent {
+export class GalleryEditPhotosComponent {
 
   tagGroups: TagGroup[];
   originalTags: Tag[];
@@ -45,7 +45,7 @@ export class GalleryEditImageTagsComponent {
   private: boolean;
   indeterminatePrivate = true;
 
-  constructor(public dialogRef: MatDialogRef<GalleryEditImageTagsComponent>,
+  constructor(public dialogRef: MatDialogRef<GalleryEditPhotosComponent>,
               @Inject(MAT_DIALOG_DATA) public data: EditPhotoPropertiesDialogData) {
     this.tagGroups = this.data.availableTags;
     this.originalTags = this.data.tags;

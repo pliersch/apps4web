@@ -3,13 +3,12 @@ import { Photo, PhotoUpdate } from '@gallery/store/photos/photo.model';
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import {
   EditPhotoPropertiesDialogData, EditPhotoPropertiesDialogResult,
-  GalleryEditImageTagsComponent
-} from "@gallery/components/explorer/edit-tags-dialog/gallery-edit-image-tags.component";
+  GalleryEditPhotosComponent
+} from "@gallery/components/editor/edit-photos-dialog/gallery-edit-photos.component";
 import { Action, ActionProvider } from "@modules/action-bar/actions";
 import {
   GalleryNewTagGroupComponent
 } from "@gallery/components/explorer/new-tag-group/gallery-new-tag-group.component";
-import { GalleryEditTagsComponent } from "@gallery/components/explorer/edit-tags/gallery-edit-tags.component";
 import {
   GalleryDeletePhotoComponent
 } from "@gallery/components/explorer/delete-photo-dialog/gallery-delete-photo.component";
@@ -22,7 +21,6 @@ import { MatDialog } from "@angular/material/dialog";
 import { Select, Store } from "@ngxs/store";
 import { TagState } from "@gallery/store/tags/tag.state";
 import { Observable } from "rxjs";
-import { UpdatePhoto } from "@gallery/store/photos/photo.actions";
 
 export interface DeletePhotoDialogData {
   photo: Photo;
@@ -181,7 +179,7 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
       tags: this.computeTagsOfPhotos(photos),
       availableTags: this.tagGroups
     };
-    const dialogRef = this.dialog.open(GalleryEditImageTagsComponent, {
+    const dialogRef = this.dialog.open(GalleryEditPhotosComponent, {
       data: dialogData,
       width: '800px',
       // minHeight: '400px',
@@ -214,7 +212,7 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
   }
 
   private openEditTagDialog(): void {
-    this.dialog.open(GalleryEditTagsComponent, {
+    this.dialog.open(GalleryEditPhotosComponent, {
       width: '800px',
       restoreFocus: false,
       autoFocus: false

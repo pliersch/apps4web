@@ -332,6 +332,49 @@ export class PhotoState {
   }
 
   //////////////////////////////////////////////////////////
+  //          update
+  //////////////////////////////////////////////////////////
+
+  @Action(photoAction.UpdatePhoto)
+  updatePhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.UpdatePhoto): Observable<Subscription> {
+    // const photo = ctx.getState().photos[action.dto.index];
+    return this.photoService.updatePhoto(action.photo.id, action.dto)
+      .pipe(
+        map((photo: Photo) =>
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new photoAction.UpdatePhotoSuccess(photo, action.photo.index))
+          )
+        ),
+        catchError(error =>
+          of(
+            asapScheduler.schedule(() =>
+              ctx.dispatch(new photoAction.UpdatePhotoFail(error))
+            )
+          )
+        )
+      );
+  }
+
+  @Action(photoAction.UpdatePhotoSuccess)
+  updatePhotoSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.UpdatePhotoSuccess): void {
+    const photo = action.photo;
+    ctx.setState(
+      patch({
+        photos: updateItem<Photo>(action.index, patch({
+          tags: photo.tags,
+          isPrivate: photo.isPrivate
+        }))
+      })
+    );
+  }
+
+  @Action(photoAction.UpdatePhotoFail)
+  updatePhotoFail(ctx: StateContext<PhotoStateModel>, action: photoAction.UpdatePhotoFail): void {
+    this.alertService.error('Add tag fail');
+    console.log(action.error)
+  }
+
+  //////////////////////////////////////////////////////////
   //          delete
   //////////////////////////////////////////////////////////
 
@@ -520,50 +563,6 @@ export class PhotoState {
     ctx.setState(
       patch({downloads: difference})
     );
-  }
-
-  //////////////////////////////////////////////////////////
-  //          update
-  //////////////////////////////////////////////////////////
-
-  @Action(photoAction.UpdatePhoto)
-  updatePhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.UpdatePhoto): Observable<Subscription> {
-    // const photo = ctx.getState().photos[action.dto.index];
-    return this.photoService.updatePhoto(action.photo.id, action.dto)
-      .pipe(
-        map((photo: Photo) =>
-          asapScheduler.schedule(() =>
-            ctx.dispatch(new photoAction.UpdatePhotoSuccess(photo, action.photo.index))
-          )
-        ),
-        catchError(error =>
-          of(
-            asapScheduler.schedule(() =>
-              ctx.dispatch(new photoAction.UpdatePhotoFail(error))
-            )
-          )
-        )
-      );
-  }
-
-  @Action(photoAction.UpdatePhotoSuccess)
-  updatePhotoSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.UpdatePhotoSuccess): void {
-    const photo = action.photo;
-    console.log('PhotoState updatePhotoSuccess: ', photo)
-    ctx.setState(
-      patch({
-        photos: updateItem<Photo>(action.index, patch({
-          tags: photo.tags,
-          isPrivate: photo.isPrivate
-        }))
-      })
-    );
-  }
-
-  @Action(photoAction.UpdatePhotoFail)
-  updatePhotoFail(ctx: StateContext<PhotoStateModel>, action: photoAction.UpdatePhotoFail): void {
-    this.alertService.error('Add tag fail');
-    console.log(action.error)
   }
 
   //////////////////////////////////////////////////////////
