@@ -164,6 +164,7 @@ export class PhotoState {
     });
   }
 
+  // region meta data
   //////////////////////////////////////////////////////////
   //          meta data
   //////////////////////////////////////////////////////////
@@ -199,6 +200,8 @@ export class PhotoState {
     ctx.dispatch({loaded: false, loading: false});
     this.alertService.error('load meta data fail');
   }
+
+  // endregion
 
   // region loading
   //////////////////////////////////////////////////////////
@@ -265,7 +268,6 @@ export class PhotoState {
   @Action(photoAction.SetCurrentPhoto)
   setCurrentPhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.SetCurrentPhoto): void {
     ctx.patchState({
-      // currentPhoto: action.photo
       currentIndex: action.photo.index
     });
   }
@@ -521,43 +523,8 @@ export class PhotoState {
   }
 
   //////////////////////////////////////////////////////////
-  //          tags
+  //          update
   //////////////////////////////////////////////////////////
-
-  // @Action(photoAction.SetTagsOfPhoto)
-  // setTagsOfPhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.SetTagsOfPhoto): Observable<Subscription> {
-  //   const photo = ctx.getState().photos[action.photo.index];
-  //   return this.photoService.updateTagsOfPhoto(action.photo.id, action.tags)
-  //     .pipe(
-  //       map((res: any) =>
-  //         asapScheduler.schedule(() =>
-  //           ctx.dispatch(new photoAction.SetTagsOfPhotoSuccess(photo, action.tags))
-  //         )
-  //       ),
-  //       catchError(error =>
-  //         of(
-  //           asapScheduler.schedule(() =>
-  //             ctx.dispatch(new photoAction.SetTagsOfPhotoFail(error))
-  //           )
-  //         )
-  //       )
-  //     );
-  // }
-  //
-  // @Action(photoAction.SetTagsOfPhotoSuccess)
-  // setTagsOfPhotoSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.SetTagsOfPhotoSuccess): void {
-  //   ctx.setState(
-  //     patch({
-  //       photos: updateItem<Photo>(action.photo.index, patch({tags: action.tags}))
-  //     })
-  //   );
-  // }
-  //
-  // @Action(photoAction.SetTagsOfPhotoFail)
-  // setTagsOfPhotoFail(ctx: StateContext<PhotoStateModel>, action: photoAction.SetTagsOfPhotoFail): void {
-  //   this.alertService.error('Set tags fail');
-  //   console.log(action.error)
-  // }
 
   @Action(photoAction.UpdatePhoto)
   updatePhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.UpdatePhoto): Observable<Subscription> {
@@ -694,7 +661,7 @@ export class PhotoState {
     });
   }
 
-  // Helper. Look for better solution
+  // Helper. Look for better solution when ngxs updates
 
   _getFilteredPhotos(state: PhotoStateModel): Photo[] {
     return PhotoState.getFilteredPhotos(

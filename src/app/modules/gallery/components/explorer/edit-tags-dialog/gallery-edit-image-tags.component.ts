@@ -90,7 +90,7 @@ export class GalleryEditImageTagsComponent {
   }
 
   onAccessChange(): void {
-    if (!this.indeterminatePrivate) {
+    if (this.private !== undefined) {
       this.changed = true;
     }
   }
