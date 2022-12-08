@@ -16,5 +16,4 @@ export interface PhotoUpdate {
   addedTagIds?: string[];
   removedTagIds?: string[];
   private?: boolean
-  rating?: number;
 }

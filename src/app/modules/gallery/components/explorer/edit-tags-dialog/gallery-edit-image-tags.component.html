@@ -40,7 +40,10 @@
       <!--      </mat-form-field>-->
     </div>
     <div class="col-2">
-      <mat-checkbox [(indeterminate)]="indeterminatePrivate" [(ngModel)]="private">privat</mat-checkbox>
+      <mat-checkbox [(indeterminate)]="indeterminatePrivate" [(ngModel)]="private"
+                    (ngModelChange)="onAccessChange()">
+        privat
+      </mat-checkbox>
     </div>
   </div>
 </mat-dialog-content>

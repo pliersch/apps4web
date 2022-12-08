@@ -18,21 +18,11 @@ export class ImageControlComponent {
   @Input()
   download: boolean;
 
-  @Input()
-  hasRights: boolean;
-
-  @Output()
-  editEvent = new EventEmitter<Photo>();
-
   @Output()
   downloadEvent = new EventEmitter<Photo>();
 
   @Output()
-  deleteEvent = new EventEmitter<Photo>();
-
-  @Output()
   previewEvent = new EventEmitter<Photo>();
-
 
   onClickDownload(): void {
     this.downloadEvent.emit(this.photo);
@@ -40,14 +30,6 @@ export class ImageControlComponent {
 
   getThumbUrl(fileName: string): string {
     return getThumbUrl(fileName);
-  }
-
-  onClickEdit(): void {
-    this.editEvent.emit(this.photo);
-  }
-
-  onClickDelete(): void {
-    this.deleteEvent.emit(this.photo);
   }
 
   onClickPreview(): void {

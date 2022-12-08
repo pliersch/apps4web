@@ -47,8 +47,8 @@ export class PhotoService {
   }
 
   // todo use PhotoUpdate as return result
-  updateTagsOfPhoto(id: string, dto: PhotoUpdate): Observable<Tag[]> {
-    return this.http.patch<Tag[]>(`${PHOTO_BASE_URL}/${id}`, dto);
+  updatePhoto(id: string, dto: PhotoUpdate): Observable<Photo> {
+    return this.http.patch<Photo>(`${PHOTO_BASE_URL}/${id}`, dto);
   }
 
   delete(id: string): Observable<string> {

@@ -1,17 +1,17 @@
 <div class="image-container" [class.active]="selected">
   <img alt="thumbnail" [id]="photo.fileName" draggable="false" appImgFallback
        [src]="getThumbUrl(photo.fileName)" loading="lazy">
-  <div class="info-container" [class.visible]="photo.isPrivate === true">
+  <div class="info-container" [class.lock]="!photo.isPrivate">
     <div class="bg">
-      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="lock"></mat-icon>
+      <mat-icon fontIcon="lock"></mat-icon>
     </div>
   </div>
-  <div [class.visible]="download === true" class="download-container">
+  <div [class.visible]="download" class="download-container">
     <button mat-mini-fab color="primary" (click)="onClickDownload()">
       <mat-icon>download</mat-icon>
     </button>
   </div>
-  <div class="action-container" [class.not-visible]="download === true">
+  <div class="action-container" [class.not-visible]="download">
     <button mat-mini-fab color="primary" (click)="onClickPreview()">
       <mat-icon>visibility</mat-icon>
     </button>

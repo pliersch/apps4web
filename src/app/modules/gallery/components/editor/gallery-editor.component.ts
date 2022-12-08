@@ -22,7 +22,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { Select, Store } from "@ngxs/store";
 import { TagState } from "@gallery/store/tags/tag.state";
 import { Observable } from "rxjs";
-import { UpdatePhotoTags } from "@gallery/store/photos/photo.actions";
+import { UpdatePhoto } from "@gallery/store/photos/photo.actions";
 
 export interface DeletePhotoDialogData {
   photo: Photo;
@@ -226,9 +226,11 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
       return;
     }
     for (const photo of this.selection) {
+      console.log('GalleryEditorComponent updateTagsOfSelectedPhotos: ', res)
       const photoUpdate: PhotoUpdate = {
         addedTagIds: [],
         removedTagIds: [],
+        private: res.private
       }
       let tags: Tag[];
       tags = res.addedTags.filter(x => !photo.tags.includes(x));
@@ -239,7 +241,7 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
       if (tags.length > 0) {
         photoUpdate.removedTagIds = this.getIdsFromTag(tags);
       }
-      this.store.dispatch(new photoAction.UpdatePhotoTags(photo, photoUpdate));
+      this.store.dispatch(new photoAction.UpdatePhoto(photo, photoUpdate));
     }
   }
 

@@ -85,6 +85,14 @@ export class GalleryEditImageTagsComponent {
     }
     const changes = this.findChangedTags();
     this.changed = changes.addedTags.length > 0 || changes.removedTags.length > 0;
+    // check
+    this.onAccessChange();
+  }
+
+  onAccessChange(): void {
+    if (!this.indeterminatePrivate) {
+      this.changed = true;
+    }
   }
 
   private findChangedTags(): Changes {

@@ -559,37 +559,42 @@ export class PhotoState {
   //   console.log(action.error)
   // }
 
-  @Action(photoAction.UpdatePhotoTags)
-  updateTags(ctx: StateContext<PhotoStateModel>, action: photoAction.UpdatePhotoTags): Observable<Subscription> {
+  @Action(photoAction.UpdatePhoto)
+  updatePhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.UpdatePhoto): Observable<Subscription> {
     // const photo = ctx.getState().photos[action.dto.index];
-    return this.photoService.updateTagsOfPhoto(action.photo.id, action.dto)
+    return this.photoService.updatePhoto(action.photo.id, action.dto)
       .pipe(
-        map((tags: Tag[]) =>
+        map((photo: Photo) =>
           asapScheduler.schedule(() =>
-            ctx.dispatch(new photoAction.UpdatePhotoTagsSuccess(action.photo, tags))
+            ctx.dispatch(new photoAction.UpdatePhotoSuccess(photo, action.photo.index))
           )
         ),
         catchError(error =>
           of(
             asapScheduler.schedule(() =>
-              ctx.dispatch(new photoAction.UpdatePhotoTagsFail(error))
+              ctx.dispatch(new photoAction.UpdatePhotoFail(error))
             )
           )
         )
       );
   }
 
-  @Action(photoAction.UpdatePhotoTagsSuccess)
-  addTagsToPhotoSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.UpdatePhotoTagsSuccess): void {
+  @Action(photoAction.UpdatePhotoSuccess)
+  updatePhotoSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.UpdatePhotoSuccess): void {
+    const photo = action.photo;
+    console.log('PhotoState updatePhotoSuccess: ', photo)
     ctx.setState(
       patch({
-        photos: updateItem<Photo>(action.photo.index, patch({tags: action.tags}))
+        photos: updateItem<Photo>(action.index, patch({
+          tags: photo.tags,
+          isPrivate: photo.isPrivate
+        }))
       })
     );
   }
 
-  @Action(photoAction.UpdatePhotoTagsFail)
-  addTagsToPhotoFail(ctx: StateContext<PhotoStateModel>, action: photoAction.UpdatePhotoTagsFail): void {
+  @Action(photoAction.UpdatePhotoFail)
+  updatePhotoFail(ctx: StateContext<PhotoStateModel>, action: photoAction.UpdatePhotoFail): void {
     this.alertService.error('Add tag fail');
     console.log(action.error)
   }

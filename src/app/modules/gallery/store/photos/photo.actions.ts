@@ -203,22 +203,22 @@ export class SetTagsOfPhotoFail {
   constructor(public error: HttpErrorResponse) { }
 }
 
-export class UpdatePhotoTags {
-  static readonly type = '[Gallery] Update Photo Tags';
+export class UpdatePhoto {
+  static readonly type = '[Gallery] Update Photo';
 
   constructor(public photo: Photo, public dto: PhotoUpdate) {
   }
 }
 
-export class UpdatePhotoTagsSuccess {
-  static readonly type = '[Gallery] Update Photo Tags success';
+export class UpdatePhotoSuccess {
+  static readonly type = '[Gallery] Update Photo success';
 
-  constructor(public photo: Photo, public tags: Tag[]) {
+  constructor(public photo: Photo, public index: number) {
   }
 }
 
-export class UpdatePhotoTagsFail {
-  static readonly type = '[Gallery] Update Photo Tags fail';
+export class UpdatePhotoFail {
+  static readonly type = '[Gallery] Update Photo fail';
 
   constructor(public error: HttpErrorResponse) {
   }
