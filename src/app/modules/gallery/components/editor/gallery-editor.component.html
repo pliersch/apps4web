@@ -6,33 +6,29 @@
     <app-gallery-rating-filter class="m5"></app-gallery-rating-filter>
     <app-gallery-date-filter class="m5"></app-gallery-date-filter>
     <div class="column m5">
-      <button mat-raised-button color="primary"
-              type="button" (click)="onClickClearFilter()">
+      <button mat-raised-button color="primary" type="button" (click)="onClickClearFilter()">
         Clear Filter
         <mat-icon style="font-size: 1.5em">clear</mat-icon>
       </button>
     </div>
-    <app-gallery-action-panel [actions]="actions" (actionEvent)="onAction($event)"
-                              class="m5"></app-gallery-action-panel>
+    <app-gallery-action-panel
+      [actions]="actions" (actionEvent)="onAction($event)"
+      class="m5"></app-gallery-action-panel>
     <app-gallery-image-detail class="m5" [currentPhoto$]="currentPhoto$"></app-gallery-image-detail>
-    <app-gallery-meta-panel class="m5"
-                            [selectedPhotosCount]="selection.length"
-                            [filteredPhotosCount]="photos.length"
-                            [loadedPhotos]="loadedPhotos"
-                            [availablePhotos]="availablePhotos"></app-gallery-meta-panel>
+    <app-gallery-meta-panel
+      class="m5" [selectedPhotosCount]="selection.length" [filteredPhotosCount]="photos.length"
+      [loadedPhotos]="loadedPhotos" [availablePhotos]="availablePhotos"></app-gallery-meta-panel>
   </div>
   <div class="column-max-width">
     <div class="scrollbar-container">
       <ng-scrollbar #scrollbar>
         <div class="images-wrapper">
-          <app-image-control2 *ngFor="let photo of (photos$ | async)" class="selection-item"
-                              [selected]="currentPhoto.id === photo.id"
-                              (click)="setCurrent(photo)" [photo]="photo"
-                              [hasRights]="true" [edit]="isSelectForEdit(photo)"
-                              (deleteEvent)="onSelectForDelete($event)"
-                              (previewEvent)="onSelectForPreview($event)"
-                              (editEvent)="onSelectForEdit($event)"
-                              (groupEditEvent)="onSelectGroupEdit($event)"></app-image-control2>
+          <app-image-control2
+            *ngFor="let photo of (photos$ | async)" class="selection-item" [photo]="photo"
+            [selected]="currentPhoto.id === photo.id" [hasRights]="true" [edit]="isSelectForEdit(photo)"
+            (click)="setCurrent(photo)" (deleteEvent)="onSelectForDelete($event)"
+            (previewEvent)="onSelectForPreview($event)" (editEvent)="onSelectForEdit($event)"
+            (groupEditEvent)="onSelectGroupEdit($event)"></app-image-control2>
         </div>
       </ng-scrollbar>
     </div>

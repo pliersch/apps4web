@@ -4,10 +4,10 @@ import { getThumbUrl } from "@gallery/store/photos/photo.tools";
 
 @Component({
   selector: 'app-image-control2',
-  templateUrl: './image-control2.component.html',
-  styleUrls: ['./image-control2.component.scss']
+  templateUrl: './editor-photo-control.component.html',
+  styleUrls: ['./editor-photo-control.component.scss']
 })
-export class ImageControl2Component {
+export class EditorPhotoControlComponent {
 
   @Input()
   photo: Photo;

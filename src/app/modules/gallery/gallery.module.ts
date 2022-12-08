@@ -35,8 +35,8 @@ import {
 import { GalleryEditTagsComponent } from './components/explorer/edit-tags/gallery-edit-tags.component';
 import { NgxsModule } from "@ngxs/store";
 import { PhotoState } from "@gallery/store/photos/photo.state";
-import { ImageControlComponent } from './components/share/image-control/image-control.component';
-import { ImageControl2Component } from './components/share/image-control2/image-control2.component';
+import { ExplorerPhotoControlComponent } from './components/explorer/photo-control/explorer-photo-control.component';
+import { EditorPhotoControlComponent } from './components/editor/photo-control/editor-photo-control.component';
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { ActionBarModule } from "@modules/action-bar/action-bar.module";
 import { TagState } from "@gallery/store/tags/tag.state";
@@ -80,8 +80,8 @@ import { ScrollerItemComponent } from './components/share/scroller-item/scroller
     GalleryStarRatingComponent,
     GalleryEditTagDetailComponent,
     GalleryEditTagsComponent,
-    ImageControlComponent,
-    ImageControl2Component,
+    ExplorerPhotoControlComponent,
+    EditorPhotoControlComponent,
     GalleryNewTagGroupComponent,
     GalleryEditPhotosComponent,
     GalleryMetaPanelComponent,

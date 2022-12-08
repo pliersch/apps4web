@@ -111,7 +111,7 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
     }
   }
 
-  deletePhotos(): void {
+  private deletePhotos(): void {
     this.selection.forEach((photo) => {
       this.store.dispatch([new photoAction.DeletePhoto(photo.id)]);
     });
@@ -121,7 +121,6 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
   }
 
   onSelectForEdit($event: Photo): void {
-    this.selection = [$event];
     this.editTags([$event]);
   }
 
@@ -146,18 +145,18 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
     return this.selection.includes(photo);
   }
 
-  onSelectionFinish(photoFileNames: string[]): void {
-    const photos: Photo[] = [];
-    for (const fileName of photoFileNames) {
-      const photo = this.photos.find(img => img.fileName == fileName);
-      if (photo) {
-        photos.push(photo);
-      } else {
-        console.log('GalleryExplorerComponent err why cant find the id?: ', fileName)
-      }
-    }
-    this.store.dispatch(new photoAction.SelectManyPhotosEdit(photos));
-  }
+  // onSelectionFinish(photoFileNames: string[]): void {
+  //   const photos: Photo[] = [];
+  //   for (const fileName of photoFileNames) {
+  //     const photo = this.photos.find(img => img.fileName == fileName);
+  //     if (photo) {
+  //       photos.push(photo);
+  //     } else {
+  //       console.log('GalleryExplorerComponent err why cant find the id?: ', fileName)
+  //     }
+  //   }
+  //   this.store.dispatch(new photoAction.SelectManyPhotosEdit(photos));
+  // }
 
   private openDeletePhotoDialog($event: Photo): void {
     const dialogRef = this.dialog.open(GalleryDeletePhotoComponent, {
@@ -188,7 +187,7 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
       autoFocus: false
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.updateTagsOfSelectedPhotos(result);
+      this.updateTagsOfSelectedPhotos(photos, result);
     });
   }
 
@@ -219,12 +218,11 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
     });
   }
 
-  private updateTagsOfSelectedPhotos(res: EditPhotoPropertiesDialogResult): void {
+  private updateTagsOfSelectedPhotos(photos: Photo[], res: EditPhotoPropertiesDialogResult): void {
     if (!res) {
       return;
     }
-    for (const photo of this.selection) {
-      console.log('GalleryEditorComponent updateTagsOfSelectedPhotos: ', res)
+    for (const photo of photos) {
       const photoUpdate: PhotoUpdate = {
         addedTagIds: [],
         removedTagIds: [],
@@ -243,7 +241,7 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
     }
   }
 
-  getIdsFromTag(tags: Tag[]): string[] {
+  private getIdsFromTag(tags: Tag[]): string[] {
     const ids: string[] = [];
     tags.forEach(tag => ids.push(tag.id));
     return ids;
