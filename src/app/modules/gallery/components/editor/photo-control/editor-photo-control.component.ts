@@ -3,7 +3,7 @@ import { Photo } from "@gallery/store/photos/photo.model";
 import { getThumbUrl } from "@gallery/store/photos/photo.tools";
 
 @Component({
-  selector: 'app-image-control2',
+  selector: 'app-editor-photo-control',
   templateUrl: './editor-photo-control.component.html',
   styleUrls: ['./editor-photo-control.component.scss']
 })

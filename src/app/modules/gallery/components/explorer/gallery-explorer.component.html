@@ -25,12 +25,12 @@
     <div class="scrollbar-container">
       <ng-scrollbar #scrollbar>
         <div class="images-wrapper">
-          <app-image-control *ngFor="let photo of (photos$ | async)" class="selection-item"
-                             [selected]="currentPhoto.id === photo.id"
-                             (click)="setCurrent(photo)" [photo]="photo"
-                             [download]="isDownload(photo)"
-                             (previewEvent)="onSelectForPreview($event)"
-                             (downloadEvent)="onSelectForDownload($event)"></app-image-control>
+          <app-explorer-photo-control *ngFor="let photo of (photos$ | async)" class="selection-item"
+                                      [selected]="currentPhoto.id === photo.id"
+                                      (click)="setCurrent(photo)" [photo]="photo"
+                                      [download]="isDownload(photo)"
+                                      (previewEvent)="onSelectForPreview($event)"
+                                      (downloadEvent)="onSelectForDownload($event)"></app-explorer-photo-control>
         </div>
       </ng-scrollbar>
     </div>

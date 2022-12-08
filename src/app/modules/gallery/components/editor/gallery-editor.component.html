@@ -23,12 +23,12 @@
     <div class="scrollbar-container">
       <ng-scrollbar #scrollbar>
         <div class="images-wrapper">
-          <app-image-control2
+          <app-editor-photo-control
             *ngFor="let photo of (photos$ | async)" class="selection-item" [photo]="photo"
             [selected]="currentPhoto.id === photo.id" [hasRights]="true" [edit]="isSelectForEdit(photo)"
             (click)="setCurrent(photo)" (deleteEvent)="onSelectForDelete($event)"
             (previewEvent)="onSelectForPreview($event)" (editEvent)="onSelectForEdit($event)"
-            (groupEditEvent)="onSelectGroupEdit($event)"></app-image-control2>
+            (groupEditEvent)="onSelectGroupEdit($event)"></app-editor-photo-control>
         </div>
       </ng-scrollbar>
     </div>
