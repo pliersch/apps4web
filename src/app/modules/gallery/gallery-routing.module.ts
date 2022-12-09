@@ -13,13 +13,13 @@ const routes: Routes = [
   {
     path: '', component: GalleryContainerComponent, resolve: {meta: GalleryResolver},
     children: [
-      {path: '', component: GalleryExplorerComponent},
       {path: 'home', component: GalleryHomeComponent},
       {path: 'explorer', title: 'Explorer', component: GalleryExplorerComponent},
       {path: 'editor', title: 'Editor', component: GalleryEditorComponent},
       {path: 'lightbox', title: 'Lightbox', component: GalleryLightboxComponent},
       {path: 'slideshow', title: 'Slideshow', component: GallerySlideshowComponent},
       {path: 'upload', title: 'Upload', component: GalleryUploadComponent},
+      {path: '**', component: GalleryHomeComponent}
     ]
   }
 ];

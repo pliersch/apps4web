@@ -2,7 +2,7 @@ export const constants = {
   appName: 'A4W',
   routes: [
     {route: '/dashboard', name: 'Home'},
-    {route: '/gallery/explorer', name: 'Galerie'},
+    {route: '/gallery', name: 'Galerie'},
     {route: '/chat', name: 'Chat'},
     {route: '/admin', name: 'Admin'},
     // {route: '/auth', name: 'Auth'},

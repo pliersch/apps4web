@@ -5,7 +5,7 @@
   </button>
   <span>{{appName}}</span>
   <mat-toolbar>
-    <button mat-flat-button routerLink="/admin" routerLinkActive='active-route'
+    <button mat-flat-button routerLinkActive='active-route'
             *ngFor="let route of routes" [routerLink]="[route.route]">{{route.name}}</button>
   </mat-toolbar>
   <!--  <mat-toolbar>-->
