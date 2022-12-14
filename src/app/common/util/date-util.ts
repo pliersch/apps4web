@@ -1,5 +1,4 @@
 import { formatDate } from "@angular/common";
-import { WasteDate } from "@modules/waste-calendar/waste-dates";
 import parse from "date-fns/parse";
 import format from 'date-fns/format'
 import { de } from "date-fns/locale";
@@ -34,17 +33,4 @@ export function formatGerman(date: Date): string {
  */
 export function formatGermanDayAndMonth(date: Date): string {
   return format(date, 'do MMMM', {locale: de});
-}
-
-export function formatDates(events: WasteDate[]): WasteDate[] {
-  const result: WasteDate[] = [];
-  for (const event of events) {
-    const s1 = formatDate(new Date(event.date), 'longDate', 'en-US');
-    const wd: WasteDate = {
-      date: s1,
-      type: event.type
-    }
-    result.push(wd)
-  }
-  return result;
 }

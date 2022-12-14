@@ -9,5 +9,6 @@ export interface User {
   role: Role,
   photoUrl: string;
   status: Status;
+  created: Date;
   lastLogin: Date;
 }

@@ -3,6 +3,7 @@
 //@import 'styles/roboto.scss';
 @import 'styles/material-icons.scss';
 @import 'styles/themes';
+@import 'styles/padding';
 @import 'styles/scrollbar';
 @import 'styles/colors';
 @import 'styles/flex-layout';
@@ -57,14 +58,6 @@ body {
 
 .m10r {
   margin-right: 10px;
-}
-
-.p5 {
-  padding: 5px;
-}
-
-.p10 {
-  padding: 10px;
 }
 
 .component {

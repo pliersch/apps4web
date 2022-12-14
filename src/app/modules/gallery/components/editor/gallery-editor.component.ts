@@ -21,6 +21,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { Select, Store } from "@ngxs/store";
 import { TagState } from "@gallery/store/tags/tag.state";
 import { Observable } from "rxjs";
+import { GalleryEditTagsComponent } from "@gallery/components/explorer/edit-tags/gallery-edit-tags.component";
 
 export interface DeletePhotoDialogData {
   photo: Photo;
@@ -211,7 +212,7 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
   }
 
   private openEditTagDialog(): void {
-    this.dialog.open(GalleryEditPhotosComponent, {
+    this.dialog.open(GalleryEditTagsComponent, {
       width: '800px',
       restoreFocus: false,
       autoFocus: false

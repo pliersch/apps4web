@@ -9,6 +9,8 @@ import { MaterialModule } from "@app/shared/material/material.module";
 import { DatePipe } from "@modules/admin/modules/user/pipes/date.pipe";
 import { RolePipe } from './pipes/role.pipe';
 import { StatusPipe } from './pipes/status.pipe';
+import { UserFormComponent } from './components/user-form/user-form.component';
+import { UserTableComponent } from './components/user-table/user-table.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { StatusPipe } from './pipes/status.pipe';
     UserLayoutComponent,
     DatePipe,
     RolePipe,
-    StatusPipe
+    StatusPipe,
+    UserFormComponent,
+    UserTableComponent
   ],
   imports: [
     CommonModule,

@@ -25,6 +25,7 @@ export interface UserStateModel {
       status: Status.accept,
       role: Role.Guest,
       photoUrl: 'not set',
+      created: new Date(),
       lastLogin: new Date()
     },
     users: [],
@@ -53,7 +54,7 @@ export class UserState {
   //////////////////////////////////////////////////////////
 
   @Action(userActions.LoadUsers)
-  loadUsers(ctx: StateContext<UserStateModel>, action: userActions.LoadUsers): Observable<Subscription> {
+  loadUsers(ctx: StateContext<UserStateModel>): Observable<Subscription> {
     return this.userService.getAll()
       .pipe(
         map((users: User[]) =>
@@ -73,14 +74,12 @@ export class UserState {
 
   @Action(userActions.LoadUsersSuccess)
   loadUsersSuccess({patchState}: StateContext<UserStateModel>, action: userActions.LoadUsersSuccess): void {
-    console.log('UserState loadUsersSuccess: ', action.payload)
     patchState({users: action.payload, user: action.payload[0]});
   }
 
   @Action(userActions.LoadUsersFail)
   loadUsersFail(action: userActions.LoadUsersFail): void {
     this.alertService.error('cant load users')
-    console.log(action.error)
   }
 
 }

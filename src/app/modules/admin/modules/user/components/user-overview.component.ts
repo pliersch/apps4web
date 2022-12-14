@@ -1,69 +1,55 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from "@angular/material/table";
-import { LiveAnnouncer } from "@angular/cdk/a11y";
-import { MatSort, Sort } from "@angular/material/sort";
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Select } from "@ngxs/store";
 import { UserState } from "@modules/admin/modules/user/store/user.state";
 import { Observable, Subscription } from "rxjs";
 import { User } from "@modules/admin/modules/user/store/user";
+import { UserFormComponent } from "@modules/admin/modules/user/components/user-form/user-form.component";
+import { UserTableComponent } from "@modules/admin/modules/user/components/user-table/user-table.component";
+
+export enum Mode {
+  AddUser = 'Create',
+  EditUser = 'Update',
+  None = 'None'
+}
 
 @Component({
   selector: 'app-user-overview',
   templateUrl: './user-overview.component.html',
   styleUrls: ['./user-overview.component.scss']
 })
-export class UserOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
+export class UserOverviewComponent implements OnInit, OnDestroy {
 
-  @Select(UserState.getUser)
-  user$: Observable<User>;
-  user: User;
+  @ViewChild(UserFormComponent)
+  form: UserFormComponent;
+
+  @ViewChild(UserTableComponent)
+  table: UserTableComponent;
 
   @Select(UserState.getUsers)
   users$: Observable<User[]>;
   users: User[];
 
+  ModeType = Mode;
+
+  mode = Mode.None;
+
   subscription: Subscription;
-  displayedColumns: string[] = ['givenName', 'lastName', 'email', 'role', /*'photoUrl',*/ 'status', 'lastLogin'];
-  dataSource: MatTableDataSource<User>;
-
-  constructor(private _liveAnnouncer: LiveAnnouncer) {}
-
-  @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit(): void {
-    this.subscription = this.user$.subscribe(res => this.user = res);
-    this.subscription.add(this.users$.subscribe(res => {
+    this.subscription = this.users$.subscribe(res => {
       this.users = res;
-      this.dataSource = new MatTableDataSource(res);
-    }))
+      // this.table.setUsers(res);
+    });
   }
 
-  addData(): void {
-    // const randomElementIndex = Math.floor(Math.random() * ELEMENT_DATA.length);
-    // this.dataToDisplay = [...this.dataToDisplay, ELEMENT_DATA[randomElementIndex]];
-    // this.dataSource.setData(this.dataToDisplay);
+  updateForm(user: User): void {
+    this.mode = Mode.EditUser;
+    this.form.setUser(user);
   }
 
-  removeData(): void {
-    // this.dataToDisplay = this.dataToDisplay.slice(0, -1);
-    // this.dataSource.setData(this.dataToDisplay);
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-  }
-
-  /** Announce the change in sort state for assistive technology. */
-  announceSortChange(sortState: Sort): void {
-    // This example uses English messages. If your application supports
-    // multiple language, you would internationalize these strings.
-    // Furthermore, you can customize the message to add additional
-    // details about the values being sorted.
-    if (sortState.direction) {
-      void this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      void this._liveAnnouncer.announce('Sorting cleared');
-    }
+  addUser(): void {
+    this.mode = Mode.AddUser;
+    this.form.setUser(null);
   }
 
   ngOnDestroy(): void {
