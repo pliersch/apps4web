@@ -2,7 +2,7 @@ import { environment } from "@environments/environment";
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, of } from 'rxjs';
-import { User } from "@modules/admin/modules/user/store/user";
+import { User } from "@modules/admin/modules/user/store/user.model";
 
 const baseUrl = `${environment.apiUrl}/users`;
 

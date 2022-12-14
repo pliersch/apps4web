@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from "@environments/environment";
 import { HttpClient } from "@angular/common/http";
-import { User } from "@modules/admin/modules/user/store/user";
+import { User } from "@modules/admin/modules/user/store/user.model";
 import { Observable } from "rxjs";
 import { GoogleUser } from "@modules/google-signin/google-user.model";
 

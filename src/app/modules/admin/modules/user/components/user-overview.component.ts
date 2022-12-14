@@ -1,15 +1,15 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Select } from "@ngxs/store";
+import { Select, Store } from "@ngxs/store";
 import { UserState } from "@modules/admin/modules/user/store/user.state";
 import { Observable, Subscription } from "rxjs";
-import { User } from "@modules/admin/modules/user/store/user";
+import { CreateUserDto, User } from "@modules/admin/modules/user/store/user.model";
 import { UserFormComponent } from "@modules/admin/modules/user/components/user-form/user-form.component";
 import { UserTableComponent } from "@modules/admin/modules/user/components/user-table/user-table.component";
+import { CreateUser, UpdateUser } from "@modules/admin/modules/user/store/user.actions";
 
 export enum Mode {
   AddUser = 'Create',
-  EditUser = 'Update',
-  None = 'None'
+  EditUser = 'Update'
 }
 
 @Component({
@@ -29,20 +29,19 @@ export class UserOverviewComponent implements OnInit, OnDestroy {
   users$: Observable<User[]>;
   users: User[];
 
-  ModeType = Mode;
-
-  mode = Mode.None;
+  mode: Mode;
 
   subscription: Subscription;
+
+  constructor(private store: Store) { }
 
   ngOnInit(): void {
     this.subscription = this.users$.subscribe(res => {
       this.users = res;
-      // this.table.setUsers(res);
     });
   }
 
-  updateForm(user: User): void {
+  handleRowSelect(user: User): void {
     this.mode = Mode.EditUser;
     this.form.setUser(user);
   }
@@ -56,4 +55,11 @@ export class UserOverviewComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  handleUserChanges($event: Partial<User>): void {
+    if (this.mode === Mode.AddUser) {
+      this.store.dispatch(new CreateUser($event as CreateUserDto))
+    } else {
+      this.store.dispatch(new UpdateUser($event))
+    }
+  }
 }

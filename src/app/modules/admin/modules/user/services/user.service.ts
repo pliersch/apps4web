@@ -3,7 +3,7 @@ import { environment } from '@environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { User } from "@modules/admin/modules/user/store/user";
+import { CreateUserDto, User } from "@modules/admin/modules/user/store/user.model";
 
 const baseUrl = `${environment.apiUrl}/user`;
 
@@ -23,8 +23,12 @@ export class UserService {
     return this.http.get<User>(`${baseUrl}/${id}`);
   }
 
-  create(user: User): Observable<any> {
-    return this.http.post<User>(baseUrl, user);
+  create(dto: CreateUserDto): Observable<User> {
+    return this.http.post<User>(baseUrl, dto);
+  }
+
+  update(dto: Partial<User>): Observable<User> {
+    return this.http.post<User>(baseUrl, dto);
   }
 
   login(user: User): Observable<any> {

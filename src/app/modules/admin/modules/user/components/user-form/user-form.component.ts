@@ -1,6 +1,6 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators } from "@angular/forms";
-import { User } from "@modules/admin/modules/user/store/user";
+import { User } from "@modules/admin/modules/user/store/user.model";
 import { getValuesOfEnum } from "@app/common/util/enum-utils";
 import { Role } from "@modules/admin/modules/user/store/role";
 import { Status } from "@modules/admin/modules/user/store/status";
@@ -14,6 +14,10 @@ export class UserFormComponent implements OnInit, OnChanges {
 
   @Input()
   user: User | null;
+
+  @Output()
+  userEvent = new EventEmitter<Partial<User>>();
+
   userValues: any;
   changed = false;
   valid = false;
@@ -38,15 +42,21 @@ export class UserFormComponent implements OnInit, OnChanges {
     });
     this.form.statusChanges.subscribe(result => {
       this.valid = result == 'VALID';
-      console.log(result)
     });
   }
 
   onSubmit(): void {
-    alert('Thanks!');
+    let user: Partial<User> = this.createUserByForm();
+
+    if (this.user) {
+      user = this.deleteUnchangedProperties(user, this.user);
+      user.id = this.user.id;
+    }
+    this.userEvent.emit(user);
   }
 
   onCancel(): void {
+    this.setUser(null)
     this.form.reset();
   }
 
@@ -74,5 +84,38 @@ export class UserFormComponent implements OnInit, OnChanges {
     } else if (changes.disabled.currentValue === false) {
       this.form.enable();
     }
+  }
+
+  private deleteUnchangedProperties(after: Partial<User>, before: User): Partial<User> {
+    if (after.givenName == before.givenName) {
+      delete after.givenName;
+    }
+    if (after.lastName == before.lastName) {
+      delete after.lastName;
+    }
+    if (after.email == before.email) {
+      delete after.email;
+    }
+    if (after.status == before.status) {
+      delete after.status;
+    }
+    if (after.role == before.role) {
+      delete after.role;
+    }
+    return after;
+  }
+
+  private createUserByForm(): Partial<User> {
+    const controls = this.form.controls;
+    const roleString = controls.role.value!;
+    const statusString = controls.status.value!;
+
+    return {
+      givenName: controls.givenName.value!,
+      lastName: controls.lastName.value!,
+      email: controls.email.value!,
+      role: Role[roleString as keyof typeof Role],
+      status: Status[statusString as keyof typeof Status],
+    };
   }
 }

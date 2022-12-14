@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSort, Sort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { User } from "@modules/admin/modules/user/store/user";
+import { User } from "@modules/admin/modules/user/store/user.model";
 import { LiveAnnouncer } from "@angular/cdk/a11y";
 
 @Component({

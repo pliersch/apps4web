@@ -7,8 +7,15 @@ export interface User {
   lastName: string,
   email: string,
   role: Role,
-  photoUrl: string;
   status: Status;
   created: Date;
   lastLogin: Date;
+}
+
+export interface CreateUserDto {
+  givenName: string,
+  lastName: string,
+  email: string,
+  role: Role,
+  status: Status;
 }

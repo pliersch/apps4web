@@ -3,7 +3,7 @@ import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto"
 import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
 import { HttpErrorResponse } from '@angular/common/http';
 import { Tag } from "@gallery/store/tags/tag.model";
-import { User } from "@modules/admin/modules/user/store/user";
+import { User } from "@modules/admin/modules/user/store/user.model";
 
 // meta data
 

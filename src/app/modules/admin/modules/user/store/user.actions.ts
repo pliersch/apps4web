@@ -1,40 +1,79 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { GoogleUser } from "@modules/google-signin/google-user.model";
-import { User } from "@modules/admin/modules/user/store/user";
+import { CreateUserDto, User } from "@modules/admin/modules/user/store/user.model";
 
-export class Login {
-  static readonly type = '[Auth] Login';
+export class CreateUser {
+  static readonly type = '[User] Create User';
 
-  constructor(public readonly user: GoogleUser) { }
+  constructor(public readonly dto: CreateUserDto) { }
 }
 
-export class LoginSuccess {
-  static readonly type = '[Auth] Login Success';
+export class CreateUserSuccess {
+  static readonly type = '[User] Create User Success';
 
   constructor(public readonly user: User) {
   }
 }
 
-export class LoginFail {
-  static readonly type = '[Auth] Login Fail';
+export class CreateUserFail {
+  static readonly type = '[User] Create User Fail';
 
   constructor(public error: string) {
   }
 }
 
+export class UpdateUser {
+  static readonly type = '[User] Update User';
+
+  constructor(public readonly user: Partial<User>) { }
+}
+
+export class UpdateUserSuccess {
+  static readonly type = '[User] Update User Success';
+
+  constructor(public readonly user: User) {
+  }
+}
+
+export class UpdateUserFail {
+  static readonly type = '[User] Update User Fail';
+
+  constructor(public error: string) {
+  }
+}
+
+// export class Login {
+//   static readonly type = '[Auth] Login';
+//
+//   constructor(public readonly user: GoogleUser) { }
+// }
+//
+// export class LoginSuccess {
+//   static readonly type = '[Auth] Login Success';
+//
+//   constructor(public readonly user: User) {
+//   }
+// }
+//
+// export class LoginFail {
+//   static readonly type = '[Auth] Login Fail';
+//
+//   constructor(public error: string) {
+//   }
+// }
+
 export class LoadUsers {
-  static readonly type = '[User Manager] Load Users';
+  static readonly type = '[User] Load Users';
 }
 
 export class LoadUsersSuccess {
-  static readonly type = '[User Manager] Load Users Success';
+  static readonly type = '[User] Load Users Success';
 
   constructor(public readonly payload: User[]) {
   }
 }
 
 export class LoadUsersFail {
-  static readonly type = '[User Manager] Load Users Fail';
+  static readonly type = '[User] Load Users Fail';
 
   constructor(public error: HttpErrorResponse) {
   }
