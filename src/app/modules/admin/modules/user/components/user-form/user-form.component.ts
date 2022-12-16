@@ -53,6 +53,8 @@ export class UserFormComponent implements OnInit, OnChanges {
       user.id = this.user.id;
     }
     this.userEvent.emit(user);
+    this.onCancel()
+    this.form.disable()
   }
 
   onCancel(): void {
@@ -87,6 +89,7 @@ export class UserFormComponent implements OnInit, OnChanges {
   }
 
   private deleteUnchangedProperties(after: Partial<User>, before: User): Partial<User> {
+    console.log('UserFormComponent deleteUnchangedProperties: ',)
     if (after.givenName == before.givenName) {
       delete after.givenName;
     }

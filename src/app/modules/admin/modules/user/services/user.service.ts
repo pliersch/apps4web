@@ -27,8 +27,8 @@ export class UserService {
     return this.http.post<User>(baseUrl, dto);
   }
 
-  update(dto: Partial<User>): Observable<User> {
-    return this.http.post<User>(baseUrl, dto);
+  update(id: string, dto: Partial<User>): Observable<User> {
+    return this.http.patch<User>(`${baseUrl}/${id}`, dto);
   }
 
   login(user: User): Observable<any> {

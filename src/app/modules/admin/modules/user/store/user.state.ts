@@ -8,6 +8,7 @@ import { Status } from "@modules/admin/modules/user/store/status";
 import { Role } from "@modules/admin/modules/user/store/role";
 import * as userActions from "@modules/admin/modules/user/store/user.actions";
 import { UserService } from "@modules/admin/modules/user/services/user.service";
+import { patch, updateItem } from "@ngxs/store/operators";
 
 export interface UserStateModel {
   user: User;
@@ -48,6 +49,7 @@ export class UserState {
               private alertService: AlertService) {
   }
 
+  // region load
   //////////////////////////////////////////////////////////
   //          load
   //////////////////////////////////////////////////////////
@@ -77,10 +79,13 @@ export class UserState {
   }
 
   @Action(userActions.LoadUsersFail)
-  loadUsersFail(action: userActions.LoadUsersFail): void {
+  loadUsersFail(): void {
     this.alertService.error('cant load users')
   }
 
+  // endregion
+
+  // region create
   //////////////////////////////////////////////////////////
   //          create
   //////////////////////////////////////////////////////////
@@ -116,21 +121,24 @@ export class UserState {
   }
 
   @Action(userActions.CreateUserFail)
-  createUserFail(action: userActions.CreateUserFail): void {
+  createUserFail(): void {
     this.alertService.error('cant create user')
   }
 
+  // endregion
+
+  // region update
   //////////////////////////////////////////////////////////
   //          update
   //////////////////////////////////////////////////////////
 
   @Action(userActions.UpdateUser)
   updateUser(ctx: StateContext<UserStateModel>, action: userActions.UpdateUser): Observable<Subscription> {
-    return this.userService.update(action.user)
+    return this.userService.update(action.id, action.partialUser)
       .pipe(
-        map((user: User) =>
+        map((typeOrmUpdateVal: any) =>
           asapScheduler.schedule(() =>
-            ctx.dispatch(new userActions.UpdateUserSuccess(user))
+            ctx.dispatch(new userActions.UpdateUserSuccess(action.id, action.partialUser))
           )
         ),
         catchError(error =>
@@ -145,19 +153,18 @@ export class UserState {
 
   @Action(userActions.UpdateUserSuccess)
   updateUserSuccess(ctx: StateContext<UserStateModel>, action: userActions.UpdateUserSuccess): void {
-
-    const state = ctx.getState();
-    ctx.patchState({
-      users: [
-        ...state.users,
-        action.user,
-      ],
-    });
+    ctx.setState(
+      patch({
+        users: updateItem<User>(user => user?.id === action.id,
+          patch(action.partialUser))
+      })
+    );
   }
 
   @Action(userActions.UpdateUserFail)
-  updateUserFail(action: userActions.UpdateUserFail): void {
+  updateUserFail(): void {
     this.alertService.error('cant update user')
   }
 
+  // endregion
 }

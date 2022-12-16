@@ -261,6 +261,7 @@ export class PhotoState {
 
   // endregion
 
+  // region current
   //////////////////////////////////////////////////////////
   //          set current
   //////////////////////////////////////////////////////////
@@ -290,6 +291,9 @@ export class PhotoState {
     });
   }
 
+  // endregion
+
+  // region add
   //////////////////////////////////////////////////////////
   //          add
   //////////////////////////////////////////////////////////
@@ -331,6 +335,9 @@ export class PhotoState {
     this.alertService.error('Upload fail');
   }
 
+  // endregion
+
+  // region update
   //////////////////////////////////////////////////////////
   //          update
   //////////////////////////////////////////////////////////
@@ -374,6 +381,9 @@ export class PhotoState {
     console.log(action.error)
   }
 
+  // endregion
+
+  // region delete
   //////////////////////////////////////////////////////////
   //          delete
   //////////////////////////////////////////////////////////
@@ -445,7 +455,9 @@ export class PhotoState {
   //   console.log(action.error)
   //   this.alertService.error('Delete fail');
   // }
+  // endregion
 
+  // region compare
   //////////////////////////////////////////////////////////
   //          photos to compare
   //////////////////////////////////////////////////////////
@@ -470,6 +482,9 @@ export class PhotoState {
     });
   }
 
+  // endregion
+
+  // region mange select
   //////////////////////////////////////////////////////////
   //          manage
   //////////////////////////////////////////////////////////
@@ -517,6 +532,9 @@ export class PhotoState {
     );
   }
 
+  // endregion
+
+  // region download
   //////////////////////////////////////////////////////////
   //          download
   //////////////////////////////////////////////////////////
@@ -565,6 +583,9 @@ export class PhotoState {
     );
   }
 
+  // endregion
+
+  // region rating
   //////////////////////////////////////////////////////////
   //          rating
   //////////////////////////////////////////////////////////
@@ -607,6 +628,9 @@ export class PhotoState {
     this.alertService.error('Rating photo fail');
   }
 
+  // endregion
+
+  // region filter
   //////////////////////////////////////////////////////////
   //          filter
   //////////////////////////////////////////////////////////
@@ -660,8 +684,10 @@ export class PhotoState {
     });
   }
 
-  // Helper. Look for better solution when ngxs updates
+  // endregion
 
+  // region help
+  // Helper. Look for better solution when ngxs updates
   _getFilteredPhotos(state: PhotoStateModel): Photo[] {
     return PhotoState.getFilteredPhotos(
       PhotoState.getPhotosByTags(PhotoState.getPhotos(state), PhotoState.getActiveTags(state)),
@@ -669,4 +695,6 @@ export class PhotoState {
       PhotoState.getFilterFrom(state),
       PhotoState.getFilterTo(state));
   }
+
+  // endregion
 }

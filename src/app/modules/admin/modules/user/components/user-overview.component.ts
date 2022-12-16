@@ -55,11 +55,13 @@ export class UserOverviewComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  handleUserChanges($event: Partial<User>): void {
+  handleUserFormChanges($event: Partial<User>): void {
     if (this.mode === Mode.AddUser) {
       this.store.dispatch(new CreateUser($event as CreateUserDto))
     } else {
-      this.store.dispatch(new UpdateUser($event))
+      const id = $event.id!;
+      delete $event.id
+      this.store.dispatch(new UpdateUser(id, $event))
     }
   }
 }

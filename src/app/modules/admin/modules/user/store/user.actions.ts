@@ -24,13 +24,13 @@ export class CreateUserFail {
 export class UpdateUser {
   static readonly type = '[User] Update User';
 
-  constructor(public readonly user: Partial<User>) { }
+  constructor(public readonly id: string, public readonly partialUser: Partial<User>) { }
 }
 
 export class UpdateUserSuccess {
   static readonly type = '[User] Update User Success';
 
-  constructor(public readonly user: User) {
+  constructor(public readonly id: string, public readonly partialUser: Partial<User>) {
   }
 }
 
