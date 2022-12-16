@@ -18,16 +18,18 @@ export class UserTableComponent implements OnChanges {
   users: User[]
 
   @Output()
-  userSelectEvent = new EventEmitter<User>();
+  userEditEvent = new EventEmitter<User>();
 
-  displayedColumns: string[] = ['givenName', 'lastName', 'email', 'role', 'status', 'created', 'lastLogin'];
+  @Output()
+  userDeleteEvent = new EventEmitter<User>();
+
+  @Output()
+  userLoginAsEvent = new EventEmitter<User>();
+
+  displayedColumns: string[] = ['givenName', 'lastName', 'email', 'role', 'status', 'created', 'lastLogin', ' '];
   dataSource: MatTableDataSource<User>;
 
   constructor(private _liveAnnouncer: LiveAnnouncer) {}
-
-  onClickRow(user: User): void {
-    this.userSelectEvent.emit(user);
-  }
 
   announceSortChange(sortState: Sort): void {
     if (sortState.direction) {
@@ -42,4 +44,15 @@ export class UserTableComponent implements OnChanges {
     this.dataSource.sort = this.sort;
   }
 
+  onClickEdit(user: User): void {
+    this.userEditEvent.emit(user);
+  }
+
+  onClickDelete(user: User): void {
+    this.userDeleteEvent.emit(user);
+  }
+
+  onClickLoginAs(user: User): void {
+    this.userLoginAsEvent.emit(user);
+  }
 }

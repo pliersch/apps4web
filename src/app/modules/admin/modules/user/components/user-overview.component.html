@@ -1,6 +1,10 @@
-<app-user-table [users]="users" (userSelectEvent)="handleRowSelect($event)"></app-user-table>
+<app-user-table [users]="users"
+                (userEditEvent)="handleEditEvent($event)"
+                (userDeleteEvent)="handleDeleteEvent($event)"
+                (userLoginAsEvent)="handleLoginAsEvent($event)">
+</app-user-table>
 <div class="button-container">
-  <button mat-raised-button (click)="addUser()" class="demo-button">
+  <button mat-raised-button color="primary" (click)="addUser()" class="demo-button">
     Add User
   </button>
 </div>

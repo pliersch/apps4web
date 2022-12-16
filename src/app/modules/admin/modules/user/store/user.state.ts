@@ -8,7 +8,7 @@ import { Status } from "@modules/admin/modules/user/store/status";
 import { Role } from "@modules/admin/modules/user/store/role";
 import * as userActions from "@modules/admin/modules/user/store/user.actions";
 import { UserService } from "@modules/admin/modules/user/services/user.service";
-import { patch, updateItem } from "@ngxs/store/operators";
+import { patch, removeItem, updateItem } from "@ngxs/store/operators";
 
 export interface UserStateModel {
   user: User;
@@ -164,6 +164,46 @@ export class UserState {
   @Action(userActions.UpdateUserFail)
   updateUserFail(): void {
     this.alertService.error('cant update user')
+  }
+
+  // endregion
+
+  // region delete
+  //////////////////////////////////////////////////////////
+  //          delete
+  //////////////////////////////////////////////////////////
+
+  @Action(userActions.DeleteUser)
+  deleteUser(ctx: StateContext<UserStateModel>, action: userActions.DeleteUser): Observable<Subscription> {
+    return this.userService.delete(action.id)
+      .pipe(
+        map(() =>
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new userActions.DeleteUserSuccess(action.id))
+          )
+        ),
+        catchError(error =>
+          of(
+            asapScheduler.schedule(() =>
+              ctx.dispatch(new userActions.DeleteUserFail(error))
+            )
+          )
+        )
+      );
+  }
+
+  @Action(userActions.DeleteUserSuccess)
+  deleteUserSuccess(ctx: StateContext<UserStateModel>, action: userActions.DeleteUserSuccess): void {
+    ctx.setState(
+      patch({
+        users: removeItem<User>(user => user!.id === action.id)
+      })
+    );
+  }
+
+  @Action(userActions.DeleteUserFail)
+  deleteUserFail(): void {
+    this.alertService.error('cant delete user')
   }
 
   // endregion

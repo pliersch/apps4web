@@ -5,11 +5,11 @@ import { Observable, Subscription } from "rxjs";
 import { CreateUserDto, User } from "@modules/admin/modules/user/store/user.model";
 import { UserFormComponent } from "@modules/admin/modules/user/components/user-form/user-form.component";
 import { UserTableComponent } from "@modules/admin/modules/user/components/user-table/user-table.component";
-import { CreateUser, UpdateUser } from "@modules/admin/modules/user/store/user.actions";
+import * as userActions from "@modules/admin/modules/user/store/user.actions";
 
 export enum Mode {
   AddUser = 'Create',
-  EditUser = 'Update'
+  EditUser = 'Update',
 }
 
 @Component({
@@ -41,7 +41,16 @@ export class UserOverviewComponent implements OnInit, OnDestroy {
     });
   }
 
-  handleRowSelect(user: User): void {
+  handleEditEvent(user: User): void {
+    this.mode = Mode.EditUser;
+    this.form.setUser(user);
+  }
+
+  handleDeleteEvent(user: User): void {
+    this.store.dispatch(new userActions.DeleteUser(user.id))
+  }
+
+  handleLoginAsEvent(user: User): void {
     this.mode = Mode.EditUser;
     this.form.setUser(user);
   }
@@ -57,11 +66,11 @@ export class UserOverviewComponent implements OnInit, OnDestroy {
 
   handleUserFormChanges($event: Partial<User>): void {
     if (this.mode === Mode.AddUser) {
-      this.store.dispatch(new CreateUser($event as CreateUserDto))
+      this.store.dispatch(new userActions.CreateUser($event as CreateUserDto))
     } else {
       const id = $event.id!;
       delete $event.id
-      this.store.dispatch(new UpdateUser(id, $event))
+      this.store.dispatch(new userActions.UpdateUser(id, $event))
     }
   }
 }

@@ -36,13 +36,14 @@ export class UserService {
   }
 
   delete(id: string): Observable<any> {
-    return this.http.delete(`${baseUrl}/${id}`).pipe(
-      finalize(() => {
-        // auto logout if the logged in account was deleted
-        // if (id === this.accountValue.id) {
-        //   // this.logout();
-        // }
-      })
-    );
+    return this.http.delete(`${baseUrl}/${id}`);
+    // .pipe(
+    // finalize(() => {
+    // auto logout if the logged in account was deleted
+    // if (id === this.accountValue.id) {
+    //   // this.logout();
+    // }
+    // })
+    // );
   }
 }

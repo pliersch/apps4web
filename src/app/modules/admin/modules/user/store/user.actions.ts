@@ -41,6 +41,26 @@ export class UpdateUserFail {
   }
 }
 
+export class DeleteUser {
+  static readonly type = '[User] Delete User';
+
+  constructor(public readonly id: string) { }
+}
+
+export class DeleteUserSuccess {
+  static readonly type = '[User] Delete User Success';
+
+  constructor(public readonly id: string) {
+  }
+}
+
+export class DeleteUserFail {
+  static readonly type = '[User] Delete User Fail';
+
+  constructor(public error: string) {
+  }
+}
+
 // export class Login {
 //   static readonly type = '[Auth] Login';
 //
