@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthLayoutComponent } from "./layouts/auth-layout/auth-layout.component";
 import { DefaultLayoutComponent } from "./layouts/default-layout/default-layout.component";
-import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { HttpClientModule } from "@angular/common/http";
 import { NgxsModule, NgxsModuleOptions, Store } from '@ngxs/store';
 import { GlobalErrorHandler } from "@app/common/helpers/global-error-handler";
 import { environment } from "@environments/environment";
@@ -21,8 +21,6 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from "@angular/materia
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from "@angular/material-date-fns-adapter";
 import { initTheme } from "@app/common/initializers/theme.initializer";
 import { initApplication } from "@app/common/initializers/app.initializer";
-import { JwtInterceptor } from "@app/common/helpers/jwt.interceptor";
-import { ErrorInterceptor } from "@app/common/helpers/error.interceptor";
 import { ThemeState } from "@modules/themes/stores/theme-state";
 import { RecipesModule } from "@modules/recipes/recipes.module";
 import { GoogleSigninModule } from "@modules/google-signin/google-signin.module";
@@ -95,8 +93,7 @@ const ngxsConfig: NgxsModuleOptions = {
         Store
       ]
     },
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    // {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: ErrorHandler, useClass: GlobalErrorHandler},
   ],
   bootstrap: [AppComponent]

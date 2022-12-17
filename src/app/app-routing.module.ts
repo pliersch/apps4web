@@ -9,7 +9,7 @@ import { AuthGuard } from "@account/helpers/auth.guard";
 const chatModule = () => import('@app/modules/chat/chat.module').then((x) => x.ChatModule);
 const adminModule = () => import('@modules/admin/admin.module').then((x) => x.AdminModule);
 // const doctorModule = () => import('@app/modules/doctor/doctor.module').then((x) => x.DoctorModule);
-// const accountModule = () => import('@app/modules/account/account.module').then((x) => x.AccountModule);
+const accountModule = () => import('@app/modules/account/account.module').then((x) => x.AccountModule);
 // const recipesModule = () => import('@app/modules/recipes/recipes.module').then((x) => x.RecipesModule);
 // const samplesModule = () => import('@app/modules/samples/samples.module').then((x) => x.SamplesModule);
 const galleryModule = () => import('@app/modules/gallery/gallery.module').then((x) => x.GalleryModule);
@@ -28,7 +28,7 @@ const routes: Routes = [{
     // {path: 'waste', loadChildren: wasteModule},
     // {path: 'felix', loadChildren: doctorModule},
     {path: 'gallery', title: 'Photo Galerie', loadChildren: galleryModule},
-    // {path: 'account', loadChildren: accountModule},
+    {path: 'account', title: 'Account Info', loadChildren: accountModule},
     // {path: 'samples', loadChildren: samplesModule},
     // {path: 'recipes', loadChildren: recipesModule},
     {path: 'three', title: 'ThreeJS Playground', loadChildren: threeModule},
