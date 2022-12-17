@@ -75,7 +75,7 @@ export class UserState {
 
   @Action(userActions.LoadUsersSuccess)
   loadUsersSuccess({patchState}: StateContext<UserStateModel>, action: userActions.LoadUsersSuccess): void {
-    patchState({users: action.payload, user: action.payload[0]});
+    patchState({users: action.payload});
   }
 
   @Action(userActions.LoadUsersFail)
@@ -85,13 +85,33 @@ export class UserState {
 
   // endregion
 
-  // region create
+  // region set current
   //////////////////////////////////////////////////////////
-  //          create
+  //         set current
   //////////////////////////////////////////////////////////
 
+  @Action(userActions.SetCurrentUser)
+  setCurrentUser(ctx: StateContext<UserStateModel>, action: userActions.SetCurrentUser): void {
+    ctx.patchState({
+      user: action.user
+    });
+  }
+
+// endregion
+
+// region create
+//////////////////////////////////////////////////////////
+//          create
+//////////////////////////////////////////////////////////
+
   @Action(userActions.CreateUser)
-  createUser(ctx: StateContext<UserStateModel>, action: userActions.CreateUser): Observable<Subscription> {
+  createUser(ctx
+               :
+               StateContext<UserStateModel>, action
+               :
+               userActions.CreateUser
+  ):
+    Observable<Subscription> {
     return this.userService.create(action.dto)
       .pipe(
         map((user: User) =>
@@ -110,7 +130,13 @@ export class UserState {
   }
 
   @Action(userActions.CreateUserSuccess)
-  createUserSuccess(ctx: StateContext<UserStateModel>, action: userActions.CreateUserSuccess): void {
+  createUserSuccess(ctx
+                      :
+                      StateContext<UserStateModel>, action
+                      :
+                      userActions.CreateUserSuccess
+  ):
+    void {
     const state = ctx.getState();
     ctx.patchState({
       users: [
@@ -121,19 +147,27 @@ export class UserState {
   }
 
   @Action(userActions.CreateUserFail)
-  createUserFail(): void {
+  createUserFail()
+    :
+    void {
     this.alertService.error('cant create user')
   }
 
-  // endregion
+// endregion
 
-  // region update
-  //////////////////////////////////////////////////////////
-  //          update
-  //////////////////////////////////////////////////////////
+// region update
+//////////////////////////////////////////////////////////
+//          update
+//////////////////////////////////////////////////////////
 
   @Action(userActions.UpdateUser)
-  updateUser(ctx: StateContext<UserStateModel>, action: userActions.UpdateUser): Observable<Subscription> {
+  updateUser(ctx
+               :
+               StateContext<UserStateModel>, action
+               :
+               userActions.UpdateUser
+  ):
+    Observable<Subscription> {
     return this.userService.update(action.id, action.partialUser)
       .pipe(
         map((typeOrmUpdateVal: any) =>
@@ -152,7 +186,13 @@ export class UserState {
   }
 
   @Action(userActions.UpdateUserSuccess)
-  updateUserSuccess(ctx: StateContext<UserStateModel>, action: userActions.UpdateUserSuccess): void {
+  updateUserSuccess(ctx
+                      :
+                      StateContext<UserStateModel>, action
+                      :
+                      userActions.UpdateUserSuccess
+  ):
+    void {
     ctx.setState(
       patch({
         users: updateItem<User>(user => user?.id === action.id,
@@ -162,19 +202,27 @@ export class UserState {
   }
 
   @Action(userActions.UpdateUserFail)
-  updateUserFail(): void {
+  updateUserFail()
+    :
+    void {
     this.alertService.error('cant update user')
   }
 
-  // endregion
+// endregion
 
-  // region delete
-  //////////////////////////////////////////////////////////
-  //          delete
-  //////////////////////////////////////////////////////////
+// region delete
+//////////////////////////////////////////////////////////
+//          delete
+//////////////////////////////////////////////////////////
 
   @Action(userActions.DeleteUser)
-  deleteUser(ctx: StateContext<UserStateModel>, action: userActions.DeleteUser): Observable<Subscription> {
+  deleteUser(ctx
+               :
+               StateContext<UserStateModel>, action
+               :
+               userActions.DeleteUser
+  ):
+    Observable<Subscription> {
     return this.userService.delete(action.id)
       .pipe(
         map(() =>
@@ -193,7 +241,13 @@ export class UserState {
   }
 
   @Action(userActions.DeleteUserSuccess)
-  deleteUserSuccess(ctx: StateContext<UserStateModel>, action: userActions.DeleteUserSuccess): void {
+  deleteUserSuccess(ctx
+                      :
+                      StateContext<UserStateModel>, action
+                      :
+                      userActions.DeleteUserSuccess
+  ):
+    void {
     ctx.setState(
       patch({
         users: removeItem<User>(user => user!.id === action.id)
@@ -202,9 +256,11 @@ export class UserState {
   }
 
   @Action(userActions.DeleteUserFail)
-  deleteUserFail(): void {
+  deleteUserFail()
+    :
+    void {
     this.alertService.error('cant delete user')
   }
 
-  // endregion
+// endregion
 }

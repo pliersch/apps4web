@@ -1,4 +1,4 @@
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { Injectable } from "@angular/core";
 import { AlertService } from "@app/common/services/alert.service";
 import * as authActions from "@modules/google-signin/store/signin.actions";
@@ -7,6 +7,7 @@ import { SigninService } from "@modules/google-signin/services/signin.service";
 import { catchError, map } from "rxjs/operators";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import { User } from "@modules/admin/modules/user/store/user.model";
+import { LoadUsers, SetCurrentUser } from "@modules/admin/modules/user/store/user.actions";
 
 export interface SigninStateModel {
   googleUser: GoogleUser | null;
@@ -33,7 +34,8 @@ export class SigninState {
   }
 
   constructor(private alertService: AlertService,
-              private signinService: SigninService) {
+              private signinService: SigninService,
+              private store: Store) {
   }
 
   @Action(authActions.SigninWithGoogle)
@@ -60,13 +62,20 @@ export class SigninState {
   signinWithGoogleSuccess(ctx: StateContext<SigninStateModel>, action: authActions.SigninWithGoogleSuccess): void {
     if (action.user === null) {
       this.alertService.warn("You are not registered");
+    } else {
+      asapScheduler.schedule(() =>
+        ctx.dispatch(new LoadUsers())
+      )
+      asapScheduler.schedule(() =>
+        ctx.dispatch((new SetCurrentUser(action.user))
+        ))
+      // this.store.dispatch(new LoadUsers())
+      // this.store.dispatch(new SetCurrentUser(action.user));
     }
-    console.log('SigninState signinWithGoogleSuccess: ', action.user)
   }
 
   @Action(authActions.SigninWithGoogleFail)
   signinWithGoogleFail(action: authActions.SigninWithGoogleFail): void {
-    console.log('SigninState signinWithGoogleFail: ', action.error)
     this.alertService.error('Signin with Google fail');
   }
 

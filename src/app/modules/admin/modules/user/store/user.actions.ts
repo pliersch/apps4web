@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { CreateUserDto, User } from "@modules/admin/modules/user/store/user.model";
+import { GoogleUser } from "@modules/google-signin/google-user.model";
 
 export class CreateUser {
   static readonly type = '[User] Create User';
@@ -61,25 +62,11 @@ export class DeleteUserFail {
   }
 }
 
-// export class Login {
-//   static readonly type = '[Auth] Login';
-//
-//   constructor(public readonly user: GoogleUser) { }
-// }
-//
-// export class LoginSuccess {
-//   static readonly type = '[Auth] Login Success';
-//
-//   constructor(public readonly user: User) {
-//   }
-// }
-//
-// export class LoginFail {
-//   static readonly type = '[Auth] Login Fail';
-//
-//   constructor(public error: string) {
-//   }
-// }
+export class SetCurrentUser {
+  static readonly type = '[User] Set Current';
+
+  constructor(public readonly user: User) { }
+}
 
 export class LoadUsers {
   static readonly type = '[User] Load Users';

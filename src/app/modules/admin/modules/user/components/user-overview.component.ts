@@ -6,6 +6,8 @@ import { CreateUserDto, User } from "@modules/admin/modules/user/store/user.mode
 import { UserFormComponent } from "@modules/admin/modules/user/components/user-form/user-form.component";
 import { UserTableComponent } from "@modules/admin/modules/user/components/user-table/user-table.component";
 import * as userActions from "@modules/admin/modules/user/store/user.actions";
+import { LoginAction } from "@account/store/auth.actions";
+import { SetCurrentUser } from "@modules/admin/modules/user/store/user.actions";
 
 export enum Mode {
   AddUser = 'Create',
@@ -51,8 +53,7 @@ export class UserOverviewComponent implements OnInit, OnDestroy {
   }
 
   handleLoginAsEvent(user: User): void {
-    this.mode = Mode.EditUser;
-    this.form.setUser(user);
+    this.store.dispatch(new SetCurrentUser(user));
   }
 
   addUser(): void {
