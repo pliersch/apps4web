@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ChatComponent } from "@modules/chat/chat.component";
 
 const routes: Routes = [{
-  path: '', component: ChatComponent
+  path: '', title: 'Chat', component: ChatComponent
 }];
 
 @NgModule({

@@ -19,20 +19,20 @@ const googleSignInModule = () => import('@app/modules/google-signin/google-signi
 
 const routes: Routes = [{
   path: '', component: DefaultLayoutComponent, children: [
-    {path: '', component: DashboardComponent},
-    {path: 'dashboard', component: DashboardComponent},
-    {path: 'impressum', component: LegalNoticeComponent},
+    {path: '', title: 'Home', component: DashboardComponent},
+    {path: 'dashboard', title: 'Home', component: DashboardComponent},
+    {path: 'impressum', title: 'Impressum', component: LegalNoticeComponent},
     // {path: 'auth', loadChildren: authModule},
     {path: 'chat', loadChildren: chatModule},
-    {path: 'admin', loadChildren: adminModule/*, canActivate: [AuthGuard]*/},
+    {path: 'admin', title: 'Administration', loadChildren: adminModule/*, canActivate: [AuthGuard]*/},
     // {path: 'waste', loadChildren: wasteModule},
     // {path: 'felix', loadChildren: doctorModule},
-    {path: 'gallery', loadChildren: galleryModule},
+    {path: 'gallery', title: 'Photo Galerie', loadChildren: galleryModule},
     // {path: 'account', loadChildren: accountModule},
     // {path: 'samples', loadChildren: samplesModule},
     // {path: 'recipes', loadChildren: recipesModule},
-    {path: 'three', loadChildren: threeModule},
-    {path: 'signin', loadChildren: googleSignInModule},
+    {path: 'three', title: 'ThreeJS Playground', loadChildren: threeModule},
+    {path: 'signin', title: 'G-Signin', loadChildren: googleSignInModule},
   ]
 }];
 

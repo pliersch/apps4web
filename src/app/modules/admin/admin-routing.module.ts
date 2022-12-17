@@ -9,7 +9,7 @@ const routes: Routes = [
     path: '', component: AdminLayoutComponent,
     children: [
       {path: '', loadChildren: userModule},
-      {path: 'user', loadChildren: userModule},
+      {path: 'user', title: 'User Management', loadChildren: userModule},
       // { path: 'accounts', loadChildren: accountsModule }
     ]
   }

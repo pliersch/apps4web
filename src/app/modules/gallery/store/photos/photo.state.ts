@@ -170,7 +170,7 @@ export class PhotoState {
   //////////////////////////////////////////////////////////
 
   @Action(photoAction.LoadMetaData)
-  loadMetaData(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaData): Observable<Subscription> {
+  loadMetaData(ctx: StateContext<PhotoStateModel>): Observable<Subscription> {
     return this.photoService.loadMetaData().pipe(
       map((metaDto: PhotoMetaDataDto) =>
         asapScheduler.schedule(() =>
@@ -196,7 +196,7 @@ export class PhotoState {
   }
 
   @Action(photoAction.LoadMetaDataFail)
-  loadMetaDataFail(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataFail): void {
+  loadMetaDataFail(ctx: StateContext<PhotoStateModel>): void {
     ctx.dispatch({loaded: false, loading: false});
     this.alertService.error('load meta data fail');
   }
@@ -254,7 +254,7 @@ export class PhotoState {
   }
 
   @Action(photoAction.LoadPhotosFail)
-  loadPhotosFail({dispatch}: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosFail): void {
+  loadPhotosFail({dispatch}: StateContext<PhotoStateModel>): void {
     this.alertService.error('Load photos fail');
     dispatch({loaded: false, loading: false});
   }
