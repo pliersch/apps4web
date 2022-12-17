@@ -7,7 +7,7 @@ export interface ThemeStateModel {
 }
 
 @State<ThemeStateModel>({
-  name: 'theme',
+  name: 'Theme',
   defaults: {
     theme: 'dark-theme'
   }

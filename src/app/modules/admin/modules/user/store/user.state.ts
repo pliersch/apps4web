@@ -16,7 +16,7 @@ export interface UserStateModel {
 }
 
 @State<UserStateModel>({
-  name: 'UserState',
+  name: 'Admin_User',
   defaults: {
     user: {
       id: 'not set',

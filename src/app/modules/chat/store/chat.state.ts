@@ -1,10 +1,10 @@
-import {Action, Selector, State, StateContext} from "@ngxs/store";
-import {Injectable} from "@angular/core";
-import {catchError, map} from "rxjs/operators";
-import {asapScheduler, Observable, of, Subscription} from "rxjs";
+import { Action, Selector, State, StateContext } from "@ngxs/store";
+import { Injectable } from "@angular/core";
+import { catchError, map } from "rxjs/operators";
+import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import * as chatAction from "@modules/chat/store/chat.actions";
-import {Message} from "@modules/chat/models/message";
-import {ChatService} from "@modules/chat/store/chat.service";
+import { Message } from "@modules/chat/models/message";
+import { ChatService } from "@modules/chat/store/chat.service";
 
 export interface ChatStateModel {
   messages: Message[];
@@ -16,7 +16,7 @@ export interface ChatStateModel {
 }
 
 @State<ChatStateModel>({
-  name: 'chat',
+  name: 'Chat',
   defaults: {
     messages: [],
     filter: undefined,

@@ -14,7 +14,7 @@ export interface SigninStateModel {
 }
 
 @State<SigninStateModel>({
-  name: 'GoogleSigninState',
+  name: 'GoogleSignin',
   defaults: {
     googleUser: null,
   }

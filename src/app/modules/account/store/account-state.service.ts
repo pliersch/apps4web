@@ -2,19 +2,19 @@ import { State } from "@ngxs/store";
 import { Injectable } from "@angular/core";
 import { AlertService } from "@app/common/services/alert.service";
 
-export interface AuthStateModel {
+export interface AccountStateModel {
   user: /*SocialUser |*/ null;
 }
 
-@State<AuthStateModel>({
-  name: 'legacy_auth',
+@State<AccountStateModel>({
+  name: 'Account',
   defaults: {
     user: null,
   }
 })
 
 @Injectable()
-export class AuthState {
+export class AccountState {
 
   // @Selector()
   // static user(state: AuthStateModel): SocialUser | null {

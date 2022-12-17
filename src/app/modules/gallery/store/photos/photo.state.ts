@@ -33,7 +33,7 @@ export interface PhotoStateModel {
 }
 
 @State<PhotoStateModel>({
-  name: 'PhotoState',
+  name: 'Photo',
   defaults: {
     photos: [],
     filteredPhotos: [],

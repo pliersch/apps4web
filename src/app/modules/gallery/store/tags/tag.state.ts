@@ -17,7 +17,7 @@ export interface TagStateModel {
 }
 
 @State<TagStateModel>({
-  name: 'TagState',
+  name: 'Tag',
   defaults: {
     tagGroups: [],
     loaded: false,

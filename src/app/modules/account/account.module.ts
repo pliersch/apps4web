@@ -6,7 +6,7 @@ import { AccountRoutingModule } from './account-routing.module';
 import { LayoutComponent } from './layout.component';
 import { SocialLoginComponent } from '@app/modules/account/social-login/social-login.component';
 import { NgxsModule } from "@ngxs/store";
-import { AuthState } from "@modules/account/store/auth.state";
+import { AccountState } from "@account/store/account-state.service";
 import { ShareModule } from "@modules/share/share.module";
 
 @NgModule({
@@ -14,7 +14,7 @@ import { ShareModule } from "@modules/share/share.module";
     CommonModule,
     MaterialModule,
     AccountRoutingModule,
-    NgxsModule.forFeature([AuthState]),
+    NgxsModule.forFeature([AccountState]),
     ShareModule,
   ],
   declarations: [
