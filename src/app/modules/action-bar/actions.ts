@@ -1,6 +1,6 @@
 export interface Action {
   name: any;
-  tooltip: string;
+  description: string;
   icon: string;
   handler: ActionProvider;
 }

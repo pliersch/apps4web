@@ -23,7 +23,7 @@ import {
 import { GalleryImageGridComponent } from '@gallery/components/lightbox/image-grid/gallery-image-grid.component';
 
 import { ShareModule } from '@app/modules/share/share.module';
-import { GalleryFilterPanelComponent } from './components/explorer/filter-panel/gallery-filter-panel.component';
+import { GalleryTagFilterComponent } from './components/explorer/tag-filter/gallery-tag-filter.component';
 import { GalleryImageDetailComponent } from './components/explorer/image-detail/gallery-image-detail.component';
 import {
   GalleryImagePlaceholderComponent
@@ -31,8 +31,8 @@ import {
 import { GalleryStarRatingComponent } from '@gallery/components/share/star-rating/gallery-star-rating.component';
 import {
   GalleryEditTagDetailComponent
-} from './components/explorer/edit-tags/edit-tag-detail/gallery-edit-tag-detail.component';
-import { GalleryEditTagsComponent } from './components/explorer/edit-tags/gallery-edit-tags.component';
+} from './components/editor/manage-tags-dialog/edit-tag-detail/gallery-edit-tag-detail.component';
+import { GalleryEditTagsComponent } from './components/editor/manage-tags-dialog/gallery-edit-tags.component';
 import { NgxsModule } from "@ngxs/store";
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { ExplorerPhotoControlComponent } from './components/explorer/photo-control/explorer-photo-control.component';
@@ -43,7 +43,7 @@ import { TagState } from "@gallery/store/tags/tag.state";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import {
   GalleryNewTagGroupComponent
-} from './components/explorer/new-tag-group/gallery-new-tag-group.component';
+} from './components/editor/new-tags-dialog/gallery-new-tag-group.component';
 import {
   GalleryEditPhotosComponent
 } from './components/editor/edit-photos-dialog/gallery-edit-photos.component';
@@ -53,7 +53,7 @@ import { GalleryActionPanelComponent } from './components/explorer/action-panel/
 import { GalleryRatingFilterComponent } from './components/explorer/rating-filter/gallery-rating-filter.component';
 import { GalleryRatingComponent } from './components/explorer/rating-panel/gallery-rating.component';
 import { GalleryDateFilterComponent } from './components/explorer/date-filter/gallery-date-filter.component';
-import { GalleryDeletePhotoComponent } from './components/explorer/delete-photo-dialog/gallery-delete-photo.component';
+import { GalleryDeletePhotoComponent } from './components/editor/delete-photo-dialog/gallery-delete-photo.component';
 import { GalleryEditorComponent } from "./components/editor/gallery-editor.component";
 import { FormsModule } from "@angular/forms";
 import { MatCheckboxModule } from "@angular/material/checkbox";
@@ -74,7 +74,7 @@ import { ScrollerItemComponent } from './components/share/scroller-item/scroller
     GalleryVerticalScrollerComponent,
     GalleryHorizontalScrollerComponent,
     GalleryImageGridComponent,
-    GalleryFilterPanelComponent,
+    GalleryTagFilterComponent,
     GalleryImageDetailComponent,
     GalleryImagePlaceholderComponent,
     GalleryStarRatingComponent,

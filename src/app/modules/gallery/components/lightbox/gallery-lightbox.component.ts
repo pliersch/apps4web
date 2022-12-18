@@ -41,9 +41,9 @@ export class GalleryLightboxComponent implements OnInit, OnDestroy, ActionProvid
   index = 0;
 
   private actions: Action[] = [
-    {name: ActionTypes.SwitchView, icon: 'arrow_downward', tooltip: 'toggle the thumbnail list', handler: this},
-    {name: ActionTypes.Filter, icon: 'filter_alt', tooltip: 'open the filter menu', handler: this},
-    {name: ActionTypes.ClearComparison, icon: 'clear', tooltip: 'clear comparison images', handler: this},
+    {name: ActionTypes.SwitchView, icon: 'arrow_downward', description: 'toggle the thumbnail list', handler: this},
+    {name: ActionTypes.Filter, icon: 'filter_alt', description: 'open the filter menu', handler: this},
+    {name: ActionTypes.ClearComparison, icon: 'clear', description: 'clear comparison images', handler: this},
   ]
 
   constructor(private alertService: AlertService,

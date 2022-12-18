@@ -5,7 +5,9 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Select, Store } from "@ngxs/store";
 import { TagState } from "@gallery/store/tags/tag.state";
 import * as tagActions from "@gallery/store/tags/tag.action";
-import { TagChanges } from "@gallery/components/explorer/edit-tags/edit-tag-detail/gallery-edit-tag-detail.component";
+import {
+  TagChanges
+} from "@gallery/components/editor/manage-tags-dialog/edit-tag-detail/gallery-edit-tag-detail.component";
 
 interface Changes {
   tagGroup: TagGroup;

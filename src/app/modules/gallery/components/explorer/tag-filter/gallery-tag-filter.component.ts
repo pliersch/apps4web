@@ -8,10 +8,10 @@ import { PhotoState } from "@gallery/store/photos/photo.state";
 
 @Component({
   selector: 'app-gallery-filter-panel',
-  templateUrl: './gallery-filter-panel.component.html',
-  styleUrls: ['./gallery-filter-panel.component.scss']
+  templateUrl: './gallery-tag-filter.component.html',
+  styleUrls: ['./gallery-tag-filter.component.scss']
 })
-export class GalleryFilterPanelComponent {
+export class GalleryTagFilterComponent {
 
   @Select(TagState.getTagGroups)
   tagGroups$: Observable<TagGroup[]>;

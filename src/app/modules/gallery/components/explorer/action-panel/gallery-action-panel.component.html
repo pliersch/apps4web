@@ -7,7 +7,7 @@
     <!--      <mat-list-item *ngFor="let action of actions">-->
     <!--        <span>{{ action.tooltip }}</span>-->
     <div *ngFor="let action of actions" class="action-container p5">
-      <span>{{ action.tooltip }}</span>
+      <span>{{ action.description }}</span>
       <button mat-raised-button color="primary"
               type="button" (click)="onClickAction(action)">
         <mat-icon> {{ action.icon }} </mat-icon>

@@ -37,7 +37,7 @@ export class SigninComponent implements OnInit {
         auto_select: true,
         cancel_on_tap_outside: false,
       });
-      /*      // OPTIONAL: In my case I want to redirect the user to an specific path.
+      /*      // OPTIONAL
             // @ts-ignore
             google.accounts.id.prompt((notification: PromptMomentNotification) => {
               console.log('Google prompt event triggered...');

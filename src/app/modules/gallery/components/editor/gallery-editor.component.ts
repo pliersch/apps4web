@@ -8,11 +8,11 @@ import {
 import { Action, ActionProvider } from "@modules/action-bar/actions";
 import {
   GalleryNewTagGroupComponent
-} from "@gallery/components/explorer/new-tag-group/gallery-new-tag-group.component";
+} from "@gallery/components/editor/new-tags-dialog/gallery-new-tag-group.component";
 import {
   GalleryDeletePhotoComponent
-} from "@gallery/components/explorer/delete-photo-dialog/gallery-delete-photo.component";
-import { AbstractExplorerComponent } from "@gallery/components/abstract/abstract-explorer.component";
+} from "@gallery/components/editor/delete-photo-dialog/gallery-delete-photo.component";
+import { AbstractExplorerComponent } from "@gallery/components/share/abstract-explorer/abstract-explorer.component";
 import { Tag, TagGroup } from "@gallery/store/tags/tag.model";
 import { ActionBarService } from "@modules/action-bar/action-bar.service";
 import { PhotoService } from "@gallery/services/photo.service";
@@ -21,7 +21,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { Select, Store } from "@ngxs/store";
 import { TagState } from "@gallery/store/tags/tag.state";
 import { Observable } from "rxjs";
-import { GalleryEditTagsComponent } from "@gallery/components/explorer/edit-tags/gallery-edit-tags.component";
+import { GalleryEditTagsComponent } from "@gallery/components/editor/manage-tags-dialog/gallery-edit-tags.component";
 
 export interface DeletePhotoDialogData {
   photo: Photo;
@@ -31,7 +31,7 @@ enum ActionTypes {
   SelectAll,
   DeselectAll,
   ToggleSelection,
-  EditTags,
+  EditPhotos,
   DeleteMany,
   NewTag,
   ManageTags,
@@ -52,14 +52,14 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
   tagGroups$: Observable<TagGroup[]>
   tagGroups: TagGroup[]
 
-  actions = [
-    {name: ActionTypes.SelectAll, icon: 'done_all', tooltip: 'select all', handler: this},
-    {name: ActionTypes.DeselectAll, icon: 'remove_done', tooltip: 'deselect all', handler: this},
-    {name: ActionTypes.ToggleSelection, icon: 'published_with_changes', tooltip: 'toggle selection', handler: this},
-    {name: ActionTypes.EditTags, icon: 'edit', tooltip: 'edit tags', handler: this},
-    {name: ActionTypes.DeleteMany, icon: 'delete', tooltip: 'delete photos', handler: this},
-    {name: ActionTypes.NewTag, icon: 'playlist_add', tooltip: 'new tag', handler: this},
-    {name: ActionTypes.ManageTags, icon: 'list', tooltip: 'manage tags', handler: this},
+  actions: Action[] = [
+    {name: ActionTypes.SelectAll, icon: 'done_all', description: 'select all', handler: this},
+    {name: ActionTypes.DeselectAll, icon: 'remove_done', description: 'deselect all', handler: this},
+    {name: ActionTypes.ToggleSelection, icon: 'published_with_changes', description: 'toggle selection', handler: this},
+    {name: ActionTypes.EditPhotos, icon: 'edit', description: 'edit photos', handler: this},
+    {name: ActionTypes.DeleteMany, icon: 'delete', description: 'delete photos', handler: this},
+    {name: ActionTypes.NewTag, icon: 'playlist_add', description: 'new tag', handler: this},
+    {name: ActionTypes.ManageTags, icon: 'list', description: 'manage tags', handler: this},
   ]
 
   constructor(
@@ -100,7 +100,7 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
       case ActionTypes.DeleteMany:
         this.deletePhotos();
         break;
-      case ActionTypes.EditTags:
+      case ActionTypes.EditPhotos:
         this.editTags(this.selection);
         break;
       case ActionTypes.NewTag:

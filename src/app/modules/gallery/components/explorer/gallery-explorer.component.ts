@@ -3,7 +3,7 @@ import { Photo } from '@gallery/store/photos/photo.model';
 import { saveAs } from 'file-saver';
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import { Action, ActionProvider } from "@modules/action-bar/actions";
-import { AbstractExplorerComponent } from "@gallery/components/abstract/abstract-explorer.component";
+import { AbstractExplorerComponent } from "@gallery/components/share/abstract-explorer/abstract-explorer.component";
 import { ActionBarService } from "@modules/action-bar/action-bar.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { Router } from "@angular/router";
@@ -25,12 +25,12 @@ enum ActionTypes {
 })
 export class GalleryExplorerComponent extends AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestroy, ActionProvider {
 
-  actions = [
-    {name: ActionTypes.SelectAll, icon: 'done_all', tooltip: 'select all', handler: this},
-    {name: ActionTypes.Add, icon: 'add', tooltip: 'add', handler: this},
-    {name: ActionTypes.DeselectAll, icon: 'remove_done', tooltip: 'deselect all', handler: this},
-    {name: ActionTypes.ToggleSelection, icon: 'published_with_changes', tooltip: 'toggle selection', handler: this},
-    {name: ActionTypes.Download, icon: 'download', tooltip: 'download', handler: this},
+  actions: Action[] = [
+    {name: ActionTypes.SelectAll, icon: 'done_all', description: 'select all', handler: this},
+    {name: ActionTypes.Add, icon: 'add', description: 'add', handler: this},
+    {name: ActionTypes.DeselectAll, icon: 'remove_done', description: 'deselect all', handler: this},
+    {name: ActionTypes.ToggleSelection, icon: 'published_with_changes', description: 'toggle selection', handler: this},
+    {name: ActionTypes.Download, icon: 'download', description: 'download', handler: this},
   ]
 
   constructor(
