@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { CreateUserDto, User } from "@modules/admin/modules/user/store/user.model";
+import { CreateUserDto, User } from "@account/store/user.model";
 import { GoogleUser } from "@modules/google-signin/google-user.model";
 
 export class CreateUser {

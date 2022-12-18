@@ -3,7 +3,7 @@ import { environment } from '@environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { CreateUserDto, User } from "@modules/admin/modules/user/store/user.model";
+import { CreateUserDto, User } from "@account/store/user.model";
 
 const baseUrl = `${environment.apiUrl}/user`;
 

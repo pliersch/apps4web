@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { AlertService } from "@app/common/services/alert.service";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import { catchError, map } from "rxjs/operators";
-import { User } from "./user.model";
+import { User } from "@account/store/user.model";
 import { Status } from "@modules/admin/modules/user/store/status";
 import { Role } from "@modules/admin/modules/user/store/role";
 import * as userActions from "@modules/admin/modules/user/store/user.actions";

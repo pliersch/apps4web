@@ -7,7 +7,7 @@ import { AddPhoto } from "@gallery/store/photos/photo.actions";
 import { TagService } from "@gallery/services/tag.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { UserState } from "@modules/admin/modules/user/store/user.state";
-import { User } from "@modules/admin/modules/user/store/user.model";
+import { User } from "@account/store/user.model";
 
 @Component({
   selector: 'app-gallery-upload',

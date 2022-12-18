@@ -2,12 +2,10 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Select, Store } from "@ngxs/store";
 import { UserState } from "@modules/admin/modules/user/store/user.state";
 import { Observable, Subscription } from "rxjs";
-import { CreateUserDto, User } from "@modules/admin/modules/user/store/user.model";
+import { CreateUserDto, User } from "@account/store/user.model";
 import { UserFormComponent } from "@modules/admin/modules/user/components/user-form/user-form.component";
 import { UserTableComponent } from "@modules/admin/modules/user/components/user-table/user-table.component";
 import * as userActions from "@modules/admin/modules/user/store/user.actions";
-import { LoginAction } from "@account/store/auth.actions";
-import { SetCurrentUser } from "@modules/admin/modules/user/store/user.actions";
 
 export enum Mode {
   AddUser = 'Create',
@@ -53,7 +51,7 @@ export class UserOverviewComponent implements OnInit, OnDestroy {
   }
 
   handleLoginAsEvent(user: User): void {
-    this.store.dispatch(new SetCurrentUser(user));
+    this.store.dispatch(new userActions.SetCurrentUser(user));
   }
 
   addUser(): void {

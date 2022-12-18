@@ -6,7 +6,7 @@ import { GoogleUser } from "@modules/google-signin/google-user.model";
 import { SigninService } from "@modules/google-signin/services/signin.service";
 import { catchError, map } from "rxjs/operators";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
-import { User } from "@modules/admin/modules/user/store/user.model";
+import { User } from "@account/store/user.model";
 import { LoadUsers, SetCurrentUser } from "@modules/admin/modules/user/store/user.actions";
 
 export interface SigninStateModel {

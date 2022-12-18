@@ -1,9 +1,10 @@
 import { State } from "@ngxs/store";
 import { Injectable } from "@angular/core";
 import { AlertService } from "@app/common/services/alert.service";
+import { User } from "@account/store/user.model";
 
 export interface AccountStateModel {
-  user: /*SocialUser |*/ null;
+  user: User | null;
 }
 
 @State<AccountStateModel>({

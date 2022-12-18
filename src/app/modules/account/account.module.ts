@@ -6,7 +6,7 @@ import { AccountRoutingModule } from './account-routing.module';
 import { LayoutComponent } from './layout.component';
 import { SocialLoginComponent } from '@app/modules/account/social-login/social-login.component';
 import { NgxsModule } from "@ngxs/store";
-import { AccountState } from "@account/store/account-state.service";
+import { AccountState } from "@account/store/account.state";
 import { ShareModule } from "@modules/share/share.module";
 
 @NgModule({

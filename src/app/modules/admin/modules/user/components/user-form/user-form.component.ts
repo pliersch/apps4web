@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators } from "@angular/forms";
-import { User } from "@modules/admin/modules/user/store/user.model";
+import { User } from "@account/store/user.model";
 import { getValuesOfEnum } from "@app/common/util/enum-utils";
 import { Role } from "@modules/admin/modules/user/store/role";
 import { Status } from "@modules/admin/modules/user/store/status";

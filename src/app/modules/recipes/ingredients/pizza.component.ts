@@ -38,11 +38,11 @@ export class PizzaComponent implements AfterContentInit {
     const doughSalt: Ingredient = this.dough.find(ingredient => ingredient.name === 'Salz')!;
 
     poolishFlour.value = String(count * 50) + 'g';
-    poolishWater.value = String(count * 47.5) + 'g';
+    poolishWater.value = String(count * 50) + 'g';
     poolishHoney.value = String(count * 0.5) + 'g';
     poolishYeast.value = String((count * 0.35).toFixed(1)) + 'g';
     doughFlour.value = String(count * 106) + 'g';
-    doughWater.value = String(count * 62.5) + 'g';
+    doughWater.value = String(count * 65) + 'g';
     doughSalt.value = String(count * 4.5) + 'g';
   }
 
