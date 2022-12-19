@@ -1,4 +1,4 @@
-import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { Injectable } from "@angular/core";
 import { AlertService } from "@app/common/services/alert.service";
 import * as authActions from "@modules/google-signin/store/signin.actions";
@@ -34,8 +34,7 @@ export class SigninState {
   }
 
   constructor(private alertService: AlertService,
-              private signinService: SigninService,
-              private store: Store) {
+              private signinService: SigninService) {
   }
 
   @Action(authActions.SigninWithGoogle)
@@ -69,23 +68,13 @@ export class SigninState {
       asapScheduler.schedule(() =>
         ctx.dispatch((new SetCurrentUser(action.user))
         ))
-      // this.store.dispatch(new LoadUsers())
-      // this.store.dispatch(new SetCurrentUser(action.user));
     }
   }
 
   @Action(authActions.SigninWithGoogleFail)
-  signinWithGoogleFail(action: authActions.SigninWithGoogleFail): void {
+  signinWithGoogleFail(): void {
     this.alertService.error('Signin with Google fail');
   }
-
-  // @Action(authActions.LoginWithGoogle)
-  // loginWithGoogle(ctx: StateContext<AuthStateModel>, action: authActions.LoginWithGoogle): void {
-  //   ctx.patchState({socialUser: action.user});
-  //   this.signinService.signin(action.user).pipe(
-  //     map((user: User) => console.log(user))
-  //   );
-  // }
 
   @Action(authActions.SignoutWithGoogle)
   logoutWithGoogle(ctx: StateContext<SigninStateModel>): void {

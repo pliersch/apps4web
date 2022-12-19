@@ -25,9 +25,6 @@ import { GalleryImageGridComponent } from '@gallery/components/lightbox/image-gr
 import { ShareModule } from '@app/modules/share/share.module';
 import { GalleryTagFilterComponent } from './components/explorer/tag-filter/gallery-tag-filter.component';
 import { GalleryImageDetailComponent } from './components/explorer/image-detail/gallery-image-detail.component';
-import {
-  GalleryImagePlaceholderComponent
-} from './components/share/image-placeholder/gallery-image-placeholder.component';
 import { GalleryStarRatingComponent } from '@gallery/components/share/star-rating/gallery-star-rating.component';
 import {
   GalleryEditTagDetailComponent
@@ -76,7 +73,7 @@ import { ScrollerItemComponent } from './components/share/scroller-item/scroller
     GalleryImageGridComponent,
     GalleryTagFilterComponent,
     GalleryImageDetailComponent,
-    GalleryImagePlaceholderComponent,
+    // GalleryImagePlaceholderComponent,
     GalleryStarRatingComponent,
     GalleryEditTagDetailComponent,
     GalleryEditTagsComponent,
