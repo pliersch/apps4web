@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler, isDevMode, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -28,6 +28,7 @@ import { SigninState } from "@modules/google-signin/store/signin.state";
 import { SamplesModule } from "@modules/samples/samples.module";
 import { RadioModule } from "@modules/radio/radio.module";
 import { UserState } from "@modules/admin/modules/user/store/user.state";
+import { ServiceWorkerModule } from "@angular/service-worker";
 
 const ngxsConfig: NgxsModuleOptions = {
   developmentMode: !environment.production,
@@ -71,6 +72,12 @@ const ngxsConfig: NgxsModuleOptions = {
     // NgxsLoggerPluginModule.forRoot(),
     WasteCalendarModule,
     RecipesModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
     GoogleSigninModule,
     SamplesModule,
     RadioModule
