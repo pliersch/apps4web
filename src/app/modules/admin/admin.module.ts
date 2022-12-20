@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminLayoutComponent } from "./layout/admin-layout.component";
-import { MaterialModule } from "@app/shared/material/material.module";
+import { MaterialModule } from "@app/modules/share/material/material.module";
 
 
 @NgModule({

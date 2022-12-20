@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MaterialModule } from "@app/shared/material/material.module";
+import { MaterialModule } from "@app/modules/share/material/material.module";
 import { DoctorRoutingModule } from './doctor-routing.module';
 import { DoctorContainerComponent } from './doctor-container.component';
 import { FooterComponent } from './footer/footer.component';

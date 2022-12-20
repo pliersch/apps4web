@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 
-import { MaterialModule } from "@app/shared/material/material.module";
+import { MaterialModule } from "@app/modules/share/material/material.module";
 // import {NgxScrollbarModule} from '@app/shared/ngx-scrollbar/ngx-scrollbar.module';
 // TODO replace
 import { NgScrollbarModule } from 'ngx-scrollbar';

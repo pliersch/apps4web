@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MaterialModule } from "@app/shared/material/material.module";
+import { MaterialModule } from "@app/modules/share/material/material.module";
 import { AccountRoutingModule } from './account-routing.module';
 import { LayoutComponent } from './layout.component';
 import { SocialLoginComponent } from '@app/modules/account/social-login/social-login.component';

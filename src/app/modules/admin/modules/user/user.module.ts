@@ -5,7 +5,7 @@ import { UserOverviewComponent } from "@modules/admin/modules/user/components/us
 import { MatTableModule } from "@angular/material/table";
 import { MatSortModule } from "@angular/material/sort";
 import { UserLayoutComponent } from "@modules/admin/modules/user/layout/user-layout.component";
-import { MaterialModule } from "@app/shared/material/material.module";
+import { MaterialModule } from "@app/modules/share/material/material.module";
 import { DatePipe } from "@modules/admin/modules/user/pipes/date.pipe";
 import { RolePipe } from './pipes/role.pipe';
 import { StatusPipe } from './pipes/status.pipe';

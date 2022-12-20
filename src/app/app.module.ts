@@ -14,7 +14,7 @@ import { AppBarComponent } from "@modules/app-bar/app-bar.component";
 import { ThemeMenuComponent } from "@modules/themes/menus/theme-menu.component";
 import { DashboardComponent } from "@modules/dashboard/dashboard.component";
 import { DashboardCardComponent } from "@modules/dashboard/cards/dashboard-card.component";
-import { MaterialModule } from "@app/shared/material/material.module";
+import { MaterialModule } from "@app/modules/share/material/material.module";
 import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
 import { WasteCalendarModule } from "@modules/waste-calendar/waste-calendar.module";
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from "@angular/material/core";

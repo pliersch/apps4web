@@ -12,6 +12,7 @@ export function filterByTags(photos: Photo[], tags: Tag[]): Photo[] {
       result.push(photo);
     }
   }
+  console.log('filterByTags filterByTags: ', result)
   return result;
 }
 

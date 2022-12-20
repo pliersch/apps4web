@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { RadioRoutingModule } from './radio-routing.module';
 import { PlayerComponent } from './player/player.component';
-import { MaterialModule } from "@app/shared/material/material.module";
-import { NgxScrollbarModule } from "@app/shared/ngx-scrollbar/ngx-scrollbar.module";
+import { MaterialModule } from "@app/modules/share/material/material.module";
+import { NgxScrollbarModule } from "@app/modules/share/ngx-scrollbar/ngx-scrollbar.module";
 
 
 @NgModule({
