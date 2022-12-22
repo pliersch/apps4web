@@ -27,7 +27,7 @@ import { SamplesModule } from "@modules/samples/samples.module";
 import { RadioModule } from "@modules/radio/radio.module";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { AccountState } from "@account/store/account.state";
-import { GoogleSigninModule } from "@account/google-signin/google-signin.module";
+import { AccountModule } from "@account/account.module";
 
 const ngxsConfig: NgxsModuleOptions = {
   developmentMode: !environment.production,
@@ -79,7 +79,7 @@ const ngxsConfig: NgxsModuleOptions = {
     }),
     SamplesModule,
     RadioModule,
-    GoogleSigninModule
+    AccountModule,
   ],
   exports: [],
   providers: [

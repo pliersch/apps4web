@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { LayoutComponent } from './layout.component';
-import { SocialLoginComponent } from "@account/social-login/social-login.component";
+import { LayoutComponent } from './layout/layout.component';
+import { SocialLoginComponent } from "@account/components/social-login/social-login.component";
 
 const routes: Routes = [
   {

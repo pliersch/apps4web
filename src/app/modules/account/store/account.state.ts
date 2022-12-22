@@ -6,7 +6,7 @@ import { Role } from "@modules/admin/modules/user/store/role";
 import { SetUser } from "@account/store/account.actions";
 import { GoogleUser } from "@account/store/google-user.model";
 import { AlertService } from "@app/common/services/alert.service";
-import { SigninService } from "@account/google-signin/services/signin.service";
+import { AccountService } from "@account/services/account.service";
 import * as authActions from "@account/store/signin.actions";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import { catchError, map } from "rxjs/operators";
@@ -53,7 +53,7 @@ export class AccountState {
 
   constructor(/*private authService: AuthService,*/
               private alertService: AlertService,
-              private signinService: SigninService) {
+              private signinService: AccountService) {
   }
 
   // region set user
