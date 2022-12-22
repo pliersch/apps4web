@@ -31,10 +31,6 @@ export class UserService {
     return this.http.patch<User>(`${baseUrl}/${id}`, dto);
   }
 
-  login(user: User): Observable<any> {
-    return this.http.post<User>(baseUrl + '/login', user);
-  }
-
   delete(id: string): Observable<any> {
     return this.http.delete(`${baseUrl}/${id}`);
     // .pipe(

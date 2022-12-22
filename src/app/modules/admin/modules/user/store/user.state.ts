@@ -4,41 +4,23 @@ import { AlertService } from "@app/common/services/alert.service";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import { User } from "@account/store/user.model";
-import { Status } from "@modules/admin/modules/user/store/status";
-import { Role } from "@modules/admin/modules/user/store/role";
 import * as userActions from "@modules/admin/modules/user/store/user.actions";
 import { UserService } from "@modules/admin/modules/user/services/user.service";
 import { patch, removeItem, updateItem } from "@ngxs/store/operators";
 
 export interface UserStateModel {
-  user: User;
   users: Array<User>;
 }
 
 @State<UserStateModel>({
   name: 'Admin_User',
   defaults: {
-    user: {
-      id: 'not set',
-      givenName: 'Gast',
-      lastName: 'not set',
-      email: 'not set',
-      status: Status.accept,
-      role: Role.Guest,
-      created: new Date(),
-      lastLogin: new Date()
-    },
     users: [],
   }
 })
 
 @Injectable()
 export class UserState {
-
-  @Selector()
-  static getUser(state: UserStateModel): User {
-    return state.user;
-  }
 
   @Selector()
   static getUsers(state: UserStateModel): User[] {
@@ -85,19 +67,19 @@ export class UserState {
 
   // endregion
 
-  // region set current
-  //////////////////////////////////////////////////////////
-  //         set current
-  //////////////////////////////////////////////////////////
-
-  @Action(userActions.SetCurrentUser)
-  setCurrentUser(ctx: StateContext<UserStateModel>, action: userActions.SetCurrentUser): void {
-    ctx.patchState({
-      user: action.user
-    });
-  }
-
-// endregion
+//   // region set current
+//   //////////////////////////////////////////////////////////
+//   //         set current
+//   //////////////////////////////////////////////////////////
+//
+//   @Action(userActions.SetCurrentUser)
+//   setCurrentUser(ctx: StateContext<UserStateModel>, action: userActions.SetCurrentUser): void {
+//     ctx.patchState({
+//       user: action.user
+//     });
+//   }
+//
+// // endregion
 
 // region create
 //////////////////////////////////////////////////////////
@@ -105,13 +87,7 @@ export class UserState {
 //////////////////////////////////////////////////////////
 
   @Action(userActions.CreateUser)
-  createUser(ctx
-               :
-               StateContext<UserStateModel>, action
-               :
-               userActions.CreateUser
-  ):
-    Observable<Subscription> {
+  createUser(ctx: StateContext<UserStateModel>, action: userActions.CreateUser): Observable<Subscription> {
     return this.userService.create(action.dto)
       .pipe(
         map((user: User) =>
@@ -130,13 +106,7 @@ export class UserState {
   }
 
   @Action(userActions.CreateUserSuccess)
-  createUserSuccess(ctx
-                      :
-                      StateContext<UserStateModel>, action
-                      :
-                      userActions.CreateUserSuccess
-  ):
-    void {
+  createUserSuccess(ctx: StateContext<UserStateModel>, action: userActions.CreateUserSuccess): void {
     const state = ctx.getState();
     ctx.patchState({
       users: [
@@ -147,9 +117,7 @@ export class UserState {
   }
 
   @Action(userActions.CreateUserFail)
-  createUserFail()
-    :
-    void {
+  createUserFail(): void {
     this.alertService.error('cant create user')
   }
 
@@ -161,13 +129,7 @@ export class UserState {
 //////////////////////////////////////////////////////////
 
   @Action(userActions.UpdateUser)
-  updateUser(ctx
-               :
-               StateContext<UserStateModel>, action
-               :
-               userActions.UpdateUser
-  ):
-    Observable<Subscription> {
+  updateUser(ctx: StateContext<UserStateModel>, action: userActions.UpdateUser): Observable<Subscription> {
     return this.userService.update(action.id, action.partialUser)
       .pipe(
         map((typeOrmUpdateVal: any) =>
@@ -186,12 +148,7 @@ export class UserState {
   }
 
   @Action(userActions.UpdateUserSuccess)
-  updateUserSuccess(ctx
-                      :
-                      StateContext<UserStateModel>, action
-                      :
-                      userActions.UpdateUserSuccess
-  ):
+  updateUserSuccess(ctx: StateContext<UserStateModel>, action: userActions.UpdateUserSuccess):
     void {
     ctx.setState(
       patch({
@@ -202,9 +159,7 @@ export class UserState {
   }
 
   @Action(userActions.UpdateUserFail)
-  updateUserFail()
-    :
-    void {
+  updateUserFail(): void {
     this.alertService.error('cant update user')
   }
 
@@ -216,13 +171,7 @@ export class UserState {
 //////////////////////////////////////////////////////////
 
   @Action(userActions.DeleteUser)
-  deleteUser(ctx
-               :
-               StateContext<UserStateModel>, action
-               :
-               userActions.DeleteUser
-  ):
-    Observable<Subscription> {
+  deleteUser(ctx: StateContext<UserStateModel>, action: userActions.DeleteUser): Observable<Subscription> {
     return this.userService.delete(action.id)
       .pipe(
         map(() =>
@@ -241,13 +190,7 @@ export class UserState {
   }
 
   @Action(userActions.DeleteUserSuccess)
-  deleteUserSuccess(ctx
-                      :
-                      StateContext<UserStateModel>, action
-                      :
-                      userActions.DeleteUserSuccess
-  ):
-    void {
+  deleteUserSuccess(ctx: StateContext<UserStateModel>, action: userActions.DeleteUserSuccess): void {
     ctx.setState(
       patch({
         users: removeItem<User>(user => user!.id === action.id)
@@ -256,9 +199,7 @@ export class UserState {
   }
 
   @Action(userActions.DeleteUserFail)
-  deleteUserFail()
-    :
-    void {
+  deleteUserFail(): void {
     this.alertService.error('cant delete user')
   }
 

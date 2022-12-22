@@ -1,4 +1,4 @@
-import { GoogleUser } from "@modules/google-signin/google-user.model";
+import { GoogleUser } from "@account/store/google-user.model";
 import { User } from "@account/store/user.model";
 
 export class SigninWithGoogle {

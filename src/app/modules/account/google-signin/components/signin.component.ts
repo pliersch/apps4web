@@ -1,23 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { GoogleUser } from "@modules/google-signin/google-user.model";
+import { GoogleUser } from "@account/store/google-user.model";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
-import { SigninState } from "@modules/google-signin/store/signin.state";
 import {
   SigninWithGoogle,
   SigninWithGoogleFail,
   SignoutWithGoogle
-} from "@modules/google-signin/store/signin.actions";
+} from "@account/store/signin.actions";
 import { CredentialResponse } from "google-one-tap";
+import { AccountState } from "@account/store/account.state";
 
 @Component({
+  // standalone: true,
   selector: 'app-signin',
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.scss']
 })
 export class SigninComponent implements OnInit {
 
-  @Select(SigninState.user)
+  @Select(AccountState.user)
   user$: Observable<GoogleUser>;
   user: GoogleUser | null;
 

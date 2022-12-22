@@ -6,6 +6,7 @@ import { CreateUserDto, User } from "@account/store/user.model";
 import { UserFormComponent } from "@modules/admin/modules/user/components/user-form/user-form.component";
 import { UserTableComponent } from "@modules/admin/modules/user/components/user-table/user-table.component";
 import * as userActions from "@modules/admin/modules/user/store/user.actions";
+import { LoadUsers } from "@modules/admin/modules/user/store/user.actions";
 
 export enum Mode {
   AddUser = 'Create',
@@ -36,6 +37,7 @@ export class UserOverviewComponent implements OnInit, OnDestroy {
   constructor(private store: Store) { }
 
   ngOnInit(): void {
+    this.store.dispatch(new LoadUsers());
     this.subscription = this.users$.subscribe(res => {
       this.users = res;
     });

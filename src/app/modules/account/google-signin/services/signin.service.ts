@@ -3,7 +3,7 @@ import { environment } from "@environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { User } from "@account/store/user.model";
 import { Observable } from "rxjs";
-import { GoogleUser } from "@modules/google-signin/google-user.model";
+import { GoogleUser } from "@account/store/google-user.model";
 
 const baseUrl = `${environment.apiUrl}/user`;
 

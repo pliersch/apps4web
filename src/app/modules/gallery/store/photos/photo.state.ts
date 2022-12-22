@@ -1,4 +1,4 @@
-import { Action, Selector, State, StateContext } from "@ngxs/store";
+import { Action, Selector, State, StateContext, Store } from "@ngxs/store";
 import { Injectable } from "@angular/core";
 import { catchError, map } from "rxjs/operators";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
@@ -12,6 +12,7 @@ import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
 import { ServerSentService } from "@app/common/services/server-sent.service";
 import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
 import { Tag } from "@gallery/store/tags/tag.model";
+import { AccountState } from "@account/store/account.state";
 
 export interface PhotoStateModel {
   photos: Photo[];
@@ -59,6 +60,7 @@ export class PhotoState {
 
   constructor(private photoService: PhotoService,
               private pushService: ServerSentService,
+              private store: Store,
               private alertService: AlertService) { }
 
   @Selector()
@@ -221,6 +223,8 @@ export class PhotoState {
     if (count == 0) {
       return of(Subscription.EMPTY);
     }
+    // const snapshot = this.store.selectSnapshot(AccountState.user);
+    // console.log('PhotoState loadPhotos: ', snapshot)
     return this.photoService.getPhotos(count, from)
       .pipe(
         map((dto: PhotoDto) =>

@@ -8,6 +8,7 @@ import { TagService } from "@gallery/services/tag.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { UserState } from "@modules/admin/modules/user/store/user.state";
 import { User } from "@account/store/user.model";
+import { AccountState } from "@account/store/account.state";
 
 @Component({
   selector: 'app-gallery-upload',
@@ -26,7 +27,7 @@ export class GalleryUploadComponent implements OnInit {
   copies: string[][];
   index = 0;
 
-  @Select(UserState.getUser)
+  @Select(AccountState.getUser)
   user$: Observable<User>;
   user: User;
 

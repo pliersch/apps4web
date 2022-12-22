@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SigninComponent } from './components/signin.component';
 import { MaterialModule } from "@app/modules/share/material/material.module";
-import { SigninService } from "@modules/google-signin/services/signin.service";
+import { SigninService } from "@account/google-signin/services/signin.service";
 
 @NgModule({
   declarations: [

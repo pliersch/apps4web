@@ -4,7 +4,6 @@ import { PhotoService } from "@gallery/services/photo.service";
 import { Router } from "@angular/router";
 import { MatDialog } from "@angular/material/dialog";
 import { Select, Store } from "@ngxs/store";
-import { SigninState } from "@modules/google-signin/store/signin.state";
 import { Observable, Subscription } from "rxjs";
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { Photo } from "@gallery/store/photos/photo.model";
@@ -13,8 +12,8 @@ import { tap } from "rxjs/operators";
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import { GALLERY_CONSTANTS } from "@gallery/const";
 import { Action } from "@modules/action-bar/actions";
-import { UserState } from "@modules/admin/modules/user/store/user.state";
 import { User } from "@account/store/user.model";
+import { AccountState } from "@account/store/account.state";
 
 
 @Component({
@@ -27,7 +26,7 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   @ViewChild('scrollbar')
   scrollbarRef: NgScrollbar;
 
-  @Select(SigninState.isAuthenticated)
+  @Select(AccountState.isAuthenticated)
   isAuthenticated$: Observable<boolean>;
   isAuthenticated: boolean;
 
@@ -55,7 +54,7 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   selection$: Observable<Photo[]>;
   selection: Photo[];
 
-  @Select(UserState.getUser)
+  @Select(AccountState.getUser)
   user$: Observable<User>;
   user: User;
 
