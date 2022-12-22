@@ -10,7 +10,7 @@ import { GALLERY_CONSTANTS } from "@gallery/const";
 @Injectable()
 export class GalleryResolver implements PushMessageListener, Resolve<Subscription> {
 
-  private isInit = true;
+  private initialized = false;
   private photosAdded = false
   private photosChanged = false
   private tagsChanged = false
@@ -24,9 +24,9 @@ export class GalleryResolver implements PushMessageListener, Resolve<Subscriptio
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Subscription> {
     let observable: Observable<Subscription> = of(Subscription.EMPTY);
-    if (this.isInit) {
+    if (!this.initialized) {
       observable = this.initStore();
-      this.isInit = false;
+      this.initialized = true;
     }
     this.handleChanges()
     return observable;

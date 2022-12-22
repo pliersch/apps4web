@@ -11,6 +11,8 @@ import { RolePipe } from './pipes/role.pipe';
 import { StatusPipe } from './pipes/status.pipe';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { UserTableComponent } from './components/user-table/user-table.component';
+import { NgxsModule } from "@ngxs/store";
+import { UserState } from "@modules/admin/modules/user/store/user.state";
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { UserTableComponent } from './components/user-table/user-table.component
     UserRoutingModule,
     MatTableModule,
     MatSortModule,
-    MaterialModule
+    MaterialModule,
+    NgxsModule.forFeature([UserState]),
   ]
 })
 export class UserModule {}

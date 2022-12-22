@@ -23,7 +23,7 @@ const routes: Routes = [{
     {path: 'impressum', title: 'Impressum', component: LegalNoticeComponent},
     // {path: 'auth', loadChildren: authModule},
     {path: 'chat', loadChildren: chatModule},
-    {path: 'admin', title: 'Administration', loadChildren: adminModule/*, canActivate: [AuthGuard]*/},
+    {path: 'admin', title: 'Administration', loadChildren: adminModule, canActivate: [AuthGuard]},
     // {path: 'waste', loadChildren: wasteModule},
     // {path: 'felix', loadChildren: doctorModule},
     {path: 'gallery', title: 'Photo Galerie', loadChildren: galleryModule},

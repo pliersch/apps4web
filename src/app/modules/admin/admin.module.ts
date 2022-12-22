@@ -5,7 +5,6 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminLayoutComponent } from "./layout/admin-layout.component";
 import { MaterialModule } from "@app/modules/share/material/material.module";
 
-
 @NgModule({
   declarations: [AdminLayoutComponent],
   imports: [
