@@ -7,7 +7,7 @@
 
       <mat-nav-list>
         <nav>
-          <a mat-list-item *ngFor="let route of routes" [routerLink]="[route.route]"
+          <a mat-list-item *ngFor="let route of routes$ | async" [routerLink]="[route.route]"
              [routerLinkActive]="['active-route']">{{route.name}}</a>
         </nav>
       </mat-nav-list>

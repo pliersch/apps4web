@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Store } from "@ngxs/store";
 import { ThemeState } from "@modules/themes/stores/theme-state";
-import { constants } from "@app/common/const/const";
+import { RouteService } from "@app/common/services/route.service";
 
 @Component({
   selector: 'app-default-layout',
@@ -16,12 +16,13 @@ export class DefaultLayoutComponent implements OnInit {
 
   @ViewChild(MatSidenav) drawer!: MatSidenav;
 
-  appName: string = constants.appName;
+  appName = 'A4W';
   theme = 'dark-theme';
-  routes = constants.routes;
+  routes$ = this.routeService.getRoutes();
 
   constructor(private breakpointObserver: BreakpointObserver,
-              private store: Store) {
+              private store: Store,
+              private routeService: RouteService) {
   }
 
   ngOnInit(): void {

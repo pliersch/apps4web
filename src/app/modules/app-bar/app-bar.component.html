@@ -6,7 +6,7 @@
   <span>{{appName}}</span>
   <mat-toolbar>
     <button mat-flat-button routerLinkActive='active-route'
-            *ngFor="let route of routes" [routerLink]="[route.route]">{{route.name}}</button>
+            *ngFor="let route of routes$ | async" [routerLink]="[route.route]">{{route.name}}</button>
   </mat-toolbar>
   <!--  <mat-toolbar>-->
   <!--    <mat-nav-list class="list-horizontal" [style.display]="(isHandset$ | async) ? 'none' : 'initial'">-->

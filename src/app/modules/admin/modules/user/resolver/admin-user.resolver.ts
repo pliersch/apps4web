@@ -14,7 +14,6 @@ export class AdminUserResolver implements Resolve<boolean> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     if (this.store.selectSnapshot(UserState.getUsers).length === 0) {
-      console.log('AdminUserResolver resolve: ',)
       return this.store.dispatch(new LoadUsers())
     }
 

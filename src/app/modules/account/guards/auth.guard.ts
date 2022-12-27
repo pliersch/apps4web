@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
     if (this.store.selectSnapshot(AccountState.isAuthenticated)) {
       return true;
     }
-    this.router.navigate(['/account/login'], {queryParams: {returnUrl: state.url}});
+    void this.router.navigate(['/account/login'], {queryParams: {returnUrl: state.url}});
     return false;
   }
 

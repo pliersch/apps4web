@@ -21,17 +21,14 @@ const routes: Routes = [{
     {path: '', title: 'Home', component: DashboardComponent},
     {path: 'dashboard', title: 'Home', component: DashboardComponent},
     {path: 'impressum', title: 'Impressum', component: LegalNoticeComponent},
-    // {path: 'auth', loadChildren: authModule},
     {path: 'chat', loadChildren: chatModule},
     {path: 'admin', title: 'Administration', loadChildren: adminModule, canActivate: [AuthGuard]},
     // {path: 'waste', loadChildren: wasteModule},
-    // {path: 'felix', loadChildren: doctorModule},
     {path: 'gallery', title: 'Photo Galerie', loadChildren: galleryModule},
     {path: 'account', title: 'Account Info', loadChildren: accountModule},
     // {path: 'samples', loadChildren: samplesModule},
     // {path: 'recipes', loadChildren: recipesModule},
     {path: 'three', title: 'ThreeJS Playground', loadChildren: threeModule},
-    // {path: 'signin', title: 'G-Signin', loadChildren: accountModule},
   ]
 }];
 
