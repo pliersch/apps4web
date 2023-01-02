@@ -57,15 +57,10 @@ export class AccountState {
     return state.user.role === Role.Admin;
   }
 
-  constructor(/*private authService: AuthService,*/
-              private alertService: AlertService,
+  constructor(private alertService: AlertService,
               private routeService: RouteService,
               private signinService: AccountService) {
   }
-
-  //////////////////////////////////////////////////////////
-  //         set user
-  //////////////////////////////////////////////////////////
 
   @Action(SetUser)
   setCurrentUser(ctx: StateContext<AccountStateModel>, action: SetUser): void {

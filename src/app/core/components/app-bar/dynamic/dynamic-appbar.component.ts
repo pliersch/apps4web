@@ -1,8 +1,8 @@
-import {Component, OnInit, Type, ViewChild} from '@angular/core';
-import {DynamicAppbarDirective} from "./dynamic-appbar.directive";
-import {DynamicAppbar} from "@modules/share/dynamic-appbar";
-import {DynamicAppbarHost} from "@modules/app-bar/dynamic/dynamic-appbar-host";
-import {DynamicAppbarService} from "@modules/app-bar/dynamic/dynamic-appbar.service";
+import { Component, OnInit, Type, ViewChild } from '@angular/core';
+import { DynamicAppbarDirective } from "./dynamic-appbar.directive";
+import { DynamicAppbar } from "@modules/share/dynamic-appbar";
+import { DynamicAppbarHost } from "@app/core/components/app-bar/dynamic/dynamic-appbar-host";
+import { DynamicAppbarService } from "@app/core/components/app-bar/dynamic/dynamic-appbar.service";
 
 @Component({
   selector: 'app-dynamic-appbar',

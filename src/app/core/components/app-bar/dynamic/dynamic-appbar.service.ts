@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {DynamicAppbarModel} from "@modules/app-bar/dynamic/dynamic-appbar.model";
-import {Location} from "@angular/common";
-import {DynamicAppbarHost} from "@modules/app-bar/dynamic/dynamic-appbar-host";
+import { Injectable } from '@angular/core';
+import { DynamicAppbarModel } from "@app/core/components/app-bar/dynamic/dynamic-appbar.model";
+import { Location } from "@angular/common";
+import { DynamicAppbarHost } from "@app/core/components/app-bar/dynamic/dynamic-appbar-host";
 
 @Injectable({
   providedIn: 'root'

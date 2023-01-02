@@ -10,7 +10,6 @@ import { HttpClientModule } from "@angular/common/http";
 import { NgxsModule, NgxsModuleOptions, Store } from '@ngxs/store';
 import { GlobalErrorHandler } from "@app/common/helpers/global-error-handler";
 import { environment } from "@environments/environment";
-import { AppBarComponent } from "@modules/app-bar/app-bar.component";
 import { ThemeMenuComponent } from "@modules/themes/menus/theme-menu.component";
 import { DashboardComponent } from "@modules/dashboard/dashboard.component";
 import { DashboardCardComponent } from "@modules/dashboard/cards/dashboard-card.component";
@@ -27,6 +26,7 @@ import { RadioModule } from "@modules/radio/radio.module";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { AccountState } from "@account/store/account.state";
 import { AccountModule } from "@account/account.module";
+import { AppBarComponent } from "@app/core/components/app-bar/app-bar.component";
 
 const ngxsConfig: NgxsModuleOptions = {
   developmentMode: !environment.production,

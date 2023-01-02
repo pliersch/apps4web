@@ -11,13 +11,6 @@
     <button mat-flat-button routerLinkActive='active-route'
             *ngFor="let route of routes$ | async" [routerLink]="[route.route]">{{route.name}}</button>
   </mat-toolbar>
-  <!--  <mat-toolbar>-->
-  <!--    <mat-nav-list class="list-horizontal" [style.display]="(isHandset$ | async) ? 'none' : 'initial'">-->
-  <!--      <a mat-list-item *ngFor="let route of routes" [routerLink]="[route.route]"-->
-  <!--         [routerLinkActive]="['active-route']">{{route.name}}</a>-->
-  <!--    </mat-nav-list>-->
-  <!--  </mat-toolbar>-->
   <app-theme-menu (switchThemeEvent)="onSwitchTheme($event)"></app-theme-menu>
   <app-signin></app-signin>
-  <!--  <ng-template #authMenuPlaceHolder></ng-template>-->
 </mat-toolbar>
