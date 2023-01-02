@@ -24,6 +24,8 @@ NGXS
 - gallery request new photos auch bei resize des viewports? wenn kleiner viewport, und dann großer wird
   request nicht ausgeführt. eigentlich kein use-case
 
+- Can't resolve 'google-one-tap' wenn account oder google importiert wird
+
 - typeORM updates werden nicht genutzt
   - https://stackoverflow.com/questions/47792808/typeorm-update-item-and-return-it
   - The key is returning response.raw[0] in order to get the type back.

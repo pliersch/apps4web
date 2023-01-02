@@ -56,7 +56,6 @@ export class AccountState {
               private signinService: AccountService) {
   }
 
-  // region set user
   //////////////////////////////////////////////////////////
   //         set user
   //////////////////////////////////////////////////////////
@@ -67,8 +66,6 @@ export class AccountState {
       user: action.user
     });
   }
-
-// endregion
 
   @Action(authActions.SigninWithGoogle)
   signinWithGoogle(ctx: StateContext<AccountStateModel>, action: authActions.SigninWithGoogle): Observable<Subscription> {

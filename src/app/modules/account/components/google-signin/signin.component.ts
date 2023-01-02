@@ -7,7 +7,7 @@ import {
   SigninWithGoogleFail,
   SignoutWithGoogle
 } from "@account/store/signin.actions";
-import { CredentialResponse } from "google-one-tap";
+import { /*accounts,*/ CredentialResponse } from "google-one-tap";
 import { AccountState } from "@account/store/account.state";
 
 @Component({
@@ -26,31 +26,30 @@ export class SigninComponent implements OnInit {
 
   ngOnInit(): void {
     this.user$.subscribe(user => this.user = user);
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    window.onGoogleLibraryLoad = () => {
-      console.log('Google\'s One-tap sign in script loaded!');
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      google.accounts.id.initialize({
-        client_id: "334979481378-o30p8vigr8pma4sdod58qepl6ekk1k8b.apps.googleusercontent.com",
-        callback: this.handleCredentialResponse.bind(this),
+    window.onload = () => {
+      window.google.accounts.id.initialize({
+        client_id: '334979481378-o30p8vigr8pma4sdod58qepl6ekk1k8b.apps.googleusercontent.com',
         auto_select: true,
-        cancel_on_tap_outside: false,
+        callback: (credential) => {
+          this.handleCredentialResponse(credential);
+        }
       });
-      /*      // OPTIONAL
-            // @ts-ignore
-            google.accounts.id.prompt((notification: PromptMomentNotification) => {
-              console.log('Google prompt event triggered...');
+      window.google.accounts.id.prompt();
+    }
 
-              if (notification.getDismissedReason() === 'credential_returned') {
-                this.ngZone.run(() => {
-                  this.router.navigate(['myapp/somewhere'], {replaceUrl: true});
-                  console.log('Welcome back!');
-                });
-              }
-            });*/
-    };
+    /*      // OPTIONAL
+          // @ts-ignore
+          google.accounts.id.prompt((notification: PromptMomentNotification) => {
+            console.log('Google prompt event triggered...');
+
+            if (notification.getDismissedReason() === 'credential_returned') {
+              this.ngZone.run(() => {
+                this.router.navigate(['myapp/somewhere'], {replaceUrl: true});
+                console.log('Welcome back!');
+              });
+            }
+          });*/
+    // };
   }
 
   handleCredentialResponse(response: CredentialResponse): void {
@@ -89,9 +88,7 @@ export class SigninComponent implements OnInit {
   }
 
   logout(): void {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    google.accounts.id.disableAutoSelect();
+    window.google.accounts.id.disableAutoSelect();
     this.store.dispatch(new SignoutWithGoogle());
   }
 }

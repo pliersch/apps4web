@@ -142,7 +142,6 @@ export class TagState {
   @Action(tagActions.AddTagGroupFail)
   addGroupFail(action: tagActions.AddTagGroupFail): void {
     this.alertService.error('Add tag fail');
-    console.log('TagState addGroupFail: ', action.error)
   }
 
   //////////////////////////////////////////////////////////
@@ -187,7 +186,6 @@ export class TagState {
 
   @Action(tagActions.UpdateTagGroupFail)
   updateGroupFail(action: tagActions.UpdateTagGroupFail): void {
-    console.log('TagState updateGroupFail: ', action.error)
     this.alertService.error('Update tag fail');
   }
 
@@ -225,7 +223,6 @@ export class TagState {
   @Action(tagActions.DeleteTagGroupFail)
   deleteGroupFail(action: tagActions.DeleteTagGroupFail): void {
     this.alertService.error('Delete tag fail');
-    console.log('TagState deleteGroupFail: ', action.error)
   }
 
 }
