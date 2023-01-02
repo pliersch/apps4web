@@ -18,7 +18,7 @@ import { AccountState } from "@account/store/account.state";
 })
 export class SigninComponent implements OnInit {
 
-  @Select(AccountState.user)
+  @Select(AccountState.getGoogleUser)
   user$: Observable<GoogleUser>;
   user: GoogleUser | null;
 
@@ -36,20 +36,6 @@ export class SigninComponent implements OnInit {
       });
       window.google.accounts.id.prompt();
     }
-
-    /*      // OPTIONAL
-          // @ts-ignore
-          google.accounts.id.prompt((notification: PromptMomentNotification) => {
-            console.log('Google prompt event triggered...');
-
-            if (notification.getDismissedReason() === 'credential_returned') {
-              this.ngZone.run(() => {
-                this.router.navigate(['myapp/somewhere'], {replaceUrl: true});
-                console.log('Welcome back!');
-              });
-            }
-          });*/
-    // };
   }
 
   handleCredentialResponse(response: CredentialResponse): void {
@@ -59,7 +45,6 @@ export class SigninComponent implements OnInit {
     } else {
       this.store.dispatch(new SigninWithGoogleFail('Login fail'));
     }
-
   }
 
   decodeCredentialResponse(response: CredentialResponse): GoogleUser | null {

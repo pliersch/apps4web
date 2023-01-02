@@ -10,6 +10,7 @@ import { AccountService } from "@account/services/account.service";
 import * as authActions from "@account/store/signin.actions";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import { catchError, map } from "rxjs/operators";
+import { RouteService } from "@app/common/services/route.service";
 
 export interface AccountStateModel {
   user: User;
@@ -42,7 +43,7 @@ export class AccountState {
   }
 
   @Selector()
-  static user(state: AccountStateModel): GoogleUser | null {
+  static getGoogleUser(state: AccountStateModel): GoogleUser | null {
     return state.googleUser;
   }
 
@@ -51,8 +52,14 @@ export class AccountState {
     return !!state.googleUser;
   }
 
+  @Selector()
+  static isAdmin(state: AccountStateModel): boolean {
+    return state.user.role === Role.Admin;
+  }
+
   constructor(/*private authService: AuthService,*/
               private alertService: AlertService,
+              private routeService: RouteService,
               private signinService: AccountService) {
   }
 
@@ -95,6 +102,7 @@ export class AccountState {
       asapScheduler.schedule(() =>
         ctx.dispatch((new SetUser(action.user))
         ))
+      this.routeService.addRoute({name: 'Admin', route: '/admin'});
     }
   }
 
