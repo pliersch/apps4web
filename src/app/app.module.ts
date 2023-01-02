@@ -23,7 +23,6 @@ import { initTheme } from "@app/common/initializers/theme.initializer";
 import { initApplication } from "@app/common/initializers/app.initializer";
 import { ThemeState } from "@modules/themes/stores/theme-state";
 import { RecipesModule } from "@modules/recipes/recipes.module";
-import { SamplesModule } from "@modules/samples/samples.module";
 import { RadioModule } from "@modules/radio/radio.module";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { AccountState } from "@account/store/account.state";
@@ -77,7 +76,6 @@ const ngxsConfig: NgxsModuleOptions = {
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
-    SamplesModule,
     RadioModule,
     AccountModule,
   ],

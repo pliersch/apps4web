@@ -3,7 +3,10 @@
           aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>{{appName}}</span>
+  <!--  <span>{{appName}}</span>-->
+  <div class='app-logo'>
+    APPS<span class='logo-color'>4</span>WEB
+  </div>
   <mat-toolbar>
     <button mat-flat-button routerLinkActive='active-route'
             *ngFor="let route of routes$ | async" [routerLink]="[route.route]">{{route.name}}</button>
