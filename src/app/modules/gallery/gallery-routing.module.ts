@@ -19,7 +19,8 @@ const routes: Routes = [
       {path: 'lightbox', title: 'Lightbox', component: GalleryLightboxComponent},
       {path: 'slideshow', title: 'Slideshow', component: GallerySlideshowComponent},
       {path: 'upload', title: 'Upload', component: GalleryUploadComponent},
-      {path: '**', component: GalleryHomeComponent}
+      {path: '**', redirectTo: '/gallery/home', pathMatch: 'full'},
+      {path: '', redirectTo: '/gallery/home', pathMatch: 'full'},
     ]
   }
 ];

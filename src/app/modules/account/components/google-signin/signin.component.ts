@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { GoogleUser } from "@account/store/google-user.model";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
@@ -24,18 +24,20 @@ export class SigninComponent implements OnInit {
 
   constructor(private store: Store) { }
 
+  @HostListener('window:load')
+  onLoad(): void {
+    window.google.accounts.id.initialize({
+      client_id: '334979481378-o30p8vigr8pma4sdod58qepl6ekk1k8b.apps.googleusercontent.com',
+      auto_select: true,
+      callback: (credential) => {
+        this.handleCredentialResponse(credential);
+      }
+    });
+    window.google.accounts.id.prompt();
+  }
+
   ngOnInit(): void {
     this.user$.subscribe(user => this.user = user);
-    window.onload = () => {
-      window.google.accounts.id.initialize({
-        client_id: '334979481378-o30p8vigr8pma4sdod58qepl6ekk1k8b.apps.googleusercontent.com',
-        auto_select: true,
-        callback: (credential) => {
-          this.handleCredentialResponse(credential);
-        }
-      });
-      window.google.accounts.id.prompt();
-    }
   }
 
   handleCredentialResponse(response: CredentialResponse): void {

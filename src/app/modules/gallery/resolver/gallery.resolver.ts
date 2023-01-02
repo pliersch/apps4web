@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
+import { Resolve } from "@angular/router";
 import { concatMap, Observable, of, Subscription } from "rxjs";
 import { Store } from "@ngxs/store";
 import { LoadMetaData, LoadPhotos } from "@gallery/store/photos/photo.actions";
@@ -8,7 +8,7 @@ import { LoadTags, SetNewTagsAvailable } from "@gallery/store/tags/tag.action";
 import { GALLERY_CONSTANTS } from "@gallery/const";
 
 @Injectable()
-export class GalleryResolver implements PushMessageListener, Resolve<Subscription> {
+export class GalleryResolver implements PushMessageListener, Resolve<boolean> {
 
   private initialized = false;
   private photosAdded = false
@@ -22,21 +22,21 @@ export class GalleryResolver implements PushMessageListener, Resolve<Subscriptio
     this.pushService.addListener(PushMessageEvent.PHOTOS_CHANGED, this);
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Subscription> {
-    let observable: Observable<Subscription> = of(Subscription.EMPTY);
+  resolve(): Observable<boolean> {
     if (!this.initialized) {
-      observable = this.initStore();
+      this.initStore();
       this.initialized = true;
     }
     this.handleChanges()
-    return observable;
+    return of(true);
   }
 
-  private initStore(): Observable<Subscription> {
-    return of(Subscription.EMPTY).pipe( // yes, I know. but more readable ;)
+  private initStore(): void {
+    of(Subscription.EMPTY).pipe( // yes, I know. but more readable ;)
       concatMap(() => this.store.dispatch(new LoadMetaData())),
       concatMap(() => this.store.dispatch(new LoadTags())),
-      concatMap(() => this.store.dispatch(new LoadPhotos(GALLERY_CONSTANTS.PHOTO_LOAD_COUNT))));
+      concatMap(() => this.store.dispatch(new LoadPhotos(GALLERY_CONSTANTS.PHOTO_LOAD_COUNT))))
+      .subscribe();
   }
 
   onServerPushMessage(event: PushMessageEvent): void {
