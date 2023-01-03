@@ -89,7 +89,7 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
   onAction(action: Action): void {
     switch (action.name) {
       case ActionTypes.SelectAll:
-        this.store.dispatch(new photoAction.SelectAllPhotosEdit());
+        this.store.dispatch(new photoAction.SelectAllFilteredPhotosEdit());
         break;
       case ActionTypes.DeselectAll:
         this.store.dispatch(new photoAction.DeselectAllPhotosEdit());

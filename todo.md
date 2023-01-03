@@ -1,4 +1,5 @@
 NGXS
+
 - impl router state! (app/stores/router.state)
 - schauen, ob selectOnce möglich ist
 - unsubscription prüfen
@@ -7,10 +8,10 @@ NGXS
   -> currentPhoto = photos[currentIndex]
 - updateMany Lösung?
   https://stackoverflow.com/questions/71086279/how-to-apply-updateitem-to-multiple-all-items-in-ngxs
-   // ctx.setState(
-   //   patch({
-   //     rabbits: compose(...updateItems),
-   //   })
+  // ctx.setState(
+  // patch({
+  // rabbits: compose(...updateItems),
+  // })
   // );
 
 - chat und gallery nutzen denselben service (photoservice)
@@ -26,6 +27,10 @@ NGXS
 
 - Can't resolve 'google-one-tap' wenn account oder google importiert wird
 
+BACKEND
+
+- upload/update photo gibt user anstatt nur userId zurück
+
 - typeORM updates werden nicht genutzt
   - https://stackoverflow.com/questions/47792808/typeorm-update-item-and-return-it
   - The key is returning response.raw[0] in order to get the type back.
@@ -34,20 +39,20 @@ NGXS
 - Add / Remove tags optimieren? z.zt. werden die tags am stück ersetzt
 - optimize/refactor routes:
   - Example1:
-      export const APP_ROUTES: Routes = [
-        {
-          path: '',
-          pathMatch: 'full',
-          component: HomeComponent
-        },
-        {
-          path: 'home',
-          component: HomeComponent
-        }
-      ];
+    export const APP_ROUTES: Routes = [
+    {
+    path: '',
+    pathMatch: 'full',
+    component: HomeComponent
+    },
+    {
+    path: 'home',
+    component: HomeComponent
+    }
+    ];
 
 so gehts doch ohne Konstanten
 export interface DialogData {
-  animal: 'panda' | 'unicorn' | 'lion';
+animal: 'panda' | 'unicorn' | 'lion';
 }
 https://material.angular.io/components/dialog/examples

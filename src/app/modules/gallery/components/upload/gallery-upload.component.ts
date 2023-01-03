@@ -6,7 +6,6 @@ import { Tag, TagGroup } from "@gallery/store/tags/tag.model";
 import { AddPhoto } from "@gallery/store/photos/photo.actions";
 import { TagService } from "@gallery/services/tag.service";
 import { PhotoService } from "@gallery/services/photo.service";
-import { UserState } from "@modules/admin/modules/user/store/user.state";
 import { User } from "@account/store/user.model";
 import { AccountState } from "@account/store/account.state";
 

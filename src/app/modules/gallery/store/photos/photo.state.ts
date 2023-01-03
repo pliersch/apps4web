@@ -512,12 +512,12 @@ export class PhotoState {
     );
   }
 
-  @Action(photoAction.SelectAllPhotosEdit)
-  selectAllPhotos(ctx: StateContext<PhotoStateModel>): void {
+  @Action(photoAction.SelectAllFilteredPhotosEdit)
+  selectAllFilteredPhotos(ctx: StateContext<PhotoStateModel>): void {
     const state = ctx.getState();
     ctx.setState(
       patch({
-        editPhotos: state.photos
+        editPhotos: this._getFilteredPhotos(ctx.getState())
       })
     );
   }

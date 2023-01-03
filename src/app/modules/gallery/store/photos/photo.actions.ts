@@ -110,8 +110,8 @@ export class SelectManyPhotosEdit {
   constructor(public photos: Photo[]) { }
 }
 
-export class SelectAllPhotosEdit {
-  static readonly type = '[Gallery] Select All Photos Edit';
+export class SelectAllFilteredPhotosEdit {
+  static readonly type = '[Gallery] Select All Filtered Photos Edit';
 }
 
 export class DeselectAllPhotosEdit {
