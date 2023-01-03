@@ -92,7 +92,7 @@ export class GalleryUploadComponent implements OnInit {
     if (this.imgFiles) {
       for (const file of this.imgFiles) {
         this.actions.push(
-          new AddPhoto(file, this.user, this.findTags(this.selectedTagNames), file.lastModified, !this.isPrivate));
+          new AddPhoto(file, this.user, this.findTags(this.selectedTagNames), file.lastModified, this.isPrivate));
       }
       this.store.dispatch(this.actions);
     }
@@ -119,7 +119,6 @@ export class GalleryUploadComponent implements OnInit {
     for (const tagName of tagNames) {
       result.push(flat.find((tag) => tag.name === tagName)!);
     }
-    console.log('GalleryUploadComponent findTags: ', result)
     return result;
   }
 

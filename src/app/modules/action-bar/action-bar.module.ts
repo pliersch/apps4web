@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActionBarComponent } from './action-bar.component';
-import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MaterialModule } from "@app/modules/share/material/material.module";
-import { MatTooltipModule } from "@angular/material/tooltip";
 import { ShareModule } from "@modules/share/share.module";
-
 
 @NgModule({
   declarations: [
@@ -16,9 +13,7 @@ import { ShareModule } from "@modules/share/share.module";
   ],
   imports: [
     CommonModule,
-    MatButtonToggleModule,
     MaterialModule,
-    MatTooltipModule,
     ShareModule
   ]
 })

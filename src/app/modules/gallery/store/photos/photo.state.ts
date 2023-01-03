@@ -12,7 +12,6 @@ import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
 import { ServerSentService } from "@app/common/services/server-sent.service";
 import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
 import { Tag } from "@gallery/store/tags/tag.model";
-import { AccountState } from "@account/store/account.state";
 
 export interface PhotoStateModel {
   photos: Photo[];
@@ -22,7 +21,6 @@ export interface PhotoStateModel {
   editPhotos: Photo[];
   downloads: Photo[];
   comparePhotos: Photo[];
-  loadedPhotos: number;
   availablePhotos: number;
   tagFilter: Tag[];
   filterRating: number;
@@ -45,7 +43,6 @@ export interface PhotoStateModel {
     currentPhoto: {id: '0', index: -1, tags: [], isPrivate: false, rating: 0, fileName: '', recordDate: new Date()},
     newDataAvailable: true,
     availablePhotos: 0,
-    loadedPhotos: 0,
     tagFilter: [],
     filterRating: 0,
     filterFrom: -1,
@@ -63,6 +60,7 @@ export class PhotoState {
               private store: Store,
               private alertService: AlertService) { }
 
+  // region selectors
   @Selector()
   static getPhotos(state: PhotoStateModel): Photo[] {
     return state.photos;
@@ -147,7 +145,7 @@ export class PhotoState {
 
   @Selector()
   static getLoadedPhotos(state: PhotoStateModel): number {
-    return state.loadedPhotos;
+    return state.photos.length;
   }
 
   // @Selector([PhotoState])
@@ -155,6 +153,9 @@ export class PhotoState {
   //   return (photo: Photo) => state.downloads.includes(photo);
   // }
 
+  // endregion
+
+  // region server sent
   //////////////////////////////////////////////////////////
   //          server sent new photos available
   //////////////////////////////////////////////////////////
@@ -165,6 +166,8 @@ export class PhotoState {
       newDataAvailable: true // todo rename
     });
   }
+
+  // endregion
 
   // region meta data
   //////////////////////////////////////////////////////////
@@ -224,7 +227,7 @@ export class PhotoState {
       return of(Subscription.EMPTY);
     }
     // const snapshot = this.store.selectSnapshot(AccountState.user);
-    // console.log('PhotoState loadPhotos: ', snapshot)
+    console.log('PhotoState loadPhotos: ')
     return this.photoService.getPhotos(count, from)
       .pipe(
         map((dto: PhotoDto) =>
@@ -246,14 +249,14 @@ export class PhotoState {
   @Action(photoAction.LoadPhotosSuccess)
   loadPhotosSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosSuccess): void {
     const state = ctx.getState();
-    let index = state.loadedPhotos;
+    let index = state.photos.length;
     for (const photo of action.dto.photos) {
       photo.recordDate = new Date(Number(photo.recordDate));
       photo.index = index++;
     }
     const photos: Photo[] = [...state.photos, ...action.dto.photos]
     ctx.patchState({
-      loadedPhotos: index, photos: photos, loaded: true, loading: false, currentPhoto: photos[0]
+      photos: photos, loaded: true, loading: false, currentPhoto: photos[0]
     });
   }
 
@@ -323,7 +326,9 @@ export class PhotoState {
   @Action(photoAction.AddPhotoSuccess)
   addPhotoSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoSuccess): void {
     const state = ctx.getState();
+    action.photo.index = state.photos.length;
     ctx.patchState({
+      availablePhotos: state.availablePhotos + 1,
       photos: [
         ...state.photos,
         action.photo,
@@ -488,7 +493,7 @@ export class PhotoState {
 
   // endregion
 
-  // region mange select
+  // region manage select
   //////////////////////////////////////////////////////////
   //          manage
   //////////////////////////////////////////////////////////

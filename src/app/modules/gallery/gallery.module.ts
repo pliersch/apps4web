@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
-import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 
 import { MaterialModule } from "@app/modules/share/material/material.module";
-// import {NgxScrollbarModule} from '@app/shared/ngx-scrollbar/ngx-scrollbar.module';
-// TODO replace
-import { NgScrollbarModule } from 'ngx-scrollbar';
+import { NgxScrollbarModule } from "@app/modules/share/ngx-scrollbar/ngx-scrollbar.module";
 import { GalleryRoutingModule } from './gallery-routing.module';
 import { GalleryToolbarComponent } from './components/core/toolbar/gallery-toolbar.component';
 import { GalleryContainerComponent } from './components/core/container/gallery-container.component';
@@ -34,7 +31,6 @@ import { NgxsModule } from "@ngxs/store";
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { ExplorerPhotoControlComponent } from './components/explorer/photo-control/explorer-photo-control.component';
 import { EditorPhotoControlComponent } from './components/editor/photo-control/editor-photo-control.component';
-import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { ActionBarModule } from "@modules/action-bar/action-bar.module";
 import { TagState } from "@gallery/store/tags/tag.state";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
@@ -53,7 +49,6 @@ import { GalleryDateFilterComponent } from './components/explorer/date-filter/ga
 import { GalleryDeletePhotoComponent } from './components/editor/delete-photo-dialog/gallery-delete-photo.component';
 import { GalleryEditorComponent } from "./components/editor/gallery-editor.component";
 import { FormsModule } from "@angular/forms";
-import { MatCheckboxModule } from "@angular/material/checkbox";
 import { TagService } from "@gallery/services/tag.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { GalleryResolver } from "@gallery/resolver/gallery.resolver";
@@ -94,18 +89,14 @@ import { ScrollerItemComponent } from './components/share/scroller-item/scroller
   imports: [
     CommonModule,
     MaterialModule,
-    DragDropModule,
     GalleryRoutingModule,
     ScrollingModule,
-    // NgxScrollbarModule,
-    NgScrollbarModule,
+    NgxScrollbarModule,
     ShareModule,
     NgxsModule.forFeature([PhotoState, TagState]),
-    MatButtonToggleModule,
     ActionBarModule,
     MatSlideToggleModule,
     FormsModule,
-    MatCheckboxModule,
     NgOptimizedImage,
   ],
   providers: [TagService, PhotoService, GalleryResolver, ToggleExplorerViewService],

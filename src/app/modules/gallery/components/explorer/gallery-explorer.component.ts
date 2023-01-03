@@ -7,8 +7,8 @@ import { AbstractExplorerComponent } from "@gallery/components/share/abstract-ex
 import { ActionBarService } from "@modules/action-bar/action-bar.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { Router } from "@angular/router";
-import { MatDialog } from "@angular/material/dialog";
 import { Store } from "@ngxs/store";
+import { MatDialog } from "@angular/material/dialog";
 
 enum ActionTypes {
   SelectAll,
