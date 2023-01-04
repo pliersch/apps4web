@@ -1,6 +1,4 @@
-import { Photo, PhotoUpdate } from "@gallery/store/photos/photo.model";
-import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
-import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
+import { Photo, PhotoDeleteDto, PhotoDto, PhotoMetaDataDto, PhotoUpdate } from "@gallery/store/photos/photo.model";
 import { HttpErrorResponse } from '@angular/common/http';
 import { Tag } from "@gallery/store/tags/tag.model";
 import { User } from "@account/store/user.model";
@@ -155,7 +153,7 @@ export class DeletePhoto {
 export class DeletePhotoSuccess {
   static readonly type = '[Gallery] Delete Photo success';
 
-  constructor(public id: string) { }
+  constructor(public dto: PhotoDeleteDto) { }
 }
 
 export class DeletePhotoFail {

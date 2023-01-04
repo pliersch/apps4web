@@ -17,3 +17,16 @@ export interface PhotoUpdate {
   removedTagIds?: string[];
   private?: boolean
 }
+
+export interface PhotoDto {
+  readonly photos: Photo[];
+  readonly meta: PhotoMetaDataDto;
+}
+
+export interface PhotoDeleteDto {
+  readonly id: string;
+}
+
+export interface PhotoMetaDataDto {
+  readonly count: number;
+}

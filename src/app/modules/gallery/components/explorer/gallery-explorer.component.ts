@@ -27,9 +27,9 @@ export class GalleryExplorerComponent extends AbstractExplorerComponent implemen
 
   actions: Action[] = [
     {name: ActionTypes.SelectAll, icon: 'done_all', description: 'select all', handler: this},
-    {name: ActionTypes.Add, icon: 'add', description: 'add', handler: this},
-    {name: ActionTypes.DeselectAll, icon: 'remove_done', description: 'deselect all', handler: this},
     {name: ActionTypes.ToggleSelection, icon: 'published_with_changes', description: 'toggle selection', handler: this},
+    {name: ActionTypes.DeselectAll, icon: 'remove_done', description: 'deselect all', handler: this},
+    {name: ActionTypes.Add, icon: 'add', description: 'add to downloads', handler: this},
     {name: ActionTypes.Download, icon: 'download', description: 'download', handler: this},
   ]
 

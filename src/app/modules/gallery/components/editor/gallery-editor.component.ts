@@ -54,8 +54,8 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
 
   actions: Action[] = [
     {name: ActionTypes.SelectAll, icon: 'done_all', description: 'select all', handler: this},
-    {name: ActionTypes.DeselectAll, icon: 'remove_done', description: 'deselect all', handler: this},
     {name: ActionTypes.ToggleSelection, icon: 'published_with_changes', description: 'toggle selection', handler: this},
+    {name: ActionTypes.DeselectAll, icon: 'remove_done', description: 'deselect all', handler: this},
     {name: ActionTypes.EditPhotos, icon: 'edit', description: 'edit photos', handler: this},
     {name: ActionTypes.DeleteMany, icon: 'delete', description: 'delete photos', handler: this},
     {name: ActionTypes.NewTag, icon: 'playlist_add', description: 'new tag', handler: this},

@@ -2,10 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
-import { Photo, PhotoUpdate } from '@gallery/store/photos/photo.model';
+import { Photo, PhotoDeleteDto, PhotoDto, PhotoMetaDataDto, PhotoUpdate } from '@gallery/store/photos/photo.model';
 import { Order } from "@app/common/const/order.constant";
-import { PhotoMetaDataDto } from "@gallery/store/photos/dto/photo-meta-data.dto";
-import { PhotoDto } from "@gallery/store/photos/dto/photo.dto";
 import { Tag } from "@gallery/store/tags/tag.model";
 
 const PHOTO_BASE_URL = `${environment.apiUrl}/photos`;
@@ -51,8 +49,8 @@ export class PhotoService {
     return this.http.patch<Photo>(`${PHOTO_BASE_URL}/${id}`, dto);
   }
 
-  delete(id: string): Observable<string> {
-    return this.http.delete<string>(`${PHOTO_BASE_URL}/${id}`);
+  delete(id: string): Observable<PhotoDeleteDto> {
+    return this.http.delete<PhotoDeleteDto>(`${PHOTO_BASE_URL}/${id}`);
   }
 
   // deletePhotos(ids: string[]): Observable<PhotoUpdate> {
