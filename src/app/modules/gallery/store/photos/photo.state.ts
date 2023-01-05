@@ -725,6 +725,7 @@ export class PhotoState {
     for (const photo of ctx.getState().photos) {
       photoClone = clone(photo);
       photoClone.index = index++;
+      photoClone.recordDate = new Date(photo.recordDate)
       photos.push(photoClone)
     }
 
