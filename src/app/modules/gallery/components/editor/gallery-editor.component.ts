@@ -113,12 +113,9 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
   }
 
   private deletePhotos(): void {
-    this.selection.forEach((photo) => {
-      this.store.dispatch([new photoAction.DeletePhoto(photo.id)]);
-    });
-    // const ids: string[] = [];
-    // this.selection.forEach((photo) => ids.push(photo.id));
-    // this.store.dispatch(new photoAction.DeletePhotos(ids));
+    const ids: string[] = [];
+    this.selection.forEach((photo) => ids.push(photo.id));
+    this.store.dispatch(new photoAction.DeletePhotos(ids));
   }
 
   onSelectForEdit($event: Photo): void {

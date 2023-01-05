@@ -2,6 +2,7 @@ import { Photo, PhotoDeleteDto, PhotoDto, PhotoMetaDataDto, PhotoUpdate } from "
 import { HttpErrorResponse } from '@angular/common/http';
 import { Tag } from "@gallery/store/tags/tag.model";
 import { User } from "@account/store/user.model";
+import { DeleteResult } from "@modules/share/interfaces/models/delete-result";
 
 // meta data
 
@@ -162,23 +163,23 @@ export class DeletePhotoFail {
   constructor(public error: HttpErrorResponse) { }
 }
 
-// export class DeletePhotos {
-//   static readonly type = '[Gallery] Delete Photos';
-//
-//   constructor(public ids: string[]) { }
-// }
-//
-// export class DeletePhotosSuccess {
-//   static readonly type = '[Gallery] Delete Photos success';
-//
-//   constructor(public photoUpdate: PhotoUpdate) { }
-// }
-//
-// export class DeletePhotosFail {
-//   static readonly type = '[Gallery] Delete Photos fail';
-//
-//   constructor(public error: HttpErrorResponse) { }
-// }
+export class DeletePhotos {
+  static readonly type = '[Gallery] Delete Photos';
+
+  constructor(public ids: string[]) { }
+}
+
+export class DeletePhotosSuccess {
+  static readonly type = '[Gallery] Delete Photos success';
+
+  constructor(public result: DeleteResult, public ids: string[]) { }
+}
+
+export class DeletePhotosFail {
+  static readonly type = '[Gallery] Delete Photos fail';
+
+  constructor(public error: HttpErrorResponse) { }
+}
 
 // tags of photo
 

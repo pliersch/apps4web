@@ -4,7 +4,7 @@ NGXS
 - schauen, ob selectOnce möglich ist
 - unsubscription prüfen
 - impl: state properties loaded & loading
-- currentPhoto seltsam/buggy setzen/updaten überprüfen evtl mit index auf photos lösen
+- index der photos müssen nach delete neu gesetzt werden. andere Lösung?
   -> currentPhoto = photos[currentIndex]
 - updateMany Lösung?
   https://stackoverflow.com/questions/71086279/how-to-apply-updateitem-to-multiple-all-items-in-ngxs

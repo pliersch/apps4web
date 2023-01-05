@@ -10,16 +10,17 @@ import { AlertService } from "@app/common/services/alert.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { ServerSentService } from "@app/common/services/server-sent.service";
 import { Tag } from "@gallery/store/tags/tag.model";
+import { clone } from "@app/common/util/obj-utils";
+import { DeleteResult } from "@modules/share/interfaces/models/delete-result";
 
 export interface PhotoStateModel {
   photos: Photo[];
   filteredPhotos: Photo[];
-  currentPhoto: Photo;
   currentIndex: number;
   editPhotos: Photo[];
   downloads: Photo[];
   comparePhotos: Photo[];
-  availablePhotos: number;
+  availableServerPhotos: number;
   tagFilter: Tag[];
   filterRating: number;
   filterFrom: number;
@@ -38,9 +39,8 @@ export interface PhotoStateModel {
     downloads: [],
     editPhotos: [],
     currentIndex: 0,
-    currentPhoto: {id: '0', index: -1, tags: [], isPrivate: false, rating: 0, fileName: '', recordDate: new Date()},
     newDataAvailable: true,
-    availablePhotos: 0,
+    availableServerPhotos: 0,
     tagFilter: [],
     filterRating: 0,
     filterFrom: -1,
@@ -113,7 +113,7 @@ export class PhotoState {
 
   @Selector()
   static getAvailablePhotos(state: PhotoStateModel): number {
-    return state.availablePhotos;
+    return state.availableServerPhotos;
   }
 
   @Selector()
@@ -194,7 +194,7 @@ export class PhotoState {
   loadMetaDataSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataSuccess): void {
     // console.log('PhotoState loadMetaDataSuccess: ',)
     ctx.patchState({
-      availablePhotos: action.dto.count, loading: false
+      availableServerPhotos: action.dto.count, loading: false
     });
   }
 
@@ -219,7 +219,7 @@ export class PhotoState {
     }
     ctx.patchState({loading: true, loaded: false});
     const from: number = action.from ? action.from : state.photos.length;
-    const unloadedPhotos: number = state.availablePhotos - state.photos.length;
+    const unloadedPhotos: number = state.availableServerPhotos - state.photos.length;
     const count: number = unloadedPhotos < action.count ? unloadedPhotos : action.count;
     if (count == 0) {
       return of(Subscription.EMPTY);
@@ -254,7 +254,7 @@ export class PhotoState {
     }
     const photos: Photo[] = [...state.photos, ...action.dto.photos]
     ctx.patchState({
-      photos: photos, loaded: true, loading: false, currentPhoto: photos[0]
+      photos: photos, loaded: true, loading: false
     });
   }
 
@@ -324,14 +324,19 @@ export class PhotoState {
   @Action(photoAction.AddPhotoSuccess)
   addPhotoSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoSuccess): void {
     const state = ctx.getState();
-    action.photo.index = state.photos.length;
     ctx.patchState({
-      availablePhotos: state.availablePhotos + 1,
+      availableServerPhotos: state.availableServerPhotos + 1,
       photos: [
         ...state.photos,
         action.photo,
       ],
     });
+    let index = 0;
+    ctx.setState(
+      patch<PhotoStateModel>({
+        photos: updateItem<Photo>(photo => photo != null, patch({index: index++}))
+      })
+    );
     this.alertService.success('Upload success');
   }
 
@@ -417,49 +422,68 @@ export class PhotoState {
   deletePhotoSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhotoSuccess): void {
     ctx.setState(
       patch({
-        photos: removeItem<Photo>(photo => photo!.id === action.dto.id)
+        photos: removeItem<Photo>(photo => photo!.id === action.dto.id),
+        availableServerPhotos: ctx.getState().availableServerPhotos - 1
       })
     );
+    this._fixIndex(ctx);
   }
 
   @Action(photoAction.DeletePhotoFail)
-  deletePhotoFail(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhotoFail): void {
+  deletePhotoFail(): void {
     this.alertService.error('Delete fail');
   }
 
-  // @Action(photoAction.DeletePhotos)
-  // deletePhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhotos): Observable<Subscription> {
-  //   return this.photoService.deletePhotos(action.ids).pipe(
-  //     // tap(console.log(action)),
-  //     map((update: PhotoUpdate) =>
-  //       asapScheduler.schedule(() =>
-  //         ctx.dispatch(new photoAction.DeletePhotosSuccess(update))
-  //       )
-  //     ),
-  //     catchError(error =>
-  //       of(
-  //         asapScheduler.schedule(() =>
-  //           ctx.dispatch(new photoAction.DeletePhotosFail(error))
-  //         )
-  //       )
-  //     )
-  //   );
-  // }
-  //
-  // @Action(photoAction.DeletePhotoSuccess)
-  // deletePhotosSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhotosSuccess): void {
-  //   ctx.setState(
-  //     patch({
-  //       photos: removeItem<Photo>(photo => photo!.id === action.photoUpdate.id)
-  //     })
-  //   );
-  // }
-  //
-  // @Action(photoAction.DeletePhotoFail)
-  // deletePhotosFail(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhotosFail): void {
-  //   console.log(action.error)
-  //   this.alertService.error('Delete fail');
-  // }
+  @Action(photoAction.DeletePhotos)
+  deletePhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhotos): Observable<Subscription> {
+    return this.photoService.deletePhotos(action.ids).pipe(
+      map((result: DeleteResult) =>
+        asapScheduler.schedule(() =>
+          ctx.dispatch(new photoAction.DeletePhotosSuccess(result, action.ids))
+        )
+      ),
+      catchError(error =>
+        of(
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new photoAction.DeletePhotosFail(error))
+          )
+        )
+      )
+    );
+  }
+
+  @Action(photoAction.DeletePhotosSuccess)
+  deletePhotosSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhotosSuccess): void {
+    const ids = action.ids;
+    const deleteCount = action.result.affected;
+    if (ids.length !== deleteCount) {
+      this.alertService.error('Delete many photos fail');
+      return;
+    }
+
+    for (const id of action.ids) {
+      ctx.setState(
+        patch({
+          photos: removeItem<Photo>(photo => photo!.id === id)
+        })
+      );
+    }
+
+    const photos: Photo[] = [];
+    ctx.setState(
+      patch({
+        availableServerPhotos: ctx.getState().availableServerPhotos - deleteCount,
+        editPhotos: photos
+      })
+    );
+    this._fixIndex(ctx);
+  }
+
+  @Action(photoAction.DeletePhotosFail)
+  deletePhotosFail(): void {
+    this.alertService.error('Delete fail');
+  }
+
   // endregion
 
   // region compare
@@ -497,7 +521,6 @@ export class PhotoState {
   @Action(photoAction.TogglePhotoGroupEdit)
   toggleGroupEdit(ctx: StateContext<PhotoStateModel>, action: photoAction.TogglePhotoGroupEdit): void {
     const contains = ctx.getState().editPhotos.includes(action.photo);
-    console.log('PhotoState toggleGroupEdit: ', action.photo, contains)
     ctx.setState(
       patch({
         editPhotos:
@@ -510,7 +533,6 @@ export class PhotoState {
 
   @Action(photoAction.SelectAllFilteredPhotosEdit)
   selectAllFilteredPhotos(ctx: StateContext<PhotoStateModel>): void {
-    const state = ctx.getState();
     ctx.setState(
       patch({
         editPhotos: this._getFilteredPhotos(ctx.getState())
@@ -620,16 +642,10 @@ export class PhotoState {
         photos: updateItem<Photo>(action.photo.index, patch({rating: action.rate})),
       })
     );
-    ctx.setState(
-      patch({
-        currentPhoto: ctx.getState().photos[action.photo.index]
-      })
-    );
   }
 
   @Action(photoAction.SetRatingFail)
-  setRatingFail(ctx: StateContext<PhotoStateModel>, action: photoAction.SetRatingFail): void {
-    console.log(action.error)
+  setRatingFail(): void {
     this.alertService.error('Rating photo fail');
   }
 
@@ -692,13 +708,29 @@ export class PhotoState {
   // endregion
 
   // region help
-  // Helper. Look for better solution when ngxs updates
+  // Look for better solution when ngxs updates to v4
   _getFilteredPhotos(state: PhotoStateModel): Photo[] {
     return PhotoState.getFilteredPhotos(
       PhotoState.getPhotosByTags(PhotoState.getPhotos(state), PhotoState.getActiveTags(state)),
       PhotoState.getFilterRating(state),
       PhotoState.getFilterFrom(state),
       PhotoState.getFilterTo(state));
+  }
+
+  // change many not supported by ngxs. WTF
+  _fixIndex(ctx: StateContext<PhotoStateModel>): void {
+    const photos = [];
+    let index = 0;
+    let photoClone;
+    for (const photo of ctx.getState().photos) {
+      photoClone = clone(photo);
+      photoClone.index = index++;
+      photos.push(photoClone)
+    }
+
+    ctx.patchState({
+      photos: photos
+    });
   }
 
   // endregion

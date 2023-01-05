@@ -5,6 +5,7 @@ import { environment } from '@environments/environment';
 import { Photo, PhotoDeleteDto, PhotoDto, PhotoMetaDataDto, PhotoUpdate } from '@gallery/store/photos/photo.model';
 import { Order } from "@app/common/const/order.constant";
 import { Tag } from "@gallery/store/tags/tag.model";
+import { DeleteResult } from "@modules/share/interfaces/models/delete-result";
 
 const PHOTO_BASE_URL = `${environment.apiUrl}/photos`;
 const DOWNLOAD_BASE_URL = `${environment.apiUrl}/download`;
@@ -53,10 +54,10 @@ export class PhotoService {
     return this.http.delete<PhotoDeleteDto>(`${PHOTO_BASE_URL}/${id}`);
   }
 
-  // deletePhotos(ids: string[]): Observable<PhotoUpdate> {
-  //   const dto = {ids: ids}
-  //   return this.http.post<PhotoUpdate>(PHOTO_BASE_URL + '/delmany', dto);
-  // }
+  deletePhotos(ids: string[]): Observable<DeleteResult> {
+    const dto = {ids: ids}
+    return this.http.post<DeleteResult>(PHOTO_BASE_URL + '/delmany', dto);
+  }
 
   setRating(photo: Photo, rate: number): Observable<PhotoUpdate> {
     const dto = {rating: rate}
