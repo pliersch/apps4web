@@ -38,12 +38,12 @@ export class ThreeService implements OnDestroy {
 
     new RGBELoader()
       .setPath('/assets/3d/')
-      .load('studio_small_01_1k.hdr', (texture) => {
+      .load('epping_forest_02_4k.hdr', (texture) => {
         texture.mapping = THREE.EquirectangularReflectionMapping;
         this.scene.background = texture;
         this.scene.environment = texture;
       });
-    new GLTFLoader().load('/assets/3d/export01.gltf', (gltf) => {
+    new GLTFLoader().load('/assets/3d/home.gltf', (gltf) => {
       gltf.scene.scale.set(10, 10, 10);
       this.scene.add(gltf.scene);
       // gltf.scene.getObjectByName()
