@@ -1,13 +1,15 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Select, Store } from "@ngxs/store";
+import * as ExifReader from 'exifreader';
 import { TagState } from "@gallery/store/tags/tag.state";
-import { Observable } from "rxjs";
+import { from, Observable, ObservedValueOf } from "rxjs";
 import { Tag, TagGroup } from "@gallery/store/tags/tag.model";
 import { AddPhoto } from "@gallery/store/photos/photo.actions";
 import { TagService } from "@gallery/services/tag.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { User } from "@account/store/user.model";
 import { AccountState } from "@account/store/account.state";
+import { parseExif } from "@app/common/util/date-util";
 
 @Component({
   selector: 'app-gallery-upload',
@@ -53,7 +55,7 @@ export class GalleryUploadComponent implements OnInit {
     });
   }
 
-  copyTags(groups: TagGroup[]): void {
+  private copyTags(groups: TagGroup[]): void {
     this.copies = [];
     for (const group of groups) {
       const tagNames: string[] = [];
@@ -89,11 +91,14 @@ export class GalleryUploadComponent implements OnInit {
 
   uploadImage(): void {
     if (this.imgFiles) {
+      let recordDate$: Observable<ObservedValueOf<Promise<Date>>>;
       for (const file of this.imgFiles) {
-        this.actions.push(
-          new AddPhoto(file, this.user, this.findTags(this.selectedTagNames), file.lastModified, this.isPrivate));
+        recordDate$ = from(this.getExifDate(file));
+        recordDate$.subscribe(date => {
+          this.store.dispatch(
+            new AddPhoto(file, this.user, this.findTags(this.selectedTagNames), date, this.isPrivate));
+        });
       }
-      this.store.dispatch(this.actions);
     }
   }
 
@@ -107,7 +112,7 @@ export class GalleryUploadComponent implements OnInit {
     this.copies[this.index].splice(index, 1);
   }
 
-  findTags(tagNames: string[]): Tag[] {
+  private findTags(tagNames: string[]): Tag[] {
     const flat: Tag[] = [];
     const result: Tag[] = [];
     for (const tagGroup of this.tagGroups) {
@@ -119,6 +124,46 @@ export class GalleryUploadComponent implements OnInit {
       result.push(flat.find((tag) => tag.name === tagName)!);
     }
     return result;
+  }
+
+  private async getExifDate(file: File): Promise<Date> {
+    let exifDate: undefined | string | Array<string>;
+    let value: string | undefined;
+
+    try {
+      const tags = await ExifReader.load(file);
+      exifDate = tags.DateTimeOriginal?.value;
+      if (!exifDate) {
+        return new Date(file.lastModified);
+      }
+    } catch (e: any) {
+      console.log('exif reader error: ', e)
+      return new Date(file.lastModified);
+    }
+    if (Array.isArray(exifDate)) {
+      value = exifDate[0]
+    } else {
+      value = exifDate;
+    }
+
+    if (this.isWrongFormat(value)) {
+      return this.fixExif(value);
+    }
+    return new Date(value);
+  }
+
+  // need for exif dates like '2013:05:01 07:15:28'
+  private fixExif(date: string): Date {
+    date = date.slice(0, 10);
+    return parseExif(date);
+  }
+
+  readonly REGEX = '^([1-2][0-9]{3}):[0-1][0-9]:[0-3][0-9]';
+
+  // test dates like '2013:05:01 07:15:28' checks only date, not time
+  private isWrongFormat(value: string): boolean {
+    const pattern = new RegExp(this.REGEX);
+    return pattern.test(value);
   }
 
 }

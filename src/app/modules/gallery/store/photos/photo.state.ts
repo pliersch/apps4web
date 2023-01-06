@@ -249,7 +249,7 @@ export class PhotoState {
     const state = ctx.getState();
     let index = state.photos.length;
     for (const photo of action.dto.photos) {
-      photo.recordDate = new Date(Number(photo.recordDate));
+      photo.recordDate = new Date(photo.recordDate);
       photo.index = index++;
     }
     const photos: Photo[] = [...state.photos, ...action.dto.photos]
@@ -324,6 +324,7 @@ export class PhotoState {
   @Action(photoAction.AddPhotoSuccess)
   addPhotoSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoSuccess): void {
     const state = ctx.getState();
+    action.photo.index = state.photos.length;
     ctx.patchState({
       availableServerPhotos: state.availableServerPhotos + 1,
       photos: [
@@ -331,12 +332,6 @@ export class PhotoState {
         action.photo,
       ],
     });
-    let index = 0;
-    ctx.setState(
-      patch<PhotoStateModel>({
-        photos: updateItem<Photo>(photo => photo != null, patch({index: index++}))
-      })
-    );
     this.alertService.success('Upload success');
   }
 

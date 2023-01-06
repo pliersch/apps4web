@@ -6,6 +6,7 @@ import { Photo, PhotoDeleteDto, PhotoDto, PhotoMetaDataDto, PhotoUpdate } from '
 import { Order } from "@app/common/const/order.constant";
 import { Tag } from "@gallery/store/tags/tag.model";
 import { DeleteResult } from "@modules/share/interfaces/models/delete-result";
+import { formatEnglish } from "@app/common/util/date-util";
 
 const PHOTO_BASE_URL = `${environment.apiUrl}/photos`;
 const DOWNLOAD_BASE_URL = `${environment.apiUrl}/download`;
@@ -34,14 +35,14 @@ export class PhotoService {
   //   return this.http.get<Photo>(`${PHOTO_BASE_URL}/${id}`);
   // }
 
-  create(file: File, userId: string, tags: Tag[], created: number, isPrivate: boolean): Observable<Photo> {
+  create(file: File, userId: string, tags: Tag[], created: Date, isPrivate: boolean): Observable<Photo> {
     const stringify = JSON.stringify(tags);
     const formData = new FormData();
     formData.append('image', file);
     formData.append('tags', stringify);
     formData.append('userid', userId);
     formData.append('isPrivate', JSON.stringify(isPrivate));
-    formData.append('created', created.toString());
+    formData.append('created', formatEnglish(created));
     return this.http.post<Photo>(PHOTO_BASE_URL + '/file', formData);
   }
 

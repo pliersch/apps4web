@@ -1,7 +1,6 @@
-import { formatDate } from "@angular/common";
 import parse from "date-fns/parse";
 import format from 'date-fns/format'
-import { de } from "date-fns/locale";
+import { de, enUS } from "date-fns/locale";
 
 /**
  * @param date like 10. Juni 2022
@@ -13,16 +12,27 @@ export function parseGerman(date: string): Date {
 /**
  * @param date like 04.14.2022
  */
-export function parseGerman2(date: string): Date {
+export function parseEnglish(date: string): Date {
   return parse(date, "MM.dd.yyyy", new Date(), {locale: de});
 }
 
-export function formatEnglish(date: Date): string {
-  return formatDate(date, 'longDate', 'en-US');
+/**
+ * need for wrong exif date
+ * @param date like 2022:01:31
+ */
+export function parseExif(date: string): Date {
+  return parse(date, "yyyy:MM:dd", new Date(), {locale: de});
 }
 
 /**
- * @return string like 13.11.2000
+ * @return string like 01.31.2000
+ */
+export function formatEnglish(date: Date): string {
+  return format(date, 'MM.dd.yyyy', {locale: enUS});
+}
+
+/**
+ * @return string like 31.12.2000
  */
 export function formatGerman(date: Date): string {
   return format(date, 'dd.MM.yyyy', {locale: de});

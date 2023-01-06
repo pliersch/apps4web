@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, Renderer2, ViewChild } from '@angular
 import wasteFile from "@assets/json/abfall.json";
 import { WasteDate, WasteEvent, WasteKey } from "@modules/waste-calendar/waste-dates";
 import { MatCalendar } from "@angular/material/datepicker";
-import { formatGermanDayAndMonth, parseGerman, parseGerman2 } from "@app/common/util/date-util";
+import { formatGermanDayAndMonth, parseGerman, parseEnglish } from "@app/common/util/date-util";
 import differenceInDays from 'date-fns/differenceInDays'
 import { de } from 'date-fns/locale'
 import { DateAdapter } from "@angular/material/core";
@@ -124,7 +124,7 @@ export class WasteReminderComponent implements OnInit, AfterViewInit {
   private generateWasteEvents(dates: WasteDate[]): WasteEvent[] {
     const events: WasteEvent[] = [];
     for (const event of dates) {
-      const date = parseGerman2(event.date);
+      const date = parseEnglish(event.date);
       events.push({
         date: new Date(date),
         wasteType: event.type

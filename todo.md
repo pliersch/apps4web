@@ -1,3 +1,7 @@
+BUGS
+
+- gelöschte fotos ggf aus downloads entfernen
+
 NGXS
 
 - impl router state! (app/stores/router.state)

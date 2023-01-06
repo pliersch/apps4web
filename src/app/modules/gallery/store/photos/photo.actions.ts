@@ -51,7 +51,7 @@ export class AddPhoto {
   constructor(public photo: File,
               public user: User,
               public tags: Tag[],
-              public created: number,
+              public created: Date,
               public isPrivate: boolean = false) { }
 }
 
