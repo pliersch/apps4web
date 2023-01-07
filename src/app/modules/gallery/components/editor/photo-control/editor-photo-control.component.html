@@ -1,6 +1,8 @@
 <div class="image-container" [class.active]="selected">
-  <img alt="thumbnail" draggable="false" appImgFallback
-       [src]="getThumbUrl(photo.fileName)" loading="lazy">
+  <div class="image-wrapper">
+    <img alt="thumbnail" draggable="false" appImgFallback
+         [src]="getThumbUrl(photo.fileName)" loading="lazy">
+  </div>
   <div class="info-container" [class.lock]="!photo.isPrivate">
     <div class="bg">
       <mat-icon fontIcon="lock"></mat-icon>

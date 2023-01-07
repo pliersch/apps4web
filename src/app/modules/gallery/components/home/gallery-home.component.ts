@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Photo } from '@gallery/store/photos/photo.model';
-import { getPhotoUrl, getPreviewUrl, getThumbUrl } from "@gallery/store/photos/photo.tools";
+import { getW300Url, getW600Url, getW900Url } from "@gallery/store/photos/photo.tools";
 import { PhotoState } from "@gallery/store/photos/photo.state";
 
 @Component({
@@ -19,15 +19,15 @@ export class GalleryHomeComponent {
   // }
 
   getPhotoUrl(fileName: string): string {
-    return getPhotoUrl(fileName);
+    return getW900Url(fileName);
   }
 
   getPreviewUrl(fileName: string): string {
-    return getPreviewUrl(fileName);
+    return getW600Url(fileName);
   }
 
   getThumbUrl(fileName: string): string {
-    return getThumbUrl(fileName);
+    return getW300Url(fileName);
   }
 
 }

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Photo } from "@gallery/store/photos/photo.model";
-import { getThumbUrl } from "@gallery/store/photos/photo.tools";
+import { getW300Url } from "@gallery/store/photos/photo.tools";
 
 @Component({
   selector: 'app-scroller-item',
@@ -23,6 +23,6 @@ export class ScrollerItemComponent {
   }
 
   getThumbUrl(fileName: string): string {
-    return getThumbUrl(fileName);
+    return getW300Url(fileName);
   }
 }

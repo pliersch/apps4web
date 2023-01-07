@@ -3,7 +3,7 @@
     *ngFor="let image of (selection | async); let i = index"
     [colspan]="cols" [rowspan]="rows">
     <div class="image-container">
-      <img alt="thumbnail" [src]="getPhotoUrl(image.fileName)">
+      <img alt="thumbnail" appImgFallback [src]="getPhotoUrl(image.fileName)">
       <div class="action-container">
         <button mat-mini-fab (click)="onClickClose(image)">
           <mat-icon>visibility_off</mat-icon>

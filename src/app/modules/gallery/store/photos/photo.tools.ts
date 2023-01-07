@@ -55,11 +55,15 @@ export function getPhotoUrl(fileName: string): string {
   return BASE_URL + 'full/' + fileName;
 }
 
-export function getPreviewUrl(fileName: string): string {
+export function getW900Url(fileName: string): string {
+  return BASE_URL + 'thumbs/' + sliceExtension(fileName) + '-900.webp';
+}
+
+export function getW600Url(fileName: string): string {
   return BASE_URL + 'thumbs/' + sliceExtension(fileName) + '-600.webp';
 }
 
-export function getThumbUrl(fileName: string): string {
+export function getW300Url(fileName: string): string {
   return BASE_URL + 'thumbs/' + sliceExtension(fileName) + '-300.webp';
 }
 

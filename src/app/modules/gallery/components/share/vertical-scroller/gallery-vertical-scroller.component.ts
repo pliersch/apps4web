@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/cor
 import { Photo } from '@gallery/store/photos/photo.model';
 import { NgScrollbar } from 'ngx-scrollbar';
 import { Observable } from 'rxjs';
-import { getThumbUrl } from "@gallery/store/photos/photo.tools";
+import { getW300Url } from "@gallery/store/photos/photo.tools";
 import { Select } from "@ngxs/store";
 import { PhotoState } from "@gallery/store/photos/photo.state";
 
@@ -50,7 +50,7 @@ export class GalleryVerticalScrollerComponent implements OnInit {
   }
 
   getThumbUrl(fileName: string): string {
-    return getThumbUrl(fileName);
+    return getW300Url(fileName);
   }
 
 }
