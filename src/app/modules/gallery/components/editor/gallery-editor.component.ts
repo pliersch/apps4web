@@ -2,7 +2,8 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Photo, PhotoUpdate } from '@gallery/store/photos/photo.model';
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import {
-  EditPhotoPropertiesDialogData, EditPhotoPropertiesDialogResult,
+  EditPhotoPropertiesDialogData,
+  EditPhotoPropertiesDialogResult,
   GalleryEditPhotosComponent
 } from "@gallery/components/editor/edit-photos-dialog/gallery-edit-photos.component";
 import { Action, ActionProvider } from "@modules/action-bar/actions";
@@ -22,6 +23,7 @@ import { Select, Store } from "@ngxs/store";
 import { TagState } from "@gallery/store/tags/tag.state";
 import { Observable } from "rxjs";
 import { GalleryEditTagsComponent } from "@gallery/components/editor/manage-tags-dialog/gallery-edit-tags.component";
+import { difference, joinUnique } from "@app/common/util/array-utils";
 
 export interface DeletePhotoDialogData {
   photo: Photo;
@@ -95,7 +97,7 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
         this.store.dispatch(new photoAction.DeselectAllPhotosEdit());
         break;
       case ActionTypes.ToggleSelection:
-        this.store.dispatch(new photoAction.ToggleAllDownload());
+        this.store.dispatch(new photoAction.ToggleSelection());
         break;
       case ActionTypes.DeleteMany:
         this.deletePhotos();
@@ -123,7 +125,7 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
   }
 
   onSelectGroupEdit($event: Photo): void {
-    this.store.dispatch(new photoAction.TogglePhotoGroupEdit($event));
+    this.store.dispatch(new photoAction.TogglePhotoEdit($event));
   }
 
   onSelectForPreview($event: Photo): void {
@@ -227,16 +229,17 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
         private: res.private
       }
       let tags: Tag[];
-      tags = res.addedTags.filter(x => !photo.tags.includes(x));
+      tags = difference(photo.tags, res.addedTags);
       if (tags.length > 0) {
         photoUpdate.addedTagIds = this.getIdsFromTag(tags);
       }
-      tags = res.removedTags.filter(x => !photo.tags.includes(x));
+      tags = difference(photo.tags, res.removedTags);
       if (tags.length > 0) {
         photoUpdate.removedTagIds = this.getIdsFromTag(tags);
       }
       this.store.dispatch(new photoAction.UpdatePhoto(photo, photoUpdate));
     }
+    this.store.dispatch(new photoAction.DeselectAllPhotosEdit());
   }
 
   private getIdsFromTag(tags: Tag[]): string[] {

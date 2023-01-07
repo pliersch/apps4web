@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, Renderer2, SimpleCha
 import { UntypedFormControl } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { TagGroup } from '@gallery/store/tags/tag.model';
+import { intersect } from "@app/common/util/array-utils";
 
 export interface TagChanges {
   name: string;
@@ -103,7 +104,7 @@ export class GalleryEditTagDetailComponent implements OnChanges {
   }
 
   cleanUpAddedAndRemovedTags(changes: TagChanges): void {
-    const intersection = changes.addedTagNames.filter(x => changes.removedTagNames.includes(x));
+    const intersection = intersect(changes.addedTagNames, changes.removedTagNames);
     for (const tagName of intersection) {
       changes.addedTagNames = changes.addedTagNames.filter(item => item !== tagName)
       changes.removedTagNames = changes.removedTagNames.filter(item => item !== tagName)

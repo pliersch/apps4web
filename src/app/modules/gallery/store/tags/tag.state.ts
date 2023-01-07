@@ -8,6 +8,7 @@ import { patch, updateItem } from "@ngxs/store/operators";
 import { TagService } from "@gallery/services/tag.service";
 import { AlertService } from "@app/common/services/alert.service";
 import { PhotoStateModel } from "@gallery/store/photos/photo.state";
+import { difference } from "@app/common/util/array-utils";
 
 export interface TagStateModel {
   tagGroups: TagGroup[];
@@ -221,7 +222,7 @@ export class TagState {
   }
 
   @Action(tagActions.DeleteTagGroupFail)
-  deleteGroupFail(action: tagActions.DeleteTagGroupFail): void {
+  deleteGroupFail(): void {
     this.alertService.error('Delete tag fail');
   }
 

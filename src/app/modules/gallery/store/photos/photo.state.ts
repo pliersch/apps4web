@@ -12,6 +12,7 @@ import { ServerSentService } from "@app/common/services/server-sent.service";
 import { Tag } from "@gallery/store/tags/tag.model";
 import { clone } from "@app/common/util/obj-utils";
 import { DeleteResult } from "@modules/share/interfaces/models/delete-result";
+import { difference } from "@app/common/util/array-utils";
 
 export interface PhotoStateModel {
   photos: Photo[];
@@ -513,8 +514,8 @@ export class PhotoState {
   //          manage
   //////////////////////////////////////////////////////////
 
-  @Action(photoAction.TogglePhotoGroupEdit)
-  toggleGroupEdit(ctx: StateContext<PhotoStateModel>, action: photoAction.TogglePhotoGroupEdit): void {
+  @Action(photoAction.TogglePhotoEdit)
+  toggleGroupEdit(ctx: StateContext<PhotoStateModel>, action: photoAction.TogglePhotoEdit): void {
     const contains = ctx.getState().editPhotos.includes(action.photo);
     ctx.setState(
       patch({
@@ -551,6 +552,16 @@ export class PhotoState {
       patch({
         editPhotos: photos // WTF !!! empty array thrown an error
       })
+    );
+  }
+
+  @Action(photoAction.ToggleSelection)
+  toggleSelection(ctx: StateContext<PhotoStateModel>): void {
+    const filteredPhotos = this._getFilteredPhotos(ctx.getState());
+    const editPhotos = ctx.getState().editPhotos;
+    const diff = difference(editPhotos, filteredPhotos);
+    ctx.setState(
+      patch({editPhotos: diff})
     );
   }
 
@@ -599,9 +610,9 @@ export class PhotoState {
   togglePhotosDownload(ctx: StateContext<PhotoStateModel>): void {
     const filteredPhotos = this._getFilteredPhotos(ctx.getState());
     const downloads = ctx.getState().downloads;
-    const difference = filteredPhotos.filter(x => !downloads.includes(x));
+    const diff = difference(downloads, filteredPhotos);
     ctx.setState(
-      patch({downloads: difference})
+      patch({downloads: diff})
     );
   }
 

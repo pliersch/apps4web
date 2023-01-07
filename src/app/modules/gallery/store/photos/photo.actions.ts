@@ -97,10 +97,14 @@ export class ClearPhotoComparison {
 
 // manage / edit
 
-export class TogglePhotoGroupEdit {
-  static readonly type = '[Gallery] Toggle Photo Group Edit';
+export class TogglePhotoEdit {
+  static readonly type = '[Gallery] Toggle Photo Edit';
 
   constructor(public photo: Photo) { }
+}
+
+export class ToggleSelection {
+  static readonly type = '[Gallery] Toggle Photo Selection';
 }
 
 export class SelectManyPhotosEdit {
