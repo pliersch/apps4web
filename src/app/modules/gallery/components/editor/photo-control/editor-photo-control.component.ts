@@ -34,7 +34,8 @@ export class EditorPhotoControlComponent {
   previewEvent = new EventEmitter<Photo>();
 
 
-  onClickGroupEdit(): void {
+  onClickGroupEdit($event: MouseEvent): void {
+    $event.stopPropagation();
     this.groupEditEvent.emit(this.photo);
   }
 
@@ -46,7 +47,8 @@ export class EditorPhotoControlComponent {
     this.editEvent.emit(this.photo);
   }
 
-  onClickDelete(): void {
+  onClickDelete($event: MouseEvent): void {
+    $event.stopPropagation();
     this.deleteEvent.emit(this.photo);
   }
 

@@ -46,6 +46,10 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   currentPhoto$: Observable<Photo>;
   currentPhoto: Photo;
 
+  @Select(PhotoState.getCurrentIndex)
+  currentIndex$: Observable<number>;
+  currentIndex: number;
+
   @Select(PhotoState.getDownloads)  // todo look for pipe to remove field downloads
   downloads$: Observable<Photo[]>;
   downloads: Photo[];
@@ -81,6 +85,7 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
     this.subscription.add(this.selection$.subscribe(res => this.selection = res));
     this.subscription.add(this.downloads$.subscribe(res => this.downloads = res));
     this.subscription.add(this.loadedPhotos$.subscribe(res => this.loadedPhotos = res));
+    this.subscription.add(this.currentIndex$.subscribe(res => this.currentIndex = res));
     this.subscription.add(this.currentPhoto$.subscribe(res => this.currentPhoto = res));
     this.subscription.add(this.isAuthenticated$.subscribe(res => this.isAuthenticated = res));
     this.subscription.add(this.availablePhotos$.subscribe(count => this.availablePhotos = count));

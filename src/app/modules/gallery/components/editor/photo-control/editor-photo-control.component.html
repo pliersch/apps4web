@@ -12,13 +12,13 @@
     <button mat-icon-button (click)="onClickPreview()">
       <mat-icon>visibility</mat-icon>
     </button>
-    <button mat-icon-button (click)="onClickGroupEdit()" [class.active]="edit">
+    <button mat-icon-button (click)="onClickGroupEdit($event)" [class.active]="edit">
       <mat-icon>check_circle</mat-icon>
     </button>
     <button mat-icon-button [disabled]="!hasRights" (click)="onClickEdit()">
       <mat-icon>edit</mat-icon>
     </button>
-    <button mat-icon-button [disabled]="!hasRights" (click)="onClickDelete()">
+    <button mat-icon-button [disabled]="!hasRights" (click)="onClickDelete($event)">
       <mat-icon>delete</mat-icon>
     </button>
   </div>

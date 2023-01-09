@@ -23,7 +23,7 @@ import { Select, Store } from "@ngxs/store";
 import { TagState } from "@gallery/store/tags/tag.state";
 import { Observable } from "rxjs";
 import { GalleryEditTagsComponent } from "@gallery/components/editor/manage-tags-dialog/gallery-edit-tags.component";
-import { difference, joinUnique } from "@app/common/util/array-utils";
+import { difference } from "@app/common/util/array-utils";
 
 export interface DeletePhotoDialogData {
   photo: Photo;
@@ -145,19 +145,6 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
     return this.selection.includes(photo);
   }
 
-  // onSelectionFinish(photoFileNames: string[]): void {
-  //   const photos: Photo[] = [];
-  //   for (const fileName of photoFileNames) {
-  //     const photo = this.photos.find(img => img.fileName == fileName);
-  //     if (photo) {
-  //       photos.push(photo);
-  //     } else {
-  //       console.log('GalleryExplorerComponent err why cant find the id?: ', fileName)
-  //     }
-  //   }
-  //   this.store.dispatch(new photoAction.SelectManyPhotosEdit(photos));
-  // }
-
   private openDeletePhotoDialog($event: Photo): void {
     const dialogRef = this.dialog.open(GalleryDeletePhotoComponent, {
       data: {photo: $event},
@@ -181,8 +168,6 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
     const dialogRef = this.dialog.open(GalleryEditPhotosComponent, {
       data: dialogData,
       width: '800px',
-      // minHeight: '400px',
-      // maxHeight: '600px',
       restoreFocus: false,
       autoFocus: false
     });
@@ -201,10 +186,7 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
 
   private openNewTagDialog(): void {
     this.dialog.open(GalleryNewTagGroupComponent, {
-      // minWidth: '600px',
       width: '500px',
-      // minHeight: '400px',
-      // maxHeight: '600px',
       restoreFocus: false,
       autoFocus: false
     });
