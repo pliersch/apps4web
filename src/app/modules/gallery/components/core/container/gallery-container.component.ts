@@ -12,8 +12,8 @@ export class GalleryContainerComponent implements OnInit {
 
   linksAndNames: LinkAndName[] = [
     {name: 'Home', link: '/gallery/home'},
-    {name: 'Explorer', link: '/gallery/explorer'},
-    {name: 'Editor', link: '/gallery/editor'},
+    {name: 'Explorer', link: '/gallery/explorer/finder'},
+    {name: 'Editor', link: '/gallery/explorer/editor'},
     {name: 'Slideshow', link: '/gallery/slideshow'},
     {name: 'Lightbox', link: '/gallery/lightbox'},
     {name: 'Upload', link: '/gallery/upload'},

@@ -1,6 +1,6 @@
 @use '@angular/material' as mat;
 @use './src/app/modules/waste-calendar/reminder/waste-reminder.component-theme' as waste-reminder;
-@use './src/app/modules/gallery/components/explorer/date-filter/gallery-date-filter.component-theme' as date-filter;
+@use '../app/modules/gallery/modules/explorer/components/date-filter/gallery-date-filter.component-theme' as date-filter;
 @use './mat-btn-toggle' as btn-toggle;
 
 $light-primary: mat.define-palette(mat.$indigo-palette, 500);

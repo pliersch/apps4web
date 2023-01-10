@@ -1,24 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { GalleryContainerComponent } from '@app/modules/gallery/components/core/container/gallery-container.component';
-import { GalleryExplorerComponent } from '@app/modules/gallery/components/explorer/gallery-explorer.component';
-import { GalleryLightboxComponent } from '@app/modules/gallery/components/lightbox/gallery-lightbox.component';
-import { GalleryUploadComponent } from '@app/modules/gallery/components/upload/gallery-upload.component';
-import { GallerySlideshowComponent } from "@gallery/components/slideshow/gallery-slideshow.component";
 import { GalleryResolver } from "@gallery/resolver/gallery.resolver";
-import { GalleryEditorComponent } from "@gallery/components/editor/gallery-editor.component";
-import { GalleryHomeComponent } from '@app/modules/gallery/components/home/gallery-home.component';
+
+const homeModule = () => import('./modules/home/home.module').then((x) => x.HomeModule);
+const uploadModule = () => import('./modules/upload/upload.module').then((x) => x.UploadModule);
+const slideShowModule = () => import('./modules/slideshow/slideshow.module').then((x) => x.SlideshowModule);
+const lightBoxModule = () => import('./modules/lightbox/lightbox.module').then((x) => x.LightboxModule);
+const explorerModule = () => import('./modules/explorer/explorer.module').then((x) => x.ExplorerModule);
 
 const routes: Routes = [
   {
     path: '', component: GalleryContainerComponent, resolve: {meta: GalleryResolver},
     children: [
-      {path: 'home', component: GalleryHomeComponent},
-      {path: 'explorer', title: 'Explorer', component: GalleryExplorerComponent},
-      {path: 'editor', title: 'Editor', component: GalleryEditorComponent},
-      {path: 'lightbox', title: 'Lightbox', component: GalleryLightboxComponent},
-      {path: 'slideshow', title: 'Slideshow', component: GallerySlideshowComponent},
-      {path: 'upload', title: 'Upload', component: GalleryUploadComponent},
+      {path: 'home', title: 'Home', loadChildren: homeModule},
+      {path: 'upload', title: 'Upload', loadChildren: uploadModule},
+      {path: 'slideshow', title: 'Slideshow', loadChildren: slideShowModule},
+      {path: 'lightbox', title: 'Lightbox', loadChildren: lightBoxModule},
+      {path: 'explorer', title: 'Explorer', loadChildren: explorerModule},
+      // {path: 'editor', title: 'Editor', loadChildren: explorerModule},
       {path: '**', redirectTo: '/gallery/home', pathMatch: 'full'},
       {path: '', redirectTo: '/gallery/home', pathMatch: 'full'},
     ]
