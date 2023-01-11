@@ -12,14 +12,14 @@ import { ServerSentService } from "@app/common/services/server-sent.service";
 import { Tag } from "@gallery/store/tags/tag.model";
 import { clone } from "@app/common/util/obj-utils";
 import { DeleteResult } from "@modules/share/interfaces/models/delete-result";
-import { difference } from "@app/common/util/array-utils";
+import { difference, difference2 } from "@app/common/util/array-utils";
 
 export interface PhotoStateModel {
   photos: Photo[];
-  filteredPhotos: Photo[];
   currentIndex: number;
   editPhotos: Photo[];
-  downloads: Photo[];
+  selectedDownloads: Photo[];
+  finalDownloads: Photo[];
   comparePhotos: Photo[];
   availableServerPhotos: number;
   tagFilter: Tag[];
@@ -35,9 +35,9 @@ export interface PhotoStateModel {
   name: 'Photo',
   defaults: {
     photos: [],
-    filteredPhotos: [],
     comparePhotos: [],
-    downloads: [],
+    selectedDownloads: [],
+    finalDownloads: [],
     editPhotos: [],
     currentIndex: 0,
     newDataAvailable: true,
@@ -84,10 +84,10 @@ export class PhotoState {
     return result;
   }
 
-  @Selector([PhotoState.getPhotosByTags, PhotoState.getFilterRating, PhotoState.getFilterFrom, PhotoState.getFilterTo])
-  static getFilteredPhotos(photos: Photo[], filterRating: number, filterFrom: number, filterTo: number): Photo[] {
-    let filteredPhotos = filterByRating(photos, filterRating);
-    // console.log('PhotoState getFilteredPhotos: ',)
+  @Selector([PhotoState.getPhotosByTags, PhotoState.getFinalDownloads, PhotoState.getFilterRating, PhotoState.getFilterFrom, PhotoState.getFilterTo])
+  static getFilteredPhotos(photos: Photo[], downloads: Photo[], filterRating: number, filterFrom: number, filterTo: number): Photo[] {
+    let filteredPhotos: Photo[] = difference2(photos, downloads);
+    filteredPhotos = filterByRating(filteredPhotos, filterRating);
     filteredPhotos = filterByYear(filteredPhotos, filterFrom, filterTo);
     return filteredPhotos;
   }
@@ -138,8 +138,13 @@ export class PhotoState {
   }
 
   @Selector()
-  static getDownloads(state: PhotoStateModel): Photo[] {
-    return state.downloads;
+  static getSelectedDownloads(state: PhotoStateModel): Photo[] {
+    return state.selectedDownloads;
+  }
+
+  @Selector()
+  static getFinalDownloads(state: PhotoStateModel): Photo[] {
+    return state.finalDownloads;
   }
 
   @Selector()
@@ -573,10 +578,10 @@ export class PhotoState {
 
   @Action(photoAction.TogglePhotoDownload)
   toggleDownload(ctx: StateContext<PhotoStateModel>, action: photoAction.TogglePhotoDownload): void {
-    const isDownload = ctx.getState().downloads.includes(action.photo);
+    const isDownload = ctx.getState().selectedDownloads.includes(action.photo);
     ctx.setState(
       patch({
-        downloads:
+        selectedDownloads:
           isDownload
             ? removeItem<Photo>(photo => photo?.index === action.photo.index)
             : insertItem<Photo>(action.photo)
@@ -587,31 +592,35 @@ export class PhotoState {
   @Action(photoAction.SelectAllDownloads)
   selectAllDownload(ctx: StateContext<PhotoStateModel>): void {
     const filteredPhotos = this._getFilteredPhotos(ctx.getState());
-    ctx.setState(patch({downloads: filteredPhotos}));
+    ctx.setState(patch({selectedDownloads: filteredPhotos}));
   }
 
-  @Action(photoAction.AddToDownload)
-  addToDownload(ctx: StateContext<PhotoStateModel>, action: photoAction.AddToDownload): void {
+  @Action(photoAction.MoveToFinalDownloads)
+  moveToFinalDownload(ctx: StateContext<PhotoStateModel>, action: photoAction.MoveToFinalDownloads): void {
     const state = ctx.getState();
-    const photos: Photo[] = [...state.downloads, ...action.photos]
-    ctx.setState(patch({downloads: photos}));
+    const cleared: Photo[] = [];
+    ctx.setState(patch({
+      finalDownloads: [...state.finalDownloads, ...state.selectedDownloads],
+      selectedDownloads: cleared
+    }));
+    this._fixIndices(ctx, state.photos[state.currentIndex])
   }
 
   @Action(photoAction.DeselectAllDownloads)
   deselectAllDownloads(ctx: StateContext<PhotoStateModel>): void {
-    const photos: Photo[] = [];
+    const photos: Photo[] = []; // patchObj want's typed array
     ctx.setState(
-      patch({downloads: photos}) // WTF !!! empty array thrown an error
+      patch({selectedDownloads: photos})
     );
   }
 
   @Action(photoAction.ToggleAllDownload)
   togglePhotosDownload(ctx: StateContext<PhotoStateModel>): void {
     const filteredPhotos = this._getFilteredPhotos(ctx.getState());
-    const downloads = ctx.getState().downloads;
+    const downloads = ctx.getState().selectedDownloads;
     const diff = difference(downloads, filteredPhotos);
     ctx.setState(
-      patch({downloads: diff})
+      patch({selectedDownloads: diff})
     );
   }
 
@@ -717,6 +726,7 @@ export class PhotoState {
   private _getFilteredPhotos(state: PhotoStateModel): Photo[] {
     return PhotoState.getFilteredPhotos(
       PhotoState.getPhotosByTags(PhotoState.getPhotos(state), PhotoState.getActiveTags(state)),
+      PhotoState.getFinalDownloads(state),
       PhotoState.getFilterRating(state),
       PhotoState.getFilterFrom(state),
       PhotoState.getFilterTo(state));

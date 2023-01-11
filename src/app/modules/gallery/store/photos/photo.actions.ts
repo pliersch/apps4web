@@ -137,14 +137,12 @@ export class SelectAllDownloads {
   static readonly type = '[Gallery] Select All Download';
 }
 
-export class AddToDownload {
-  static readonly type = '[Gallery] Add To Download';
-
-  constructor(public photos: Photo[]) { }
-}
-
 export class DeselectAllDownloads {
   static readonly type = '[Gallery] Clear Download';
+}
+
+export class MoveToFinalDownloads {
+  static readonly type = '[Gallery] Move To Final Downloads';
 }
 
 // delete

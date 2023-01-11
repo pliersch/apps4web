@@ -16,9 +16,10 @@
                               class="m5"></app-gallery-action-panel>
     <app-gallery-image-detail class="m5" [currentPhoto$]="currentPhoto$"></app-gallery-image-detail>
     <app-gallery-meta-panel class="m5"
-                            [selectedPhotosCount]="downloads.length"
+                            [selectedPhotosCount]="selectedDownloads.length"
                             [filteredPhotosCount]="photos.length"
                             [loadedPhotos]="loadedPhotos"
+                            [finalDownloadsPhotosCount]="finalDownloads.length"
                             [availablePhotos]="availablePhotos"></app-gallery-meta-panel>
   </div>
   <div class="column-max-width">

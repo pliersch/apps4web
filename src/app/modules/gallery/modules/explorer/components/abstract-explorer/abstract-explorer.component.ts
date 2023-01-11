@@ -50,9 +50,13 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   currentIndex$: Observable<number>;
   currentIndex: number;
 
-  @Select(PhotoState.getDownloads)
-  downloads$: Observable<Photo[]>;
-  downloads: Photo[];
+  @Select(PhotoState.getSelectedDownloads)
+  selectedDownloads$: Observable<Photo[]>;
+  selectedDownloads: Photo[];
+
+  @Select(PhotoState.getFinalDownloads)
+  finalDownloads$: Observable<Photo[]>;
+  finalDownloads: Photo[];
 
   @Select(PhotoState.getEditPhotos)
   selection$: Observable<Photo[]>;
@@ -83,7 +87,8 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
     this.actionBarService.setActions(this.actions);
     this.subscription = this.user$.subscribe(res => this.user = res);
     this.subscription.add(this.selection$.subscribe(res => this.selection = res));
-    this.subscription.add(this.downloads$.subscribe(res => this.downloads = res));
+    this.subscription.add(this.selectedDownloads$.subscribe(res => this.selectedDownloads = res));
+    this.subscription.add(this.finalDownloads$.subscribe(res => this.finalDownloads = res));
     this.subscription.add(this.loadedPhotos$.subscribe(res => this.loadedPhotos = res));
     this.subscription.add(this.currentIndex$.subscribe(res => this.currentIndex = res));
     this.subscription.add(this.currentPhoto$.subscribe(res => this.currentPhoto = res));

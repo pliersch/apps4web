@@ -19,4 +19,7 @@ export class GalleryMetaPanelComponent {
   @Input()
   filteredPhotosCount: number;
 
+  @Input()
+  finalDownloadsPhotosCount: number;
+
 }

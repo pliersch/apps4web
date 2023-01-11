@@ -63,7 +63,7 @@ export class GalleryExplorerComponent extends AbstractExplorerComponent implemen
         this.store.dispatch(new photoAction.SelectAllDownloads());
         break;
       case ActionTypes.Add:
-        this.store.dispatch(new photoAction.AddToDownload(this.photos));
+        this.store.dispatch(new photoAction.MoveToFinalDownloads());
         break;
       case ActionTypes.DeselectAll:
         this.store.dispatch(new photoAction.DeselectAllDownloads());
@@ -91,11 +91,11 @@ export class GalleryExplorerComponent extends AbstractExplorerComponent implemen
   }
 
   isDownload(photo: Photo): boolean {
-    return this.downloads.includes(photo);
+    return this.selectedDownloads.includes(photo);
   }
 
   private downloadPhotos(): void {
-    this.photoService.download(this.downloads)
+    this.photoService.download(this.selectedDownloads)
       .subscribe((blob) => {
         saveAs(blob, 'photos.zip')
         this.store.dispatch(new photoAction.DeselectAllDownloads())
