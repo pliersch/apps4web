@@ -12,7 +12,7 @@ import { ServerSentService } from "@app/common/services/server-sent.service";
 import { Tag } from "@gallery/store/tags/tag.model";
 import { clone } from "@app/common/util/obj-utils";
 import { DeleteResult } from "@modules/share/interfaces/models/delete-result";
-import { difference, difference2 } from "@app/common/util/array-utils";
+import { difference } from "@app/common/util/array-utils";
 
 export interface PhotoStateModel {
   photos: Photo[];
@@ -86,7 +86,7 @@ export class PhotoState {
 
   @Selector([PhotoState.getPhotosByTags, PhotoState.getFinalDownloads, PhotoState.getFilterRating, PhotoState.getFilterFrom, PhotoState.getFilterTo])
   static getFilteredPhotos(photos: Photo[], downloads: Photo[], filterRating: number, filterFrom: number, filterTo: number): Photo[] {
-    let filteredPhotos: Photo[] = difference2(photos, downloads);
+    let filteredPhotos: Photo[] = difference(photos, downloads);
     filteredPhotos = filterByRating(filteredPhotos, filterRating);
     filteredPhotos = filterByYear(filteredPhotos, filterFrom, filterTo);
     return filteredPhotos;
@@ -563,7 +563,7 @@ export class PhotoState {
   toggleSelection(ctx: StateContext<PhotoStateModel>): void {
     const filteredPhotos = this._getFilteredPhotos(ctx.getState());
     const editPhotos = ctx.getState().editPhotos;
-    const diff = difference(editPhotos, filteredPhotos);
+    const diff = difference(filteredPhotos, editPhotos);
     ctx.setState(
       patch({editPhotos: diff})
     );
@@ -618,7 +618,7 @@ export class PhotoState {
   togglePhotosDownload(ctx: StateContext<PhotoStateModel>): void {
     const filteredPhotos = this._getFilteredPhotos(ctx.getState());
     const downloads = ctx.getState().selectedDownloads;
-    const diff = difference(downloads, filteredPhotos);
+    const diff = difference(filteredPhotos, downloads);
     ctx.setState(
       patch({selectedDownloads: diff})
     );

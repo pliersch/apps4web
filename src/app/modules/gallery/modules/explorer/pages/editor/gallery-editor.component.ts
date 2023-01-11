@@ -27,7 +27,7 @@ import { Observable } from "rxjs";
 import {
   GalleryManageTagsComponent
 } from "@gallery/modules/explorer/components/manage-tags-dialog/gallery-manage-tags.component";
-import { difference } from "@app/common/util/array-utils";
+import { joinUnique } from "@app/common/util/array-utils";
 
 export interface DeletePhotoDialogData {
   photo: Photo;
@@ -215,11 +215,14 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
         private: res.private
       }
       let tags: Tag[];
-      tags = difference(photo.tags, res.addedTags);
+      tags = joinUnique(photo.tags, res.addedTags);
+      console.log('GalleryEditorComponent updateTagsOfSelectedPhotos ADD: ', tags.length)
       if (tags.length > 0) {
         photoUpdate.addedTagIds = this.getIdsFromTag(tags);
       }
-      tags = difference(photo.tags, res.removedTags);
+      // tags = difference2(photo.tags, res.removedTags);
+      tags = res.removedTags;
+      console.log('GalleryEditorComponent updateTagsOfSelectedPhotos REMOVE: ', tags.length)
       if (tags.length > 0) {
         photoUpdate.removedTagIds = this.getIdsFromTag(tags);
       }
