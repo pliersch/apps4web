@@ -13,6 +13,7 @@ import { firstValueFrom, of } from "rxjs";
 import { getBazTagGroup, getFooBarTagGroups } from "@gallery/store/testing/test.tags";
 import { AlertService } from "@app/common/services/alert.service";
 import { UpdateTagGroupResultDto } from "@gallery/store/tags/tag.model";
+import { clone } from "@app/common/util/obj-utils";
 // import { addMatchers } from "@testing/jasmine-matchers";
 
 // beforeEach(addMatchers)
@@ -77,18 +78,18 @@ describe('TagState', () => {
     describe('SetNewTagsAvailable', () => {
 
       it('re-loads tags', waitForAsync(async () => {
-        let testTags = getFooBarTagGroups();
-        tagServiceMock.getAll.and.returnValue(of(testTags));
+        const existingGroups = getFooBarTagGroups();
+        const copy = clone(existingGroups);
+        tagServiceMock.getAll.and.returnValue(of(existingGroups));
         await firstValueFrom(store.dispatch(new LoadTags()));
+        const expectation = [...copy, getBazTagGroup()];
 
-        testTags = [...testTags, ...testTags]
-        tagServiceMock.getAll.and.returnValue(of(testTags));
+        tagServiceMock.getAll.and.returnValue(of(expectation));
         await firstValueFrom(store.dispatch(new SetNewTagsAvailable()));
 
         const tags = store.selectSnapshot(TagState.getTagGroups);
-        expect(tags.length).toBe(4);
+        expect(tags.length).toBe(3);
       }));
-
 
     });
 
