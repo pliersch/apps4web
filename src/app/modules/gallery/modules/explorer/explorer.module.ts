@@ -50,11 +50,11 @@ import {
 } from "@gallery/modules/explorer/components/manage-tags-dialog/manage-tag-detail/gallery-manage-tag-detail.component";
 import { GalleryShareModule } from "@gallery/modules/share/gallery-share.module";
 import { ShareModule } from "@modules/share/share.module";
-import { NgxScrollbarModule } from "@modules/share/ngx-scrollbar/ngx-scrollbar.module";
 import { NgxsModule } from "@ngxs/store";
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { TagState } from "@gallery/store/tags/tag.state";
 import { FormsModule } from "@angular/forms";
+import { NgScrollbarModule } from "ngx-scrollbar";
 
 
 @NgModule({
@@ -85,7 +85,7 @@ import { FormsModule } from "@angular/forms";
     MaterialModule,
     GalleryShareModule,
     ShareModule,
-    NgxScrollbarModule,
+    NgScrollbarModule,
     NgxsModule.forFeature([PhotoState, TagState]),
     FormsModule,
   ]

@@ -10,13 +10,13 @@ import { ChatEmojiItemComponent } from './chat-emoji-item/chat-emoji-item.compon
 import { ChatImageItemComponent } from './chat-image-item/chat-image-item.component';
 import { ChatUploadComponent } from './chat-upload/chat-upload.component';
 import { ChatMessagesComponent } from "@modules/chat/chat-messages/chat-messages.component";
-import { NgxScrollbarModule } from "@app/modules/share/ngx-scrollbar/ngx-scrollbar.module";
 import { MaterialModule } from "@app/modules/share/material/material.module";
 import { NgxsModule } from "@ngxs/store";
 import { ChatState } from "@modules/chat/store/chat.state";
 import { ChatService } from "@modules/chat/store/chat.service";
 import { FormsModule } from "@angular/forms";
 import { FileDragDropModule } from "@modules/file-drag-drop/file-drag-drop.module";
+import { NgScrollbarModule } from "ngx-scrollbar";
 
 
 @NgModule({
@@ -33,7 +33,7 @@ import { FileDragDropModule } from "@modules/file-drag-drop/file-drag-drop.modul
   imports: [
     CommonModule,
     ChatRoutingModule,
-    NgxScrollbarModule,
+    NgScrollbarModule,
     MaterialModule,
     NgxsModule.forFeature([ChatState]),
     FormsModule,

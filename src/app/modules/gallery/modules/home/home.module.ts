@@ -5,8 +5,8 @@ import { PhotoState } from "@gallery/store/photos/photo.state";
 import { TagState } from "@gallery/store/tags/tag.state";
 import { GalleryHomeComponent } from "@gallery/modules/home/pages/gallery-home.component";
 import { HomeRoutingModule } from "@gallery/modules/home/home-routing.module";
-import { NgxScrollbarModule } from "@modules/share/ngx-scrollbar/ngx-scrollbar.module";
 import { MaterialModule } from "@modules/share/material/material.module";
+import { NgScrollbarModule } from "ngx-scrollbar";
 
 
 @NgModule({
@@ -17,7 +17,7 @@ import { MaterialModule } from "@modules/share/material/material.module";
     CommonModule,
     HomeRoutingModule,
     MaterialModule,
-    NgxScrollbarModule,
+    NgScrollbarModule,
     NgxsModule.forFeature([PhotoState, TagState]),
   ]
 })

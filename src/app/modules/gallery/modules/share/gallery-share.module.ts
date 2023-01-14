@@ -6,11 +6,11 @@ import {
 import {
   GalleryVerticalScrollerComponent
 } from "@gallery/modules/share/vertical-scroller/gallery-vertical-scroller.component";
-import { NgxScrollbarModule } from "@modules/share/ngx-scrollbar/ngx-scrollbar.module";
 import { ScrollerItemComponent } from "@gallery/modules/share/scroller-item/scroller-item.component";
 import {
   GalleryImagePlaceholderComponent
 } from "@gallery/modules/share/image-placeholder/gallery-image-placeholder.component";
+import { NgScrollbarModule } from "ngx-scrollbar";
 
 
 @NgModule({
@@ -22,7 +22,7 @@ import {
   ],
   imports: [
     CommonModule,
-    NgxScrollbarModule,
+    NgScrollbarModule,
   ],
   exports: [
     GalleryHorizontalScrollerComponent,
