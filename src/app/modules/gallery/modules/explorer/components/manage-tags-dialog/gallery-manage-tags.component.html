@@ -18,11 +18,11 @@
     </div>
     <!--    <mat-divider [vertical]="true"></mat-divider>-->
     <div class="col-s-9">
-      <app-gallery-edit-tag-detail class="full-width"
-                                   (tagChangesEvent)="onEntriesChanged($event)"
-                                   (deleteEvent)="onDeleteGroup($event)"
-                                   [tagGroup]="currentGroup">
-      </app-gallery-edit-tag-detail>
+      <app-gallery-manage-tag-detail class="full-width"
+                                     (tagChangesEvent)="onEntriesChanged($event)"
+                                     (deleteGroupEvent)="onDeleteGroup($event)"
+                                     [tagGroup]="currentGroup">
+      </app-gallery-manage-tag-detail>
     </div>
   </div>
 </mat-dialog-content>

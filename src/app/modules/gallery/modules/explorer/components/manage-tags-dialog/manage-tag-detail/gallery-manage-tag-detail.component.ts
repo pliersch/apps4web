@@ -12,7 +12,7 @@ export interface TagChanges {
 }
 
 @Component({
-  selector: 'app-gallery-edit-tag-detail',
+  selector: 'app-gallery-manage-tag-detail',
   templateUrl: './gallery-manage-tag-detail.component.html',
   styleUrls: ['./gallery-manage-tag-detail.component.scss']
 })
@@ -24,7 +24,7 @@ export class GalleryManageTagDetailComponent implements OnChanges {
   @Output()
   tagChangesEvent = new EventEmitter<TagChanges | null>();
   @Output()
-  deleteEvent = new EventEmitter<TagGroup>();
+  deleteGroupEvent = new EventEmitter<TagGroup>();
 
   tagNames: string[];
   separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -51,8 +51,8 @@ export class GalleryManageTagDetailComponent implements OnChanges {
     }
   }
 
-  onClickDeleteTag(group: TagGroup): void {
-    this.deleteEvent.emit(group);
+  onClickDeleteTagGroup(group: TagGroup): void {
+    this.deleteGroupEvent.emit(group);
   }
 
   add(event: MatChipInputEvent): void {
@@ -88,7 +88,6 @@ export class GalleryManageTagDetailComponent implements OnChanges {
 
   onChangeGroupName($event: string): void {
     this.changes.name = this.tagGroup.name === $event ? '' : $event;
-    console.log('GalleryEditTagDetailComponent onChangeGroupName: ', this.changes.name)
     this.emitStateChange();
   }
 

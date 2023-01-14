@@ -25,7 +25,6 @@ export class TagService {
   }
 
   updateTagGroup(update: UpdateTagGroupDto): Observable<UpdateTagGroupResultDto> {
-    // console.log('TagService updateTagGroup: ', update)
     return this.http.patch<UpdateTagGroupResultDto>(`${tagUrl}/${update.id}`, update);
   }
 

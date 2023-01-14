@@ -4,15 +4,13 @@ import { Injectable } from "@angular/core";
 import * as tagActions from "@gallery/store/tags/tag.action";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import { catchError, map } from "rxjs/operators";
-import { patch, updateItem } from "@ngxs/store/operators";
+import { patch, removeItem, updateItem } from "@ngxs/store/operators";
 import { TagService } from "@gallery/services/tag.service";
 import { AlertService } from "@app/common/services/alert.service";
 import { PhotoStateModel } from "@gallery/store/photos/photo.state";
 
 export interface TagStateModel {
   tagGroups: TagGroup[];
-  loaded: boolean;
-  loading: boolean;
   newDataAvailable: boolean,
 }
 
@@ -20,8 +18,6 @@ export interface TagStateModel {
   name: 'Tag',
   defaults: {
     tagGroups: [],
-    loaded: false,
-    loading: false,
     newDataAvailable: true,
   }
 })
@@ -47,6 +43,7 @@ export class TagState {
               private alertService: AlertService) {
   }
 
+  // region load
   //////////////////////////////////////////////////////////
   //          load
   //////////////////////////////////////////////////////////
@@ -57,7 +54,6 @@ export class TagState {
     if (!state.newDataAvailable) {
       return of(Subscription.EMPTY);
     }
-    ctx.patchState({loading: true});
     return this.tagService.getAll()
       .pipe(
         map((tags: TagGroup[]) =>
@@ -84,37 +80,38 @@ export class TagState {
     for (const group of sortedTagGroups) {
       group.tags = group.tags.sort((t1: Tag, t2: Tag) => t1.name.localeCompare(t2.name));
     }
-    patchState({tagGroups: sortedTagGroups, loaded: true, loading: false, newDataAvailable: false});
+    patchState({tagGroups: sortedTagGroups, newDataAvailable: false});
   }
 
   @Action(tagActions.LoadTagsFail)
-  loadTagsFail({dispatch}: StateContext<TagStateModel>): void {
+  loadTagsFail(): void {
     this.alertService.error('Load tags fail');
-    dispatch({loaded: false, loading: false});
   }
 
+  // endregion
+
+  // region server sent
   //////////////////////////////////////////////////////////
   //          server sent new tags available
   //////////////////////////////////////////////////////////
 
   @Action(tagActions.SetNewTagsAvailable)
   setNewTagsAvailable(ctx: StateContext<PhotoStateModel>): void {
-    console.log('TagState setNewTagsAvailable: ',)
     ctx.patchState({
       newDataAvailable: true
     });
-    // todo: only dispatch when inside gallery
     ctx.dispatch(new tagActions.LoadTags())
   }
 
+// endregion
 
+  // region add
   //////////////////////////////////////////////////////////
   //          add
   //////////////////////////////////////////////////////////
 
   @Action(tagActions.AddTagGroup)
   addGroup(ctx: StateContext<TagStateModel>, action: tagActions.AddTagGroup): Observable<Subscription> {
-    ctx.patchState({loading: true});
     return this.tagService.createTagGroup(action.dto)
       .pipe(
         map((tag: TagGroup) =>
@@ -136,14 +133,17 @@ export class TagState {
   addGroupSuccess(ctx: StateContext<TagStateModel>, action: tagActions.AddTagGroupSuccess): void {
     const state = ctx.getState();
     const tags: TagGroup[] = [...state.tagGroups, action.tagGroup]
-    ctx.patchState({tagGroups: tags, loaded: true, loading: false});
+    ctx.patchState({tagGroups: tags});
   }
 
   @Action(tagActions.AddTagGroupFail)
-  addGroupFail(action: tagActions.AddTagGroupFail): void {
-    this.alertService.error('Add tag fail');
+  addGroupFail(): void {
+    this.alertService.error('Add group fail');
   }
 
+  // endregion
+
+  // region update
   //////////////////////////////////////////////////////////
   //          update
   //////////////////////////////////////////////////////////
@@ -169,38 +169,45 @@ export class TagState {
 
   @Action(tagActions.UpdateTagGroupSuccess)
   updateGroupSuccess(ctx: StateContext<TagStateModel>, action: tagActions.UpdateTagGroupSuccess): void {
-    // console.log('TagState updateGroupSuccess: ', action.dto)
     const state = ctx.getState();
-    const tagGroup = state.tagGroups.find(c => c.id === action.dto.id)!;
-    const removedTagIds = action.dto.removedTagIds || [];
+    const dto = action.dto;
+    const patchObj: Partial<TagGroup> = {};
+    const tagGroup = state.tagGroups.find(c => c.id === dto.id)!;
+    if (dto.name) {
+      patchObj.name = dto.name;
+    }
+    const removedTagIds = dto.removedTagIds || [];
     const result: Tag[] = tagGroup.tags.filter(tag => !removedTagIds.includes(tag.id));
-    const addedTags = action.dto.addedTags || [];
+    const addedTags = dto.addedTags || [];
     result.push(...addedTags)
+    patchObj.tags = result;
     ctx.setState(
       patch({
-        tagGroups: updateItem<TagGroup>(tag => tag!.id === action.dto.id,
-          patch({tags: result}))
+        tagGroups: updateItem<TagGroup>(tag => tag!.id === dto.id,
+          patch(patchObj))
       })
     );
   }
 
   @Action(tagActions.UpdateTagGroupFail)
-  updateGroupFail(action: tagActions.UpdateTagGroupFail): void {
+  updateGroupFail(): void {
     this.alertService.error('Update tag fail');
   }
 
+  // endregion
+
+  // region delete
   //////////////////////////////////////////////////////////
   //          delete
   //////////////////////////////////////////////////////////
 
   @Action(tagActions.DeleteTagGroup)
   deleteGroup(ctx: StateContext<TagStateModel>, action: tagActions.DeleteTagGroup): Observable<Subscription> {
-    ctx.patchState({loading: true});
     return this.tagService.deleteTagGroup(action.id)
       .pipe(
-        map((tag: TagGroup) =>
+        map((group: TagGroup) =>
           asapScheduler.schedule(() =>
-            ctx.dispatch(new tagActions.DeleteTagGroupSuccess(tag))
+            ctx.dispatch(new tagActions.DeleteTagGroupSuccess(group))
           )
         ),
         catchError(error =>
@@ -214,15 +221,19 @@ export class TagState {
   }
 
   @Action(tagActions.DeleteTagGroupSuccess)
-  deleteGroupSuccess({patchState}: StateContext<TagStateModel>, action: tagActions.DeleteTagGroupSuccess): void {
-    console.log('TagState loadTagsSuccess: BUT NOT IMPL !!!', action.tagGroup)
-    // TODO !!!
-    // patchState({tags: action.tags, loaded: true, loading: false});
+  deleteGroupSuccess(ctx: StateContext<TagStateModel>, action: tagActions.DeleteTagGroupSuccess): void {
+    ctx.setState(
+      patch({
+        tagGroups: removeItem<TagGroup>(group => group!.id === action.tagGroup.id),
+      })
+    );
   }
 
   @Action(tagActions.DeleteTagGroupFail)
   deleteGroupFail(): void {
-    this.alertService.error('Delete tag fail');
+    this.alertService.error('Delete TagGroup fail');
   }
+
+  //endregion
 
 }

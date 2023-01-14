@@ -596,7 +596,7 @@ export class PhotoState {
   }
 
   @Action(photoAction.MoveToFinalDownloads)
-  moveToFinalDownload(ctx: StateContext<PhotoStateModel>, action: photoAction.MoveToFinalDownloads): void {
+  moveToFinalDownload(ctx: StateContext<PhotoStateModel>): void {
     const state = ctx.getState();
     const cleared: Photo[] = [];
     ctx.setState(patch({
