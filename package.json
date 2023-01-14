@@ -46,7 +46,6 @@
     "@angular-eslint/template-parser": "^15.1.0",
     "@angular/cli": "^15.0.4",
     "@angular/compiler-cli": "^15.0.4",
-    "@ngxs-labs/testing": "^0.0.3",
     "@types/file-saver": "^2.0.5",
     "@types/google-one-tap": "^1.2.2",
     "@types/jasmine": "~4.3.0",

@@ -27,7 +27,9 @@ describe('TagState', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NgxsModule.forRoot([TagState])],
+      imports: [NgxsModule.forRoot([TagState], {
+        developmentMode: true
+      })],
       providers: [{
         // {provide: TagService, useClass: TestHeroService},
         provide: TagService,
