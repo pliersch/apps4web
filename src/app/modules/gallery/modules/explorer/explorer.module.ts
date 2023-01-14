@@ -14,7 +14,6 @@ import {
   GalleryManageTagDetailComponent,
   GalleryManageTagsComponent,
   GalleryMetaPanelComponent,
-  GalleryNewTagGroupComponent,
   GalleryRatingComponent,
   GalleryRatingFilterComponent,
   GalleryStarRatingComponent,
@@ -27,9 +26,7 @@ import { MaterialModule } from "@modules/share/material/material.module";
 import { ShareModule } from "@modules/share/share.module";
 import { NgxsModule } from "@ngxs/store";
 import { NgScrollbarModule } from "ngx-scrollbar";
-
 import { ExplorerRoutingModule } from './explorer-routing.module';
-
 
 @NgModule({
   declarations: [
@@ -43,7 +40,6 @@ import { ExplorerRoutingModule } from './explorer-routing.module';
     GalleryManageTagDetailComponent,
     ExplorerPhotoControlComponent,
     EditorPhotoControlComponent,
-    GalleryNewTagGroupComponent,
     GalleryEditPhotosComponent,
     GalleryMetaPanelComponent,
     GalleryActionPanelComponent,

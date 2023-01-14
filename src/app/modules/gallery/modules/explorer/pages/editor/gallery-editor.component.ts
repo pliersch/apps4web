@@ -8,7 +8,6 @@ import {
   GalleryDeletePhotoComponent,
   GalleryEditPhotosComponent,
   GalleryManageTagsComponent,
-  GalleryNewTagGroupComponent
 } from "@gallery/modules/explorer/";
 import {
   AbstractExplorerComponent
@@ -34,7 +33,6 @@ enum ActionTypes {
   ToggleSelection,
   EditPhotos,
   DeleteMany,
-  NewTag,
   ManageTags,
 }
 
@@ -59,7 +57,6 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
     {name: ActionTypes.DeselectAll, icon: 'remove_done', description: 'deselect all', handler: this},
     {name: ActionTypes.EditPhotos, icon: 'edit', description: 'edit photos', handler: this},
     {name: ActionTypes.DeleteMany, icon: 'delete', description: 'delete photos', handler: this},
-    {name: ActionTypes.NewTag, icon: 'playlist_add', description: 'new tag', handler: this},
     {name: ActionTypes.ManageTags, icon: 'list', description: 'manage tags', handler: this},
   ]
 
@@ -103,9 +100,6 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
         break;
       case ActionTypes.EditPhotos:
         this.editTags(this.selection);
-        break;
-      case ActionTypes.NewTag:
-        this.openNewTagDialog();
         break;
       case ActionTypes.ManageTags:
         this.openEditTagDialog();
@@ -181,14 +175,6 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
       res.push(...pic.tags);
     }
     return Array.from(new Set(res));
-  }
-
-  private openNewTagDialog(): void {
-    this.dialog.open(GalleryNewTagGroupComponent, {
-      width: '500px',
-      restoreFocus: false,
-      autoFocus: false
-    });
   }
 
   private openEditTagDialog(): void {
