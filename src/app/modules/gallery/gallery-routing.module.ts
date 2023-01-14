@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { GalleryContainerComponent } from '@app/modules/gallery/components/core/container/gallery-container.component';
+import { GalleryContainerComponent } from '@app/modules/gallery/core/components/container/gallery-container.component';
 import { GalleryResolver } from "@gallery/resolver/gallery.resolver";
 
 const homeModule = () => import('./modules/home/home.module').then((x) => x.HomeModule);

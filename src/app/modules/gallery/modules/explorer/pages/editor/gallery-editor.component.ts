@@ -1,33 +1,28 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { Photo, PhotoUpdate } from '@gallery/store/photos/photo.model';
-import * as photoAction from "@gallery/store/photos/photo.actions";
+import { MatDialog } from "@angular/material/dialog";
+import { Router } from "@angular/router";
+import { joinUnique } from "@app/common/util/array-utils";
 import {
   EditPhotoPropertiesDialogData,
   EditPhotoPropertiesDialogResult,
-  GalleryEditPhotosComponent
-} from "@gallery/modules/explorer/components/edit-photos-dialog/gallery-edit-photos.component";
-import { Action, ActionProvider } from "@modules/action-bar/actions";
-import {
+  GalleryDeletePhotoComponent,
+  GalleryEditPhotosComponent,
+  GalleryManageTagsComponent,
   GalleryNewTagGroupComponent
-} from "@gallery/modules/explorer/components/new-tags-dialog/gallery-new-tag-group.component";
-import {
-  GalleryDeletePhotoComponent
-} from "@gallery/modules/explorer/components/delete-photo-dialog/gallery-delete-photo.component";
+} from "@gallery/modules/explorer/";
 import {
   AbstractExplorerComponent
 } from "@gallery/modules/explorer/components/abstract-explorer/abstract-explorer.component";
-import { Tag, TagGroup } from "@gallery/store/tags/tag.model";
-import { ActionBarService } from "@modules/action-bar/action-bar.service";
 import { PhotoService } from "@gallery/services/photo.service";
-import { Router } from "@angular/router";
-import { MatDialog } from "@angular/material/dialog";
-import { Select, Store } from "@ngxs/store";
+import * as photoAction from "@gallery/store/photos/photo.actions";
+import { Photo, PhotoUpdate } from '@gallery/store/photos/photo.model';
+
+import { Tag, TagGroup } from "@gallery/store/tags/tag.model";
 import { TagState } from "@gallery/store/tags/tag.state";
+import { ActionBarService } from "@modules/action-bar/action-bar.service";
+import { Action, ActionProvider } from "@modules/action-bar/actions";
+import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
-import {
-  GalleryManageTagsComponent
-} from "@gallery/modules/explorer/components/manage-tags-dialog/gallery-manage-tags.component";
-import { joinUnique } from "@app/common/util/array-utils";
 
 export interface DeletePhotoDialogData {
   photo: Photo;
@@ -118,12 +113,6 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
     }
   }
 
-  private deletePhotos(): void {
-    const ids: string[] = [];
-    this.selection.forEach((photo) => ids.push(photo.id));
-    this.store.dispatch(new photoAction.DeletePhotos(ids));
-  }
-
   onSelectForEdit($event: Photo): void {
     this.editTags([$event]);
   }
@@ -147,6 +136,12 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
 
   isSelectForEdit(photo: Photo): boolean {
     return this.selection.includes(photo);
+  }
+
+  private deletePhotos(): void {
+    const ids: string[] = [];
+    this.selection.forEach((photo) => ids.push(photo.id));
+    this.store.dispatch(new photoAction.DeletePhotos(ids));
   }
 
   private openDeletePhotoDialog($event: Photo): void {

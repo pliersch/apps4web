@@ -1,16 +1,16 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { Photo } from '@gallery/store/photos/photo.model';
-import { saveAs } from 'file-saver';
-import * as photoAction from "@gallery/store/photos/photo.actions";
-import { Action, ActionProvider } from "@modules/action-bar/actions";
+import { MatDialog } from "@angular/material/dialog";
+import { Router } from "@angular/router";
 import {
   AbstractExplorerComponent
 } from "@gallery/modules/explorer/components/abstract-explorer/abstract-explorer.component";
-import { ActionBarService } from "@modules/action-bar/action-bar.service";
 import { PhotoService } from "@gallery/services/photo.service";
-import { Router } from "@angular/router";
+import * as photoAction from "@gallery/store/photos/photo.actions";
+import { Photo } from '@gallery/store/photos/photo.model';
+import { ActionBarService } from "@modules/action-bar/action-bar.service";
+import { Action, ActionProvider } from "@modules/action-bar/actions";
 import { Store } from "@ngxs/store";
-import { MatDialog } from "@angular/material/dialog";
+import { saveAs } from 'file-saver';
 
 enum ActionTypes {
   SelectAll,
