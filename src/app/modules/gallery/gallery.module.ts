@@ -10,7 +10,6 @@ import { TagState } from "@gallery/store/tags/tag.state";
 import { TagService } from "@gallery/services/tag.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { GalleryResolver } from "@gallery/resolver/gallery.resolver";
-import { ToggleExplorerViewService } from "@gallery/services/toggle-explorer-view.service";
 import { MaterialModule, ShareModule } from "@modules/share";
 
 @NgModule({
@@ -25,7 +24,7 @@ import { MaterialModule, ShareModule } from "@modules/share";
     ShareModule,
     NgxsModule.forFeature([PhotoState, TagState]),
   ],
-  providers: [TagService, PhotoService, GalleryResolver, ToggleExplorerViewService],
+  providers: [TagService, PhotoService, GalleryResolver],
 })
 
 export class GalleryModule {

@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { TagGroup } from '@gallery/store/tags/tag.model';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Select, Store } from "@ngxs/store";
 import { TagState } from "@gallery/store/tags/tag.state";
 import * as tagActions from "@gallery/store/tags/tag.action";
-import {
-  TagChanges
-} from "@gallery/modules/explorer/components/manage-tags-dialog/manage-tag-detail/gallery-manage-tag-detail.component";
+import { TagChanges } from "@gallery/modules/explorer/";
 
 interface Changes {
   tagGroup: TagGroup;
@@ -28,22 +26,23 @@ export enum CrudAction {
   templateUrl: './gallery-manage-tags.component.html',
   styleUrls: ['./gallery-manage-tags.component.scss']
 })
-export class GalleryManageTagsComponent implements OnInit {
+export class GalleryManageTagsComponent implements OnInit, OnDestroy {
 
   @Select(TagState.getTagGroups)
   tagGroups$: Observable<TagGroup[]>;
   tagGroups: TagGroup[] = [];
   currentGroup: TagGroup;
   hasChanges: boolean;
-  changes: Changes[];
-  dirtyState = false;
+  isCreatingGroup = false;
+  private changes: Changes[];
+  private subscription: Subscription;
 
   constructor(private store: Store,
               public dialogRef: MatDialogRef<GalleryManageTagsComponent>) {
   }
 
   ngOnInit(): void {
-    this.tagGroups$.subscribe(res => {
+    this.subscription = this.tagGroups$.subscribe(res => {
       this.tagGroups = res;
       this.currentGroup = this.tagGroups[0];
       this.changes = [];
@@ -53,27 +52,34 @@ export class GalleryManageTagsComponent implements OnInit {
     });
   }
 
-  onSelectTagGroups(tag: TagGroup): void {
-    this.currentGroup = this.tagGroups.find((x) => x.id === tag.id)!;
-    this.dirtyState = false;
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
-  close(): void {
+  onSelectTagGroups(tag: TagGroup): void {
+    this.currentGroup = this.tagGroups.find((x) => x.id === tag.id)!;
+    if (this.isCreatingGroup) {
+      this.isCreatingGroup = false;
+      this.deleteInvalidCreatedGroup();
+    }
+  }
+
+  onClickClose(): void {
     this.dialogRef.close();
   }
 
-  apply(): void {
+  onClickApply(): void {
     if (this.hasChanges) {
       this.updateStore();
     }
   }
 
-  save(): void {
-    this.apply();
+  onClickSave(): void {
+    this.onClickApply();
     this.dialogRef.close();
   }
 
-  onNewTag(): void {
+  onClickCreateGroup(): void {
     const newGroup: TagGroup = {
       tags: [],
       name: '',
@@ -81,10 +87,17 @@ export class GalleryManageTagsComponent implements OnInit {
     }
     this.currentGroup = newGroup;
     this.changes.push({tagGroup: newGroup, tagChanges: null, action: CrudAction.create})
-    // this.dirtyState = true;
+    this.isCreatingGroup = true;
   }
 
-  onEntriesChanged($event: TagChanges | null): void {
+  deleteInvalidCreatedGroup(): void {
+    const lastChange = this.changes[this.changes.length - 1];
+    if (lastChange.tagGroup.name == '') {
+      this.changes.pop()
+    }
+  }
+
+  handleEntriesChanged($event: TagChanges | null): void {
     this.hasChanges = !!$event;
     const element = this.changes.find(change => change.tagGroup === this.currentGroup)!;
     if (element.action === CrudAction.none) {
@@ -93,7 +106,7 @@ export class GalleryManageTagsComponent implements OnInit {
     element.tagChanges = $event;
   }
 
-  onDeleteGroup($event: TagGroup): void {
+  handleDeleteGroup($event: TagGroup): void {
     this.store.dispatch(new tagActions.DeleteTagGroup($event.id!));
   }
 

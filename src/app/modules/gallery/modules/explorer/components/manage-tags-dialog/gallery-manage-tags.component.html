@@ -3,25 +3,25 @@
   <div class="row">
     <div class="col-s-3">
       <div style="width: auto; height: 300px;">
-        <ng-scrollbar class="dark-scrollbar" [autoWidthDisabled]="false"
+        <ng-scrollbar [autoWidthDisabled]="false" class="dark-scrollbar"
                       track="vertical" visibility="always">
           <mat-selection-list appNoPaddingTop multiple="false">
-            <mat-list-option *ngFor="let tag of tagGroups$ | async; let i = index"
-                             [selected]="currentGroup.id === tag.id"
-                             [value]="tag" (click)="onSelectTagGroups(tag)">
+            <mat-list-option (click)="onSelectTagGroups(tag)"
+                             *ngFor="let tag of tagGroups$ | async; let i = index"
+                             [selected]="currentGroup.id === tag.id" [value]="tag">
               {{tag.name}}
             </mat-list-option>
           </mat-selection-list>
         </ng-scrollbar>
       </div>
-      <button mat-raised-button color="primary" [disabled]="dirtyState" (click)="onNewTag()">New</button>
+      <button (click)="onClickCreateGroup()" [disabled]="isCreatingGroup" color="primary" mat-raised-button>New</button>
     </div>
     <!--    <mat-divider [vertical]="true"></mat-divider>-->
     <div class="col-s-9">
-      <app-gallery-manage-tag-detail class="full-width"
-                                     (tagChangesEvent)="onEntriesChanged($event)"
-                                     (deleteGroupEvent)="onDeleteGroup($event)"
-                                     [tagGroup]="currentGroup">
+      <app-gallery-manage-tag-detail (deleteGroupEvent)="handleDeleteGroup($event)"
+                                     (tagChangesEvent)="handleEntriesChanged($event)"
+                                     [tagGroup]="currentGroup"
+                                     class="full-width">
       </app-gallery-manage-tag-detail>
     </div>
   </div>
@@ -29,9 +29,9 @@
 
 <mat-dialog-actions>
   <span class="spacer"></span>
-  <button mat-raised-button class="mat-primary"
-          [disabled]="!hasChanges" (click)="apply()">Apply
+  <button (click)="onClickApply()" [disabled]="!hasChanges"
+          class="mat-primary" mat-raised-button>Apply
   </button>
-  <button mat-raised-button (click)="close()">Cancel</button>
-  <button mat-raised-button color="primary" (click)="save()">Ok</button>
+  <button (click)="onClickClose()" mat-raised-button>Cancel</button>
+  <button (click)="onClickSave()" color="primary" mat-raised-button>Ok</button>
 </mat-dialog-actions>
