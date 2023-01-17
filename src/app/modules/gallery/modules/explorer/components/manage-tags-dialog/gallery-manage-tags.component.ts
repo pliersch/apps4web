@@ -133,6 +133,7 @@ export class GalleryManageTagsComponent implements OnInit, OnDestroy {
       priority: 20,
       tagNames: changes.tagChanges?.addedTagNames
     }));
+    this.isCreatingGroup = false;
   }
 
   private updateGroup(changes: Changes): void {

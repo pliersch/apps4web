@@ -1,3 +1,4 @@
+import { DeleteResult } from "@modules/share/interfaces/models/delete-result";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { Tag, TagGroup, UpdateTagGroupResultDto } from "@gallery/store/tags/tag.model";
 import { Injectable } from "@angular/core";
@@ -25,6 +26,10 @@ export interface TagStateModel {
 @Injectable()
 export class TagState {
 
+  constructor(private tagService: TagService,
+              private alertService: AlertService) {
+  }
+
   @Selector()
   static getTagGroups(state: TagStateModel): TagGroup[] {
     return state.tagGroups;
@@ -37,10 +42,6 @@ export class TagState {
       tags.push(...tagGroup.tags);
     }
     return tags;
-  }
-
-  constructor(private tagService: TagService,
-              private alertService: AlertService) {
   }
 
   // region load
@@ -205,9 +206,9 @@ export class TagState {
   deleteGroup(ctx: StateContext<TagStateModel>, action: tagActions.DeleteTagGroup): Observable<Subscription> {
     return this.tagService.deleteTagGroup(action.id)
       .pipe(
-        map((group: TagGroup) =>
+        map((result: DeleteResult) =>
           asapScheduler.schedule(() =>
-            ctx.dispatch(new tagActions.DeleteTagGroupSuccess(group))
+            ctx.dispatch(new tagActions.DeleteTagGroupSuccess(action.id))
           )
         ),
         catchError(error =>
@@ -224,7 +225,7 @@ export class TagState {
   deleteGroupSuccess(ctx: StateContext<TagStateModel>, action: tagActions.DeleteTagGroupSuccess): void {
     ctx.setState(
       patch({
-        tagGroups: removeItem<TagGroup>(group => group!.id === action.tagGroup.id),
+        tagGroups: removeItem<TagGroup>(group => group!.id === action.id),
       })
     );
   }

@@ -83,7 +83,7 @@ export class DeleteTagGroup {
 export class DeleteTagGroupSuccess {
   static readonly type = '[Gallery] Delete TagGroup success';
 
-  constructor(public tagGroup: TagGroup) {
+  constructor(public id: string) {
   }
 }
 

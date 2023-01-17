@@ -32,7 +32,6 @@ describe('TagState', () => {
         developmentMode: true
       })],
       providers: [{
-        // {provide: TagService, useClass: TestHeroService},
         provide: TagService,
         useValue: tagServiceSpy
       }, {
