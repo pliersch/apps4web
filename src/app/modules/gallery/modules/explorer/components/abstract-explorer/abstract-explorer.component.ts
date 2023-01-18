@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { SetRatingFilter } from "@gallery/store/photos/photo.actions";
 import { ActionBarService } from "@modules/action-bar/action-bar.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { Router } from "@angular/router";
@@ -66,6 +67,10 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   user$: Observable<User>;
   user: User;
 
+  @Select(PhotoState.getFilterRating)
+  currentRating$: Observable<number>;
+  currentRating: number;
+
   protected subscription: Subscription;
   protected actions: Action[]
 
@@ -94,6 +99,7 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
     this.subscription.add(this.currentPhoto$.subscribe(res => this.currentPhoto = res));
     this.subscription.add(this.isAuthenticated$.subscribe(res => this.isAuthenticated = res));
     this.subscription.add(this.availablePhotos$.subscribe(count => this.availablePhotos = count));
+    this.subscription.add(this.currentRating$.subscribe(res => this.currentRating = res));
     this.subscription.add(
       this.photos$.subscribe(res => {
         this.photos = res;
@@ -138,6 +144,10 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
 
   setCurrent(photo: Photo): void {
     this.store.dispatch(new photoAction.SetCurrentPhoto(photo))
+  }
+
+  handleRatingChange($event: number): void {
+    this.store.dispatch(new SetRatingFilter($event));
   }
 
   ngOnDestroy(): void {

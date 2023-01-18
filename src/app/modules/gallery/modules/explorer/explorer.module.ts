@@ -16,7 +16,6 @@ import {
   GalleryMetaPanelComponent,
   GalleryRatingComponent,
   GalleryRatingFilterComponent,
-  GalleryStarRatingComponent,
   GalleryTagFilterComponent
 } from "@gallery/modules/explorer/";
 import { GalleryShareModule } from "@gallery/modules/share/gallery-share.module";
@@ -35,7 +34,6 @@ import { ExplorerRoutingModule } from './explorer-routing.module';
     GalleryEditorComponent,
     GalleryTagFilterComponent,
     GalleryImageDetailComponent,
-    GalleryStarRatingComponent,
     GalleryManageTagsComponent,
     GalleryManageTagDetailComponent,
     ExplorerPhotoControlComponent,

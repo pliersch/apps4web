@@ -1,13 +1,6 @@
 <mat-card class="card" style="padding-bottom:10px!important;">
-  <!-- check '0' stars with ngif doesnt works :((( -->
-  <!--  <app-gallery-star-rating *ngIf="currentRating$ | async as progress" [rate]="progress"-->
-  <!--                           (rateChangeEvent)="onRateChange($event)"></app-gallery-star-rating>-->
-  <!--  <mat-card-header>-->
-  <!--    <mat-card-title>Rating</mat-card-title>-->
-  <!--  </mat-card-header>-->
   <mat-card-content>
-    <app-gallery-star-rating [rate]="currentRating"
-                             (rateChangeEvent)="onRateChange($event)"></app-gallery-star-rating>
+    <app-gallery-star-rating
+      [rate]="currentRating" (rateChangeEvent)="onRateChange($event)"></app-gallery-star-rating>
   </mat-card-content>
-
 </mat-card>

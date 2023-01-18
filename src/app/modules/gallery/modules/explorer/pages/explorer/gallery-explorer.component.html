@@ -3,7 +3,9 @@
     <div class="m5 scrollbar-container">
       <app-gallery-filter-panel></app-gallery-filter-panel>
     </div>
-    <app-gallery-rating-filter class="m5"></app-gallery-rating-filter>
+    <app-gallery-rating-filter
+      class="m5" [currentRating]="currentRating"
+      (changeRatingEvent)="handleRatingChange($event)"></app-gallery-rating-filter>
     <app-gallery-date-filter class="m5"></app-gallery-date-filter>
     <div class="column m5">
       <button mat-raised-button color="primary"

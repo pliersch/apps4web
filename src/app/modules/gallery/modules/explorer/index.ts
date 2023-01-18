@@ -13,5 +13,4 @@ export * from './components/manage-tags-dialog/manage-tag-detail/gallery-manage-
 export * from './components/meta-panel/gallery-meta-panel.component'
 export * from './components/rating-filter/gallery-rating-filter.component'
 export * from './components/rating-panel/gallery-rating.component'
-export * from './components/star-rating/gallery-star-rating.component'
 export * from './components/tag-filter/gallery-tag-filter.component'
