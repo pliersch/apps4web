@@ -1,4 +1,4 @@
-import { TagGroup } from "@gallery/store/tags/tag.model";
+import { Tag, TagGroup } from "@gallery/store/tags/tag.model";
 
 export function getFooBarTagGroups(): TagGroup[] {
   return [{
@@ -18,7 +18,7 @@ export function getFooBarTagGroups(): TagGroup[] {
     priority: 10,
     tags: [{
       id: 'bar1',
-      name: 'Bar2'
+      name: 'Bar1'
     }, {
       id: 'bar2',
       name: 'Bar2'
@@ -36,4 +36,14 @@ export function getBazTagGroup(): TagGroup {
       name: 'Baz1'
     }]
   };
+}
+
+export function getFoo1Bar2Tags(): Tag[] {
+  return [{
+    id: 'foo1',
+    name: 'Foo1'
+  }, {
+    id: 'bar2',
+    name: 'Bar2'
+  }];
 }

@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { SetRatingFilter } from "@gallery/store/photos/photo.actions";
+import { AddTagFilter, RemoveTagFilter, SetRatingFilter } from "@gallery/store/photos/photo.actions";
+import { Tag, TagGroup } from "@gallery/store/tags/tag.model";
+import { TagState } from "@gallery/store/tags/tag.state";
 import { ActionBarService } from "@modules/action-bar/action-bar.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { Router } from "@angular/router";
@@ -71,13 +73,19 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   currentRating$: Observable<number>;
   currentRating: number;
 
+  @Select(TagState.getTagGroups) // for tagFilterComponent
+  tagGroups$: Observable<TagGroup[]>;
+  tagGroups: TagGroup[];
+
+  @Select(PhotoState.getActiveTags) // for tagFilterComponent
+  activeTags$: Observable<Tag[]>;
+  activeTags: Tag[];
+
   protected subscription: Subscription;
   protected actions: Action[]
-
   protected absoluteHeight = 0;
   protected isRequesting: boolean;
   protected resizeObserver: ResizeObserver;
-
 
   constructor(
     public actionBarService: ActionBarService,
@@ -100,6 +108,8 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
     this.subscription.add(this.isAuthenticated$.subscribe(res => this.isAuthenticated = res));
     this.subscription.add(this.availablePhotos$.subscribe(count => this.availablePhotos = count));
     this.subscription.add(this.currentRating$.subscribe(res => this.currentRating = res));
+    this.subscription.add(this.tagGroups$.subscribe(res => this.tagGroups = res));
+    this.subscription.add(this.activeTags$.subscribe(res => this.activeTags = res));
     this.subscription.add(
       this.photos$.subscribe(res => {
         this.photos = res;
@@ -148,6 +158,14 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
 
   handleRatingChange($event: number): void {
     this.store.dispatch(new SetRatingFilter($event));
+  }
+
+  handleTagFilterChanged($event: Tag, added: boolean): void {
+    if (added) {
+      this.store.dispatch(new AddTagFilter($event));
+    } else {
+      this.store.dispatch(new RemoveTagFilter($event));
+    }
   }
 
   ngOnDestroy(): void {

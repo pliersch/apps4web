@@ -1,7 +1,10 @@
 <div class="row-max-height">
   <div class="column control-panel p5">
     <div class="scrollbar-container m5">
-      <app-gallery-filter-panel></app-gallery-filter-panel>
+      <app-gallery-tag-filter
+        [tagGroups]="tagGroups" [activeTags]="activeTags"
+        (addTagFilterEvent)="handleTagFilterChanged($event, true)"
+        (removeTagFilterEvent)="handleTagFilterChanged($event, false)"></app-gallery-tag-filter>
     </div>
     <app-gallery-rating-filter
       class="m5" [currentRating]="currentRating"
