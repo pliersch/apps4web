@@ -16,6 +16,7 @@
   }
 
   .grid-detail {
+    position: relative;
     grid-area: detail;
     overflow: hidden;
     min-height: 0;
@@ -40,5 +41,15 @@
     position: relative;
     box-sizing: border-box;
     overflow: hidden;
+  }
+
+  .caption-container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    //padding: 2px 16px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
   }
 }
