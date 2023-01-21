@@ -17,6 +17,7 @@
 
   .grid-detail {
     grid-area: detail;
+    position: relative;
     overflow: hidden;
     min-height: 0;
     min-width: 0;
@@ -46,16 +47,17 @@
   .next {
     cursor: pointer;
     position: absolute;
-    top: 40%;
     width: auto;
+    top: 50%;
+    transform: translate(0, -50%);
     padding: 16px;
-    margin-top: -50px;
     color: white;
+    background-color: rgba(0, 0, 0, 0.8);
     font-weight: bold;
     font-size: 20px;
     border-radius: 0 3px 3px 0;
     user-select: none;
-    -webkit-user-select: none;
+    //-webkit-user-select: none;
   }
 
   .next {
@@ -63,17 +65,19 @@
     border-radius: 3px 0 0 3px;
   }
 
-  /* On hover, add a black background color with a little bit see-through */
-  .prev:hover,
-  .next:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-  }
+  //.prev:hover,
+  //.next:hover {
+  //  background-color: rgba(0, 0, 0, 0.8);
+  //}
 
   .caption-container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
     text-align: center;
-    background-color: #222;
     padding: 2px 16px;
     color: white;
+    background-color: rgba(0, 0, 0, 0.8);
   }
 
 

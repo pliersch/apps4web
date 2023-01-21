@@ -7,7 +7,6 @@ import { NgxsModule } from "@ngxs/store";
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { TagState } from "@gallery/store/tags/tag.state";
 import { GalleryShareModule } from "@gallery/modules/share/gallery-share.module";
-import { GalleryModule } from "@gallery/gallery.module";
 import {
   GalleryImageGridComponent
 } from "@gallery/modules/lightbox/components/image-grid/gallery-image-grid.component";
@@ -26,7 +25,6 @@ import { NgScrollbarModule } from "ngx-scrollbar";
     NgScrollbarModule,
     NgxsModule.forFeature([PhotoState, TagState]),
     GalleryShareModule,
-    GalleryModule,
     ShareModule,
   ]
 })

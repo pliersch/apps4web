@@ -12,7 +12,7 @@ export interface RouteConfig {
 export class RouteService {
 
   private routes = [
-    {route: '/dashboard', name: 'Home'},
+    {route: '/dashboard', name: 'Dashboard'},
     {route: '/gallery', name: 'Galerie'},
     {route: '/chat', name: 'Chat'},
     {route: '/account', name: 'Account'},

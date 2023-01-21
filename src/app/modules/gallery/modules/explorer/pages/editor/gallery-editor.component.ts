@@ -160,7 +160,7 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
     };
     const dialogRef = this.dialog.open(GalleryEditPhotosComponent, {
       data: dialogData,
-      width: '800px',
+      width: '600px',
       restoreFocus: false,
       autoFocus: false
     });

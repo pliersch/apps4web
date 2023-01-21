@@ -1,6 +1,6 @@
-<div class="grid"
-     [class.horizontal]="view === viewEnum.Horizontal"
-     [class.vertical]="view === viewEnum.Vertical">
+<div class="grid horizontal">
+  <!--     [class.horizontal]="view === viewEnum.Horizontal"-->
+  <!--     [class.vertical]="view === viewEnum.Vertical">-->
 
   <div class="grid-detail">
     <div class="responsive-image"
@@ -8,14 +8,13 @@
     <a class="prev" (click)="prevSlide()">&#10094;</a>
     <a class="next" (click)="nextSlide()">&#10095;</a>
     <div class="caption-container">
-      <p>foo bar baz</p>
+      <p>todo: info & actionbar</p>
     </div>
   </div>
 
   <div class="grid-thumbs">
-    <app-gallery-vertical-scroller *ngIf="view === viewEnum.Vertical">
-    </app-gallery-vertical-scroller>
-    <app-gallery-horizontal-scroller *ngIf="view === viewEnum.Horizontal">
-    </app-gallery-horizontal-scroller>
+    <!--    <app-gallery-vertical-scroller *ngIf="view === viewEnum.Vertical">-->
+    <!--    </app-gallery-vertical-scroller>-->
+    <app-gallery-horizontal-scroller></app-gallery-horizontal-scroller>
   </div>
 </div>

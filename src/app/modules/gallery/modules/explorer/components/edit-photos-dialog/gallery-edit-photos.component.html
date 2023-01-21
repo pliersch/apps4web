@@ -10,10 +10,11 @@
   <div class="row">
     <div class="col-6">
       <mat-label>Tags</mat-label>
-      <section class="example-section">
-          <span *ngFor="let checkList of checkLists; let i=index" class="example-list-section">
+      <section class="tag-section" style="height: 300px;">
+        <ng-scrollbar track="vertical">
+          <span *ngFor="let checkList of checkLists; let i=index">
               {{checkList.title}}
-            <span class="example-list-section">
+            <span>
               <ul>
                 <li *ngFor="let item of checkList.items">
                   <mat-checkbox [(ngModel)]="item.checked" (ngModelChange)="onSelectionChange(item)"
@@ -24,6 +25,7 @@
               </ul>
             </span>
           </span>
+        </ng-scrollbar>
       </section>
     </div>
     <div class="col-2">

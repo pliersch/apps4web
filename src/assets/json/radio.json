@@ -8,7 +8,7 @@
     {
       "name": "Klassik Radio Movie",
       "logoUrl": "/assets/radio/Klassik_Radio_movie.jpg",
-      "stream": "https://edge09.streams.klassikradio.de/klassikradio-movie/stream/mp3"
+      "stream": "https://edge04.streams.klassikradio.de/klassikradio-movie?aggregator=Webseite&mode=preroll&aw_0_1st.skey=1674275981&cb=61416777&listenerid=26b9ce39cf684b969aed346823abcdc4"
     },
     {
       "name": "Klassik Radio Schiller",
@@ -22,4 +22,3 @@
     }
   ]
 }
-

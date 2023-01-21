@@ -1,21 +1,16 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import {
-  GalleryVerticalScrollerComponent
-} from "@gallery/modules/share/vertical-scroller/gallery-vertical-scroller.component";
 import { Select, Store } from "@ngxs/store";
 import { SetNextPhoto, SetPreviousPhoto } from "@gallery/store/photos/photo.actions";
-import {
-  GalleryHorizontalScrollerComponent
-} from "@gallery/modules/share/horizontal-scroller/gallery-horizontal-scroller.component";
+import { GalleryHorizontalScrollerComponent } from "@gallery/core";
 import { getPhotoUrl } from "@gallery/store/photos/photo.tools";
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { Observable, Subscription } from "rxjs";
 import { Photo } from "@gallery/store/photos/photo.model";
 
-enum View {
-  Horizontal,
-  Vertical
-}
+// enum View {
+//   Horizontal,
+//   Vertical
+// }
 
 @Component({
   selector: 'app-gallery-slideshow',
@@ -27,8 +22,8 @@ export class GallerySlideshowComponent implements OnInit, AfterViewInit, OnDestr
   @ViewChild(GalleryHorizontalScrollerComponent)
   horizontalScrollbarRef!: GalleryHorizontalScrollerComponent;
 
-  @ViewChild(GalleryVerticalScrollerComponent)
-  verticalScrollbarRef!: GalleryVerticalScrollerComponent;
+  // @ViewChild(GalleryVerticalScrollerComponent)
+  // verticalScrollbarRef!: GalleryVerticalScrollerComponent;
 
   @Select(PhotoState.getCurrentPhoto)
   currentPhoto$: Observable<Photo>;
@@ -39,8 +34,8 @@ export class GallerySlideshowComponent implements OnInit, AfterViewInit, OnDestr
 
   imgUrl = '';
 
-  viewEnum = View;
-  view = View.Horizontal;
+  // viewEnum = View;
+  // view = View.Horizontal;
   private subscription: Subscription;
 
   constructor(private store: Store) { }
@@ -75,11 +70,12 @@ export class GallerySlideshowComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   private scrollToActiveItem(): void {
-    if (this.view === View.Horizontal) {
-      this.horizontalScrollbarRef.scrollToIndex(this.currentIndex);
-    } else {
-      this.verticalScrollbarRef.scrollTo(this.currentIndex);
-    }
+    this.horizontalScrollbarRef.scrollToIndex(this.currentIndex);
+    // if (this.view === View.Horizontal) {
+    //   this.horizontalScrollbarRef.scrollToIndex(this.currentIndex);
+    // } else {
+    //   this.verticalScrollbarRef.scrollTo(this.currentIndex);
+    // }
   }
 
 }

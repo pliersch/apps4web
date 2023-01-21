@@ -38,11 +38,13 @@ export class ThreeService implements OnDestroy {
 
     new RGBELoader()
       .setPath('/assets/3d/')
-      .load('epping_forest_02_4k.hdr', (texture) => {
+      // .load('epping_forest_02_4k.hdr', (texture) => {
+      .load('aristea_wreck_2k.hdr', (texture) => {
         texture.mapping = THREE.EquirectangularReflectionMapping;
         this.scene.background = texture;
         this.scene.environment = texture;
       });
+
     new GLTFLoader().load('/assets/3d/home.gltf', (gltf) => {
       gltf.scene.scale.set(10, 10, 10);
       this.scene.add(gltf.scene);
@@ -50,6 +52,14 @@ export class ThreeService implements OnDestroy {
     }, undefined, (error) => {
       console.error(error);
     });
+
+    // const ambientLight = new THREE.AmbientLight(0xcccccc);
+    // this.scene.add(ambientLight);
+    //
+    // const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+    // directionalLight.position.set(1, 1, 0.5).normalize();
+    // this.scene.add(directionalLight);
+
 
     // this.scene.background = new THREE.Color(0x000000)
     this.scene.background = new THREE.Color(0x777777)
@@ -66,8 +76,9 @@ export class ThreeService implements OnDestroy {
     //   this.nearClippingPlane,
     //   this.farClippingPlane
     // )
-    this.camera.position.y = 4;
-    this.camera.position.z = 10;
+
+    this.camera.position.y = 60;
+    this.camera.position.z = 200;
 
     this.renderer = new THREE.WebGLRenderer({canvas: this.canvas});
     this.renderer.setPixelRatio(devicePixelRatio);

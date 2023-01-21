@@ -33,38 +33,23 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     this.audio = this.player.nativeElement;
   }
 
-  togglePlay(): void {
-    this.audio.paused ? this.audio.play() : this.audio.pause()
-  }
-
-  paused(): boolean {
-    if (this.audio) {
-      return this.audio.paused;
-    } else {
-      return true;
-    }
-  }
-
-  isPlaying(radio: RadioStation): boolean {
-    console.log('PlayerComponent isPlaying: ', radio)
-    console.log('PlayerComponent isPlaying: ', radio === this.current)
-    return radio === this.current;
-  }
-
   onClickPlay(radio: RadioStation): void {
     if (this.current === radio) {
       this.audio.src = ''
       this.audio.load();
-      // this.audio = null;
       this.current = this.empty;
     } else {
       this.current = radio;
       this.audio.addEventListener('canplay', () => {
-        this.togglePlay()
-        this.audio.removeEventListener('canplay', this.togglePlay);
+        this.play();
+        this.audio.removeEventListener('canplay', this.play);
       });
       this.audio.src = radio.stream;
     }
+  }
+
+  play(): void {
+    void this.audio.play();
   }
 
   onScroll($event: WheelEvent): void {
@@ -74,7 +59,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     // } else {
     //   this.scrollToPosition(scrollLeft - 600);
     // }
-    $event.preventDefault();
+    // $event.preventDefault();
   }
 
 }

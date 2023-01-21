@@ -1,13 +1,14 @@
-<mat-toolbar>
+<mat-toolbar class="p8lr">
   <button mat-icon-button (click)="emitNavToggle()" [style.display]="(isHandset$ | async) ? 'initial' : 'none'"
           aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
   </button>
-  <!--  <span>{{appName}}</span>-->
-  <div class='app-logo'>
-    APPS<span class='logo-color'>4</span>WEB
-  </div>
-  <mat-toolbar>
+  <mat-toolbar class="p8lr">
+    <button mat-flat-button [routerLink]="['/']">
+      <div class='app-logo'>
+        APPS<span class='logo-color'>4</span>WEB
+      </div>
+    </button>
     <button mat-flat-button routerLinkActive='active-route'
             *ngFor="let route of routes$ | async" [routerLink]="[route.route]">{{route.name}}</button>
   </mat-toolbar>
