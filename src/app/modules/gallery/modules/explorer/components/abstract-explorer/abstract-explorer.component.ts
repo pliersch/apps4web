@@ -1,22 +1,20 @@
+import { AccountState } from "@account/store/account.state";
+import { User } from "@account/store/user.model";
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from "@angular/material/dialog";
+import { Router } from "@angular/router";
+import { GALLERY_CONSTANTS } from "@gallery/const";
+import { PhotoService } from "@gallery/services/photo.service";
+import * as photoAction from "@gallery/store/photos/photo.actions";
 import { AddTagFilter, RemoveTagFilter, SetRatingFilter } from "@gallery/store/photos/photo.actions";
+import { Photo } from "@gallery/store/photos/photo.model";
+import { PhotoState } from "@gallery/store/photos/photo.state";
 import { Tag, TagGroup } from "@gallery/store/tags/tag.model";
 import { TagState } from "@gallery/store/tags/tag.state";
-import { ActionBarService } from "@modules/action-bar/action-bar.service";
-import { PhotoService } from "@gallery/services/photo.service";
-import { Router } from "@angular/router";
-import { MatDialog } from "@angular/material/dialog";
 import { Select, Store } from "@ngxs/store";
-import { Observable, Subscription } from "rxjs";
-import { PhotoState } from "@gallery/store/photos/photo.state";
-import { Photo } from "@gallery/store/photos/photo.model";
 import { NgScrollbar } from "ngx-scrollbar";
+import { Observable, Subscription } from "rxjs";
 import { tap } from "rxjs/operators";
-import * as photoAction from "@gallery/store/photos/photo.actions";
-import { GALLERY_CONSTANTS } from "@gallery/const";
-import { Action } from "@modules/action-bar/actions";
-import { User } from "@account/store/user.model";
-import { AccountState } from "@account/store/account.state";
 
 
 @Component({
@@ -82,13 +80,11 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   activeTags: Tag[];
 
   protected subscription: Subscription;
-  protected actions: Action[]
   protected absoluteHeight = 0;
   protected isRequesting: boolean;
   protected resizeObserver: ResizeObserver;
 
   constructor(
-    public actionBarService: ActionBarService,
     public photoService: PhotoService,
     public router: Router,
     public dialog: MatDialog,
@@ -97,7 +93,6 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   ngOnInit(): void {
-    this.actionBarService.setActions(this.actions);
     this.subscription = this.user$.subscribe(res => this.user = res);
     this.subscription.add(this.selection$.subscribe(res => this.selection = res));
     this.subscription.add(this.selectedDownloads$.subscribe(res => this.selectedDownloads = res));
@@ -170,7 +165,7 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-    this.actionBarService.removeActions();
+    // this.actionBarService.removeActions();
   }
 
 }

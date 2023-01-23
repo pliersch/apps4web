@@ -226,7 +226,7 @@ export class PhotoState {
     }
     // const snapshot = this.store.selectSnapshot(AccountState.user);
     console.log('PhotoState loadPhotos: ')
-    return this.photoService.getPhotos(count, from)
+    return this.photoService.getPhotos(from, count)
       .pipe(
         map((dto: PhotoDto) =>
           asapScheduler.schedule(() => {

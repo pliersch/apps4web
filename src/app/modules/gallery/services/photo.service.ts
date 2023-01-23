@@ -20,8 +20,8 @@ export class PhotoService {
     return this.http.get<PhotoMetaDataDto>(PHOTO_BASE_URL + '/meta');
   }
 
-  getPhotos(take: number, from: number): Observable<PhotoDto> {
-    console.log('PhotoService getPhotos: ', take, from)
+  getPhotos(from: number, take: number): Observable<PhotoDto> {
+    console.log('PhotoService getPhotos: ', from, take)
     return this.http.get<PhotoDto>(PHOTO_BASE_URL, {
       params: {
         order: Order.ASC,

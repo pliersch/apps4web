@@ -7,8 +7,7 @@ import {
 import { PhotoService } from "@gallery/services/photo.service";
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import { Photo } from '@gallery/store/photos/photo.model';
-import { ActionBarService } from "@modules/action-bar/action-bar.service";
-import { Action, ActionProvider } from "@modules/action-bar/actions";
+import { Action } from "@modules/action-bar/actions";
 import { Store } from "@ngxs/store";
 import { saveAs } from 'file-saver';
 
@@ -25,7 +24,7 @@ enum ActionTypes {
   templateUrl: './gallery-explorer.component.html',
   styleUrls: ['./gallery-explorer.component.scss']
 })
-export class GalleryExplorerComponent extends AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestroy, ActionProvider {
+export class GalleryExplorerComponent extends AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   actions: Action[] = [
     {name: ActionTypes.SelectAll, icon: 'done_all', description: 'select all', handler: this},
@@ -36,13 +35,12 @@ export class GalleryExplorerComponent extends AbstractExplorerComponent implemen
   ]
 
   constructor(
-    public actionBarService: ActionBarService,
     public photoService: PhotoService,
     public router: Router,
     public dialog: MatDialog,
     public store: Store,
   ) {
-    super(actionBarService, photoService, router, dialog, store);
+    super(photoService, router, dialog, store);
   }
 
   ngOnInit(): void {

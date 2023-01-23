@@ -18,8 +18,7 @@ import { Photo, PhotoUpdate } from '@gallery/store/photos/photo.model';
 
 import { Tag, TagGroup } from "@gallery/store/tags/tag.model";
 import { TagState } from "@gallery/store/tags/tag.state";
-import { ActionBarService } from "@modules/action-bar/action-bar.service";
-import { Action, ActionProvider } from "@modules/action-bar/actions";
+import { Action } from "@modules/action-bar/actions";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 
@@ -41,7 +40,7 @@ enum ActionTypes {
   templateUrl: './gallery-editor.component.html',
   styleUrls: ['./gallery-editor.component.scss']
 })
-export class GalleryEditorComponent extends AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestroy, ActionProvider {
+export class GalleryEditorComponent extends AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Select(TagState.getTags)
   tags$: Observable<Tag[]>
@@ -61,13 +60,12 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
   ]
 
   constructor(
-    public actionBarService: ActionBarService,
     public photoService: PhotoService,
     public router: Router,
     public dialog: MatDialog,
     public store: Store,
   ) {
-    super(actionBarService, photoService, router, dialog, store);
+    super(photoService, router, dialog, store);
   }
 
   ngOnInit(): void {
@@ -153,7 +151,6 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
   }
 
   private editTags(photos: Photo[]): void {
-    console.log('GalleryEditorComponent editTags: ', photos)
     const dialogData: EditPhotoPropertiesDialogData = {
       tags: this.computeTagsOfPhotos(photos),
       availableTags: this.tagGroups
@@ -197,13 +194,11 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
       }
       let tags: Tag[];
       tags = joinUnique(photo.tags, res.addedTags);
-      console.log('GalleryEditorComponent updateTagsOfSelectedPhotos ADD: ', tags.length)
       if (tags.length > 0) {
         photoUpdate.addedTagIds = this.getIdsFromTag(tags);
       }
       // tags = difference2(photo.tags, res.removedTags);
       tags = res.removedTags;
-      console.log('GalleryEditorComponent updateTagsOfSelectedPhotos REMOVE: ', tags.length)
       if (tags.length > 0) {
         photoUpdate.removedTagIds = this.getIdsFromTag(tags);
       }
