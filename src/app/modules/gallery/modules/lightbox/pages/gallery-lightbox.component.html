@@ -1,7 +1,4 @@
 <div class="grid horizontal">
-  <!--     [class.horizontal]="view === viewEnum.Horizontal"-->
-  <!--     [class.vertical]="view === viewEnum.Vertical">-->
-
   <div class="grid-detail">
     <app-gallery-image-grid (closeEvent)="onSelectImage($event)"></app-gallery-image-grid>
     <div class="caption-container">
@@ -10,13 +7,7 @@
   </div>
 
   <div class="grid-thumbs">
-    <!--    <app-gallery-vertical-scroller *ngIf="view === viewEnum.Vertical"-->
-    <!--                                   (selectEvent)="onSelectImage($event)">-->
-    <!--    </app-gallery-vertical-scroller>-->
     <app-gallery-horizontal-scroller (selectEvent)="onSelectImage($event)">
     </app-gallery-horizontal-scroller>
-    <!--    <app-gallery-horizontal-scroller *ngIf="view === viewEnum.Horizontal"-->
-    <!--                                     (selectEvent)="onSelectImage($event)">-->
-    <!--    </app-gallery-horizontal-scroller>-->
   </div>
 </div>

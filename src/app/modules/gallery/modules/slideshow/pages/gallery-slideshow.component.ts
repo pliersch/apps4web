@@ -7,11 +7,6 @@ import { PhotoState } from "@gallery/store/photos/photo.state";
 import { Observable, Subscription } from "rxjs";
 import { Photo } from "@gallery/store/photos/photo.model";
 
-// enum View {
-//   Horizontal,
-//   Vertical
-// }
-
 @Component({
   selector: 'app-gallery-slideshow',
   templateUrl: './gallery-slideshow.component.html',
@@ -22,9 +17,6 @@ export class GallerySlideshowComponent implements OnInit, AfterViewInit, OnDestr
   @ViewChild(GalleryHorizontalScrollerComponent)
   horizontalScrollbarRef!: GalleryHorizontalScrollerComponent;
 
-  // @ViewChild(GalleryVerticalScrollerComponent)
-  // verticalScrollbarRef!: GalleryVerticalScrollerComponent;
-
   @Select(PhotoState.getCurrentPhoto)
   currentPhoto$: Observable<Photo>;
 
@@ -34,8 +26,6 @@ export class GallerySlideshowComponent implements OnInit, AfterViewInit, OnDestr
 
   imgUrl = '';
 
-  // viewEnum = View;
-  // view = View.Horizontal;
   private subscription: Subscription;
 
   constructor(private store: Store) { }
@@ -71,11 +61,6 @@ export class GallerySlideshowComponent implements OnInit, AfterViewInit, OnDestr
 
   private scrollToActiveItem(): void {
     this.horizontalScrollbarRef.scrollToIndex(this.currentIndex);
-    // if (this.view === View.Horizontal) {
-    //   this.horizontalScrollbarRef.scrollToIndex(this.currentIndex);
-    // } else {
-    //   this.verticalScrollbarRef.scrollTo(this.currentIndex);
-    // }
   }
 
 }

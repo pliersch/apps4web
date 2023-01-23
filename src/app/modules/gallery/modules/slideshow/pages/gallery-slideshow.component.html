@@ -1,7 +1,4 @@
 <div class="grid horizontal">
-  <!--     [class.horizontal]="view === viewEnum.Horizontal"-->
-  <!--     [class.vertical]="view === viewEnum.Vertical">-->
-
   <div class="grid-detail">
     <div class="responsive-image"
          [style.background-image]="'url(' + imgUrl + ')'"></div>
@@ -13,8 +10,6 @@
   </div>
 
   <div class="grid-thumbs">
-    <!--    <app-gallery-vertical-scroller *ngIf="view === viewEnum.Vertical">-->
-    <!--    </app-gallery-vertical-scroller>-->
     <app-gallery-horizontal-scroller></app-gallery-horizontal-scroller>
   </div>
 </div>
