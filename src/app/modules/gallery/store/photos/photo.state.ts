@@ -10,7 +10,6 @@ import { AlertService } from "@app/common/services/alert.service";
 import { PhotoService } from "@gallery/services/photo.service";
 import { ServerSentService } from "@app/common/services/server-sent.service";
 import { Tag } from "@gallery/store/tags/tag.model";
-import { clone } from "@app/common/util/obj-utils";
 import { DeleteResult } from "@modules/share/interfaces/models/delete-result";
 import { difference } from "@app/common/util/array-utils";
 
@@ -92,9 +91,9 @@ export class PhotoState {
     return filteredPhotos;
   }
 
-  @Selector()
-  static getCurrentPhoto(state: PhotoStateModel): Photo {
-    return state.photos[state.currentIndex];
+  @Selector([PhotoState.getFilteredPhotos, PhotoState.getCurrentIndex])
+  static getCurrentPhoto(photos: Photo[], index: number): Photo {
+    return photos[index];
   }
 
   @Selector()
@@ -151,11 +150,6 @@ export class PhotoState {
   static getLoadedPhotos(state: PhotoStateModel): number {
     return state.photos.length;
   }
-
-  // @Selector([PhotoState])
-  // isDataSelected(state: PhotoStateModel): (photo: Photo) => boolean {
-  //   return (photo: Photo) => state.downloads.includes(photo);
-  // }
 
   // endregion
 
@@ -253,10 +247,8 @@ export class PhotoState {
   @Action(photoAction.LoadPhotosSuccess)
   loadPhotosSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadPhotosSuccess): void {
     const state = ctx.getState();
-    let index = state.photos.length;
     for (const photo of action.dto.photos) {
       photo.recordDate = new Date(photo.recordDate);
-      photo.index = index++;
     }
     const photos: Photo[] = [...state.photos, ...action.dto.photos]
     ctx.patchState({
@@ -279,8 +271,9 @@ export class PhotoState {
 
   @Action(photoAction.SetCurrentPhoto)
   setCurrentPhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.SetCurrentPhoto): void {
+    const index = this._getFilteredPhotos(ctx.getState()).indexOf(action.photo);
     ctx.patchState({
-      currentIndex: action.photo.index
+      currentIndex: index
     });
   }
 
@@ -330,7 +323,6 @@ export class PhotoState {
   @Action(photoAction.AddPhotoSuccess)
   addPhotoSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoSuccess): void {
     const state = ctx.getState();
-    action.photo.index = state.photos.length;
     ctx.patchState({
       availableServerPhotos: state.availableServerPhotos + 1,
       photos: [
@@ -362,7 +354,7 @@ export class PhotoState {
       .pipe(
         map((photo: Photo) =>
           asapScheduler.schedule(() =>
-            ctx.dispatch(new photoAction.UpdatePhotoSuccess(photo, action.photo.index))
+            ctx.dispatch(new photoAction.UpdatePhotoSuccess(photo))
           )
         ),
         catchError(error =>
@@ -380,7 +372,7 @@ export class PhotoState {
     const photo = action.photo;
     ctx.setState(
       patch({
-        photos: updateItem<Photo>(action.index, patch({
+        photos: updateItem<Photo>(p => p!.id === photo.id, patch({
           tags: photo.tags,
           isPrivate: photo.isPrivate
         }))
@@ -422,7 +414,6 @@ export class PhotoState {
   @Action(photoAction.DeletePhotoSuccess)
   deletePhotoSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhotoSuccess): void {
     const state = ctx.getState();
-    const currentPhoto = state.photos[state.currentIndex];
     const available = state.availableServerPhotos;
     ctx.setState(
       patch({
@@ -430,7 +421,6 @@ export class PhotoState {
         availableServerPhotos: available === 0 ? 0 : available - 1,
       })
     );
-    this._fixIndices(ctx, currentPhoto);
   }
 
   @Action(photoAction.DeletePhotoFail)
@@ -465,7 +455,6 @@ export class PhotoState {
       this.alertService.error('Delete many photos fail');
       return;
     }
-    const currentPhoto = state.photos[state.currentIndex];
     const editPhotos: Photo[] = [];
     for (const id of action.ids) {
       ctx.setState(
@@ -476,7 +465,6 @@ export class PhotoState {
         })
       );
     }
-    this._fixIndices(ctx, currentPhoto);
   }
 
   @Action(photoAction.DeletePhotosFail)
@@ -498,7 +486,7 @@ export class PhotoState {
       patch({
         comparePhotos:
           contains
-            ? removeItem<Photo>(photo => photo?.index === action.photo.index)
+            ? removeItem<Photo>(photo => photo!.id === action.photo.id)
             : insertItem<Photo>(action.photo)
       })
     );
@@ -525,7 +513,7 @@ export class PhotoState {
       patch({
         editPhotos:
           contains
-            ? removeItem<Photo>(photo => photo?.index === action.photo.index)
+            ? removeItem<Photo>(photo => photo!.id === action.photo.id)
             : insertItem<Photo>(action.photo)
       })
     );
@@ -583,7 +571,7 @@ export class PhotoState {
       patch({
         selectedDownloads:
           isDownload
-            ? removeItem<Photo>(photo => photo?.index === action.photo.index)
+            ? removeItem<Photo>(photo => photo!.id === action.photo.id)
             : insertItem<Photo>(action.photo)
       })
     );
@@ -603,7 +591,6 @@ export class PhotoState {
       finalDownloads: [...state.finalDownloads, ...state.selectedDownloads],
       selectedDownloads: cleared
     }));
-    this._fixIndices(ctx, state.photos[state.currentIndex])
   }
 
   @Action(photoAction.DeselectAllDownloads)
@@ -653,7 +640,8 @@ export class PhotoState {
   setRatingSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.SetRatingSuccess): void {
     ctx.setState(
       patch({
-        photos: updateItem<Photo>(action.photo.index, patch({rating: action.rate})),
+        photos: updateItem<Photo>(photo => photo?.id === action.photo!.id,
+          patch({rating: action.rate})),
       })
     );
   }
@@ -721,7 +709,7 @@ export class PhotoState {
 
   // endregion
 
-  // region help
+  // region helper
   // Look for better solution when ngxs updates to v4
   private _getFilteredPhotos(state: PhotoStateModel): Photo[] {
     return PhotoState.getFilteredPhotos(
@@ -730,43 +718,6 @@ export class PhotoState {
       PhotoState.getFilterRating(state),
       PhotoState.getFilterFrom(state),
       PhotoState.getFilterTo(state));
-  }
-
-  // change many not supported by ngxs. WTF
-  /**
-   * set index of every photo. need after deleting
-   */
-  private _fixIndices(ctx: StateContext<PhotoStateModel>, currentPhoto: Photo): void {
-    const state = ctx.getState();
-    const photos = [];
-    let index = 0;
-    let photoClone;
-    for (const photo of state.photos) {
-      photoClone = clone(photo);
-      photoClone.index = index++;
-      photoClone.recordDate = new Date(photo.recordDate)
-      photos.push(photoClone)
-    }
-
-    ctx.patchState({
-      photos: photos,
-      currentIndex: this._computeCurrentIndex(state, currentPhoto)
-    });
-  }
-
-  /**
-   * return fixed index if larger than length or lower then 0
-   */
-  private _computeCurrentIndex(state: PhotoStateModel, currentPhoto: Photo): number {
-    const indexOf = state.photos.indexOf(currentPhoto);
-    if (indexOf > -1) {
-      return indexOf;
-    }
-    const index = state.currentIndex;
-    const length = state.photos.length;
-    let newIndex = index >= length ? length - 1 : index;
-    newIndex = newIndex < 0 ? 0 : newIndex;
-    return newIndex;
   }
 
   // endregion

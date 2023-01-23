@@ -1,27 +1,26 @@
 <div class="row-max-height">
   <div class="column control-panel p5">
-    <div class="scrollbar-container m5">
+    <div class="scrollbar-container">
       <app-gallery-tag-filter
         [tagGroups]="tagGroups" [activeTags]="activeTags"
         (addTagFilterEvent)="handleTagFilterChanged($event, true)"
         (removeTagFilterEvent)="handleTagFilterChanged($event, false)"></app-gallery-tag-filter>
     </div>
     <app-gallery-rating-filter
-      class="m5" [currentRating]="currentRating"
+      [currentRating]="currentRating"
       (changeRatingEvent)="handleRatingChange($event)"></app-gallery-rating-filter>
-    <app-gallery-date-filter class="m5"></app-gallery-date-filter>
-    <div class="column m5">
+    <app-gallery-date-filter></app-gallery-date-filter>
+    <div class="column">
       <button mat-raised-button color="primary" type="button" (click)="onClickClearFilter()">
         Clear Filter
         <mat-icon style="font-size: 1.5em">clear</mat-icon>
       </button>
     </div>
     <app-gallery-action-panel
-      [actions]="actions" (actionEvent)="onAction($event)"
-      class="m5"></app-gallery-action-panel>
-    <app-gallery-image-detail class="m5" [currentPhoto$]="currentPhoto$"></app-gallery-image-detail>
+      [actions]="actions" (actionEvent)="onAction($event)"></app-gallery-action-panel>
+    <app-gallery-image-detail [currentPhoto$]="currentPhoto$"></app-gallery-image-detail>
     <app-gallery-meta-panel
-      class="m5" [selectedPhotosCount]="selection.length" [filteredPhotosCount]="photos.length"
+      [selectedPhotosCount]="selection.length" [filteredPhotosCount]="photos.length"
       [loadedPhotos]="loadedPhotos" [availablePhotos]="availablePhotos"></app-gallery-meta-panel>
   </div>
   <div class="column-max-width">
@@ -29,8 +28,8 @@
       <ng-scrollbar #scrollbar>
         <div class="images-wrapper">
           <app-editor-photo-control
-            *ngFor="let photo of (photos$ | async)" class="selection-item" [photo]="photo"
-            [selected]="currentIndex === photo.index" [hasRights]="true" [edit]="isSelectForEdit(photo)"
+            *ngFor="let photo of (photos$ | async); let i=index" class="selection-item" [photo]="photo"
+            [selected]="currentIndex === i" [hasRights]="true" [edit]="isSelectForEdit(photo)"
             (click)="setCurrent(photo)" (deleteEvent)="onSelectForDelete($event)"
             (previewEvent)="onSelectForPreview($event)" (editEvent)="onSelectForEdit($event)"
             (groupEditEvent)="onSelectGroupEdit($event)"></app-editor-photo-control>

@@ -214,7 +214,7 @@ export class UpdatePhoto {
 export class UpdatePhotoSuccess {
   static readonly type = '[Gallery] Update Photo success';
 
-  constructor(public photo: Photo, public index: number) {
+  constructor(public photo: Photo) {
   }
 }
 

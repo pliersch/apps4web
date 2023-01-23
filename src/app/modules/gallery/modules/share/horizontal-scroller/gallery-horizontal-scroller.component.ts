@@ -50,13 +50,6 @@ export class GalleryHorizontalScrollerComponent implements OnInit {
     this.selectEvent.emit($event.photo);
   }
 
-  // isCompared(photo: Photo): Observable<boolean> {
-  //   console.log('GalleryHorizontalScrollerComponent isCompared: ',)
-  //   return this.comparePhotos$.pipe(
-  //     map(photos => photos.includes(photo))
-  //   );
-  // }
-
   onScroll($event: WheelEvent): void {
     const scrollLeft = this.scrollbar.viewport.scrollLeft;
     if ($event.deltaY > 0) {

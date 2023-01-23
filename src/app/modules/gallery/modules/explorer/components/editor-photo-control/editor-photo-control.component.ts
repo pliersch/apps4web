@@ -12,6 +12,9 @@ export class EditorPhotoControlComponent {
   @Input()
   photo: Photo;
 
+  // @Input()
+  // index: number;
+
   @Input()
   selected: boolean;
 

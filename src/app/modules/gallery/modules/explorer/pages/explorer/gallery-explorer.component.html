@@ -1,42 +1,45 @@
 <div class="row-max-height">
   <div class="column control-panel p5">
-    <div class="m5 scrollbar-container">
+    <div class="scrollbar-container">
       <app-gallery-tag-filter
         [tagGroups]="tagGroups" [activeTags]="activeTags"
         (addTagFilterEvent)="handleTagFilterChanged($event, true)"
         (removeTagFilterEvent)="handleTagFilterChanged($event, false)"></app-gallery-tag-filter>
     </div>
     <app-gallery-rating-filter
-      class="m5" [currentRating]="currentRating"
+      [currentRating]="currentRating"
       (changeRatingEvent)="handleRatingChange($event)"></app-gallery-rating-filter>
-    <app-gallery-date-filter class="m5"></app-gallery-date-filter>
-    <div class="column m5">
-      <button mat-raised-button color="primary"
-              type="button" (click)="onClickClearFilter()">
+    <app-gallery-date-filter></app-gallery-date-filter>
+    <div class="column">
+      <button
+        mat-raised-button color="primary"
+        type="button" (click)="onClickClearFilter()">
         Clear Filter
         <mat-icon>clear</mat-icon>
       </button>
     </div>
-    <app-gallery-action-panel [actions]="actions" (actionEvent)="onAction($event)"
-                              class="m5"></app-gallery-action-panel>
-    <app-gallery-image-detail class="m5" [currentPhoto$]="currentPhoto$"></app-gallery-image-detail>
-    <app-gallery-meta-panel class="m5"
-                            [selectedPhotosCount]="selectedDownloads.length"
-                            [filteredPhotosCount]="photos.length"
-                            [loadedPhotos]="loadedPhotos"
-                            [finalDownloadsPhotosCount]="finalDownloads.length"
-                            [availablePhotos]="availablePhotos"></app-gallery-meta-panel>
+    <app-gallery-action-panel
+      [actions]="actions" (actionEvent)="onAction($event)"></app-gallery-action-panel>
+    <app-gallery-image-detail
+      [currentPhoto$]="currentPhoto$"></app-gallery-image-detail>
+    <app-gallery-meta-panel
+      [selectedPhotosCount]="selectedDownloads.length"
+      [filteredPhotosCount]="photos.length"
+      [loadedPhotos]="loadedPhotos"
+      [finalDownloadsPhotosCount]="finalDownloads.length"
+      [availablePhotos]="availablePhotos"></app-gallery-meta-panel>
   </div>
   <div class="column-max-width">
     <div class="scrollbar-container">
       <ng-scrollbar #scrollbar>
         <div class="images-wrapper">
-          <app-explorer-photo-control *ngFor="let photo of (photos$ | async)" class="selection-item"
-                                      [selected]="currentPhoto.id === photo.id"
-                                      (click)="setCurrent(photo)" [photo]="photo"
-                                      [download]="isDownload(photo)"
-                                      (previewEvent)="onSelectForPreview($event)"
-                                      (downloadEvent)="onSelectForDownload($event)"></app-explorer-photo-control>
+          <app-explorer-photo-control
+            *ngFor="let photo of (photos$ | async); let i=index" class="selection-item"
+            [selected]="currentIndex === i"
+            (click)="setCurrent(photo)" [photo]="photo"
+            [download]="isDownload(photo)"
+            (previewEvent)="onSelectForPreview($event)"
+            (downloadEvent)="onSelectForDownload($event)"></app-explorer-photo-control>
         </div>
       </ng-scrollbar>
     </div>
