@@ -2,7 +2,7 @@
   <div class="column control-panel p5">
     <div class="scrollbar-container">
       <app-gallery-tag-filter
-        [tagGroups]="tagGroups" [activeTags]="activeTags"
+        [tagGroups]="tagGroups" [activeTags]="activeTags" [photoCounts]="photoCounts"
         (addTagFilterEvent)="handleTagFilterChanged($event, true)"
         (removeTagFilterEvent)="handleTagFilterChanged($event, false)"></app-gallery-tag-filter>
     </div>

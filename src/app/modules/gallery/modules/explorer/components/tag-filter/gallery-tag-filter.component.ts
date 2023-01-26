@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { PhotoCountByTag } from "@gallery/store/photos/photo.model";
 import { Tag, TagGroup } from '@gallery/store/tags/tag.model';
 
 @Component({
@@ -13,6 +14,9 @@ export class GalleryTagFilterComponent {
 
   @Input()
   activeTags: Tag[] = [];
+
+  @Input()
+  photoCounts: PhotoCountByTag[] = [];
 
   @Output()
   addTagFilterEvent = new EventEmitter<Tag>();
@@ -36,6 +40,11 @@ export class GalleryTagFilterComponent {
 
   isTagActivated(entry: Tag): boolean {
     return this.activeTags.includes(entry);
+  }
+
+  getPhotoCount(tagId: string): number | undefined {
+    const countByTag = this.photoCounts.find(el => el.tagId === tagId);
+    return countByTag?.count;
   }
 
 }

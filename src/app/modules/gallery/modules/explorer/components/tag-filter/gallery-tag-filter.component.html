@@ -11,7 +11,7 @@
       <mat-selection-list>
         <mat-list-option *ngFor="let tag of group.tags" [selected]="isTagActivated(tag)"
                          [value]="tag" (click)="onSelectionChange(tag)">
-          {{tag.name}}
+          {{tag.name + ' ' + getPhotoCount(tag.id)}}
         </mat-list-option>
       </mat-selection-list>
     </mat-expansion-panel>

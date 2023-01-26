@@ -27,6 +27,7 @@ export interface PhotoDeleteDto {
 }
 
 export interface PhotoMetaDataDto {
+  readonly allPhotosCount: number;
   readonly photoCountByTags: PhotoCountByTag[];
 }
 

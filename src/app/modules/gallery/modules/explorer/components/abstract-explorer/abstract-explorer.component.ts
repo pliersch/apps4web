@@ -7,7 +7,7 @@ import { GALLERY_CONSTANTS } from "@gallery/const";
 import { PhotoService } from "@gallery/services/photo.service";
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import { AddTagFilter, RemoveTagFilter, SetRatingFilter } from "@gallery/store/photos/photo.actions";
-import { Photo } from "@gallery/store/photos/photo.model";
+import { Photo, PhotoCountByTag } from "@gallery/store/photos/photo.model";
 import { PhotoState } from "@gallery/store/photos/photo.state";
 import { Tag, TagGroup } from "@gallery/store/tags/tag.model";
 import { TagState } from "@gallery/store/tags/tag.state";
@@ -79,6 +79,10 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   activeTags$: Observable<Tag[]>;
   activeTags: Tag[];
 
+  @Select(PhotoState.getPhotoCountByTags) // for tagFilterComponent
+  photoCounts$: Observable<PhotoCountByTag[]>;
+  photoCounts: PhotoCountByTag[];
+
   protected subscription: Subscription;
   protected absoluteHeight = 0;
   protected isRequesting: boolean;
@@ -107,6 +111,7 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
     this.subscription.add(this.currentRating$.subscribe(res => this.currentRating = res));
     this.subscription.add(this.tagGroups$.subscribe(res => this.tagGroups = res));
     this.subscription.add(this.activeTags$.subscribe(res => this.activeTags = res));
+    this.subscription.add(this.photoCounts$.subscribe(res => this.photoCounts = res));
     this.subscription.add(
       this.photos$.subscribe(res => {
         this.photos = res;

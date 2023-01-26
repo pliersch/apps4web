@@ -126,6 +126,11 @@ export class PhotoState {
   }
 
   @Selector()
+  static getPhotoCountByTags(state: PhotoStateModel): PhotoCountByTag[] {
+    return state.photoCountByTags;
+  }
+
+  @Selector()
   static getActiveTags(state: PhotoStateModel): Tag[] {
     return state.tagFilter;
   }
@@ -201,8 +206,9 @@ export class PhotoState {
 
   @Action(photoAction.LoadMetaDataSuccess)
   loadMetaDataSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataSuccess): void {
+    console.log('PhotoState loadMetaDataSuccess: ', action.dto)
     ctx.patchState({
-      availableServerPhotos: action.dto.photoCountByTags.length,
+      availableServerPhotos: action.dto.allPhotosCount,
       photoCountByTags: action.dto.photoCountByTags
     });
   }
