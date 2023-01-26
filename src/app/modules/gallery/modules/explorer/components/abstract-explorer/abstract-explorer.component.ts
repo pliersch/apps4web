@@ -83,6 +83,8 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   protected absoluteHeight = 0;
   protected isRequesting: boolean;
   protected resizeObserver: ResizeObserver;
+  private content: Element;
+  private viewport: Element;
 
   constructor(
     public photoService: PhotoService,
@@ -113,24 +115,25 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   ngAfterViewInit(): void {
+    this.content = this.scrollbarRef.nativeElement.querySelector('.ng-scroll-content')!;
+    this.absoluteHeight = this.content.clientHeight + this.content.scrollTop;
+    this.viewport = this.scrollbarRef.nativeElement.querySelector('.ng-scroll-viewport')!;
     this.observeScrollContent();
     this.scrollbarRef.verticalScrolled.pipe(
       tap((e: Event) => {
         this.requestNextPhotos(e.target as Element);
       })
     ).subscribe();
-    const element = this.scrollbarRef.nativeElement.querySelector('.ng-scroll-content');
-    this.absoluteHeight = element!.clientHeight + element!.scrollTop;
-    const element1 = this.scrollbarRef.nativeElement.querySelector('.ng-scroll-viewport');
-    this.requestNextPhotos(element1!);
+    this.requestNextPhotos(this.viewport);
   }
 
   observeScrollContent(): void {
-    const element = this.scrollbarRef.nativeElement.querySelector('.ng-scroll-content');
     this.resizeObserver = new ResizeObserver(res => {
       this.absoluteHeight = res[0].contentRect.height;
+      console.log('AbstractExplorerComponent : ',)
+      this.requestNextPhotos(this.viewport);
     });
-    this.resizeObserver.observe(element!);
+    this.resizeObserver.observe(this.content);
   }
 
   requestNextPhotos(element: Element): void {

@@ -3,7 +3,14 @@ import { Injectable } from "@angular/core";
 import { catchError, map } from "rxjs/operators";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import * as photoAction from "@gallery/store/photos/photo.actions";
-import { Photo, PhotoDeleteDto, PhotoDto, PhotoMetaDataDto, PhotoUpdate } from "@gallery/store/photos/photo.model";
+import {
+  Photo,
+  PhotoCountByTag,
+  PhotoDeleteDto,
+  PhotoDto,
+  PhotoMetaDataDto,
+  PhotoUpdate
+} from "@gallery/store/photos/photo.model";
 import { append, insertItem, patch, removeItem, updateItem } from "@ngxs/store/operators";
 import { filterByRating, filterByTags, filterByYear } from "@gallery/store/photos/photo.tools";
 import { AlertService } from "@app/common/services/alert.service";
@@ -21,6 +28,7 @@ export interface PhotoStateModel {
   finalDownloads: Photo[];
   comparePhotos: Photo[];
   availableServerPhotos: number;
+  photoCountByTags: PhotoCountByTag[];
   tagFilter: Tag[];
   filterRating: number;
   filterFrom: number;
@@ -41,6 +49,7 @@ export interface PhotoStateModel {
     currentIndex: 0,
     newDataAvailable: true,
     availableServerPhotos: 0,
+    photoCountByTags: [],
     tagFilter: [],
     filterRating: 0,
     filterFrom: -1,
@@ -192,9 +201,9 @@ export class PhotoState {
 
   @Action(photoAction.LoadMetaDataSuccess)
   loadMetaDataSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataSuccess): void {
-    // console.log('PhotoState loadMetaDataSuccess: ',)
     ctx.patchState({
-      availableServerPhotos: action.dto.count, loading: false
+      availableServerPhotos: action.dto.photoCountByTags.length,
+      photoCountByTags: action.dto.photoCountByTags
     });
   }
 
@@ -224,9 +233,11 @@ export class PhotoState {
     if (count == 0) {
       return of(Subscription.EMPTY);
     }
-    // const snapshot = this.store.selectSnapshot(AccountState.user);
-    console.log('PhotoState loadPhotos: ')
-    return this.photoService.getPhotos(from, count)
+    const activeTags = this.store.selectSnapshot(PhotoState.getActiveTags);
+    console.log('PhotoState loadPhotos: ', from, count, activeTags)
+    const tagIds: string[] = [];
+    activeTags.forEach(tag => tagIds.push(tag.id))
+    return this.photoService.getPhotos(from, count, tagIds)
       .pipe(
         map((dto: PhotoDto) =>
           asapScheduler.schedule(() => {
