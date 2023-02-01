@@ -3,7 +3,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import {
   AbstractExplorerComponent
-} from "@gallery/modules/explorer/components/abstract-explorer/abstract-explorer.component";
+} from "@gallery/modules/explorer/pages/abstract-explorer/abstract-explorer.component";
 import { PhotoService } from "@gallery/services/photo.service";
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import { Photo } from '@gallery/store/photos/photo.model';

@@ -3,7 +3,6 @@ import { User } from "@account/store/user.model";
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
-import { GALLERY_CONSTANTS } from "@gallery/const";
 import { PhotoService } from "@gallery/services/photo.service";
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import { AddTagFilter, RemoveTagFilter, SetRatingFilter } from "@gallery/store/photos/photo.actions";
@@ -151,7 +150,7 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
     const currentHeight = element.clientHeight + element.scrollTop;
     if (currentHeight + 180 > this.absoluteHeight) {
       this.isRequesting = true;
-      this.store.dispatch(new photoAction.LoadPhotos(GALLERY_CONSTANTS.PHOTO_LOAD_COUNT));
+      this.store.dispatch(new photoAction.LoadPhotos());
     }
   }
 
