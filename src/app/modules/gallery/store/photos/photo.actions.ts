@@ -28,7 +28,9 @@ export class LoadMetaDataFail {
 export class LoadPhotos {
   static readonly type = '[Gallery] Load Photos';
 
-  constructor(public count: number, public from?: number) { }
+  constructor(public count?: number,
+              public from?: number,
+              public tag?: Tag) { }
 }
 
 export class LoadPhotosSuccess {
@@ -253,14 +255,14 @@ export class SetRatingFail {
 export class AddTagFilter {
   static readonly type = '[Gallery] Add Tag Filter';
 
-  constructor(public filter: Tag) {
+  constructor(public tag: Tag) {
   }
 }
 
 export class RemoveTagFilter {
   static readonly type = '[Gallery] Remove Tag Filter';
 
-  constructor(public filter: Tag) { }
+  constructor(public tag: Tag) { }
 }
 
 export class SetRatingFilter {

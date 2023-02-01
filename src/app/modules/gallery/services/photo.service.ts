@@ -1,12 +1,11 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { formatEnglish } from "@app/common/util/date-util";
 import { environment } from '@environments/environment';
 import { Photo, PhotoDeleteDto, PhotoDto, PhotoMetaDataDto, PhotoUpdate } from '@gallery/store/photos/photo.model';
-import { Order } from "@app/common/const/order.constant";
 import { Tag } from "@gallery/store/tags/tag.model";
 import { DeleteResult } from "@modules/share/interfaces/models/delete-result";
-import { formatEnglish } from "@app/common/util/date-util";
+import { Observable } from 'rxjs';
 
 const PHOTO_BASE_URL = `${environment.apiUrl}/photos`;
 const DOWNLOAD_BASE_URL = `${environment.apiUrl}/download`;
@@ -24,7 +23,6 @@ export class PhotoService {
     console.log('PhotoService getPhotos: ', from, take)
     return this.http.get<PhotoDto>(PHOTO_BASE_URL, {
       params: {
-        order: Order.ASC,
         from: from,
         take: take,
         tagIds: tagIds

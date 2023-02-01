@@ -10,16 +10,22 @@ export interface Photo {
   rating: number;
 }
 
+export interface PhotoDto {
+  readonly photos: Photo[];
+  readonly meta: PhotoMetaDataDto;
+}
+
+export class PhotosRequestDto {
+  readonly from?: number = 1;
+  readonly take?: number = 60;
+  readonly tagIds: string[] = [];
+}
+
 export interface PhotoUpdate {
   // id: string;
   addedTagIds?: string[];
   removedTagIds?: string[];
   private?: boolean
-}
-
-export interface PhotoDto {
-  readonly photos: Photo[];
-  readonly meta: PhotoMetaDataDto;
 }
 
 export interface PhotoDeleteDto {

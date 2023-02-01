@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from "@angular/router";
-import { concatMap, Observable, of, Subscription } from "rxjs";
-import { Store } from "@ngxs/store";
-import { LoadMetaData, LoadPhotos } from "@gallery/store/photos/photo.actions";
 import { PushMessageEvent, PushMessageListener, ServerSentService } from "@app/common/services/server-sent.service";
+import { LoadMetaData, LoadPhotos } from "@gallery/store/photos/photo.actions";
 import { LoadTags, SetNewTagsAvailable } from "@gallery/store/tags/tag.action";
-import { GALLERY_CONSTANTS } from "@gallery/const";
+import { Store } from "@ngxs/store";
+import { concatMap, Observable, of, Subscription } from "rxjs";
 
 @Injectable()
 export class GalleryResolver implements PushMessageListener, Resolve<boolean> {
@@ -35,7 +34,7 @@ export class GalleryResolver implements PushMessageListener, Resolve<boolean> {
     of(Subscription.EMPTY).pipe( // yes, I know. but more readable ;)
       concatMap(() => this.store.dispatch(new LoadMetaData())),
       concatMap(() => this.store.dispatch(new LoadTags())),
-      concatMap(() => this.store.dispatch(new LoadPhotos(GALLERY_CONSTANTS.PHOTO_LOAD_COUNT))))
+      concatMap(() => this.store.dispatch(new LoadPhotos())))
       .subscribe();
   }
 

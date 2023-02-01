@@ -1,3 +1,4 @@
+import { GALLERY_CONSTANTS } from "@gallery/const";
 import { Action, Selector, State, StateContext, Store } from "@ngxs/store";
 import { Injectable } from "@angular/core";
 import { catchError, map } from "rxjs/operators";
@@ -235,7 +236,8 @@ export class PhotoState {
     ctx.patchState({loading: true, loaded: false});
     const from: number = action.from ? action.from : state.photos.length;
     const unloadedPhotos: number = state.availableServerPhotos - state.photos.length;
-    const count: number = unloadedPhotos < action.count ? unloadedPhotos : action.count;
+    let count: number = action.count ? action.count : GALLERY_CONSTANTS.PHOTO_LOAD_COUNT;
+    count = unloadedPhotos < count ? unloadedPhotos : count;
     if (count == 0) {
       return of(Subscription.EMPTY);
     }
@@ -679,16 +681,17 @@ export class PhotoState {
   addTagFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.AddTagFilter): void {
     ctx.setState(
       patch({
-        tagFilter: append([action.filter])
+        tagFilter: append([action.tag])
       })
     );
+    ctx.dispatch(new photoAction.LoadPhotos(GALLERY_CONSTANTS.PHOTO_LOAD_COUNT))
   }
 
   @Action(photoAction.RemoveTagFilter)
   removeTagFilter(ctx: StateContext<PhotoStateModel>, action: photoAction.RemoveTagFilter): void {
     ctx.setState(
       patch({
-        tagFilter: removeItem<Tag>(name => name === action.filter)
+        tagFilter: removeItem<Tag>(name => name === action.tag)
       })
     );
   }
