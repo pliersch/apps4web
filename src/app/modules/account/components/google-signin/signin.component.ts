@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { GoogleUser } from "@account/store/google-user.model";
+import { Router } from "@angular/router";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import {
@@ -22,7 +23,8 @@ export class SigninComponent implements OnInit {
   user$: Observable<GoogleUser>;
   user: GoogleUser | null;
 
-  constructor(private store: Store) { }
+  constructor(private store: Store,
+              private router: Router) { }
 
   @HostListener('window:load')
   onLoad(): void {
@@ -77,5 +79,9 @@ export class SigninComponent implements OnInit {
   logout(): void {
     window.google.accounts.id.disableAutoSelect();
     this.store.dispatch(new SignoutWithGoogle());
+  }
+
+  navigateToAccount(): void {
+    void this.router.navigate(['account']);
   }
 }

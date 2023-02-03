@@ -19,7 +19,7 @@ const threeModule = () => import('@app/modules/three/three.module').then((x) => 
 const routes: Routes = [{
   path: '', component: DefaultLayoutComponent, children: [
     {path: '', title: 'Home', component: DashboardComponent},
-    {path: 'dashboard', title: 'Home', component: DashboardComponent},
+    // {path: 'dashboard', title: 'Home', component: DashboardComponent},
     {path: 'impressum', title: 'Impressum', component: LegalNoticeComponent},
     {path: 'chat', loadChildren: chatModule},
     {path: 'admin', title: 'Administration', loadChildren: adminModule, canActivate: [AuthGuard]},

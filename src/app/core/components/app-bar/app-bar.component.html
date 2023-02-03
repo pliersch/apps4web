@@ -1,17 +1,31 @@
-<mat-toolbar class="p8lr">
-  <button mat-icon-button (click)="emitNavToggle()" [style.display]="(isHandset$ | async) ? 'initial' : 'none'"
-          aria-label="Example icon-button with menu icon">
-    <mat-icon>menu</mat-icon>
-  </button>
+<ng-template [ngIf]="(isHandset$ | async)" [ngIfElse]="desktop">
   <mat-toolbar class="p8lr">
+    <button mat-icon-button (click)="emitNavToggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
     <button mat-flat-button [routerLink]="['/']">
       <div class='app-logo'>
         APPS<span class='logo-color'>4</span>WEB
       </div>
     </button>
-    <button mat-flat-button routerLinkActive='active-route'
-            *ngFor="let route of routes$ | async" [routerLink]="[route.route]">{{route.name}}</button>
+    <span class="spacer"></span>
+    <app-theme-menu (switchThemeEvent)="onSwitchTheme($event)"></app-theme-menu>
+    <app-signin></app-signin>
   </mat-toolbar>
-  <app-theme-menu (switchThemeEvent)="onSwitchTheme($event)"></app-theme-menu>
-  <app-signin></app-signin>
-</mat-toolbar>
+</ng-template>
+
+<ng-template #desktop>
+  <mat-toolbar class="p8lr">
+    <mat-toolbar class="p8lr">
+      <button mat-flat-button [routerLink]="['/']">
+        <div class='app-logo'>
+          APPS<span class='logo-color'>4</span>WEB
+        </div>
+      </button>
+      <button mat-flat-button routerLinkActive='active-route'
+              *ngFor="let route of routes$ | async" [routerLink]="[route.route]">{{route.name}}</button>
+    </mat-toolbar>
+    <app-theme-menu (switchThemeEvent)="onSwitchTheme($event)"></app-theme-menu>
+    <app-signin></app-signin>
+  </mat-toolbar>
+</ng-template>
