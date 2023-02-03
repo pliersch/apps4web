@@ -9,6 +9,7 @@ import {
 } from "@gallery/modules/share";
 import { MaterialModule } from "@modules/share";
 import { NgScrollbarModule } from "ngx-scrollbar";
+import { GallerySorterComponent } from './sorter/gallery-sorter.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { NgScrollbarModule } from "ngx-scrollbar";
     ScrollerItemComponent,
     GalleryImagePlaceholderComponent,
     GalleryStarRatingComponent,
+    GallerySorterComponent,
   ],
   imports: [
     CommonModule,
@@ -28,6 +30,7 @@ import { NgScrollbarModule } from "ngx-scrollbar";
     GalleryHorizontalScrollerComponent,
     GalleryVerticalScrollerComponent,
     GalleryStarRatingComponent,
+    GallerySorterComponent,
   ]
 })
 export class GalleryShareModule {}
