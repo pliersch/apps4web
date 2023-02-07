@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DefaultLayoutComponent } from "./layouts/default-layout/default-layout.component";
+import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
 import { DashboardComponent } from "@modules/dashboard/dashboard.component";
 import { LegalNoticeComponent } from "@modules/legal-notice/legal-notice.component";
 import { AuthGuard } from "@account/guards/auth.guard";
