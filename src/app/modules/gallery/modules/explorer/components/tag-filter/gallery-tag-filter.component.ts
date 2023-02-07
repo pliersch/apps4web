@@ -42,9 +42,10 @@ export class GalleryTagFilterComponent {
     return this.activeTags.includes(entry);
   }
 
-  getPhotoCount(tagId: string): number | undefined {
+  getPhotoCount(tagId: string): string {
     const countByTag = this.photoCounts.find(el => el.tagId === tagId);
-    return countByTag?.count;
+    const count = countByTag?.count;
+    return count ? count.toString() : '';
   }
 
 }
