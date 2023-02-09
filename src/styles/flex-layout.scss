@@ -4,6 +4,12 @@
   flex-wrap: wrap;
 }
 
+.row-no-wrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
 .row-max-width {
   display: flex;
   flex-wrap: wrap;

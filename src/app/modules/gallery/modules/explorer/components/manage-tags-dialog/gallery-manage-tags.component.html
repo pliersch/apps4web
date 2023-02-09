@@ -1,27 +1,30 @@
 <h1 mat-dialog-title>Manage Tags</h1>
 <mat-dialog-content style="overflow: hidden;">
-  <div class="row">
+  <div class="row-no-wrap">
     <div class="column col-s-3 height300">
-      <ng-scrollbar [autoWidthDisabled]="false" class="dark-scrollbar"
-                    track="vertical" visibility="always">
+      <ng-scrollbar
+        [autoWidthDisabled]="false" class="dark-scrollbar"
+        track="vertical" visibility="always">
         <mat-selection-list appNoPaddingTop multiple="false">
-          <mat-list-option (click)="onSelectTagGroups(tag)"
-                           *ngFor="let tag of tagGroups$ | async; let i = index"
-                           [selected]="currentGroup.id === tag.id" [value]="tag">
+          <mat-list-option
+            (click)="onSelectTagGroups(tag)"
+            *ngFor="let tag of tagGroups$ | async; let i = index"
+            [selected]="currentGroup.id === tag.id" [value]="tag">
             {{tag.name}}
           </mat-list-option>
         </mat-selection-list>
       </ng-scrollbar>
-      <button (click)="onClickCreateGroup()" [disabled]="isCreatingGroup"
-              color="primary" mat-raised-button>New
+      <button
+        (click)="onClickCreateGroup()" [disabled]="isCreatingGroup"
+        color="primary" mat-raised-button>New
       </button>
     </div>
-    <!--    <mat-divider [vertical]="true"></mat-divider>-->
-    <div class="col-s-9">
-      <app-gallery-manage-tag-detail (deleteGroupEvent)="handleDeleteGroup($event)"
-                                     (tagChangesEvent)="handleEntriesChanged($event)"
-                                     [tagGroup]="currentGroup"
-                                     class="full-width">
+    <div class="column m10l">
+      <app-gallery-manage-tag-detail
+        (deleteGroupEvent)="handleDeleteGroup($event)"
+        (tagChangesEvent)="handleEntriesChanged($event)"
+        [tagGroup]="currentGroup"
+        class="full-width-height">
       </app-gallery-manage-tag-detail>
     </div>
   </div>

@@ -1,4 +1,4 @@
-<div>
+<div class="column-max-height">
   <div class="row-max-width">
     <mat-form-field class="flex-1" appearance="fill">
       <mat-label>Kategorie Name</mat-label>
@@ -6,6 +6,10 @@
              (keyup)="onChangeGroupName(groupVal.value)">
       <mat-icon matSuffix>edit</mat-icon>
     </mat-form-field>
+    <button mat-mini-fab color="primary" class="m8tl"
+            (click)="onClickDeleteTagGroup(tagGroup)">
+      <mat-icon>delete</mat-icon>
+    </button>
   </div>
   <div>
     <mat-chip-grid #chipList>
@@ -17,6 +21,7 @@
       </mat-chip>
     </mat-chip-grid>
   </div>
+  <span class="spacer"></span>
   <div>
     <form>
       <mat-form-field class="full-width" appearance="fill">
@@ -30,8 +35,4 @@
       </mat-form-field>
     </form>
   </div>
-  <button (click)="onClickDeleteTagGroup(tagGroup)" mat-raised-button>
-    Löschen
-    <mat-icon style="font-size: 1.5em">delete</mat-icon>
-  </button>
 </div>
