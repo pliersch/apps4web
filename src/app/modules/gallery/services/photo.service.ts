@@ -2,7 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { formatEnglish } from "@app/common/util/date-util";
 import { environment } from '@environments/environment';
-import { Photo, PhotoDeleteDto, PhotoDto, PhotoMetaDataDto, PhotoUpdate } from '@gallery/store/photos/photo.model';
+import {
+  DeletePhotoDto,
+  Photo,
+  PhotoMetaData,
+  PhotoRequestResult,
+  PhotoUpdate
+} from '@gallery/store/photos/photo.model';
 import { Tag } from "@gallery/store/tags/tag.model";
 import { DeleteResult } from "@modules/share/interfaces/models/delete-result";
 import { Observable } from 'rxjs';
@@ -15,13 +21,13 @@ export class PhotoService {
 
   constructor(private http: HttpClient) { }
 
-  loadMetaData(): Observable<PhotoMetaDataDto> {
-    return this.http.get<PhotoMetaDataDto>(PHOTO_BASE_URL + '/meta');
+  loadMetaData(): Observable<PhotoMetaData> {
+    return this.http.get<PhotoMetaData>(PHOTO_BASE_URL + '/meta');
   }
 
-  getPhotos(from: number, take: number, tagIds: string[]): Observable<PhotoDto> {
+  getPhotos(from: number, take: number, tagIds: string[]): Observable<PhotoRequestResult> {
     console.log('PhotoService getPhotos: ', from, take)
-    return this.http.get<PhotoDto>(PHOTO_BASE_URL, {
+    return this.http.get<PhotoRequestResult>(PHOTO_BASE_URL, {
       params: {
         from: from,
         take: take,
@@ -50,8 +56,8 @@ export class PhotoService {
     return this.http.patch<Photo>(`${PHOTO_BASE_URL}/${id}`, dto);
   }
 
-  delete(id: string): Observable<PhotoDeleteDto> {
-    return this.http.delete<PhotoDeleteDto>(`${PHOTO_BASE_URL}/${id}`);
+  delete(id: string): Observable<DeletePhotoDto> {
+    return this.http.delete<DeletePhotoDto>(`${PHOTO_BASE_URL}/${id}`);
   }
 
   deletePhotos(ids: string[]): Observable<DeleteResult> {

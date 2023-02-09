@@ -10,16 +10,16 @@ export interface Photo {
   rating: number;
 }
 
-export interface PhotoDto {
+export interface PhotoRequestResult {
   readonly photos: Photo[];
-  readonly meta: PhotoMetaDataDto;
+  readonly availablePhotos: number;
 }
 
-export class PhotosRequestDto {
-  readonly from?: number = 1;
-  readonly take?: number = 60;
-  readonly tagIds: string[] = [];
-}
+// export class PhotosRequestDto {
+//   readonly from?: number = 1;
+//   readonly take?: number = 60;
+//   readonly tagIds: string[] = [];
+// }
 
 export interface PhotoUpdate {
   // id: string;
@@ -28,11 +28,11 @@ export interface PhotoUpdate {
   private?: boolean
 }
 
-export interface PhotoDeleteDto {
+export interface DeletePhotoDto {
   readonly id: string;
 }
 
-export interface PhotoMetaDataDto {
+export interface PhotoMetaData {
   readonly allPhotosCount: number;
   readonly photoCountByTags: PhotoCountByTag[];
 }

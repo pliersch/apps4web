@@ -1,25 +1,25 @@
-import { GALLERY_CONSTANTS } from "@gallery/const";
-import { Action, Selector, State, StateContext, Store } from "@ngxs/store";
 import { Injectable } from "@angular/core";
-import { catchError, map } from "rxjs/operators";
-import { asapScheduler, Observable, of, Subscription } from "rxjs";
+import { AlertService } from "@app/common/services/alert.service";
+import { ServerSentService } from "@app/common/services/server-sent.service";
+import { difference } from "@app/common/util/array-utils";
+import { GALLERY_CONSTANTS } from "@gallery/const";
+import { PhotoService } from "@gallery/services/photo.service";
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import {
+  DeletePhotoDto,
   Photo,
   PhotoCountByTag,
-  PhotoDeleteDto,
-  PhotoDto,
-  PhotoMetaDataDto,
+  PhotoMetaData,
+  PhotoRequestResult,
   PhotoUpdate
 } from "@gallery/store/photos/photo.model";
-import { append, insertItem, patch, removeItem, updateItem } from "@ngxs/store/operators";
 import { filterByRating, filterByTags, filterByYear } from "@gallery/store/photos/photo.tools";
-import { AlertService } from "@app/common/services/alert.service";
-import { PhotoService } from "@gallery/services/photo.service";
-import { ServerSentService } from "@app/common/services/server-sent.service";
 import { Tag } from "@gallery/store/tags/tag.model";
 import { DeleteResult } from "@modules/share/interfaces/models/delete-result";
-import { difference } from "@app/common/util/array-utils";
+import { Action, Selector, State, StateContext, Store } from "@ngxs/store";
+import { append, insertItem, patch, removeItem, updateItem } from "@ngxs/store/operators";
+import { asapScheduler, Observable, of, Subscription } from "rxjs";
+import { catchError, map } from "rxjs/operators";
 
 export interface PhotoStateModel {
   photos: Photo[];
@@ -190,7 +190,7 @@ export class PhotoState {
   @Action(photoAction.LoadMetaData)
   loadMetaData(ctx: StateContext<PhotoStateModel>): Observable<Subscription> {
     return this.photoService.loadMetaData().pipe(
-      map((metaDto: PhotoMetaDataDto) =>
+      map((metaDto: PhotoMetaData) =>
         asapScheduler.schedule(() =>
           ctx.dispatch(new photoAction.LoadMetaDataSuccess(metaDto))
         )
@@ -247,7 +247,7 @@ export class PhotoState {
     activeTags.forEach(tag => tagIds.push(tag.id))
     return this.photoService.getPhotos(from, count, tagIds)
       .pipe(
-        map((dto: PhotoDto) =>
+        map((dto: PhotoRequestResult) =>
           asapScheduler.schedule(() => {
               ctx.dispatch(new photoAction.LoadPhotosSuccess(dto))
             }
@@ -415,7 +415,7 @@ export class PhotoState {
   @Action(photoAction.DeletePhoto)
   deletePhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhoto): Observable<Subscription> {
     return this.photoService.delete(action.id).pipe(
-      map((dto: PhotoDeleteDto) =>
+      map((dto: DeletePhotoDto) =>
         asapScheduler.schedule(() =>
           ctx.dispatch(new photoAction.DeletePhotoSuccess(dto))
         )

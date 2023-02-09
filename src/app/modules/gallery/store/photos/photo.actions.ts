@@ -1,7 +1,13 @@
-import { Photo, PhotoDeleteDto, PhotoDto, PhotoMetaDataDto, PhotoUpdate } from "@gallery/store/photos/photo.model";
-import { HttpErrorResponse } from '@angular/common/http';
-import { Tag } from "@gallery/store/tags/tag.model";
 import { User } from "@account/store/user.model";
+import { HttpErrorResponse } from '@angular/common/http';
+import {
+  DeletePhotoDto,
+  Photo,
+  PhotoMetaData,
+  PhotoRequestResult,
+  PhotoUpdate
+} from "@gallery/store/photos/photo.model";
+import { Tag } from "@gallery/store/tags/tag.model";
 import { DeleteResult } from "@modules/share/interfaces/models/delete-result";
 
 // meta data
@@ -14,7 +20,7 @@ export class LoadMetaData {
 export class LoadMetaDataSuccess {
   static readonly type = '[Gallery] Load MetaData success';
 
-  constructor(public dto: PhotoMetaDataDto) { }
+  constructor(public dto: PhotoMetaData) { }
 }
 
 export class LoadMetaDataFail {
@@ -36,7 +42,7 @@ export class LoadPhotos {
 export class LoadPhotosSuccess {
   static readonly type = '[Gallery] Load Photos success';
 
-  constructor(public dto: PhotoDto) { }
+  constructor(public dto: PhotoRequestResult) { }
 }
 
 export class LoadPhotosFail {
@@ -158,7 +164,7 @@ export class DeletePhoto {
 export class DeletePhotoSuccess {
   static readonly type = '[Gallery] Delete Photo success';
 
-  constructor(public dto: PhotoDeleteDto) { }
+  constructor(public dto: DeletePhotoDto) { }
 }
 
 export class DeletePhotoFail {

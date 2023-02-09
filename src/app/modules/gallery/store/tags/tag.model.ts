@@ -5,6 +5,12 @@ export interface TagGroup {
   tags: Tag[];
 }
 
+export interface Tag {
+  id: string;
+  tagGroupId?: string; // todo don't need in frontend?!
+  name: string;
+}
+
 export interface CreteTagGroupDto {
   name: string;
   priority: number;
@@ -25,10 +31,4 @@ export interface UpdateTagGroupResultDto {
   priority?: number;
   addedTags?: Tag[];
   removedTagIds?: string[];
-}
-
-export interface Tag {
-  id: string;
-  tagGroupId?: string; // todo don't need in frontend?!
-  name: string;
 }
