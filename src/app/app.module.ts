@@ -1,32 +1,31 @@
+import { AccountModule } from "@account/account.module";
+import { AccountState } from "@account/store/account.state";
+import { HttpClientModule } from "@angular/common/http";
 import { APP_INITIALIZER, ErrorHandler, isDevMode, NgModule } from '@angular/core';
+import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from "@angular/material-date-fns-adapter";
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from "@angular/material/core";
 import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from "@angular/service-worker";
+import { GlobalErrorHandler } from "@app/common/helpers/global-error-handler";
+import { initApplication } from "@app/common/initializers/app.initializer";
+import { initTheme } from "@app/common/initializers/theme.initializer";
+import { AppBarComponent } from "@app/core/components/app-bar/app-bar.component";
+import { MaterialModule } from "@app/modules/share/material/material.module";
+import { environment } from "@environments/environment";
+import { DashboardCardComponent } from "@modules/dashboard/cards/dashboard-card.component";
+import { DashboardComponent } from "@modules/dashboard/dashboard.component";
+import { RadioModule } from "@modules/radio/radio.module";
+import { RecipesModule } from "@modules/recipes/recipes.module";
+import { ThemeMenuComponent } from "@modules/themes/menus/theme-menu.component";
+import { ThemeState } from "@modules/themes/stores/theme-state";
+import { WasteCalendarModule } from "@modules/waste-calendar/waste-calendar.module";
+import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
+import { NgxsModule, NgxsModuleOptions, Store } from '@ngxs/store';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthLayoutComponent } from "./core/layouts/auth-layout/auth-layout.component";
 import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
-import { HttpClientModule } from "@angular/common/http";
-import { NgxsModule, NgxsModuleOptions, Store } from '@ngxs/store';
-import { GlobalErrorHandler } from "@app/common/helpers/global-error-handler";
-import { environment } from "@environments/environment";
-import { ThemeMenuComponent } from "@modules/themes/menus/theme-menu.component";
-import { DashboardComponent } from "@modules/dashboard/dashboard.component";
-import { DashboardCardComponent } from "@modules/dashboard/cards/dashboard-card.component";
-import { MaterialModule } from "@app/modules/share/material/material.module";
-import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
-import { WasteCalendarModule } from "@modules/waste-calendar/waste-calendar.module";
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from "@angular/material/core";
-import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from "@angular/material-date-fns-adapter";
-import { initTheme } from "@app/common/initializers/theme.initializer";
-import { initApplication } from "@app/common/initializers/app.initializer";
-import { ThemeState } from "@modules/themes/stores/theme-state";
-import { RecipesModule } from "@modules/recipes/recipes.module";
-import { RadioModule } from "@modules/radio/radio.module";
-import { ServiceWorkerModule } from "@angular/service-worker";
-import { AccountState } from "@account/store/account.state";
-import { AccountModule } from "@account/account.module";
-import { AppBarComponent } from "@app/core/components/app-bar/app-bar.component";
 
 const ngxsConfig: NgxsModuleOptions = {
   developmentMode: !environment.production,
@@ -81,22 +80,10 @@ const ngxsConfig: NgxsModuleOptions = {
   ],
   exports: [],
   providers: [
-    {
-      provide: DateAdapter,
-      useClass: DateFnsAdapter,
-      deps: [MAT_DATE_LOCALE],
-    },
+    {provide: DateAdapter, useClass: DateFnsAdapter, deps: [MAT_DATE_LOCALE]},
     {provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS},
-    {
-      provide: APP_INITIALIZER, useFactory: initApplication, multi: true, deps: [
-        Store
-      ]
-    },
-    {
-      provide: APP_INITIALIZER, useFactory: initTheme, multi: true, deps: [
-        Store
-      ]
-    },
+    {provide: APP_INITIALIZER, useFactory: initApplication, multi: true, deps: [Store]},
+    {provide: APP_INITIALIZER, useFactory: initTheme, multi: true, deps: [Store]},
     // {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: ErrorHandler, useClass: GlobalErrorHandler},
   ],
