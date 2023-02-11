@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {HTMLInputEvent} from "@modules/chat/chat-input/chat-input.component";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { HTMLInputEvent } from "@modules/chat/components/input/chat-input.component";
 
 @Component({
   selector: 'app-drag-drop-input',
