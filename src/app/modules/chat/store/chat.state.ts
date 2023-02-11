@@ -1,10 +1,12 @@
-import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { Injectable } from "@angular/core";
-import { catchError, map } from "rxjs/operators";
-import { asapScheduler, Observable, of, Subscription } from "rxjs";
+import { AlertService } from "@app/common/services/alert.service";
 import * as chatAction from "@modules/chat/store/chat.actions";
-import { Message } from "@modules/chat/models/message";
+import { Message, MessageResultDto } from "@modules/chat/store/chat.model";
 import { ChatService } from "@modules/chat/store/chat.service";
+import { createMessage } from "@modules/chat/store/chat.tools";
+import { Action, Selector, State, StateContext } from "@ngxs/store";
+import { asapScheduler, Observable, of, Subscription } from "rxjs";
+import { catchError, map } from "rxjs/operators";
 
 export interface ChatStateModel {
   messages: Message[];
@@ -38,8 +40,8 @@ export class ChatState {
     return state.messages;
   }
 
-  constructor(private service: ChatService) {
-  }
+  constructor(private service: ChatService,
+              private alertService: AlertService) { }
 
   //////////////////////////////////////////////////////////
   //          load chat
@@ -50,7 +52,7 @@ export class ChatState {
     ctx.patchState({loading: true});
     return this.service.loadChat()
       .pipe(
-        map((messages: Message[]) =>
+        map((messages: MessageResultDto[]) =>
           asapScheduler.schedule(() => {
               ctx.dispatch(new chatAction.LoadChatSuccess(messages))
             }
@@ -68,17 +70,17 @@ export class ChatState {
 
   @Action(chatAction.LoadChatSuccess)
   loadChatSuccess(ctx: StateContext<ChatStateModel>, action: chatAction.LoadChatSuccess): void {
-    for (const message of action.messages) {
-      if (message.images === undefined) {
-        message.images = [];
-      }
+    console.log('ChatState loadChatSuccess: ', action.messageDtos)
+    const messages: Message[] = [];
+    for (const dto of action.messageDtos) {
+      messages.push(createMessage(dto))
     }
-    ctx.patchState({messages: action.messages, loaded: true, loading: false});
+    ctx.patchState({messages: messages, loaded: true, loading: false});
   }
 
   @Action(chatAction.LoadChatFail)
-  loadChatFail(ctx: StateContext<ChatStateModel>, action: chatAction.LoadChatFail): void {
-    ctx.dispatch({loaded: false, loading: false});
+  loadChatFail(): void {
+    this.alertService.error('Load chat fail');
   }
 
   //////////////////////////////////////////////////////////
@@ -88,9 +90,9 @@ export class ChatState {
   @Action(chatAction.SendMessage)
   sendMessage(ctx: StateContext<ChatStateModel>, action: chatAction.SendMessage): Observable<Subscription> {
     ctx.patchState({sending: true});
-    return this.service.sendMessage(action.message)
+    return this.service.sendMessage(action.dto)
       .pipe(
-        map((message: Message) =>
+        map((message: MessageResultDto) =>
           asapScheduler.schedule(() => {
               ctx.dispatch(new chatAction.SendMessageSuccess(message))
               console.log(message)
@@ -100,7 +102,7 @@ export class ChatState {
         catchError(error =>
           of(
             asapScheduler.schedule(() =>
-              ctx.dispatch(new chatAction.LoadChatFail(error))
+              ctx.dispatch(new chatAction.SendMessageFail(error))
             )
           )
         )
@@ -111,19 +113,18 @@ export class ChatState {
   @Action(chatAction.SendMessageSuccess)
   sendMessageSuccess(ctx: StateContext<ChatStateModel>, action: chatAction.SendMessageSuccess): void {
     const state = ctx.getState();
+    const message = createMessage(action.dto);
     ctx.patchState({
       messages: [
         ...state.messages,
-        action.message,
+        message,
       ], loaded: true, loading: false
     });
   }
 
   @Action(chatAction.SendMessageFail)
-  sendMessageFail({dispatch}: StateContext<ChatStateModel>, action: chatAction.SendMessageFail): void {
-    // TODO handle error!
-    console.log(action.error)
-    dispatch({loaded: false, loading: false});
+  sendMessageFail(): void {
+    this.alertService.error('Send message fail');
   }
 
   //////////////////////////////////////////////////////////

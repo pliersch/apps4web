@@ -1,0 +1,46 @@
+export interface Message {
+  id: string;
+  userId: string;
+  userFirstName: string;
+  userLastName: string;
+  // chatId: string;
+  text: string;
+  pictureUrls: string[];
+  date: Date;
+}
+
+export interface ChatImage {
+  comment: string;
+  images?: File[];
+}
+
+export interface Emoji {
+  key: string;
+  value: string;
+}
+
+//////////////////////////////////////////////////////////
+//                   dto
+//////////////////////////////////////////////////////////
+
+export interface CreateMessageDto {
+  userId: string;
+  // chatId: string;
+  text: string;
+  pictures: File[];
+}
+
+interface UserIdentity {
+  id: string;
+  givenName: string;
+  lastName: string;
+}
+
+export interface MessageResultDto {
+  id: string;
+  user: UserIdentity;
+  // chatId: string;
+  text: string;
+  pictureUrls: string[];
+  created: Date;
+}

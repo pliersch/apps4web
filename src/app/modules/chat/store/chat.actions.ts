@@ -1,5 +1,5 @@
-import { Message } from "@modules/chat/models/message";
 import { HttpErrorResponse } from "@angular/common/http";
+import { CreateMessageDto, MessageResultDto } from "@modules/chat/store/chat.model";
 
 // loading chat
 
@@ -10,7 +10,7 @@ export class LoadChat {
 export class LoadChatSuccess {
   static readonly type = '[Chat] Load Chat Success';
 
-  constructor(public messages: Message[]) {
+  constructor(public messageDtos: MessageResultDto[]) {
   }
 }
 
@@ -26,14 +26,14 @@ export class LoadChatFail {
 export class SendMessage {
   static readonly type = '[Chat] Send Message';
 
-  constructor(public message: Message) {
+  constructor(public dto: CreateMessageDto) {
   }
 }
 
 export class SendMessageSuccess {
   static readonly type = '[Chat] Send Message Success';
 
-  constructor(public message: Message) {
+  constructor(public dto: MessageResultDto) {
   }
 }
 

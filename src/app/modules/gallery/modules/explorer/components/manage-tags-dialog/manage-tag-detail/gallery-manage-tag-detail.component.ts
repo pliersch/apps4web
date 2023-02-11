@@ -1,9 +1,9 @@
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { COMMA, ENTER } from '@angular/cdk/keycodes'; // FIXME obsolete, use KeyboardEvent.code
 import { Component, EventEmitter, Input, OnChanges, Output, Renderer2, SimpleChanges } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { TagGroup } from '@gallery/store/tags/tag.model';
 import { intersect } from "@app/common/util/array-utils";
+import { TagGroup } from '@gallery/store/tags/tag.model';
 
 export interface TagChanges {
   name: string;

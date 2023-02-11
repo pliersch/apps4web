@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Output} from '@angular/core';
-import {Emoji} from "@modules/chat/models/emoji";
+import { Component, EventEmitter, HostListener, Output } from '@angular/core';
+import { Emoji } from "@modules/chat/store/chat.model";
 
 export interface HTMLInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -22,6 +22,7 @@ export class ChatInputComponent {
 
   content = '';
   emojiPanel = false;
+  visible = false;
   fileName: string;
 
   emitMessage(): void {
@@ -41,6 +42,13 @@ export class ChatInputComponent {
     this.emojiPanel = !this.emojiPanel
   }
 
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent): void {
+    if (event.code === 'Enter' && event.ctrlKey) {
+      this.emitMessage();
+    }
+  }
+
   appendFile($event: Event): void {
     const e = <HTMLInputEvent>$event;
     if (e.target && e.target.files) {
@@ -55,8 +63,6 @@ export class ChatInputComponent {
   reset(): void {
     // this.$refs.form.reset()
   }
-
-  visible = false;
 
   toggleUpload(): void {
     this.toggleTmpEvent.emit(this.visible);

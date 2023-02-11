@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Emoji } from "@modules/chat/models/emoji";
 import emoji from "@assets/json/emoji.json";
+import { Emoji } from "@modules/chat/store/chat.model";
 
 @Component({
   selector: 'app-chat-emoji-picker',

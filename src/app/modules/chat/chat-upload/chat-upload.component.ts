@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Output} from '@angular/core';
-import {ChatImage} from "@modules/chat/models/chat-image";
+import { Component, EventEmitter, Output } from '@angular/core';
+import { ChatImage } from "@modules/chat/store/chat.model";
 
 @Component({
   selector: 'app-chat-upload',

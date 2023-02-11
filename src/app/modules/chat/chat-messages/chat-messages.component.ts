@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Message} from "@modules/chat/models/message";
-import {Observable} from "rxjs";
+import { User } from "@account/store/user.model";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Message } from "@modules/chat/store/chat.model";
+import { Observable } from "rxjs";
 
 @Component({
   selector: 'app-chat-messages',
@@ -9,15 +10,15 @@ import {Observable} from "rxjs";
 })
 export class ChatMessagesComponent implements OnInit {
 
-  @Output()
-  imageLoadEvent = new EventEmitter<never>();
+  @Input()
+  user: User;
   @Input()
   messages: Observable<Message[]>;
-
-  userName = 'User 16';
+  @Output()
+  imageLoadEvent = new EventEmitter<never>();
 
   ngOnInit(): void {
-    console.log('init', this.userName);
+    console.log('init User ', this.user.lastName);
   }
 
   onImageLoad($event: string): void {

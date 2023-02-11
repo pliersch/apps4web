@@ -1,18 +1,18 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { ChatToolbarComponent } from "@modules/chat/chat-toolbar/chat-toolbar.component";
-import { Select, Store } from "@ngxs/store";
-import { LoadChat, MessagesFilter, SendMessage } from "@modules/chat/store/chat.actions";
-import { Message } from "@modules/chat/models/message";
-import { randomIntFromInterval } from "@app/common/util/math.utils";
-import { Observable } from "rxjs";
-import { ChatState } from "@modules/chat/store/chat.state";
-import { ChatService } from "@modules/chat/store/chat.service";
+import { AccountState } from "@account/store/account.state";
+import { User } from "@account/store/user.model";
 // TODO extract to animation module?!
 import { animate, style, transition, trigger } from "@angular/animations";
 import { ViewportScroller } from "@angular/common";
-import { NgScrollbar } from "ngx-scrollbar";
-import { ChatImage } from "@modules/chat/models/chat-image";
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { EventBusService, EventData } from "@app/common/services/event-bus.service";
+import { ChatToolbarComponent } from "@modules/chat/chat-toolbar/chat-toolbar.component";
+import { LoadChat, MessagesFilter, SendMessage } from "@modules/chat/store/chat.actions";
+import { ChatImage, CreateMessageDto, Message } from "@modules/chat/store/chat.model";
+import { ChatService } from "@modules/chat/store/chat.service";
+import { ChatState } from "@modules/chat/store/chat.state";
+import { Select, Store } from "@ngxs/store";
+import { NgScrollbar } from "ngx-scrollbar";
+import { Observable, Subscription } from "rxjs";
 
 @Component({
   selector: 'app-chat',
@@ -32,18 +32,23 @@ import { EventBusService, EventData } from "@app/common/services/event-bus.servi
   ]
 })
 
-export class ChatComponent implements OnInit, AfterViewInit {
+export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  @Select(AccountState.getUser)
+  user$: Observable<User>;
+  user: User;
 
   // TODO same selector, why?
   @Select(ChatState.getMessages)
-  messages: Observable<Message[]>;
+  messages$: Observable<Message[]>;
 
   // TODO same selector, why?
   @Select(ChatState.getMessages)
-  filteredMessages: Observable<Message[]>;
+  filteredMessages$: Observable<Message[]>;
 
   private content = '';
   userFilter = '';
+  private subscription: Subscription;
 
   showPreview = false;
   fileList: FileList;
@@ -62,6 +67,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.store.dispatch(new LoadChat());
+    this.subscription = this.user$.subscribe(res => this.user = res);
     this.eventBus.emit(new EventData('current-module', ChatToolbarComponent));
     // this.totalChatHeight = this.$refs.chatContainer.scrollHeight
     // this.loading = false
@@ -77,9 +83,14 @@ export class ChatComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.messages.subscribe(messages => {
+    this.messages$.subscribe(messages => {
       this.scrollToEnd();
     })
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+    // this.actionBarService.removeActions();
   }
 
   filterByUser(filter: string): void {
@@ -92,7 +103,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
     // if (this.userFilter !== '') {
     //   return this.chatMessages.filter((msg) => msg.userName === this.userFilter)
     // }
-    return this.messages;
+    return this.messages$;
   }
 
   onScroll($event: Event): void {
@@ -148,16 +159,12 @@ export class ChatComponent implements OnInit, AfterViewInit {
     // this.scrollToEnd()
   }
 
-  sendMessage(content: string, imageFiles?: File[]): void {
-    let user = 'User ' + randomIntFromInterval(1, 20);
-    const msg = {
-      userId: /*this.username*/ user,
-      userName: /*this.username*/ user,
+  sendMessage(content: string, pictures?: File[]): void {
+    const msg: CreateMessageDto = {
+      userId: this.user.id,
+      // chatId: this.name,
       text: content,
-      images: [],
-      files: imageFiles || [],
-      date: new Date().toString(),
-      chatID: /*this.name*/ 'chat'
+      pictures: pictures || [],
     }
     // if (file) {
     //   msg.image = file

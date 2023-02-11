@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { Message } from "@modules/chat/models/message";
+import { Injectable } from '@angular/core';
 import { environment } from "@environments/environment";
+import { CreateMessageDto, Message, MessageResultDto } from "@modules/chat/store/chat.model";
 import { Observable } from "rxjs";
 
 const BASE_URL = `${environment.apiUrl}/chat`;
@@ -12,11 +12,11 @@ export class ChatService {
   constructor(private http: HttpClient) {
   }
 
-  sendMessage(msg: Message): Observable<Message> {
-    if (msg.files) {
-      this.sendImages(msg.files)
+  sendMessage(msg: CreateMessageDto): Observable<MessageResultDto> {
+    if (msg.pictures) {
+      this.sendImages(msg.pictures)
     }
-    return this.http.post<Message>(BASE_URL, msg);
+    return this.http.post<MessageResultDto>(BASE_URL, msg);
   }
 
   sendImages(images: File[]): Observable<Message> {
@@ -25,7 +25,7 @@ export class ChatService {
     return this.http.post<Message>(BASE_URL + '/file', formData);
   }
 
-  loadChat(chatName?: string): Observable<Message[]> {
-    return this.http.get<Message[]>(BASE_URL);
+  loadChat(chatName?: string): Observable<MessageResultDto[]> {
+    return this.http.get<MessageResultDto[]>(BASE_URL);
   }
 }

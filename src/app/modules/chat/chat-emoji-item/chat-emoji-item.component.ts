@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Emoji} from "@modules/chat/models/emoji";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Emoji } from "@modules/chat/store/chat.model";
 
 @Component({
   selector: 'app-chat-emoji-item',
@@ -10,9 +10,6 @@ export class ChatEmojiItemComponent {
 
   @Input() emoji!: Emoji;
   @Output() clickEvent = new EventEmitter<Emoji>();
-
-  constructor() {
-  }
 
   onEmojiClick() {
     this.clickEvent.emit(this.emoji);

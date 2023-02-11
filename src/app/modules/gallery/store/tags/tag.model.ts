@@ -7,7 +7,7 @@ export interface TagGroup {
 
 export interface Tag {
   id: string;
-  tagGroupId?: string; // todo don't need in frontend?!
+  // tagGroupId?: string;
   name: string;
 }
 

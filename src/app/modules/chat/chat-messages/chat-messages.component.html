@@ -1,10 +1,11 @@
 <div class="message" *ngFor="let message of messages | async; let i=index"
-     [class.own]="message.userId === userName">
-  <div class="username" *ngIf="message.userId !== userName">{{ message.userId }}</div>
+     [class.own]="message.userId === user.id">
+  <div class="username" *ngIf="message.userId !== user.id">{{ message.userFirstName + ' ' + message.userLastName}}</div>
   <div class="content">
     <div>{{ message.text }}</div>
-    <app-chat-image-item *ngIf="message.images[0]" [src]="message.images[0]"
-                         (imageLoadEvent)="onImageLoad($event)"></app-chat-image-item>
+
+    <!--    <app-chat-image-item *ngIf="message.pictures[0]" [src]="message.pictures[0]"-->
+    <!--                         (imageLoadEvent)="onImageLoad($event)"></app-chat-image-item>-->
   </div>
 </div>
 
