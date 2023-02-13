@@ -4,9 +4,8 @@ import { User } from "@account/store/user.model";
 import { animate, style, transition, trigger } from "@angular/animations";
 import { ViewportScroller } from "@angular/common";
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { EventBusService, EventData } from "@app/common/services/event-bus.service";
-import { ChatToolbarComponent } from "@modules/chat/chat-toolbar/chat-toolbar.component";
-import { LoadChat, MessagesFilter, SendMessage } from "@modules/chat/store/chat.actions";
+import { ChatToolbarComponent } from "@modules/chat/components/toolbar/chat-toolbar.component";
+import { MessagesFilter, SendMessage } from "@modules/chat/store/chat.actions";
 import { ChatImage, CreateMessageDto, Message } from "@modules/chat/store/chat.model";
 import { ChatService } from "@modules/chat/store/chat.service";
 import { ChatState } from "@modules/chat/store/chat.state";
@@ -59,27 +58,20 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(NgScrollbar)
   scrollbarRef: NgScrollbar;
 
-  constructor(private eventBus: EventBusService,
-              private chatService: ChatService,
+  constructor(private chatService: ChatService,
               private scroller: ViewportScroller,
               private store: Store) {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new LoadChat());
     this.subscription = this.user$.subscribe(res => this.user = res);
-    this.eventBus.emit(new EventData('current-module', ChatToolbarComponent));
+    // this.eventBus.emit(new EventData('current-module', ChatToolbarComponent));
     // this.totalChatHeight = this.$refs.chatContainer.scrollHeight
     // this.loading = false
 
     // messages.forEach((msg: Message) => {
     //     this.onNewMessageAdded(msg)
     //   })
-
-    // TODO use eventTypes const's
-    this.eventBus.on('chat_message', (msg: Observable<Message>) => {
-      // this.onNewMessageAdded(msg);
-    })
   }
 
   ngAfterViewInit(): void {

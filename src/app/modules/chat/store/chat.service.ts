@@ -9,8 +9,7 @@ const BASE_URL = `${environment.apiUrl}/chat`;
 @Injectable()
 export class ChatService {
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
   sendMessage(msg: CreateMessageDto): Observable<MessageResultDto> {
     if (msg.pictures) {
@@ -25,7 +24,13 @@ export class ChatService {
     return this.http.post<Message>(BASE_URL + '/file', formData);
   }
 
-  loadChat(chatName?: string): Observable<MessageResultDto[]> {
-    return this.http.get<MessageResultDto[]>(BASE_URL);
+  loadChat(chatId: string, from: number, take: number): Observable<MessageResultDto[]> {
+    return this.http.get<MessageResultDto[]>(BASE_URL, {
+      params: {
+        chatId: chatId,
+        from: from,
+        take: take,
+      }
+    });
   }
 }

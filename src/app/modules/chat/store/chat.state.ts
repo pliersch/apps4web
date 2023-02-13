@@ -50,7 +50,7 @@ export class ChatState {
   @Action(chatAction.LoadChat)
   loadChat(ctx: StateContext<ChatStateModel>, action: chatAction.LoadChat): Observable<Subscription> {
     ctx.patchState({loading: true});
-    return this.service.loadChat()
+    return this.service.loadChat('not_impl', ctx.getState().messages.length - 1, 0)
       .pipe(
         map((messages: MessageResultDto[]) =>
           asapScheduler.schedule(() => {

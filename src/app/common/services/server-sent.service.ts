@@ -4,6 +4,7 @@ export class PushMessageEvent {
   static PHOTOS_ADDED = 'photos_added'
   static PHOTOS_CHANGED = 'photos_changed'
   static TAGS_CHANGED = 'tags_changed'
+  static MESSAGE_ADDED = 'message_added'
   type: string;
 }
 
@@ -23,6 +24,7 @@ export class ServerSentService {
 
   private listeners: ServerPushListener[] = [];
 
+  // todo move to public method for setup by 'listener'
   constructor() {
     const photoEventSource = new EventSource('http://localhost:3000/photos/sse');
     photoEventSource.onmessage = (event: MessageEvent): void => {
@@ -30,6 +32,11 @@ export class ServerSentService {
     }
     const tagEventSource = new EventSource('http://localhost:3000/tags/sse');
     tagEventSource.onmessage = (event: MessageEvent): void => {
+      this.handleServerSent(event)
+    }
+    const chatEventSource = new EventSource('http://localhost:3000/chat/sse');
+    chatEventSource.onmessage = (event: MessageEvent): void => {
+      console.log('ServerSentService onmessage: ', event)
       this.handleServerSent(event)
     }
   }

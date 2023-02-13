@@ -5,6 +5,9 @@ import { CreateMessageDto, MessageResultDto } from "@modules/chat/store/chat.mod
 
 export class LoadChat {
   static readonly type = '[Chat] Load Chat';
+
+  constructor(public count?: number,
+              public from?: number) { }
 }
 
 export class LoadChatSuccess {
