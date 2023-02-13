@@ -6,7 +6,7 @@ export function createMessage(dto: MessageResultDto): Message {
     id: dto.id,
     userId: dto.user.id,
     userFirstName: dto.user.givenName,
-    userLastName: dto.user.lastName,
+    userLastName: dto.user.surName,
     date: dto.created,
     text: dto.text,
     pictureUrls: pictures,

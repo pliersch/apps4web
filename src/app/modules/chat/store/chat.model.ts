@@ -33,7 +33,7 @@ export interface CreateMessageDto {
 interface UserIdentity {
   id: string;
   givenName: string;
-  lastName: string;
+  surName: string;
 }
 
 export interface MessageResultDto {

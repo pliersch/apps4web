@@ -18,12 +18,10 @@ export class ChatResolver implements PushMessageListener, Resolve<boolean> {
   constructor(private store: Store,
               private pushService: ServerSentService,
               private router: Router) {
-    console.log('ChatResolver constructor: ',)
     this.pushService.addListener(PushMessageEvent.MESSAGE_ADDED, this);
   }
 
   resolve(): Observable<boolean> {
-    console.log('ChatResolver resolve: ', this.initialized)
     if (!this.initialized) {
       this.initStore();
     } else {
@@ -36,7 +34,6 @@ export class ChatResolver implements PushMessageListener, Resolve<boolean> {
     this.store.select(AccountState.getUser).pipe(
       filter((user) => user.id != 'not set')
     ).subscribe((user) => {
-      console.log('ChatResolver load chat: ',)
       this.store.dispatch(new LoadChat())
     })
     this.initialized = true;

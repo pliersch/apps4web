@@ -20,5 +20,4 @@ export class ChatMessagesComponent {
   onImageLoad($event: string): void {
     console.log('image load', $event);
   }
-
 }

@@ -1,7 +1,16 @@
 <div *ngFor="let message of messages | async"
      class="message" [class.own]="message.userId === user.id">
-  <div class="username" *ngIf="message.userId !== user.id">
-    {{ message.userFirstName + ' ' + message.userLastName}}</div>
+
+  <ng-template [ngIf]="message.userId !== user.id" [ngIfElse]="userMessage">
+    <div class="username">
+      {{ message.userFirstName + ' ' + message.userLastName + ' ' + (message.date | date:'medium') }}</div>
+  </ng-template>
+
+  <ng-template #userMessage>
+    <div class="username">
+      {{ (message.date | date:'medium') }}</div>
+  </ng-template>
+
   <div class="content">
     <div>{{ message.text }}</div>
 
@@ -10,4 +19,3 @@
       (imageLoadEvent)="onImageLoad($event)"></app-chat-image-item>
   </div>
 </div>
-

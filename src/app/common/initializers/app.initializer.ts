@@ -1,6 +1,4 @@
-import { filter, take } from 'rxjs/operators';
 import { Store } from "@ngxs/store";
-import { LoadUsers } from "@modules/admin/modules/user/store/user.actions";
 
 export function initApplication(store: Store,
                                 /*userService: UserService*/): () => Promise<unknown> {
@@ -39,12 +37,3 @@ export function initApplication(store: Store,
   });
 }
 
-// function createUserByAuth(authUser: SocialUser): User {
-//   return new User(
-//     'authUser-authorizationCode',
-//     'no title',
-//     authUser.firstName,
-//     authUser.lastName,
-//     authUser.email,
-//     'admin');
-// }
