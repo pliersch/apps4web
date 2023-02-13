@@ -10,6 +10,7 @@ import { ShareModule } from "@modules/share/share.module";
 import { AccountService } from "@account/services/account.service";
 import { SigninComponent } from "@account/components/google-signin/signin.component";
 import { AccountInfoComponent } from './components/account-info/account-info.component';
+import { HiddenLoginComponent } from './components/hidden-login/hidden-login.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { AccountInfoComponent } from './components/account-info/account-info.com
   declarations: [
     LayoutComponent,
     SigninComponent,
-    AccountInfoComponent
+    AccountInfoComponent,
+    HiddenLoginComponent
   ],
   exports: [
     SigninComponent

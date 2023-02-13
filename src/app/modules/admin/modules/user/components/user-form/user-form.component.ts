@@ -1,6 +1,6 @@
+import { User } from "@account/store/user.model";
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators } from "@angular/forms";
-import { User } from "@account/store/user.model";
 import { getValuesOfEnum } from "@app/common/util/enum-utils";
 import { Role } from "@modules/admin/modules/user/store/role";
 import { Status } from "@modules/admin/modules/user/store/status";
@@ -68,7 +68,7 @@ export class UserFormComponent implements OnInit, OnChanges {
     if (user) {
       this.form.setValue({
         givenName: user.givenName,
-        lastName: user.lastName,
+        lastName: user.surName,
         email: user.email,
         role: Role[user.role],
         status: Status[user.status]
@@ -93,8 +93,8 @@ export class UserFormComponent implements OnInit, OnChanges {
     if (after.givenName == before.givenName) {
       delete after.givenName;
     }
-    if (after.lastName == before.lastName) {
-      delete after.lastName;
+    if (after.surName == before.surName) {
+      delete after.surName;
     }
     if (after.email == before.email) {
       delete after.email;
@@ -115,7 +115,7 @@ export class UserFormComponent implements OnInit, OnChanges {
 
     return {
       givenName: controls.givenName.value!,
-      lastName: controls.lastName.value!,
+      surName: controls.lastName.value!,
       email: controls.email.value!,
       role: Role[roleString as keyof typeof Role],
       status: Status[statusString as keyof typeof Status],

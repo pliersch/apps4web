@@ -1,10 +1,10 @@
-import { Status } from "@modules/admin/modules/user/store/status";
 import { Role } from "@modules/admin/modules/user/store/role";
+import { Status } from "@modules/admin/modules/user/store/status";
 
 export interface User {
   id: string,
   givenName: string,
-  lastName: string,
+  surName: string,
   email: string,
   role: Role,
   status: Status;
@@ -14,7 +14,7 @@ export interface User {
 
 export interface CreateUserDto {
   givenName: string,
-  lastName: string,
+  surName: string,
   email: string,
   role: Role,
   status: Status;

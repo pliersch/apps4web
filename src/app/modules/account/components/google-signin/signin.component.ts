@@ -1,15 +1,11 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { SigninWithGoogle, SigninWithGoogleFail, SignoutWithGoogle } from "@account/store/account.actions";
+import { AccountState } from "@account/store/account.state";
 import { GoogleUser } from "@account/store/google-user.model";
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { Select, Store } from "@ngxs/store";
+import { CredentialResponse } from "google-one-tap";
 import { Observable } from "rxjs";
-import {
-  SigninWithGoogle,
-  SigninWithGoogleFail,
-  SignoutWithGoogle
-} from "@account/store/signin.actions";
-import { /*accounts,*/ CredentialResponse } from "google-one-tap";
-import { AccountState } from "@account/store/account.state";
 
 @Component({
   // standalone: true,
