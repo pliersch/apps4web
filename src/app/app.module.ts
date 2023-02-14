@@ -43,6 +43,13 @@ const ngxsConfig: NgxsModuleOptions = {
   // executionStrategy: NoopNgxsExecutionStrategy
 };
 
+// const config: SocketIoConfig = {
+//   url: environment.socketUrl, // socket server url;
+//   options: {
+//     transports: ['websocket']
+//   }
+// }
+
 @NgModule({
   declarations: [
     DefaultLayoutComponent,
@@ -64,6 +71,7 @@ const ngxsConfig: NgxsModuleOptions = {
     // NgScrollbarModule,
     MaterialModule,
     // AuthModule,
+    //SocketIoModule.forRoot(config),
     NgxsModule.forRoot([ThemeState, AccountState], ngxsConfig),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     // NgxsLoggerPluginModule.forRoot(),
