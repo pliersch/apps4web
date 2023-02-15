@@ -1,4 +1,11 @@
-<mat-toolbar dense="dense">
-  <button mat-button (click)="onUserSelect()">Filter User
-  </button>
+<mat-toolbar>
+  <mat-form-field appearance="fill">
+    <mat-label>filter by user</mat-label>
+    <mat-select [(value)]="selected" (selectionChange)='onChangeSelection()'>
+      <mat-option>X</mat-option>
+      <mat-option *ngFor='let identity of userIdentities$ | async' [value]='identity'>
+        {{identity.givenName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </mat-toolbar>

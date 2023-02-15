@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
 
-export class PushMessageEvent {
+export class PushMessageEvent<T> {
   static PHOTOS_ADDED = 'photos_added'
   static PHOTOS_CHANGED = 'photos_changed'
   static TAGS_CHANGED = 'tags_changed'
   static MESSAGE_ADDED = 'message_added'
   type: string;
-  payload: any;
+  payload: T | undefined;
 
 
-  constructor(type: string, payload?: any) {
+  constructor(type: string, payload?: T) {
     this.type = type;
     this.payload = payload;
   }
 }
 
 export interface PushMessageListener {
-  onServerPushMessage(event: PushMessageEvent): void
+  onServerPushMessage(event: PushMessageEvent<never>): void
 }
 
 interface ServerPushListener {
@@ -48,13 +48,13 @@ export class ServerSentService {
   }
 
   private handleServerSent(event: MessageEvent): void {
-    const message: PushMessageEvent = JSON.parse(event.data);
+    const message: PushMessageEvent<never> = JSON.parse(event.data);
     if ('type' in message) {
       this.emit(message);
     }
   }
 
-  private emit(event: PushMessageEvent): void {
+  private emit(event: PushMessageEvent<never>): void {
     this.listeners.forEach((listener) => {
       if (listener.type === event.type) {
         listener.handler.onServerPushMessage(event);

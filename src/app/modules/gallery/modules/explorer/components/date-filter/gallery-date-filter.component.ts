@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Select, Store } from "@ngxs/store";
-import { PhotoState } from "@gallery/store/photos/photo.state";
-import { Observable } from "rxjs";
-import { SetFromYearFilter, SetToYearFilter } from "@gallery/store/photos/photo.actions";
 import { MatSelectChange } from "@angular/material/select";
+import { SetFromYearFilter, SetToYearFilter } from "@gallery/store/photos/photo.actions";
 import { Photo } from "@gallery/store/photos/photo.model";
+import { PhotoState } from "@gallery/store/photos/photo.state";
+import { Select, Store } from "@ngxs/store";
+import { Observable } from "rxjs";
 
 @Component({
   selector: 'app-gallery-date-filter',
@@ -15,7 +15,6 @@ export class GalleryDateFilterComponent implements OnInit {
 
   @Select(PhotoState.getPhotosByTagsAndRating)
   photos$: Observable<Photo[]>;
-  years: number[];
 
   @Select(PhotoState.getFilterFrom)
   yearFrom$: Observable<number>;
@@ -23,6 +22,7 @@ export class GalleryDateFilterComponent implements OnInit {
   @Select(PhotoState.getFilterTo)
   yearTo$: Observable<number>;
 
+  years: number[];
   selectedFrom = '';
   selectedTo = '';
 

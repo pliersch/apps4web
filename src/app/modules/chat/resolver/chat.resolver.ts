@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, Router } from '@angular/router';
 import { PushMessageEvent, PushMessageListener, ServerSentService } from "@app/common/services/server-sent.service";
 import { AddMessage, LoadChat } from "@modules/chat/store/chat.actions";
+import { MessageResultDto } from "@modules/chat/store/chat.model";
 import { Store } from "@ngxs/store";
 import { Observable, of } from 'rxjs';
 import { filter } from "rxjs/operators";
@@ -42,10 +43,10 @@ export class ChatResolver implements PushMessageListener, Resolve<boolean> {
     this.initialized = true;
   }
 
-  onServerPushMessage(event: PushMessageEvent): void {
+  onServerPushMessage(event: PushMessageEvent<MessageResultDto>): void {
     if (event.type === PushMessageEvent.MESSAGE_ADDED) {
-      if (this.router.url === '/chat' && event.payload.user.id != this.user.id) {
-        this.store.dispatch(new AddMessage(event.payload));
+      if (this.router.url === '/chat' && event.payload!.user.id != this.user.id) {
+        this.store.dispatch(new AddMessage(event.payload!));
       } else {
         this.messagesAdded = true;
       }

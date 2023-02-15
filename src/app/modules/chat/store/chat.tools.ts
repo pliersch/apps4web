@@ -1,4 +1,4 @@
-import { Message, MessageResultDto } from "@modules/chat/store/chat.model";
+import { Message, MessageResultDto, UserIdentity } from "@modules/chat/store/chat.model";
 
 export function createMessage(dto: MessageResultDto): Message {
   const pictures = dto.pictureUrls ? dto.pictureUrls : [];
@@ -11,4 +11,12 @@ export function createMessage(dto: MessageResultDto): Message {
     text: dto.text,
     pictureUrls: pictures,
   }
+}
+
+export function addToUserIdentities(identities: UserIdentity[], dto: MessageResultDto): UserIdentity[] {
+  const id = dto.user.id;
+  if (!identities.find(identity => identity.id === id)) {
+    identities.push(dto.user)
+  }
+  return identities;
 }

@@ -6,7 +6,7 @@ import { ViewportScroller } from "@angular/common";
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ChatToolbarComponent } from "@modules/chat/components/toolbar/chat-toolbar.component";
 import { MessagesFilter, SendMessage } from "@modules/chat/store/chat.actions";
-import { ChatImage, CreateMessageDto, Message } from "@modules/chat/store/chat.model";
+import { ChatImage, CreateMessageDto, Message, UserIdentity } from "@modules/chat/store/chat.model";
 import { ChatService } from "@modules/chat/store/chat.service";
 import { ChatState } from "@modules/chat/store/chat.state";
 import { Select, Store } from "@ngxs/store";
@@ -37,13 +37,12 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   user$: Observable<User>;
   user: User;
 
-  // TODO same selector, why?
   @Select(ChatState.getMessages)
   messages$: Observable<Message[]>;
+// messages:Message[];
 
-  // TODO same selector, why?
-  @Select(ChatState.getMessages)
-  filteredMessages$: Observable<Message[]>;
+  @Select(ChatState.getUserIdentities)
+  userIdentities$: Observable<UserIdentity[]>;
 
   private content = '';
   private subscription: Subscription;
@@ -66,6 +65,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription = this.user$.subscribe(res => this.user = res);
+    // this.subscription.add(this.messages$.subscribe(res => this.messages = res));
 
     // this.eventBus.emit(new EventData('current-module', ChatToolbarComponent));
     // this.totalChatHeight = this.$refs.chatContainer.scrollHeight
@@ -98,10 +98,6 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
     //   return this.chatMessages.filter((msg) => msg.userName === this.userFilter)
     // }
     return this.messages$;
-  }
-
-  onScroll($event: Event): void {
-    console.log("scroll", $event)
   }
 
   scrollToEnd(): void {

@@ -1,4 +1,6 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { UserIdentity } from "@modules/chat/store/chat.model";
+import { Observable } from "rxjs";
 
 @Component({
   selector: 'app-chat-toolbar',
@@ -9,18 +11,25 @@ export class ChatToolbarComponent {
 
   private toggle = false;
 
+  @Input()
+  userIdentities$: Observable<UserIdentity[]>
+
   @Output()
   filterUserEvent = new EventEmitter<string>();
 
-  constructor() {
-  }
+  selected: UserIdentity;
 
-  onUserSelect(): void {
+  onClickFilter(): void {
     if (this.toggle) {
       this.filterUserEvent.emit('User 10');
     } else {
       this.filterUserEvent.emit(undefined);
     }
     this.toggle = !this.toggle;
+  }
+
+  onChangeSelection(): void {
+    const id = this.selected ? this.selected.id : undefined;
+    this.filterUserEvent.emit(id);
   }
 }

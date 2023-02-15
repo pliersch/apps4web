@@ -38,7 +38,8 @@ export class GalleryResolver implements PushMessageListener, Resolve<boolean> {
       .subscribe();
   }
 
-  onServerPushMessage(event: PushMessageEvent): void {
+  // current changes will handle when re-open gallery
+  onServerPushMessage(event: PushMessageEvent<any>): void {
     switch (event.type) {
       case PushMessageEvent.PHOTOS_ADDED:
         this.photosAdded = true;
