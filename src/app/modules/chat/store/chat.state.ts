@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { AlertService } from "@app/common/services/alert.service";
+import { CHAT_CONSTANTS } from "@modules/chat/const";
 import * as chatAction from "@modules/chat/store/chat.actions";
 import { Message, MessageResultDto } from "@modules/chat/store/chat.model";
 import { ChatService } from "@modules/chat/store/chat.service";
@@ -45,7 +46,9 @@ export class ChatState {
 
   @Action(chatAction.LoadChat)
   loadChat(ctx: StateContext<ChatStateModel>, action: chatAction.LoadChat): Observable<Subscription> {
-    return this.service.loadChat('not_impl', ctx.getState().messages.length - 1, 0)
+    const length = ctx.getState().messages.length;
+    const from = length > 0 ? length : 0;
+    return this.service.loadChat('not_impl', from, CHAT_CONSTANTS.MESSAGE_LOAD_COUNT)
       .pipe(
         map((messages: MessageResultDto[]) =>
           asapScheduler.schedule(() => {
@@ -66,11 +69,17 @@ export class ChatState {
   @Action(chatAction.LoadChatSuccess)
   loadChatSuccess(ctx: StateContext<ChatStateModel>, action: chatAction.LoadChatSuccess): void {
     console.log('ChatState loadChatSuccess: ', action.messageDtos)
+    const state = ctx.getState();
     const messages: Message[] = [];
     for (const dto of action.messageDtos) {
       messages.push(createMessage(dto))
     }
-    ctx.patchState({messages: messages});
+    ctx.patchState({
+      messages: [
+        ...state.messages,
+        ...messages,
+      ]
+    });
   }
 
   @Action(chatAction.LoadChatFail)
