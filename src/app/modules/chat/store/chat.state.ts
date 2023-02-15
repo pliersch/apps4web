@@ -11,8 +11,6 @@ import { catchError, map } from "rxjs/operators";
 export interface ChatStateModel {
   messages: Message[];
   filter: string | undefined;
-  loading: boolean;
-  loaded: boolean;
   sending: boolean;
   sent: boolean;
 }
@@ -22,8 +20,6 @@ export interface ChatStateModel {
   defaults: {
     messages: [],
     filter: undefined,
-    loaded: false,
-    loading: false,
     sending: false,
     sent: false,
   }
@@ -49,7 +45,6 @@ export class ChatState {
 
   @Action(chatAction.LoadChat)
   loadChat(ctx: StateContext<ChatStateModel>, action: chatAction.LoadChat): Observable<Subscription> {
-    ctx.patchState({loading: true});
     return this.service.loadChat('not_impl', ctx.getState().messages.length - 1, 0)
       .pipe(
         map((messages: MessageResultDto[]) =>
@@ -75,7 +70,7 @@ export class ChatState {
     for (const dto of action.messageDtos) {
       messages.push(createMessage(dto))
     }
-    ctx.patchState({messages: messages, loaded: true, loading: false});
+    ctx.patchState({messages: messages});
   }
 
   @Action(chatAction.LoadChatFail)
@@ -118,13 +113,29 @@ export class ChatState {
       messages: [
         ...state.messages,
         message,
-      ], loaded: true, loading: false
+      ]
     });
   }
 
   @Action(chatAction.SendMessageFail)
   sendMessageFail(): void {
     this.alertService.error('Send message fail');
+  }
+
+  //////////////////////////////////////////////////////////
+  //                   add message
+  //////////////////////////////////////////////////////////
+  // via server-sent (duplicated, like 'sendMessageSuccess')
+  @Action(chatAction.AddMessage)
+  addMessage(ctx: StateContext<ChatStateModel>, action: chatAction.AddMessage): void {
+    const state = ctx.getState();
+    const message = createMessage(action.dto);
+    ctx.patchState({
+      messages: [
+        ...state.messages,
+        message,
+      ]
+    });
   }
 
   //////////////////////////////////////////////////////////

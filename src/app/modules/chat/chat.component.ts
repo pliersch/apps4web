@@ -46,9 +46,9 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   filteredMessages$: Observable<Message[]>;
 
   private content = '';
-  userFilter = '';
   private subscription: Subscription;
 
+  userFilter = '';
   showPreview = false;
   fileList: FileList;
 
@@ -59,12 +59,14 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   scrollbarRef: NgScrollbar;
 
   constructor(private chatService: ChatService,
+              /*private socketService: SocketService,*/
               private scroller: ViewportScroller,
               private store: Store) {
   }
 
   ngOnInit(): void {
     this.subscription = this.user$.subscribe(res => this.user = res);
+
     // this.eventBus.emit(new EventData('current-module', ChatToolbarComponent));
     // this.totalChatHeight = this.$refs.chatContainer.scrollHeight
     // this.loading = false
@@ -165,6 +167,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.chatService.sendMessage(msg).subscribe(res => {
     //   console.log('ChatComponent : ', res)
     // });
+    // this.socketService.sendMessage(msg)
     this.store.dispatch(new SendMessage(msg))
   }
 

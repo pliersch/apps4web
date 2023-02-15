@@ -47,6 +47,15 @@ export class SendMessageFail {
   }
 }
 
+// add message
+
+export class AddMessage {
+  static readonly type = '[Chat] Add Message';
+
+  constructor(public dto: MessageResultDto) {
+  }
+}
+
 // filter messages
 
 export class MessagesFilter {

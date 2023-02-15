@@ -6,6 +6,13 @@ export class PushMessageEvent {
   static TAGS_CHANGED = 'tags_changed'
   static MESSAGE_ADDED = 'message_added'
   type: string;
+  payload: any;
+
+
+  constructor(type: string, payload?: any) {
+    this.type = type;
+    this.payload = payload;
+  }
 }
 
 export interface PushMessageListener {
@@ -36,7 +43,6 @@ export class ServerSentService {
     }
     const chatEventSource = new EventSource('http://localhost:3000/chat/sse');
     chatEventSource.onmessage = (event: MessageEvent): void => {
-      console.log('ServerSentService onmessage: ', event)
       this.handleServerSent(event)
     }
   }
