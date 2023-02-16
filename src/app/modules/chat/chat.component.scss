@@ -14,16 +14,12 @@
 }
 
 .chat-container {
-  //position: relative;
-  //box-sizing: border-box;
+  position: relative;
   padding: 10px;
-  //overflow-y: auto;
   grid-area: messages;
 }
 
 .input {
-  /*margin: 6px;*/
-  //background-color: var(--v-background_primary-lighten2);
   grid-area: input;
 }
 
@@ -42,13 +38,13 @@
   background-color: #8ca0ff;
 }
 
-.preview-container {
-  //position: absolute;
-  /*height: 60vh;*/
-  //max-width: 60vw;
-  //bottom: 0;
-  //background-color: #8ca0ff;
-  //z-index: 2;
+.upload-container {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 90%;
 }
 
 .fade-enter-active,

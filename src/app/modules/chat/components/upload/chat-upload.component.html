@@ -1,20 +1,8 @@
 <mat-card class="upload-preview">
-  <!--  <mat-toolbar>-->
-  <!--    <span>Vorschau</span>-->
-  <!--    <span class="spacer"></span>-->
-  <!--    <button mat-icon-button (click)="closePreview()">-->
-  <!--      <mat-icon>close</mat-icon>-->
-  <!--    </button>-->
-  <!--  </mat-toolbar>-->
   <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title>Shiba Inu</mat-card-title>
-    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+    <mat-card-title>Upload</mat-card-title>
+    <mat-card-subtitle>add pictures</mat-card-subtitle>
   </mat-card-header>
-
-  <!--  <div *ngFor="let image of images">-->
-  <!--    <img mat-card-image [src]="image">-->
-  <!--  </div>-->
 
   <div class="thumbnail-list">
     <div class="thumbnail-item item" *ngFor="let image of images; let i = index"
@@ -30,7 +18,7 @@
   </mat-card-content>
   <mat-card-actions>
     <button mat-icon-button (click)="onUploadClicked()"
-            aria-label="Example icon-button with menu icon">
+            aria-label="button to execute uploading files">
       <mat-icon>send</mat-icon>
     </button>
   </mat-card-actions>

@@ -65,7 +65,7 @@ export class ChatInputComponent {
   }
 
   toggleUpload(): void {
-    this.toggleTmpEvent.emit(this.visible);
     this.visible = !this.visible;
+    this.toggleTmpEvent.emit(this.visible);
   }
 }

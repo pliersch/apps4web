@@ -9,13 +9,14 @@
         <app-chat-messages
           [user]="user" [messages]="messages$" (imageLoadEvent)="scrollToEnd()"></app-chat-messages>
       </ng-scrollbar>
-      <app-chat-upload
-        class="preview-container" *ngIf="showPreview" @show (closeUploadEvent)="onUploadClose()"
-        (previewMountedEvent)="onPreviewMounted($event)"
-        (uploadEvent)="onUploadFile($event)"></app-chat-upload>
     </div>
+    <app-chat-upload
+      class="upload-container" *ngIf="showPreview" @show (closeUploadEvent)="onUploadClose()"
+      (previewMountedEvent)="onPreviewMounted($event)"
+      (uploadEvent)="onUploadFile($event)"></app-chat-upload>
   </div>
   <app-chat-input
     class="input" (messageEvent)="sendMessage($event)" (toggleTmpEvent)="toggleTmp($event)"
     (fileChangeEvent)="onFileInputChange($event)"></app-chat-input>
 </div>
+

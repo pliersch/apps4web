@@ -93,13 +93,6 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
     this.scrollToEnd()
   }
 
-  filterMessages(): Observable<Message[]> {
-    // if (this.userFilter !== '') {
-    //   return this.chatMessages.filter((msg) => msg.userName === this.userFilter)
-    // }
-    return this.messages$;
-  }
-
   scrollToEnd(): void {
     void this.scrollbarRef.scrollTo({bottom: 0, end: 0, duration: 300});
     // this.$nextTick(() => {
@@ -215,6 +208,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   toggleTmp($event: boolean): void {
+    console.log('ChatComponent toggleTmp: ', $event)
     this.showPreview = $event;
   }
 
