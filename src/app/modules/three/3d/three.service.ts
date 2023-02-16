@@ -1,8 +1,8 @@
-import * as THREE from 'three';
 import { ElementRef, Injectable, NgZone, OnDestroy } from '@angular/core';
+import * as THREE from 'three';
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
 
 @Injectable()
 export class ThreeService implements OnDestroy {
@@ -41,7 +41,7 @@ export class ThreeService implements OnDestroy {
       // .load('epping_forest_02_4k.hdr', (texture) => {
       .load('aristea_wreck_2k.hdr', (texture) => {
         texture.mapping = THREE.EquirectangularReflectionMapping;
-        this.scene.background = texture;
+        // this.scene.background = texture;
         this.scene.environment = texture;
       });
 
@@ -101,7 +101,6 @@ export class ThreeService implements OnDestroy {
     // c.staticMoving = false;
     // c.dynamicDampingFactor = 0.15;
     // c.keys = ['KeyA', 'KeyS', 'KeyD']; not working
-
     const spotLight = new THREE.SpotLight(0xffffff, 10);
     spotLight.position.set(2, 5, 2);
     spotLight.angle = Math.PI / 6;
