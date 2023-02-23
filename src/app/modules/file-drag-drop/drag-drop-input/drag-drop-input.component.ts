@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, Renderer2, ViewChild } from '@angular/core';
 import { HTMLInputEvent } from "@modules/chat/components/input/chat-input.component";
 
 @Component({
@@ -8,6 +8,9 @@ import { HTMLInputEvent } from "@modules/chat/components/input/chat-input.compon
 })
 export class DragDropInputComponent {
 
+  @ViewChild('fileInput')
+  input!: ElementRef;
+
   @Input()
   fileTypes: string[] = [];
 
@@ -15,6 +18,8 @@ export class DragDropInputComponent {
   fileChangeEvent = new EventEmitter<File[]>();
 
   files: File[] = [];
+
+  constructor(private renderer: Renderer2) {}
 
   onFileDropped(fileList: FileList): void {
     this.prepareFilesList(fileList);
@@ -60,15 +65,19 @@ export class DragDropInputComponent {
     this.fileChangeEvent.emit(this.files);
   }
 
-  formatBytes(bytes: number, decimals?: number): string {
-    if (bytes === 0) {
-      return '0 Bytes';
-    }
-    decimals = decimals || 2
-    const k = 1024;
-    const dm = decimals <= 0 ? 0 : decimals;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  // formatBytes(bytes: number, decimals?: number): string {
+  //   if (bytes === 0) {
+  //     return '0 Bytes';
+  //   }
+  //   decimals = decimals || 2
+  //   const k = 1024;
+  //   const dm = decimals <= 0 ? 0 : decimals;
+  //   const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+  //   const i = Math.floor(Math.log(bytes) / Math.log(k));
+  //   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  // }
+
+  onClickBrowse(): void {
+    this.renderer.selectRootElement(this.input.nativeElement).click();
   }
 }

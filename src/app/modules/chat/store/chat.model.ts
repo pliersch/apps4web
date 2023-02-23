@@ -9,11 +9,6 @@ export interface Message {
   date: Date;
 }
 
-export interface ChatImage {
-  comment: string;
-  images?: File[];
-}
-
 export interface Emoji {
   key: string;
   value: string;
@@ -27,7 +22,7 @@ export interface CreateMessageDto {
   userId: string;
   // chatId: string;
   text: string;
-  pictures: File[];
+  pictures?: File[];
 }
 
 export interface UserIdentity {
@@ -41,6 +36,6 @@ export interface MessageResultDto {
   user: UserIdentity;
   // chatId: string;
   text: string;
-  pictureUrls: string[];
+  fileNames: string[];
   created: Date;
 }

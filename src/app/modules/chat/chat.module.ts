@@ -17,7 +17,7 @@ import { ChatEmojiPickerComponent } from './components/emoji-picker/chat-emoji-p
 import { ChatImageItemComponent } from './components/image-item/chat-image-item.component';
 import { ChatInputComponent } from './components/input/chat-input.component';
 import { ChatToolbarComponent } from './components/toolbar/chat-toolbar.component';
-import { ChatUploadComponent } from './components/upload/chat-upload.component';
+import { ChatUploadDialogComponent } from './components/upload-dialog/chat-upload-dialog.component';
 
 
 @NgModule({
@@ -29,7 +29,7 @@ import { ChatUploadComponent } from './components/upload/chat-upload.component';
     ChatEmojiItemComponent,
     ChatImageItemComponent,
     ChatMessagesComponent,
-    ChatUploadComponent
+    ChatUploadDialogComponent
   ],
   imports: [
     CommonModule,

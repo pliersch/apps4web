@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-chat-image-item',
@@ -8,15 +8,12 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 export class ChatImageItemComponent {
 
   @Output()
-  imageLoadEvent = new EventEmitter<string>();
+  imageLoadEvent = new EventEmitter<never>();
 
   @Input()
   src: string;
 
-  constructor() {
-  }
-
   onLoad(): void {
-
+    this.imageLoadEvent.emit()
   }
 }

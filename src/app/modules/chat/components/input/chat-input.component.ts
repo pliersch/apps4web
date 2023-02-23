@@ -1,4 +1,5 @@
-import { Component, EventEmitter, HostListener, Output } from '@angular/core';
+import { CdkTextareaAutosize } from "@angular/cdk/text-field";
+import { Component, EventEmitter, HostListener, Output, ViewChild } from '@angular/core';
 import { Emoji } from "@modules/chat/store/chat.model";
 
 export interface HTMLInputEvent extends Event {
@@ -13,8 +14,11 @@ export interface HTMLInputEvent extends Event {
 
 export class ChatInputComponent {
 
+  @ViewChild('autosize')
+  autosize: CdkTextareaAutosize;
+
   @Output()
-  toggleTmpEvent = new EventEmitter<boolean>();
+  showUploadEvent = new EventEmitter();
   @Output()
   messageEvent = new EventEmitter<string>();
   @Output()
@@ -23,7 +27,6 @@ export class ChatInputComponent {
   content = '';
   emojiPanel = false;
   visible = false;
-  fileName: string;
 
   emitMessage(): void {
     this.messageEvent.emit(this.content);
@@ -49,23 +52,11 @@ export class ChatInputComponent {
     }
   }
 
-  appendFile($event: Event): void {
-    const e = <HTMLInputEvent>$event;
-    if (e.target && e.target.files) {
-      this.fileChangeEvent.emit(e.target.files);
-    }
-  }
-
-  onFileInputChange(): void {
-    // this.fileChangeEvent.emit(this.$refs.fileInput.files);
-  }
-
   reset(): void {
     // this.$refs.form.reset()
   }
 
-  toggleUpload(): void {
-    this.visible = !this.visible;
-    this.toggleTmpEvent.emit(this.visible);
+  showUpload(): void {
+    this.showUploadEvent.emit();
   }
 }

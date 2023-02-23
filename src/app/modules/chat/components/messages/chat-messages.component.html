@@ -16,6 +16,6 @@
 
     <app-chat-image-item
       *ngIf="message.pictureUrls[0]" [src]="message.pictureUrls[0]"
-      (imageLoadEvent)="onImageLoad($event)"></app-chat-image-item>
+      (imageLoadEvent)="onImageLoad()"></app-chat-image-item>
   </div>
 </div>

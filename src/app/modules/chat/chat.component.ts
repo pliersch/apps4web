@@ -4,9 +4,11 @@ import { User } from "@account/store/user.model";
 import { animate, style, transition, trigger } from "@angular/animations";
 import { ViewportScroller } from "@angular/common";
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from "@angular/material/dialog";
 import { ChatToolbarComponent } from "@modules/chat/components/toolbar/chat-toolbar.component";
+import { ChatUploadDialogComponent } from "@modules/chat/components/upload-dialog/chat-upload-dialog.component";
 import { MessagesFilter, SendMessage } from "@modules/chat/store/chat.actions";
-import { ChatImage, CreateMessageDto, Message, UserIdentity } from "@modules/chat/store/chat.model";
+import { CreateMessageDto, Message, UserIdentity } from "@modules/chat/store/chat.model";
 import { ChatService } from "@modules/chat/store/chat.service";
 import { ChatState } from "@modules/chat/store/chat.state";
 import { Select, Store } from "@ngxs/store";
@@ -39,12 +41,10 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Select(ChatState.getMessages)
   messages$: Observable<Message[]>;
-// messages:Message[];
 
   @Select(ChatState.getUserIdentities)
   userIdentities$: Observable<UserIdentity[]>;
 
-  private content = '';
   private subscription: Subscription;
 
   userFilter = '';
@@ -59,6 +59,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private chatService: ChatService,
               /*private socketService: SocketService,*/
+              public dialog: MatDialog,
               private scroller: ViewportScroller,
               private store: Store) {
   }
@@ -66,11 +67,6 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.user$.subscribe(res => this.user = res);
     // this.subscription.add(this.messages$.subscribe(res => this.messages = res));
-
-    // this.eventBus.emit(new EventData('current-module', ChatToolbarComponent));
-    // this.totalChatHeight = this.$refs.chatContainer.scrollHeight
-    // this.loading = false
-
     // messages.forEach((msg: Message) => {
     //     this.onNewMessageAdded(msg)
     //   })
@@ -95,32 +91,6 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   scrollToEnd(): void {
     void this.scrollbarRef.scrollTo({bottom: 0, end: 0, duration: 300});
-    // this.$nextTick(() => {
-    //   this.$refs.scroll.$el.scrollTop = this.$refs.chatContainer.scrollHeight
-    //   // const options = {
-    //   //   duration: 300,
-    //   //   offset: 0
-    //   //   // easing: this.easing,
-    //   // }
-    //
-    //   // this.$vuetify.goTo(900, options)
-    //   const container = this.$refs.chatContainer
-    //   container.scrollTop = 500
-    //   // container.offsetTop = 500
-    //   // container.scrollTop = container.scrollHeight
-    //   console.log('scrollHeight', container.scrollHeight)
-    //   // console.log('scrollTop', container.scrollTop)
-    // })
-  }
-
-  scrollTo(): void {
-    console.log('scroll to')
-    // this.$nextTick(() => {
-    //   const currentHeight = this.$refs.chatContainer.scrollHeight
-    //   const difference = currentHeight - this.totalChatHeight
-    //   const container = this.$el.querySelector('.chat-container')
-    //   container.scrollTop = difference
-    // })
   }
 
   private onNewMessageAdded(msg: Message): void {
@@ -147,15 +117,9 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
       userId: this.user.id,
       // chatId: this.name,
       text: content,
-      pictures: pictures || [],
+      pictures: pictures,
     }
-    // if (file) {
-    //   msg.image = file
-    // }
     // SocketManager.getInstance(this).sendMessage(msg)
-    // this.chatService.sendMessage(msg).subscribe(res => {
-    //   console.log('ChatComponent : ', res)
-    // });
     // this.socketService.sendMessage(msg)
     this.store.dispatch(new SendMessage(msg))
   }
@@ -177,23 +141,6 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
     //   }
   }
 
-  onUploadClose(): void {
-    this.showPreview = false
-    // this.$refs.input.reset()
-  }
-
-  onPreviewMounted($event: never): void {
-    // this.$refs.preview.handleFiles(this.fileList);
-  }
-
-  onUploadFile(chatImage: ChatImage): void {
-    this.showPreview = false
-    const formData = new FormData()
-    // @ts-ignore
-    formData.append('chatimage', chatImage.images[0])
-    this.sendMessage(chatImage.comment, chatImage.images)
-  }
-
   processMessage(message: Message): Message {
     const imageRegex = /([^\s\']+).(?:jpg|jpeg|gif|png)/i
     if (imageRegex.test(message.text)) {
@@ -207,9 +154,14 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
     return message
   }
 
-  toggleTmp($event: boolean): void {
-    console.log('ChatComponent toggleTmp: ', $event)
-    this.showPreview = $event;
+  handleUploadClick(): void {
+    const dialogRef = this.dialog.open(ChatUploadDialogComponent, {
+      restoreFocus: false,
+      autoFocus: false
+    });
+    dialogRef.afterClosed().subscribe(attachment => {
+      this.sendMessage(attachment.comment, attachment.pictures)
+    });
   }
 
 }

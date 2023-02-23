@@ -17,7 +17,7 @@ export class ChatMessagesComponent {
   @Output()
   imageLoadEvent = new EventEmitter<never>();
 
-  onImageLoad($event: string): void {
-    console.log('image load', $event);
+  onImageLoad(): void {
+    this.imageLoadEvent.emit();
   }
 }

@@ -1,8 +1,9 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {DragDropInputComponent} from './drag-drop-input/drag-drop-input.component';
-import {DragDropDirectiveDirective} from './drag-drop-directive.directive';
-import {DragDropProgressComponent} from './drag-drop-progress/drag-drop-progress.component';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { MatButtonModule } from "@angular/material/button";
+import { DragDropDirectiveDirective } from './drag-drop-directive.directive';
+import { DragDropInputComponent } from './drag-drop-input/drag-drop-input.component';
+import { DragDropProgressComponent } from './drag-drop-progress/drag-drop-progress.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import {DragDropProgressComponent} from './drag-drop-progress/drag-drop-progress
     DragDropInputComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatButtonModule
   ]
 })
 
