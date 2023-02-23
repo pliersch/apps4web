@@ -10,8 +10,7 @@ export class ImageFallbackDirective {
   @HostListener('error')
   loadFallbackOnError(): void {
     const element: HTMLImageElement = <HTMLImageElement>this.eRef.nativeElement;
-    element.src = 'https://cdn2.iconfinder.com/data/icons/flat-mini-1/128/message_failed-512.png';
-    // element.src = this.appImgFallback || 'https://via.placeholder.com/200';
+    element.src = '/assets/svg/broken_image.svg';
   }
 
 }
