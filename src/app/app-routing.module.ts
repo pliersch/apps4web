@@ -1,9 +1,9 @@
+import { AuthGuard } from "@account/guards/auth.guard";
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
 import { DashboardComponent } from "@modules/dashboard/dashboard.component";
 import { LegalNoticeComponent } from "@modules/legal-notice/legal-notice.component";
-import { AuthGuard } from "@account/guards/auth.guard";
+import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
 
 // const authModule = () => import('@app/modules/auth/auth.module').then((x) => x.AuthModule);
 const chatModule = () => import('@app/modules/chat/chat.module').then((x) => x.ChatModule);
@@ -22,10 +22,10 @@ const routes: Routes = [{
     // {path: 'dashboard', title: 'Home', component: DashboardComponent},
     {path: 'impressum', title: 'Impressum', component: LegalNoticeComponent},
     {path: 'chat', loadChildren: chatModule},
-    {path: 'admin', title: 'Administration', loadChildren: adminModule, canActivate: [AuthGuard]},
+    {path: 'admin', title: 'Administration', loadChildren: adminModule},
     // {path: 'waste', loadChildren: wasteModule},
     {path: 'gallery', title: 'Photo Galerie', loadChildren: galleryModule},
-    {path: 'account', title: 'Account Info', loadChildren: accountModule},
+    {path: 'account', title: 'Account Info', loadChildren: accountModule, canActivate: [AuthGuard]},
     // {path: 'samples', loadChildren: samplesModule},
     // {path: 'recipes', loadChildren: recipesModule},
     {path: 'three', title: 'ThreeJS Playground', loadChildren: threeModule},

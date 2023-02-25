@@ -49,7 +49,7 @@ export class AccountState {
 
   @Selector()
   static isAuthenticated(state: AccountStateModel): boolean {
-    return !!state.googleUser;
+    return !!state.user;
   }
 
   @Selector()
