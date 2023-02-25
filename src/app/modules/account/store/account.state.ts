@@ -1,6 +1,6 @@
-import { AccountService } from "@account/services/account.service";
 import * as accountActions from "@account/store/account.actions";
 import { LoginWithId, SetUser } from "@account/store/account.actions";
+import { AccountService } from "@account/store/account.service";
 import { GoogleUser } from "@account/store/google-user.model";
 import { User } from "@account/store/user.model";
 import { Injectable } from "@angular/core";

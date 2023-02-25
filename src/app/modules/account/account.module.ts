@@ -1,16 +1,16 @@
-import { NgModule } from '@angular/core';
+import { SigninComponent } from "@account/components/google-signin/signin.component";
+import { AccountService } from "@account/store/account.service";
+import { AccountState } from "@account/store/account.state";
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
 import { MaterialModule } from "@app/modules/share/material/material.module";
-import { AccountRoutingModule } from './account-routing.module';
-import { LayoutComponent } from './layout/layout.component';
-import { NgxsModule } from "@ngxs/store";
-import { AccountState } from "@account/store/account.state";
 import { ShareModule } from "@modules/share/share.module";
-import { AccountService } from "@account/services/account.service";
-import { SigninComponent } from "@account/components/google-signin/signin.component";
+import { NgxsModule } from "@ngxs/store";
+import { AccountRoutingModule } from './account-routing.module';
 import { AccountInfoComponent } from './components/account-info/account-info.component';
 import { HiddenLoginComponent } from './components/hidden-login/hidden-login.component';
+import { LayoutComponent } from './layout/layout.component';
 
 @NgModule({
   imports: [

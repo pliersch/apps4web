@@ -1,4 +1,7 @@
-<p>use queryParams for login</p>
-<button mat-raised-button color="primary" (click)="onClickLogin()">
-  Login
-</button>
+<ng-template [ngIf]="(user$ | async)" [ngIfElse]="noUser">
+  <p *ngIf="user$ | async as user">You are logged in as {{ user.surName }}</p>
+</ng-template>
+
+<ng-template #noUser>
+  <p>Nope, you are not logged in. Damn</p>
+</ng-template>
