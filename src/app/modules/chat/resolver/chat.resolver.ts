@@ -35,9 +35,9 @@ export class ChatResolver implements PushMessageListener, Resolve<boolean> {
 
   private initialize(): void {
     this.store.select(AccountState.getUser).pipe(
-      filter((user) => user.id != 'not set')
+      filter((user) => user != null)
     ).subscribe((user) => {
-      this.user = user;
+      this.user = user!;
       this.store.dispatch(new LoadChat())
     })
     this.initialized = true;

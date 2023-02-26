@@ -7,13 +7,12 @@ import { Injectable } from "@angular/core";
 import { AlertService } from "@app/common/services/alert.service";
 import { RouteService } from "@app/common/services/route.service";
 import { Role } from "@modules/admin/modules/user/store/role";
-import { Status } from "@modules/admin/modules/user/store/status";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 
 export interface AccountStateModel {
-  user: User;
+  user: User | null;
   googleUser: GoogleUser | null;
 }
 
@@ -21,16 +20,7 @@ export interface AccountStateModel {
   name: 'Account',
   defaults: {
     googleUser: null,
-    user: {
-      id: 'not set',
-      givenName: 'Gast',
-      surName: 'not set',
-      email: 'not set',
-      status: Status.accept,
-      role: Role.Guest,
-      created: new Date(),
-      lastLogin: new Date()
-    },
+    user: null,
   }
 })
 
@@ -38,7 +28,7 @@ export interface AccountStateModel {
 export class AccountState {
 
   @Selector()
-  static getUser(state: AccountStateModel): User {
+  static getUser(state: AccountStateModel): User | null {
     return state.user;
   }
 
@@ -54,7 +44,7 @@ export class AccountState {
 
   @Selector()
   static isAdmin(state: AccountStateModel): boolean {
-    return state.user.role === Role.Admin;
+    return state.user?.role === Role.Admin;
   }
 
   constructor(private alertService: AlertService,
