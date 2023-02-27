@@ -39,6 +39,7 @@ export class AccountState {
 
   @Selector()
   static isAuthenticated(state: AccountStateModel): boolean {
+    console.log('AccountState isAuthenticated: ', state.user)
     return !!state.user;
   }
 

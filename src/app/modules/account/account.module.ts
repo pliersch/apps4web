@@ -8,8 +8,8 @@ import { MaterialModule } from "@app/modules/share/material/material.module";
 import { ShareModule } from "@modules/share/share.module";
 import { NgxsModule } from "@ngxs/store";
 import { AccountRoutingModule } from './account-routing.module';
-import { AccountInfoComponent } from './components/account-info/account-info.component';
 import { HiddenLoginComponent } from './components/hidden-login/hidden-login.component';
+import { AccountProfileComponent } from './components/profile/account-profile.component';
 import { LayoutComponent } from './layout/layout.component';
 
 @NgModule({
@@ -23,7 +23,7 @@ import { LayoutComponent } from './layout/layout.component';
   declarations: [
     LayoutComponent,
     SigninComponent,
-    AccountInfoComponent,
+    AccountProfileComponent,
     HiddenLoginComponent
   ],
   exports: [
