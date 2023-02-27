@@ -1,4 +1,3 @@
-import { AuthGuard } from "@account/guards/auth.guard";
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from "@modules/dashboard/dashboard.component";
@@ -25,7 +24,7 @@ const routes: Routes = [{
     {path: 'admin', title: 'Administration', loadChildren: adminModule},
     // {path: 'waste', loadChildren: wasteModule},
     {path: 'gallery', title: 'Photo Galerie', loadChildren: galleryModule},
-    {path: 'account', title: 'Account Info', loadChildren: accountModule, canActivate: [AuthGuard]},
+    {path: 'account', title: 'Account Info', loadChildren: accountModule},
     // {path: 'samples', loadChildren: samplesModule},
     // {path: 'recipes', loadChildren: recipesModule},
     {path: 'three', title: 'ThreeJS Playground', loadChildren: threeModule},

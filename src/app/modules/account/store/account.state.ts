@@ -85,7 +85,10 @@ export class AccountState {
       asapScheduler.schedule(() =>
         ctx.dispatch((new SetUser(action.user))
         ))
-      this.routeService.addRoute({name: 'Admin', route: '/admin'});
+      this.routeService.enableAccountRoute();
+      if (action.user.role === Role.Admin) {
+        this.routeService.enableAdminRoute();
+      }
     }
   }
 
@@ -122,7 +125,10 @@ export class AccountState {
       asapScheduler.schedule(() =>
         ctx.dispatch((new SetUser(action.user))
         ))
-      this.routeService.addRoute({name: 'Admin', route: '/admin'});
+      this.routeService.enableAccountRoute();
+      if (action.user.role === Role.Admin) {
+        this.routeService.enableAdminRoute();
+      }
     }
   }
 
@@ -134,6 +140,8 @@ export class AccountState {
   @Action(accountActions.SignoutWithGoogle)
   signoutWithGoogle(ctx: StateContext<AccountStateModel>): void {
     ctx.patchState({googleUser: null});
+    this.routeService.disableAccountRoute();
+    this.routeService.disableAdminRoute();
   }
 
 }

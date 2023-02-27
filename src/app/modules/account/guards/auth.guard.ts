@@ -1,7 +1,7 @@
-﻿import { Injectable } from '@angular/core';
+﻿import { AccountState } from "@account/store/account.state";
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { Store } from "@ngxs/store";
-import { AccountState } from "@account/store/account.state";
 
 @Injectable({providedIn: 'root'})
 export class AuthGuard implements CanActivate {
@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
     if (this.store.selectSnapshot(AccountState.isAuthenticated)) {
       return true;
     }
-    void this.router.navigate(['/account/login'], {queryParams: {returnUrl: state.url}});
+    void this.router.navigate(['/account/login']);
     return false;
   }
 
