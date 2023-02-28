@@ -27,6 +27,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthLayoutComponent } from "./core/layouts/auth-layout/auth-layout.component";
 import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
+import { ActionFooterComponent } from './modules/action-footer/action-footer.component';
 
 const ngxsConfig: NgxsModuleOptions = {
   developmentMode: !environment.production,
@@ -60,6 +61,7 @@ const ngxsConfig: NgxsModuleOptions = {
     ThemeMenuComponent,
     DashboardComponent,
     DashboardCardComponent,
+    ActionFooterComponent,
     // DynamicAppbarDirective,
     // DynamicAppbarComponent,
     // LegalNoticeComponent,

@@ -1,7 +1,7 @@
+import { Location } from "@angular/common";
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
-import { Location } from "@angular/common";
-import { LinkAndName } from "@app/common/interfaces/link-and-names";
+import { LinkAndName } from "@app/core/interfaces/link-and-names";
 
 @Component({
   selector: 'app-gallery-container',
