@@ -8,9 +8,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { GlobalErrorHandler } from "@app/common/helpers/global-error-handler";
-import { initApplication } from "@app/common/initializers/app.initializer";
-import { initTheme } from "@app/common/initializers/theme.initializer";
 import { AppBarComponent } from "@app/core/components/app-bar/app-bar.component";
+import { initApplication } from "@app/core/initializers/app.initializer";
+import { initTheme } from "@app/core/initializers/theme.initializer";
+import { RouterState } from "@app/core/stores/routes/router.state";
 import { MaterialModule } from "@app/modules/share/material/material.module";
 import { environment } from "@environments/environment";
 import { DashboardCardComponent } from "@modules/dashboard/cards/dashboard-card.component";
@@ -72,7 +73,7 @@ const ngxsConfig: NgxsModuleOptions = {
     MaterialModule,
     // AuthModule,
     //SocketIoModule.forRoot(config),
-    NgxsModule.forRoot([ThemeState, AccountState], ngxsConfig),
+    NgxsModule.forRoot([RouterState, ThemeState, AccountState], ngxsConfig),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     // NgxsLoggerPluginModule.forRoot(),
     WasteCalendarModule,

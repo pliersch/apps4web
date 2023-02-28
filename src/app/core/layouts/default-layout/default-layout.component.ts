@@ -1,11 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { map } from 'rxjs/operators';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Store } from "@ngxs/store";
+import { constants } from "@app/core/const/const";
+import { Route, RouterState } from "@app/core/stores/routes/router.state";
 import { ThemeState } from "@modules/themes/stores/theme-state";
-import { RouteService } from "@app/common/services/route.service";
+import { Select, Store } from "@ngxs/store";
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-default-layout',
@@ -16,13 +17,14 @@ export class DefaultLayoutComponent implements OnInit {
 
   @ViewChild(MatSidenav) drawer!: MatSidenav;
 
-  appName = 'A4W';
+  @Select(RouterState.getRoutes)
+  routes$: Observable<Route[]>;
+
+  appName = constants.APP_NAME;
   theme = 'dark-theme';
-  routes$ = this.routeService.getRoutes();
 
   constructor(private breakpointObserver: BreakpointObserver,
-              private store: Store,
-              private routeService: RouteService) {
+              private store: Store) {
   }
 
   ngOnInit(): void {

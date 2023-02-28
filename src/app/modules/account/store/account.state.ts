@@ -5,13 +5,13 @@ import { GoogleUser } from "@account/store/google-user.model";
 import { User } from "@account/store/user.model";
 import { Injectable } from "@angular/core";
 import { AlertService } from "@app/common/services/alert.service";
-import { RouteService } from "@app/common/services/route.service";
+import { SetUserRole } from "@app/core/stores/routes/router.actions";
 import { Role } from "@modules/admin/modules/user/store/role";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 
-export interface AccountStateModel {
+interface AccountStateModel {
   user: User | null;
   googleUser: GoogleUser | null;
 }
@@ -39,7 +39,6 @@ export class AccountState {
 
   @Selector()
   static isAuthenticated(state: AccountStateModel): boolean {
-    console.log('AccountState isAuthenticated: ', state.user)
     return !!state.user;
   }
 
@@ -49,7 +48,6 @@ export class AccountState {
   }
 
   constructor(private alertService: AlertService,
-              private routeService: RouteService,
               private accountService: AccountService) {
   }
 
@@ -86,10 +84,7 @@ export class AccountState {
       asapScheduler.schedule(() =>
         ctx.dispatch((new SetUser(action.user))
         ))
-      this.routeService.enableAccountRoute();
-      if (action.user.role === Role.Admin) {
-        this.routeService.enableAdminRoute();
-      }
+      ctx.dispatch(new SetUserRole(action.user.role));
     }
   }
 
@@ -126,10 +121,7 @@ export class AccountState {
       asapScheduler.schedule(() =>
         ctx.dispatch((new SetUser(action.user))
         ))
-      this.routeService.enableAccountRoute();
-      if (action.user.role === Role.Admin) {
-        this.routeService.enableAdminRoute();
-      }
+      ctx.dispatch(new SetUserRole(action.user.role));
     }
   }
 
@@ -141,8 +133,7 @@ export class AccountState {
   @Action(accountActions.SignoutWithGoogle)
   signoutWithGoogle(ctx: StateContext<AccountStateModel>): void {
     ctx.patchState({googleUser: null});
-    this.routeService.disableAccountRoute();
-    this.routeService.disableAdminRoute();
+    ctx.dispatch(new SetUserRole(Role.Guest));
   }
 
 }

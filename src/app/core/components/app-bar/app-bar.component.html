@@ -23,7 +23,7 @@
         </div>
       </button>
       <button mat-flat-button routerLinkActive='active-route'
-              *ngFor="let route of routes$ | async" [routerLink]="[route.route]">{{route.name}}</button>
+              *ngFor="let route of routes$ | async" [routerLink]="[route.path]">{{route.name}}</button>
     </mat-toolbar>
     <app-theme-menu (switchThemeEvent)="onSwitchTheme($event)"></app-theme-menu>
     <app-signin></app-signin>

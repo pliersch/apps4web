@@ -18,7 +18,6 @@ export class HiddenLoginComponent implements OnInit, OnDestroy {
   user: User;
 
   id: string;
-  msg = 'No. Not logged in'
   private subscription: Subscription;
 
   constructor(private store: Store,

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Route, RouterState } from "@app/core/stores/routes/router.state";
+import { Select } from "@ngxs/store";
 import { Observable } from "rxjs";
-import { RouteService } from "@app/common/services/route.service";
 
 @Component({
   selector: 'app-appbar',
@@ -14,14 +15,13 @@ export class AppBarComponent {
   @Output() toggleNavEvent = new EventEmitter<string>();
   @Output() switchThemeEvent = new EventEmitter<string>();
 
-
-  constructor(private routeService: RouteService) {
-  }
+  @Select(RouterState.getRoutes)
+  routes$: Observable<Route[]>;
 
 // @ViewChild("authMenuPlaceHolder", {read: ViewContainerRef})
   // authMenuPlaceHolder!: ViewContainerRef;
 
-  routes$ = this.routeService.getRoutes();
+  // routes$ = this.routeService.getRoutes();
 
   // constructor(/*private injector: Injector*/ ) { }
 
