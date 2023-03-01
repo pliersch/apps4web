@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import {
   AbstractExplorerComponent
 } from "@gallery/modules/explorer/pages/abstract-explorer/abstract-explorer.component";
+import { SortMode } from "@gallery/modules/share/sorter/gallery-sorter.component";
 import { PhotoService } from "@gallery/services/photo.service";
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import { Photo } from '@gallery/store/photos/photo.model';
@@ -73,6 +74,10 @@ export class GalleryExplorerComponent extends AbstractExplorerComponent implemen
         this.downloadPhotos();
         break;
     }
+  }
+
+  handleChangeSorting($event: SortMode): void {
+    this.store.dispatch(new photoAction.SetSortMode($event));
   }
 
   onSelectForDownload($event: Photo): void {

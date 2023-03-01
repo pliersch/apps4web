@@ -3,6 +3,7 @@ import { AlertService } from "@app/common/services/alert.service";
 import { ServerSentService } from "@app/common/services/server-sent.service";
 import { difference } from "@app/common/util/array-utils";
 import { GALLERY_CONSTANTS } from "@gallery/const";
+import { SortMode } from "@gallery/modules/share/sorter/gallery-sorter.component";
 import { PhotoService } from "@gallery/services/photo.service";
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import {
@@ -13,7 +14,7 @@ import {
   PhotoRequestResult,
   PhotoUpdate
 } from "@gallery/store/photos/photo.model";
-import { filterByRating, filterByTags, filterByYear } from "@gallery/store/photos/photo.tools";
+import { filterByRating, filterByTags, filterByYear, sort } from "@gallery/store/photos/photo.tools";
 import { Tag } from "@gallery/store/tags/tag.model";
 import { DeleteResult } from "@modules/share/interfaces/models/delete-result";
 import { Action, Selector, State, StateContext, Store } from "@ngxs/store";
@@ -34,6 +35,7 @@ export interface PhotoStateModel {
   filterRating: number;
   filterFrom: number;
   filterTo: number;
+  sortMode: SortMode
   newDataAvailable: boolean;
   loaded: boolean;
   loading: boolean;
@@ -52,6 +54,7 @@ export interface PhotoStateModel {
     availableServerPhotos: 0,
     photoCountByTags: [],
     tagFilter: [],
+    sortMode: SortMode.Newest,
     filterRating: 0,
     filterFrom: -1,
     filterTo: -1,
@@ -93,11 +96,14 @@ export class PhotoState {
     return result;
   }
 
-  @Selector([PhotoState.getPhotosByTags, PhotoState.getFinalDownloads, PhotoState.getFilterRating, PhotoState.getFilterFrom, PhotoState.getFilterTo])
-  static getFilteredPhotos(photos: Photo[], downloads: Photo[], filterRating: number, filterFrom: number, filterTo: number): Photo[] {
+  @Selector([PhotoState.getPhotosByTags, PhotoState.getFinalDownloads, PhotoState.getFilterRating,
+    PhotoState.getFilterFrom, PhotoState.getFilterTo, PhotoState.getSortMode])
+  static getFilteredPhotos(photos: Photo[], downloads: Photo[], filterRating: number,
+                           filterFrom: number, filterTo: number, sortMode: SortMode): Photo[] {
     let filteredPhotos: Photo[] = difference(photos, downloads);
     filteredPhotos = filterByRating(filteredPhotos, filterRating);
     filteredPhotos = filterByYear(filteredPhotos, filterFrom, filterTo);
+    filteredPhotos = sort(filteredPhotos, sortMode);
     return filteredPhotos;
   }
 
@@ -149,6 +155,11 @@ export class PhotoState {
   @Selector()
   static getFilterTo(state: PhotoStateModel): number {
     return state.filterTo;
+  }
+
+  @Selector()
+  static getSortMode(state: PhotoStateModel): number {
+    return state.sortMode;
   }
 
   @Selector()
@@ -672,6 +683,22 @@ export class PhotoState {
 
   // endregion
 
+  // region sorting
+  //////////////////////////////////////////////////////////
+  //                   sorting
+  //////////////////////////////////////////////////////////
+
+  @Action(photoAction.SetSortMode)
+  setSortMode(ctx: StateContext<PhotoStateModel>, action: photoAction.SetSortMode): void {
+    ctx.setState(
+      patch({
+        sortMode: action.mode
+      })
+    );
+  }
+
+  // endregion
+
   // region filter
   //////////////////////////////////////////////////////////
   //          filter
@@ -737,7 +764,8 @@ export class PhotoState {
       PhotoState.getFinalDownloads(state),
       PhotoState.getFilterRating(state),
       PhotoState.getFilterFrom(state),
-      PhotoState.getFilterTo(state));
+      PhotoState.getFilterTo(state),
+      PhotoState.getSortMode(state));
   }
 
   // endregion

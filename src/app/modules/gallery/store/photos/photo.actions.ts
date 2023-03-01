@@ -1,5 +1,6 @@
 import { User } from "@account/store/user.model";
 import { HttpErrorResponse } from '@angular/common/http';
+import { SortMode } from "@gallery/modules/share/sorter/gallery-sorter.component";
 import {
   DeletePhotoDto,
   Photo,
@@ -196,8 +197,7 @@ export class DeletePhotosFail {
 export class SetTagsOfPhoto {
   static readonly type = '[Gallery] Set Tags Of Photo';
 
-  constructor(public photo: Photo, public tags: Tag[]) {
-  }
+  constructor(public photo: Photo, public tags: Tag[]) { }
 }
 
 export class SetTagsOfPhotoSuccess {
@@ -215,22 +215,19 @@ export class SetTagsOfPhotoFail {
 export class UpdatePhoto {
   static readonly type = '[Gallery] Update Photo';
 
-  constructor(public photo: Photo, public dto: PhotoUpdate) {
-  }
+  constructor(public photo: Photo, public dto: PhotoUpdate) { }
 }
 
 export class UpdatePhotoSuccess {
   static readonly type = '[Gallery] Update Photo success';
 
-  constructor(public photo: Photo) {
-  }
+  constructor(public photo: Photo) { }
 }
 
 export class UpdatePhotoFail {
   static readonly type = '[Gallery] Update Photo fail';
 
-  constructor(public error: HttpErrorResponse) {
-  }
+  constructor(public error: HttpErrorResponse) { }
 }
 
 
@@ -245,15 +242,21 @@ export class SetRating {
 export class SetRatingSuccess {
   static readonly type = '[Gallery] Set Rating Of Photo Success';
 
-  constructor(public photo: Photo, public rate: number) {
-  }
+  constructor(public photo: Photo, public rate: number) { }
 }
 
 export class SetRatingFail {
   static readonly type = '[Gallery] Set Rating Of Photo Fail';
 
-  constructor(public error: HttpErrorResponse) {
-  }
+  constructor(public error: HttpErrorResponse) { }
+}
+
+// sorting
+
+export class SetSortMode {
+  static readonly type = '[Gallery] Set Sort Mode';
+
+  constructor(public mode: SortMode) { }
 }
 
 // filtering
@@ -261,8 +264,7 @@ export class SetRatingFail {
 export class AddTagFilter {
   static readonly type = '[Gallery] Add Tag Filter';
 
-  constructor(public tag: Tag) {
-  }
+  constructor(public tag: Tag) { }
 }
 
 export class RemoveTagFilter {
@@ -274,8 +276,7 @@ export class RemoveTagFilter {
 export class SetRatingFilter {
   static readonly type = '[Gallery] Set Rating Filter';
 
-  constructor(public rate: number) {
-  }
+  constructor(public rate: number) { }
 }
 
 export class SetFromYearFilter {
@@ -287,8 +288,7 @@ export class SetFromYearFilter {
 export class SetToYearFilter {
   static readonly type = '[Gallery] Set To Year Filter';
 
-  constructor(public year: number) {
-  }
+  constructor(public year: number) { }
 }
 
 export class ClearFilter {

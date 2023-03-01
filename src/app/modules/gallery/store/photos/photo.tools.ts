@@ -1,5 +1,6 @@
-import { Photo } from "@gallery/store/photos/photo.model";
 import { GALLERY_CONSTANTS } from "@gallery/const";
+import { SortMode } from "@gallery/modules/share/sorter/gallery-sorter.component";
+import { Photo } from "@gallery/store/photos/photo.model";
 import { Tag } from "@gallery/store/tags/tag.model";
 
 const BASE_URL = GALLERY_CONSTANTS.PHOTO_DOWNLOAD_BASE_URL;
@@ -28,7 +29,6 @@ export function filterByRating(photos: Photo[], rate: number): Photo[] {
 export function filterByYear(photos: Photo[], from: number, to: number): Photo[] {
   const result = [];
   let year: number;
-  // console.log('filterByYear filterByYear: ', from, to)
   if (from === -1 && to === -1) {
     return photos;
   }
@@ -50,8 +50,66 @@ export function filterByYear(photos: Photo[], from: number, to: number): Photo[]
   return result;
 }
 
+export function sort(photos: Photo[], mode: SortMode): Photo[] {
+  switch (mode) {
+    case SortMode.Newest:
+      return photos.sort(sortByNewest);
+    case SortMode.Oldest:
+      return photos.sort(sortByOldest);
+    case SortMode.HighestRating:
+      return photos.sort(sortByHighestRating);
+    case SortMode.LowestRating:
+      return photos.sort(sortByLowestRating);
+    default:
+      return photos;
+  }
+}
+
+function sortByNewest(p1: Photo, p2: Photo): number {
+  const compare = p1.recordDate.getTime() - p2.recordDate.getTime();
+  if (compare > 0) {
+    return -1;
+  } else if (compare < 0) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
+function sortByOldest(p1: Photo, p2: Photo): number {
+  const compare = p1.recordDate.getTime() - p2.recordDate.getTime();
+  if (compare > 0) {
+    return 1;
+  } else if (compare < 0) {
+    return -1;
+  } else {
+    return 0;
+  }
+}
+
+function sortByHighestRating(p1: Photo, p2: Photo): number {
+  const compare = p1.rating - p2.rating;
+  if (compare > 0) {
+    return -1;
+  } else if (compare < 0) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
+function sortByLowestRating(p1: Photo, p2: Photo): number {
+  const compare = p1.rating - p2.rating;
+  if (compare > 0) {
+    return 1;
+  } else if (compare < 0) {
+    return -1;
+  } else {
+    return 0;
+  }
+}
+
 export function getPhotoUrl(fileName: string): string {
-  // fileName = fileName.slice(0, fileName.lastIndexOf('.') - 1);
   return BASE_URL + 'full/' + fileName;
 }
 
@@ -71,15 +129,3 @@ function sliceExtension(fileName: string): string {
   return fileName.slice(0, fileName.lastIndexOf('.'));
 }
 
-// export function comparePhotos(p1: Photo, p2: Photo): number {
-//   const creationTime1 = new Date(p1.createDateTime).getTime();
-//   const creationTime2 = new Date(p2.createDateTime).getTime();
-//   const compare = creationTime1 - creationTime2;
-//   if (compare > 0) {
-//     return 1;
-//   } else if (compare < 0) {
-//     return -1;
-//   } else {
-//     return 0;
-//   }
-// }

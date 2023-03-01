@@ -11,7 +11,7 @@ import { Role } from "@modules/admin/modules/user/store/role";
 })
 export class GalleryContainerComponent implements OnInit {
 
-  // fixme
+  // fixme Role ignored
   linksAndNames: Route[] = [
     {name: 'Home', path: '/gallery/home', accepted: Role.User},
     {name: 'Explorer', path: '/gallery/explorer/finder', accepted: Role.User},

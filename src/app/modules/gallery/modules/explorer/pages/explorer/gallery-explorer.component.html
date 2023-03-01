@@ -10,7 +10,7 @@
       [currentRating]="currentRating"
       (changeRatingEvent)="handleRatingChange($event)"></app-gallery-rating-filter>
     <app-gallery-date-filter></app-gallery-date-filter>
-    <app-gallery-sorter></app-gallery-sorter>
+    <app-gallery-sorter (sortEvent)="handleChangeSorting($event)"></app-gallery-sorter>
     <div class="column">
       <button
         mat-raised-button color="primary"
