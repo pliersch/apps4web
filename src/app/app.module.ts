@@ -14,6 +14,7 @@ import { initTheme } from "@app/core/initializers/theme.initializer";
 import { RouterState } from "@app/core/stores/routes/router.state";
 import { MaterialModule } from "@app/modules/share/material/material.module";
 import { environment } from "@environments/environment";
+import { ActionFooterComponent } from '@modules/action-footer/action-footer.component';
 import { DashboardCardComponent } from "@modules/dashboard/cards/dashboard-card.component";
 import { DashboardComponent } from "@modules/dashboard/dashboard.component";
 import { RadioModule } from "@modules/radio/radio.module";
@@ -27,7 +28,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthLayoutComponent } from "./core/layouts/auth-layout/auth-layout.component";
 import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
-import { ActionFooterComponent } from './modules/action-footer/action-footer.component';
 
 const ngxsConfig: NgxsModuleOptions = {
   developmentMode: !environment.production,

@@ -1,17 +1,18 @@
 ﻿import { Location } from "@angular/common";
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
-import { LinkAndName } from "@app/core/interfaces/link-and-names";
+import { Route } from "@app/core/stores/routes/router.state";
+import { Role } from "@modules/admin/modules/user/store/role";
 
 @Component({templateUrl: 'admin-layout.component.html'})
 
 export class AdminLayoutComponent implements OnInit {
 
-  linksAndNames: LinkAndName[] = [
-    {name: 'User', link: '/admin/user'},
+  routes: Route[] = [
+    {name: 'User', path: '/admin/user', accepted: Role.Admin},
   ];
 
-  activeLink = this.linksAndNames[0].link;
+  activeLink = this.routes[0].path;
 
   constructor(private router: Router,
               private location: Location,

@@ -1,7 +1,8 @@
 import { Location } from "@angular/common";
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
-import { LinkAndName } from "@app/core/interfaces/link-and-names";
+import { Route } from "@app/core/stores/routes/router.state";
+import { Role } from "@modules/admin/modules/user/store/role";
 
 @Component({
   selector: 'app-gallery-container',
@@ -10,16 +11,17 @@ import { LinkAndName } from "@app/core/interfaces/link-and-names";
 })
 export class GalleryContainerComponent implements OnInit {
 
-  linksAndNames: LinkAndName[] = [
-    {name: 'Home', link: '/gallery/home'},
-    {name: 'Explorer', link: '/gallery/explorer/finder'},
-    {name: 'Editor', link: '/gallery/explorer/editor'},
-    {name: 'Slideshow', link: '/gallery/slideshow'},
-    {name: 'Lightbox', link: '/gallery/lightbox'},
-    {name: 'Upload', link: '/gallery/upload'},
+  // fixme
+  linksAndNames: Route[] = [
+    {name: 'Home', path: '/gallery/home', accepted: Role.User},
+    {name: 'Explorer', path: '/gallery/explorer/finder', accepted: Role.User},
+    {name: 'Editor', path: '/gallery/explorer/editor', accepted: Role.User},
+    {name: 'Slideshow', path: '/gallery/slideshow', accepted: Role.User},
+    {name: 'Lightbox', path: '/gallery/lightbox', accepted: Role.User},
+    {name: 'Upload', path: '/gallery/upload', accepted: Role.Admin},
   ];
 
-  activeLink = this.linksAndNames[0].link;
+  activeLink = this.linksAndNames[0].path;
 
   constructor(private router: Router,
               private location: Location,
