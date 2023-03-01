@@ -27,6 +27,15 @@
   flex-direction: column;
 }
 
+.footer {
+  position: absolute;
+  z-index: 101;
+  bottom: 10px;
+  right: 10px;
+  //display: flex;
+  //flex-direction: column;
+}
+
 .sidenav-container {
   height: 100%;
 }
