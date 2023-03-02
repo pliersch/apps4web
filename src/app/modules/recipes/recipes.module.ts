@@ -1,10 +1,11 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RecipesRoutingModule } from './recipes-routing.module';
-import { PizzaComponent } from './ingredients/pizza.component';
+import { MatSliderModule } from "@angular/material/slider";
 import { MaterialModule } from "@app/modules/share/material/material.module";
 import { ShareModule } from "@modules/share/share.module";
+import { PizzaComponent } from './pizza/pizza.component';
+import { RecipesRoutingModule } from './recipes-routing.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ShareModule } from "@modules/share/share.module";
     ReactiveFormsModule,
     RecipesRoutingModule,
     MaterialModule,
-    ShareModule
+    ShareModule,
+    MatSliderModule
   ]
 })
 export class RecipesModule {}

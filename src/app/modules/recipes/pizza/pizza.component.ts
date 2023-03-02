@@ -14,7 +14,7 @@ export interface Ingredient {
 export class PizzaComponent implements AfterContentInit {
 
   countControl = new UntypedFormControl('4');
-
+  value = 270;
   poolish: Ingredient[] = [
     {name: 'Mehl', value: '0'},
     {name: 'Wasser', value: '0'},
@@ -41,7 +41,7 @@ export class PizzaComponent implements AfterContentInit {
     poolishWater.value = String(count * 50) + 'g';
     poolishHoney.value = String(count * 0.5) + 'g';
     poolishYeast.value = String((count * 0.35).toFixed(1)) + 'g';
-    doughFlour.value = String(count * 106) + 'g';
+    doughFlour.value = String(count * 105) + 'g';
     doughWater.value = String(count * 65) + 'g';
     doughSalt.value = String(count * 4.5) + 'g';
   }

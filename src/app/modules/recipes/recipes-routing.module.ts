@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PizzaComponent } from "@modules/recipes/ingredients/pizza.component";
+import { PizzaComponent } from "@modules/recipes/pizza/pizza.component";
 
 const routes: Routes = [
   {
