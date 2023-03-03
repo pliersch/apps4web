@@ -8,9 +8,6 @@ import {Subject, Subscription} from 'rxjs';
 export class EventBusService {
   private subject$ = new Subject();
 
-  constructor() {
-  }
-
   emit(event: EventData): void {
     this.subject$.next(event);
   }

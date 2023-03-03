@@ -9,9 +9,6 @@ export class ActionBarService {
 
   private host: ActionBarHost;
 
-  constructor() {
-  }
-
   setHost(host: ActionBarHost): void {
     this.host = host;
   }

@@ -5,7 +5,6 @@ import { Directive, ViewContainerRef } from '@angular/core';
 })
 export class DynamicAppbarDirective {
 
-  constructor(private viewContainerRef: ViewContainerRef) {
-  }
+  constructor(viewContainerRef: ViewContainerRef) { }
 
 }

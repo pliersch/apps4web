@@ -9,12 +9,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { GlobalErrorHandler } from "@app/common/helpers/global-error-handler";
 import { AppBarComponent } from "@app/core/components/app-bar/app-bar.component";
+import { WidgetComponent } from "@app/core/components/widget/widget.component";
+import { WidgetDirective } from "@app/core/components/widget/widget.directive";
 import { initApplication } from "@app/core/initializers/app.initializer";
 import { initTheme } from "@app/core/initializers/theme.initializer";
 import { RouterState } from "@app/core/stores/routes/router.state";
 import { MaterialModule } from "@app/modules/share/material/material.module";
 import { environment } from "@environments/environment";
-import { ActionFooterComponent } from '@modules/action-footer/action-footer.component';
 import { DashboardCardComponent } from "@modules/dashboard/cards/dashboard-card.component";
 import { DashboardComponent } from "@modules/dashboard/dashboard.component";
 import { RadioModule } from "@modules/radio/radio.module";
@@ -61,7 +62,8 @@ const ngxsConfig: NgxsModuleOptions = {
     ThemeMenuComponent,
     DashboardComponent,
     DashboardCardComponent,
-    ActionFooterComponent,
+    WidgetComponent,
+    WidgetDirective,
     // DynamicAppbarDirective,
     // DynamicAppbarComponent,
     // LegalNoticeComponent,

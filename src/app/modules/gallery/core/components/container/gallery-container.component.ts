@@ -12,7 +12,7 @@ import { Role } from "@modules/admin/modules/user/store/role";
 export class GalleryContainerComponent implements OnInit {
 
   // fixme Role ignored
-  linksAndNames: Route[] = [
+  routes: Route[] = [
     {name: 'Home', path: '/gallery/home', accepted: Role.User},
     {name: 'Explorer', path: '/gallery/explorer/finder', accepted: Role.User},
     {name: 'Editor', path: '/gallery/explorer/editor', accepted: Role.User},
@@ -21,7 +21,7 @@ export class GalleryContainerComponent implements OnInit {
     {name: 'Upload', path: '/gallery/upload', accepted: Role.Admin},
   ];
 
-  activeLink = this.linksAndNames[0].path;
+  activeLink = this.routes[0].path;
 
   constructor(private router: Router,
               private location: Location,
