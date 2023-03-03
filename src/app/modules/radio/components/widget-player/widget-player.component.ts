@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { RadioStation } from "@modules/radio/components/player/player.component";
 
 @Component({
   selector: 'app-widget-player',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class WidgetPlayerComponent {
 
+  @Input()
+  radio: RadioStation;
+
+  isPlaying = false;
+
+  onClickPlay(radio: RadioStation): void {
+    this.isPlaying = !this.isPlaying;
+  }
 }

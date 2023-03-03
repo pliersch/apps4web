@@ -6,13 +6,13 @@
     <mat-tab-group>
       <mat-tab label="Favoriten">
         <ng-scrollbar class="dark-scrollbar" [autoHeightDisabled]="false" track="horizontal" visibility="always">
-          <div (wheel)="onScroll($event)">
+          <div>
             <div class="thumbnail-list">
               <div *ngFor="let radio of favorites;"
                    class="thumbnail-item item" [class.active]="radio === current"
                    [style.background-image]="'url(' + radio.logoUrl + ')'"
                    (click)="onClickPlay(radio)">
-                <div class="info-container" [class.active]="radio === current">
+                <div class="info-container" [class.active]="radio === current && playing">
                   <button mat-mini-fab color="primary">
                     <mat-icon>volume_mute</mat-icon>
                   </button>

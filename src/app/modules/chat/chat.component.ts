@@ -159,6 +159,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
       restoreFocus: false,
       autoFocus: false
     });
+    // fixme close without message throws error
     dialogRef.afterClosed().subscribe(attachment => {
       this.sendMessage(attachment.comment, attachment.pictures)
     });

@@ -9,6 +9,7 @@
       </div>
     </button>
     <span class="spacer"></span>
+    <app-widget></app-widget>
     <app-theme-menu (switchThemeEvent)="onSwitchTheme($event)"></app-theme-menu>
     <app-signin></app-signin>
   </mat-toolbar>
@@ -25,6 +26,7 @@
       <button mat-flat-button routerLinkActive='active-route'
               *ngFor="let route of routes$ | async" [routerLink]="[route.path]">{{route.name}}</button>
     </mat-toolbar>
+    <app-widget></app-widget>
     <app-theme-menu (switchThemeEvent)="onSwitchTheme($event)"></app-theme-menu>
     <app-signin></app-signin>
   </mat-toolbar>
