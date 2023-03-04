@@ -1,4 +1,3 @@
-import { EventData } from "@app/common/services/event-bus.service";
 import { Subject, Subscription } from "rxjs";
 import { filter, map } from "rxjs/operators";
 
@@ -9,11 +8,10 @@ export class EventEmitter {
     this.subject$.next(new Event(name, payload));
   }
 
-  on(eventName: string, action: any): Subscription {
+  on(eventName: string, callback: () => void): Subscription {
     return this.subject$.pipe(
-      // @ts-ignore
-      filter((e: EventData) => e.name === eventName),
-      map((e: EventData) => e.value)).subscribe(action);
+      filter((e: Event<any>) => e.name === eventName),
+      map((e: Event<any>) => e.value)).subscribe(callback);
   }
 }
 

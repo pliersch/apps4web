@@ -1,8 +1,27 @@
-<!--<div class="mini-player"-->
-<!--     (click)="onClickPlay(radio)">-->
-<!--  <div class="info-container" [class.active]="isPlaying">-->
-<button mat-mini-fab color="primary">
+<button mat-icon-button [matMenuTriggerFor]="playerMenu">
   <mat-icon>volume_mute</mat-icon>
 </button>
-<!--  </div>-->
-<!--</div>-->
+<mat-menu #playerMenu="matMenu" yPosition="below">
+  <button mat-menu-item (click)="onClickTogglePlay()">
+    <mat-icon>{{playToggleAction.symbol}}</mat-icon>
+    <span>{{playToggleAction.name}}</span>
+  </button>
+  <button mat-menu-item (click)="onClickClose()">
+    <mat-icon>{{exitAction.symbol}}</mat-icon>
+    <span>{{exitAction.name}}</span>
+  </button>
+  <button mat-menu-item [matMenuTriggerFor]="vertebrates">Vertebrates</button>
+  <button mat-menu-item [matMenuTriggerFor]="invertebrates">Invertebrates</button>
+</mat-menu>
+
+<mat-menu #vertebrates="matMenu">
+  <button mat-menu-item>Birds</button>
+  <button mat-menu-item>Mammals</button>
+</mat-menu>
+
+<mat-menu #invertebrates="matMenu">
+  <button mat-menu-item>Insects</button>
+  <button mat-menu-item>Molluscs</button>
+  <button mat-menu-item>Crustaceans</button>
+</mat-menu>
+

@@ -3,7 +3,7 @@ import { EventEmitter } from "@app/common/base/event-emitter";
 import { RadioStation } from "@modules/radio/components/player/player.component";
 import { Subscription } from "rxjs";
 
-export type PlayerEvent = 'play' | 'pause'
+export type PlayerState = 'play' | 'pause'
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +39,16 @@ export class PlayerService {
     this.audio.pause();
   }
 
+  togglePlayPause(): PlayerState {
+    if (this.isPlaying()) {
+      this.pause();
+      return "pause"
+    } else {
+      this.play(this.radioStation);
+      return "play";
+    }
+  }
+
   isPlaying(): boolean {
     return !this.audio.paused
   }
@@ -51,7 +61,7 @@ export class PlayerService {
     void this.audio.play();
   }
 
-  on(eventName: PlayerEvent, callback: () => void): Subscription {
+  on(eventName: PlayerState, callback: () => void): Subscription {
     return this.eventEmitter.on(eventName, callback)
   }
 }

@@ -1,6 +1,6 @@
 <ng-template [ngIf]="(user$ | async)" [ngIfElse]="noUser">
   <button *ngIf="user$ | async as user" mat-icon-button [matMenuTriggerFor]="accountMenu">
-    <img class="avatar" [src]="user.photoUrl">
+    <img class="avatar" [src]="user.photoUrl" alt="avatar">
   </button>
 </ng-template>
 

@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ElementRef, OnInit, Type, ViewChild } from '@angular/core';
+import { Component, OnInit, Type, ViewChild } from '@angular/core';
 import { WidgetDirective } from "@app/core/components/widget/widget.directive";
 import { WidgetService } from "@app/core/components/widget/widget.service";
 
@@ -7,13 +7,12 @@ import { WidgetService } from "@app/core/components/widget/widget.service";
   templateUrl: './widget.component.html',
   styleUrls: ['./widget.component.scss']
 })
-export class WidgetComponent implements OnInit, AfterContentInit {
-
-  @ViewChild('mount')
-  mount!: ElementRef;
+export class WidgetComponent implements OnInit {
 
   @ViewChild(WidgetDirective, {static: true})
   appWidgetHost!: WidgetDirective;
+
+  private currentWidget: Type<Component>;
 
   constructor(private widgetService: WidgetService) { }
 
@@ -21,19 +20,20 @@ export class WidgetComponent implements OnInit, AfterContentInit {
     this.widgetService.setWidgetHost(this);
   }
 
-  loadWidget(component: Type<any>): void {
+  loadWidget(component: Type<Component>): void {
     const viewContainerRef = this.appWidgetHost.viewContainerRef;
     viewContainerRef.clear();
-    const componentRef = viewContainerRef.createComponent<typeof component>(component);
-    // componentRef.instance.data = adItem.data;
+    viewContainerRef.createComponent(component);
+    this.currentWidget = component;
   }
 
-  removeWidget(component: Type<any>): void {
+  removeWidget(component: Type<Component>): void {
+    if (component.name !== this.currentWidget.name) {
+      console.log('WidgetComponent removeWidget not possible: ',
+        component.name, this.currentWidget.name)
+      return;
+    }
     this.appWidgetHost.viewContainerRef.clear();
-  }
-
-  ngAfterContentInit(): void {
-    // this.widgetService.setWidgetHost(this);
   }
 
 }
