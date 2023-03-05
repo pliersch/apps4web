@@ -17,6 +17,6 @@
 </ng-template>
 
 <mat-menu #accountMenu="matMenu" yPosition="below">
-  <button mat-menu-item style="margin: 0;" (click)="navigateToAccount()">Account</button>
+  <button mat-menu-item style="margin: 0;" (click)="navigateToAccountProfile()">Account</button>
   <button *ngIf="user" mat-menu-item style="margin: 0;" (click)="logout()">Logout</button>
 </mat-menu>

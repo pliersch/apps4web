@@ -1,4 +1,4 @@
-import { SigninComponent } from "@account/components/google-signin/signin.component";
+import { SigninComponent } from "@account/components/signin-menu/signin.component";
 import { AccountService } from "@account/store/account.service";
 import { AccountState } from "@account/store/account.state";
 import { CommonModule } from '@angular/common';

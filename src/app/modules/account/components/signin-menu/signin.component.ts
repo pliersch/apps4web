@@ -77,7 +77,7 @@ export class SigninComponent implements OnInit {
     this.store.dispatch(new SignoutWithGoogle());
   }
 
-  navigateToAccount(): void {
-    void this.router.navigate(['account']);
+  navigateToAccountProfile(): void {
+    void this.router.navigate(['account/profile']);
   }
 }
