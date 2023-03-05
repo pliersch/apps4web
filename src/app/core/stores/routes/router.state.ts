@@ -11,6 +11,7 @@ export interface Route {
 
 interface RouterStateModel {
   routes: Route[];
+  routeBeforeSignin: string;
   role: Role;
 }
 
@@ -18,6 +19,7 @@ interface RouterStateModel {
   name: 'Routes',
   defaults: {
     role: Role.Guest,
+    routeBeforeSignin: '',
     routes: [
       {path: '/gallery', name: 'Galerie', accepted: Role.User},
       {path: '/chat', name: 'Chat', accepted: Role.User},
@@ -34,6 +36,11 @@ interface RouterStateModel {
 export class RouterState {
 
   @Selector()
+  static getRouteBeforeSignin(state: RouterStateModel): string {
+    return state.routeBeforeSignin;
+  }
+
+  @Selector()
   static getRoutes(state: RouterStateModel): Route[] {
     const accessibleRoutes: Route[] = [];
     for (const route of state.routes) {
@@ -48,6 +55,13 @@ export class RouterState {
   setRole(ctx: StateContext<RouterStateModel>, action: routerAction.SetUserRole): void {
     ctx.patchState({
       role: action.role
+    })
+  }
+
+  @Action(routerAction.SetRouteBeforeSignin)
+  setRouteBeforeSignin(ctx: StateContext<RouterStateModel>, action: routerAction.SetRouteBeforeSignin): void {
+    ctx.patchState({
+      routeBeforeSignin: action.url
     })
   }
 

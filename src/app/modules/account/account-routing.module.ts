@@ -1,4 +1,4 @@
-import { HiddenLoginComponent } from "@account/components/hidden-login/hidden-login.component";
+import { LoginComponent } from "@account/components/login/login.component";
 import { AccountProfileComponent } from "@account/components/profile/account-profile.component";
 import { AuthGuard } from "@account/guards/auth.guard";
 import { NgModule } from '@angular/core';
@@ -12,8 +12,8 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       {path: 'profile', component: AccountProfileComponent, canActivate: [AuthGuard]},
-      {path: 'login', component: HiddenLoginComponent},
-      {path: '**', component: HiddenLoginComponent},
+      {path: 'login', component: LoginComponent},
+      {path: '**', component: LoginComponent},
     ]
   }
 ];
