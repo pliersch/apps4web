@@ -1,7 +1,6 @@
 <div class="flex-container bg-primary-dark">
-
   <app-chat-emoji-picker
-    [show]="emojiPanel" (close)="onClose()"
+    [visible]="emojiPanel" (close)="onClose()"
     (emojiSelectEvent)="addEmojiToMessage($event)"></app-chat-emoji-picker>
   <button mat-mini-fab color="primary"
           class="m10" (click)="toggleEmojiPanel()">
@@ -24,6 +23,5 @@
     (click)="emitMessage()" [disabled]="content === &quot;&quot;">
     <mat-icon>send</mat-icon>
   </button>
-
 </div>
 

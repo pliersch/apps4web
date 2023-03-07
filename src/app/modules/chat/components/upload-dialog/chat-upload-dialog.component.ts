@@ -31,7 +31,6 @@ export class ChatUploadDialogComponent {
   }
 
   onClickCancel(): void {
-    console.log('ChatUploadDialogComponent onClickCancel: ',)
     this.dialogRef.close();
   }
 
@@ -62,9 +61,5 @@ export class ChatUploadDialogComponent {
       formData.append("thumbnail", file);
     }
   }
-
-  // onSelectImage($event: MouseEvent, i: number): void {
-  //   console.log('ChatUploadComponent onSelectImage: ')
-  // }
 
 }

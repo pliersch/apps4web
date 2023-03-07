@@ -12,7 +12,6 @@ import { NgScrollbarModule } from "ngx-scrollbar";
 
 import { ChatRoutingModule } from './chat-routing.module';
 import { ChatComponent } from './chat.component';
-import { ChatEmojiItemComponent } from './components/emoji-item/chat-emoji-item.component';
 import { ChatEmojiPickerComponent } from './components/emoji-picker/chat-emoji-picker.component';
 import { ChatImageItemComponent } from './components/image-item/chat-image-item.component';
 import { ChatInputComponent } from './components/input/chat-input.component';
@@ -26,7 +25,6 @@ import { ChatUploadDialogComponent } from './components/upload-dialog/chat-uploa
     ChatInputComponent,
     ChatToolbarComponent,
     ChatEmojiPickerComponent,
-    ChatEmojiItemComponent,
     ChatImageItemComponent,
     ChatMessagesComponent,
     ChatUploadDialogComponent

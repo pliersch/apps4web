@@ -1,6 +1,5 @@
 import { AccountState } from "@account/store/account.state";
 import { User } from "@account/store/user.model";
-// TODO extract to animation module?!
 import { animate, style, transition, trigger } from "@angular/animations";
 import { ViewportScroller } from "@angular/common";
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
@@ -45,17 +44,14 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   @Select(ChatState.getUserIdentities)
   userIdentities$: Observable<UserIdentity[]>;
 
-  private subscription: Subscription;
-
-  userFilter = '';
-  showPreview = false;
-  fileList: FileList;
-
   @ViewChild(ChatToolbarComponent)
   toolbar: ChatToolbarComponent;
 
   @ViewChild(NgScrollbar)
   scrollbarRef: NgScrollbar;
+
+  private subscription: Subscription;
+  userFilter = '';
 
   constructor(private chatService: ChatService,
               /*private socketService: SocketService,*/
@@ -66,10 +62,6 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription = this.user$.subscribe(res => this.user = res);
-    // this.subscription.add(this.messages$.subscribe(res => this.messages = res));
-    // messages.forEach((msg: Message) => {
-    //     this.onNewMessageAdded(msg)
-    //   })
   }
 
   ngAfterViewInit(): void {
@@ -80,7 +72,6 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-    // this.actionBarService.removeActions();
   }
 
   filterByUser(filter: string): void {
@@ -93,25 +84,6 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
     void this.scrollbarRef.scrollTo({bottom: 0, end: 0, duration: 300});
   }
 
-  private onNewMessageAdded(msg: Message): void {
-    console.log('ChatComponent onNewMessageAdded: ')
-
-    // this.messages.push(msg);
-
-    // if (msg.text !== undefined) {
-    //   const urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gi
-    //   msg.text = msg.text
-    //     .replace(/&/g, '&amp;')
-    //     .replace(/</g, '&lt;')
-    //     .replace(/>/g, '&gt;')
-    //     .replace(/"/g, '&quot;')
-    //     .replace(/'/g, '&#039;')
-    //   msg.text = msg.text.replace(urlPattern, "<a href='$1'>$1</a>")
-    // }
-    // this.chatMessages.push(this.processMessage(msg))
-    // this.scrollToEnd()
-  }
-
   sendMessage(content: string, pictures?: File[]): void {
     const msg: CreateMessageDto = {
       userId: this.user.id,
@@ -122,36 +94,6 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
     // SocketManager.getInstance(this).sendMessage(msg)
     // this.socketService.sendMessage(msg)
     this.store.dispatch(new SendMessage(msg))
-  }
-
-  onFileInputChange(fileList: FileList): void {
-    this.showPreview = true
-    console.log('ChatComponent onFileInputChange: ')
-    this.fileList = fileList;
-
-    // let file = e.target.files[0];
-    //   if (file) {
-    //     console.log(file)
-    //     this.fileName = file.name;
-    //     const formData = new FormData();
-    //     formData.append("thumbnail", file);
-    //     this.fileChangeEvent.emit(e.target.files);
-    //     // const upload$ = this.http.post("/api/thumbnail-upload", formData);
-    //     // upload$.subscribe();
-    //   }
-  }
-
-  processMessage(message: Message): Message {
-    const imageRegex = /([^\s\']+).(?:jpg|jpeg|gif|png)/i
-    if (imageRegex.test(message.text)) {
-      // @ts-ignore
-      message.image = imageRegex.exec(message.text)[0];
-    }
-    // const emojiRegex = /([\u{1F300}-\u{1F5FF}\u{1F900}-\u{1F9FF}\u{1F600}-\u{1F64F}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F1E6}-\u{1F1FF}\u{1F191}-\u{1F251}\u{2934}-\u{1f18e}])/gu
-    // if (emojiRegex.test(message.content)) {
-    //   message.content = message.content.replace(emojiRegex, '<span class="emoji">$1</span>')
-    // }
-    return message
   }
 
   handleUploadClick(): void {

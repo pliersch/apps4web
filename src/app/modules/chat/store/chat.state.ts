@@ -76,7 +76,6 @@ export class ChatState {
 
   @Action(chatAction.LoadChatSuccess)
   loadChatSuccess(ctx: StateContext<ChatStateModel>, action: chatAction.LoadChatSuccess): void {
-    console.log('ChatState loadChatSuccess: ', action.messageDtos)
     const state = ctx.getState();
     const messages: Message[] = [];
     const userIdentities: UserIdentity[] = [];
@@ -113,7 +112,6 @@ export class ChatState {
         map((message: MessageResultDto) =>
           asapScheduler.schedule(() => {
               ctx.dispatch(new chatAction.SendMessageSuccess(message))
-              console.log(message)
             }
           )
         ),

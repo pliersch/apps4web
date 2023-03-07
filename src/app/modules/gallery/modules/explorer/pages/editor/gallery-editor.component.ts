@@ -163,7 +163,9 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
       autoFocus: false
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.updateTagsOfSelectedPhotos(photos, result);
+      if (result) {
+        this.updateTagsOfSelectedPhotos(photos, result);
+      }
     });
   }
 
@@ -184,9 +186,6 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
   }
 
   private updateTagsOfSelectedPhotos(photos: Photo[], res: EditPhotoPropertiesDialogResult): void {
-    if (!res) {
-      return;
-    }
     for (const photo of photos) {
       const photoUpdate: PhotoUpdate = {
         addedTagIds: [],

@@ -26,7 +26,6 @@ export class ChatInputComponent {
 
   content = '';
   emojiPanel = false;
-  visible = false;
 
   emitMessage(): void {
     this.messageEvent.emit(this.content);
@@ -45,15 +44,11 @@ export class ChatInputComponent {
     this.emojiPanel = !this.emojiPanel
   }
 
-  @HostListener('document:keydown', ['$event'])
+  @HostListener('keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent): void {
     if (event.code === 'Enter' && event.ctrlKey) {
       this.emitMessage();
     }
-  }
-
-  reset(): void {
-    // this.$refs.form.reset()
   }
 
   showUpload(): void {

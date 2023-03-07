@@ -1,9 +1,8 @@
-<mat-card class="emoji-picker" *ngIf="show">
-  <mat-card-header class="blue white--text"><span class="headline">Emoji Pickers</span></mat-card-header>
+<mat-card class="emoji-picker" *ngIf="visible">
   <mat-card-content>
     <div class="emoji-content">
-      <app-chat-emoji-item *ngFor="let emoji of emojis" [emoji]="emoji"
-                           (click)="onEmojiClick(emoji)"></app-chat-emoji-item>
+      <span *ngFor="let emoji of emojis"
+            (click)="onEmojiClick(emoji)">{{ emoji.value }}</span>
     </div>
   </mat-card-content>
 </mat-card>

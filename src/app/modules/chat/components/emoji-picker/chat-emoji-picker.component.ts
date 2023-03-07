@@ -13,11 +13,9 @@ export class ChatEmojiPickerComponent implements OnInit {
   emojiSelectEvent = new EventEmitter<Emoji>();
 
   @Input()
-  show: boolean = false;
+  visible = false;
 
   emojis: Emoji[] = [];
-
-  // mixins: [escapeMixin],
 
   constructor() {
   }
@@ -30,26 +28,11 @@ export class ChatEmojiPickerComponent implements OnInit {
     this.emojiSelectEvent.emit(emoji);
   }
 
-  handleEscape(): void {
-    // this.close()
-    //  this.$emit('close')
-  }
-
-  //   mounted() {
-  //   document.addEventListener('keyup', this.onEscape)
-  // },
-  // beforeDestroy() {
-  //   document.removeEventListener('keyup', this.onEscape)
-  // },
-  // methods: {
-  //   onEscape(event) {
-  //     if (event.defaultPrevented) {
-  //       return
-  //     }
-  //     const key = event.key || event.keyCode
-  //     if (key === 'Escape' || key === 'Esc' || key === 27) {
-  //       this.handleEscape()
-  //     }
+  // @HostListener('document:click', ['$event.target'])
+  // onClick(btn: any): void {
+  //   if (this.visible) {
+  //     this.visible = false;
   //   }
   // }
+
 }

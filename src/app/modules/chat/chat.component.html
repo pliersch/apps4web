@@ -1,20 +1,17 @@
 <div class="grid">
   <div class="toolbar">
-    <app-chat-toolbar
-      [userIdentities$]="userIdentities$" (filterUserEvent)="filterByUser($event)"></app-chat-toolbar>
+    <app-chat-toolbar [userIdentities$]="userIdentities$"
+                      (filterUserEvent)="filterByUser($event)"></app-chat-toolbar>
   </div>
   <div class="chat-container">
     <div class="column-max-height">
       <ng-scrollbar>
-        <app-chat-messages
-          [user]="user" [messages]="messages$" (imageLoadEvent)="scrollToEnd()"></app-chat-messages>
+        <app-chat-messages [user]="user" [messages]="messages$"
+                           (imageLoadEvent)="scrollToEnd()"></app-chat-messages>
       </ng-scrollbar>
     </div>
-    <app-chat-upload-dialog
-      class="upload-container" *ngIf="showPreview" @show></app-chat-upload-dialog>
   </div>
-  <app-chat-input
-    class="input" (messageEvent)="sendMessage($event)" (showUploadEvent)="handleUploadClick()"
-    (fileChangeEvent)="onFileInputChange($event)"></app-chat-input>
+  <app-chat-input class="input" (messageEvent)="sendMessage($event)"
+                  (showUploadEvent)="handleUploadClick()"></app-chat-input>
 </div>
 
