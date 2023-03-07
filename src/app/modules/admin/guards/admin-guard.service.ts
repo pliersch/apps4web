@@ -1,6 +1,7 @@
 ﻿import { AccountState } from "@account/store/account.state";
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { SetRouteBeforeSignin } from "@app/core/stores/routes/router.actions";
 import { Store } from "@ngxs/store";
 
 @Injectable({providedIn: 'root'})
@@ -13,7 +14,8 @@ export class AdminGuard implements CanActivate {
     if (this.store.selectSnapshot(AccountState.isAdmin)) {
       return true;
     }
-    void this.router.navigate(['/account/login'], {queryParams: {returnUrl: state.url}});
+    this.store.dispatch(new SetRouteBeforeSignin(state.url))
+    void this.router.navigate(['/account/login']);
     return false;
   }
 

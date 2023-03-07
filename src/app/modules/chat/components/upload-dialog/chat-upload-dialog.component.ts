@@ -31,6 +31,7 @@ export class ChatUploadDialogComponent {
   }
 
   onClickCancel(): void {
+    console.log('ChatUploadDialogComponent onClickCancel: ',)
     this.dialogRef.close();
   }
 

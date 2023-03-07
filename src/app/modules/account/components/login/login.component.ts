@@ -1,9 +1,10 @@
+import { LoginWithId } from "@account/store/account.actions";
 import { AccountState } from "@account/store/account.state";
 import { User } from "@account/store/user.model";
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { RouterState } from "@app/core/stores/routes/router.state";
-import { Select } from "@ngxs/store";
+import { Select, Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 
 @Component({
@@ -24,7 +25,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   id: string;
   private subscription: Subscription;
 
-  constructor(private router: Router) { }
+  constructor(private store: Store,
+              private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.subscription = this.user$.subscribe(res => {
@@ -33,6 +36,14 @@ export class LoginComponent implements OnInit, OnDestroy {
         void this.router.navigateByUrl(this.routeBeforeSignin);
       }
     });
+    this.subscription.add(this.route.queryParams
+      .subscribe(params => {
+          this.id = params.id;
+          if (params.id) {
+            this.store.dispatch(new LoginWithId(params.id));
+          }
+        }
+      ));
     this.subscription.add(
       this.routeBeforeSignin$.subscribe(url => this.routeBeforeSignin = url));
   }

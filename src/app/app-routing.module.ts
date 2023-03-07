@@ -5,30 +5,25 @@ import { DashboardComponent } from "@modules/dashboard/dashboard.component";
 import { LegalNoticeComponent } from "@modules/legal-notice/legal-notice.component";
 import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
 
-// const authModule = () => import('@app/modules/auth/auth.module').then((x) => x.AuthModule);
-const chatModule = () => import('@app/modules/chat/chat.module').then((x) => x.ChatModule);
-const adminModule = () => import('@modules/admin/admin.module').then((x) => x.AdminModule);
-// const doctorModule = () => import('@app/modules/doctor/doctor.module').then((x) => x.DoctorModule);
-const accountModule = () => import('@app/modules/account/account.module').then((x) => x.AccountModule);
-// const recipesModule = () => import('@app/modules/recipes/recipes.module').then((x) => x.RecipesModule);
-// const samplesModule = () => import('@app/modules/samples/samples.module').then((x) => x.SamplesModule);
 const galleryModule = () => import('@app/modules/gallery/gallery.module').then((x) => x.GalleryModule);
+const accountModule = () => import('@app/modules/account/account.module').then((x) => x.AccountModule);
+const adminModule = () => import('@modules/admin/admin.module').then((x) => x.AdminModule);
 const threeModule = () => import('@app/modules/three/three.module').then((x) => x.ThreeModule);
+const chatModule = () => import('@app/modules/chat/chat.module').then((x) => x.ChatModule);
+// const recipesModule = () => import('@app/modules/recipes/recipes.module').then((x) => x.RecipesModule);
 // const wasteModule = () => import('@app/modules/waste-calendar/waste-calendar.module').then((x) => x.WasteCalendarModule);
 
 const routes: Routes = [{
   path: '', component: DefaultLayoutComponent, children: [
     {path: '', title: 'Home', component: DashboardComponent},
-    // {path: 'dashboard', title: 'Home', component: DashboardComponent},
     {path: 'impressum', title: 'Impressum', component: LegalNoticeComponent},
-    {path: 'chat', loadChildren: chatModule, canActivate: [AuthGuard]},
+    {path: 'chat', title: 'Chat', loadChildren: chatModule, canActivate: [AuthGuard]},
     {path: 'admin', title: 'Administration', loadChildren: adminModule},
-    // {path: 'waste', loadChildren: wasteModule},
     {path: 'gallery', title: 'Photo Galerie', loadChildren: galleryModule, canActivate: [AuthGuard]},
+    {path: 'three', title: 'ThreeJS Playground', loadChildren: threeModule, canActivate: [AuthGuard]},
     {path: 'account', title: 'Account Info', loadChildren: accountModule},
-    // {path: 'samples', loadChildren: samplesModule},
+    // {path: 'waste', loadChildren: wasteModule},
     // {path: 'recipes', loadChildren: recipesModule},
-    {path: 'three', title: 'ThreeJS Playground', loadChildren: threeModule},
   ]
 }];
 
