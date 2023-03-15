@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   @Select(RouterState.getRouteBeforeSignin)
   routeBeforeSignin$: Observable<string>;
-  routeBeforeSignin: string;
+  routeBeforeSignin = '';
 
   @Select(AccountState.getUser)
   user$: Observable<User>;
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.user$.subscribe(res => {
       this.user = res;
-      if (this.routeBeforeSignin != ('' || undefined)) {
+      if (this.routeBeforeSignin != '') {
         void this.router.navigateByUrl(this.routeBeforeSignin);
       }
     });

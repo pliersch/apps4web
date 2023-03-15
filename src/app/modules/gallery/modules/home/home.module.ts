@@ -8,11 +8,13 @@ import { ShareModule } from "@modules/share";
 import { MaterialModule } from "@modules/share/material/material.module";
 import { NgxsModule } from "@ngxs/store";
 import { NgScrollbarModule } from "ngx-scrollbar";
+import { GalleryHighlightComponent } from './components/gallery-highlight.component';
 
 
 @NgModule({
   declarations: [
-    GalleryHomeComponent
+    GalleryHomeComponent,
+    GalleryHighlightComponent
   ],
   imports: [
     CommonModule,

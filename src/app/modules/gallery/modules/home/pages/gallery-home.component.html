@@ -1,12 +1,6 @@
 <ng-scrollbar class="dark-scrollbar" track="vertical" visibility="always">
   <div class="gallery">
-    <div class="gallery-panel" *ngFor="let photo of (photos$ | async)">
-      <picture>
-        <source media="(min-width: 1900px)" [srcset]="getPhotoUrl(photo.fileName)">
-        <source media="(min-width: 1200px)" [srcset]="getPreviewUrl(photo.fileName)">
-        <source media="(min-width: 800px)" [srcset]="getThumbUrl(photo.fileName)">
-        <img loading="lazy" [src]="getThumbUrl(photo.fileName)" alt="thumb">
-      </picture>
-    </div>
+    <app-gallery-highlight
+      *ngFor="let photo of (photos$ | async)" [photo]="photo"></app-gallery-highlight>
   </div>
 </ng-scrollbar>
