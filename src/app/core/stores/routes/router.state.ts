@@ -21,11 +21,11 @@ interface RouterStateModel {
     role: Role.Guest,
     routeBeforeSignin: '',
     routes: [
-      {path: '/gallery', name: 'Galerie', accepted: Role.User},
-      {path: '/chat', name: 'Chat', accepted: Role.User},
-      {path: '/three', name: 'Three', accepted: Role.User},
-      {path: '/account', name: 'Account', accepted: Role.User},
-      {path: '/admin', name: 'Admin', accepted: Role.Admin},
+      {path: 'gallery', name: 'Galerie', accepted: Role.User},
+      {path: 'chat', name: 'Chat', accepted: Role.User},
+      {path: 'three', name: 'Three', accepted: Role.Guest},
+      {path: 'account', name: 'Account', accepted: Role.User},
+      {path: 'admin', name: 'Admin', accepted: Role.Admin},
       // {route: '/dashboard', name: 'Dashboard', accepted: Role.Guest},
       // {route: '/recipes', name: 'Rezepte', accepted: Role.Guest},
     ]
@@ -41,7 +41,18 @@ export class RouterState {
   }
 
   @Selector()
-  static getRoutes(state: RouterStateModel): Route[] {
+  static getAccessibleRoutes(state: RouterStateModel): Route[] {
+    const accessibleRoutes: Route[] = [];
+    for (const route of state.routes) {
+      if (state.role >= route.accepted) {
+        accessibleRoutes.push(route);
+      }
+    }
+    return accessibleRoutes;
+  }
+
+  @Selector()
+  static getRoutesForGuests(state: RouterStateModel): Route[] {
     const accessibleRoutes: Route[] = [];
     for (const route of state.routes) {
       if (state.role >= route.accepted) {

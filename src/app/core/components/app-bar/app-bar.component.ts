@@ -15,7 +15,7 @@ export class AppBarComponent {
   @Output() toggleNavEvent = new EventEmitter<string>();
   @Output() switchThemeEvent = new EventEmitter<string>();
 
-  @Select(RouterState.getRoutes)
+  @Select(RouterState.getAccessibleRoutes)
   routes$: Observable<Route[]>;
 
 // @ViewChild("authMenuPlaceHolder", {read: ViewContainerRef})

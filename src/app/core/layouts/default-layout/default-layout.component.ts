@@ -17,7 +17,7 @@ export class DefaultLayoutComponent implements OnInit {
 
   @ViewChild(MatSidenav) drawer!: MatSidenav;
 
-  @Select(RouterState.getRoutes)
+  @Select(RouterState.getAccessibleRoutes)
   routes$: Observable<Route[]>;
 
   appName = constants.APP_NAME;

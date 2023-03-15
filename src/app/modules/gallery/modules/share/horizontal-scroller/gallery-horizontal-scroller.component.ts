@@ -1,11 +1,11 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { ScrollerItemComponent } from "@gallery/modules/share/scroller-item/scroller-item.component";
+import { SetCurrentPhoto } from "@gallery/store/photos/photo.actions";
 import { Photo } from '@gallery/store/photos/photo.model';
+import { PhotoState } from "@gallery/store/photos/photo.state";
+import { Select, Store } from '@ngxs/store';
 import { NgScrollbar } from 'ngx-scrollbar';
 import { Observable } from 'rxjs';
-import { Select, Store } from '@ngxs/store';
-import { PhotoState } from "@gallery/store/photos/photo.state";
-import { SetCurrentPhoto } from "@gallery/store/photos/photo.actions";
-import { ScrollerItemComponent } from "@gallery/modules/share/scroller-item/scroller-item.component";
 
 @Component({
   selector: 'app-gallery-horizontal-scroller',
@@ -62,7 +62,8 @@ export class GalleryHorizontalScrollerComponent implements OnInit {
 
   scrollToIndex(index: number): void {
     void this.scrollbar.scrollTo({
-      left: index * 150
+      left: index * 150,
+      duration: 0
     });
   }
 
