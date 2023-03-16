@@ -10,6 +10,7 @@ export class AdminLayoutComponent implements OnInit {
 
   routes: Route[] = [
     {name: 'User', path: '/admin/user', accepted: Role.Admin},
+    {name: 'Photos', path: '/admin/photos', accepted: Role.Admin},
   ];
 
   activeLink = this.routes[0].path;
@@ -23,8 +24,9 @@ export class AdminLayoutComponent implements OnInit {
     this.location.onUrlChange(url => this.activeLink = url);
   }
 
-  navigateUrl(link: string): void {
-    void this.router.navigateByUrl(link);
+  navigateUrl(url: string): void {
+    console.log('AdminLayoutComponent navigateUrl: ', url)
+    void this.router.navigateByUrl(url);
   }
 
 }
