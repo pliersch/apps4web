@@ -29,7 +29,7 @@
         <div class="images-wrapper">
           <app-editor-photo-control
             *ngFor="let photo of (photos$ | async); let i=index" class="selection-item" [photo]="photo"
-            [selected]="currentIndex === i" [hasRights]="true" [edit]="isSelectForEdit(photo)"
+            [selected]="currentIndex === i" [hasRights]="true" [edit]="selection.includes(photo)"
             (click)="setCurrent(photo)" (deleteEvent)="onSelectForDelete($event)"
             (previewEvent)="onSelectForPreview($event)" (editEvent)="onSelectForEdit($event)"
             (groupEditEvent)="onSelectGroupEdit($event)"></app-editor-photo-control>

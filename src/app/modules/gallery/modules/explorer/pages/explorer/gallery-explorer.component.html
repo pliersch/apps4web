@@ -38,7 +38,7 @@
             *ngFor="let photo of (photos$ | async); let i=index" class="selection-item"
             [selected]="currentIndex === i"
             (click)="setCurrent(photo)" [photo]="photo"
-            [download]="isDownload(photo)"
+            [download]="selectedDownloads.includes(photo)"
             (previewEvent)="onSelectForPreview($event)"
             (downloadEvent)="onSelectForDownload($event)"></app-explorer-photo-control>
         </div>

@@ -9,7 +9,7 @@
       </mat-expansion-panel-header>
 
       <mat-selection-list>
-        <mat-list-option *ngFor="let tag of group.tags" [selected]="isTagActivated(tag)"
+        <mat-list-option *ngFor="let tag of group.tags" [selected]="activeTags.includes(tag)"
                          [value]="tag" (click)="onSelectionChange(tag)">
           {{tag.name + ' ' + getPhotoCount(tag.id)}}
         </mat-list-option>

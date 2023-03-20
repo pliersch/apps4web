@@ -97,10 +97,6 @@ export class GalleryExplorerComponent extends AbstractExplorerComponent implemen
     this.store.dispatch(new photoAction.ClearFilter())
   }
 
-  isDownload(photo: Photo): boolean {
-    return this.selectedDownloads.includes(photo);
-  }
-
   scrollToActiveItem(): void {
     const elementRef = this.photoControls.get(this.currentIndex);
     if (elementRef) {

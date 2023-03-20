@@ -130,10 +130,6 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
     this.store.dispatch(new photoAction.ClearFilter())
   }
 
-  isSelectForEdit(photo: Photo): boolean {
-    return this.selection.includes(photo);
-  }
-
   scrollToActiveItem(): void {
     const elementRef = this.photoControls.get(this.currentIndex);
     if (elementRef) {
