@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { joinUnique } from "@app/common/util/array-utils";
 import {
+  EditorPhotoControlComponent,
   EditPhotoPropertiesDialogData,
   EditPhotoPropertiesDialogResult,
   GalleryDeletePhotoComponent,
@@ -41,6 +42,9 @@ enum ActionTypes {
   styleUrls: ['./gallery-editor.component.scss']
 })
 export class GalleryEditorComponent extends AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  @ViewChildren(EditorPhotoControlComponent, {read: ElementRef})
+  photoControls!: QueryList<ElementRef>;
 
   @Select(TagState.getTags)
   tags$: Observable<Tag[]>
@@ -128,6 +132,15 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
 
   isSelectForEdit(photo: Photo): boolean {
     return this.selection.includes(photo);
+  }
+
+  scrollToActiveItem(): void {
+    const elementRef = this.photoControls.get(this.currentIndex);
+    if (elementRef) {
+      void this.scrollbar.scrollToElement(elementRef.nativeElement, {
+        duration: 0
+      });
+    }
   }
 
   private deletePhotos(): void {

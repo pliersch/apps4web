@@ -12,7 +12,7 @@ import { Tag, TagGroup } from "@gallery/store/tags/tag.model";
 import { TagState } from "@gallery/store/tags/tag.state";
 import { Select, Store } from "@ngxs/store";
 import { NgScrollbar } from "ngx-scrollbar";
-import { Observable, Subscription } from "rxjs";
+import { Observable, Subscription, take } from "rxjs";
 import { tap } from "rxjs/operators";
 
 
@@ -24,7 +24,7 @@ import { tap } from "rxjs/operators";
 export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('scrollbar')
-  scrollbarRef: NgScrollbar;
+  scrollbar: NgScrollbar;
 
   @Select(AccountState.isAuthenticated)
   isAuthenticated$: Observable<boolean>;
@@ -119,22 +119,29 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   ngAfterViewInit(): void {
-    this.content = this.scrollbarRef.nativeElement.querySelector('.ng-scroll-content')!;
+    this.content = this.scrollbar.nativeElement.querySelector('.ng-scroll-content')!;
     this.absoluteHeight = this.content.clientHeight + this.content.scrollTop;
-    this.viewport = this.scrollbarRef.nativeElement.querySelector('.ng-scroll-viewport')!;
+    this.viewport = this.scrollbar.nativeElement.querySelector('.ng-scroll-viewport')!;
     this.observeScrollContent();
-    this.scrollbarRef.verticalScrolled.pipe(
+    this.scrollbar.verticalScrolled.pipe(
       tap((e: Event) => {
         this.requestNextPhotos(e.target as Element);
       })
     ).subscribe();
     this.requestNextPhotos(this.viewport);
+    this.currentIndex$.pipe(take(1)).subscribe(res => {
+      this.currentIndex = res;
+      this.scrollToActiveItem();
+    })
+  }
+
+  protected scrollToActiveItem(): void {
+    throw new Error('you must impl "scrollToActiveItem"')
   }
 
   observeScrollContent(): void {
     this.resizeObserver = new ResizeObserver(res => {
       this.absoluteHeight = res[0].contentRect.height;
-      console.log('AbstractExplorerComponent : ',)
       this.requestNextPhotos(this.viewport);
     });
     this.resizeObserver.observe(this.content);

@@ -32,7 +32,7 @@
   </div>
   <div class="column-max-width">
     <div class="scrollbar-container">
-      <ng-scrollbar #scrollbar>
+      <ng-scrollbar #scrollbar class="dark-scrollbar">
         <div class="images-wrapper">
           <app-explorer-photo-control
             *ngFor="let photo of (photos$ | async); let i=index" class="selection-item"

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Photo } from "@gallery/store/photos/photo.model";
 import { getW300Url } from "@gallery/store/photos/photo.tools";
 
@@ -7,7 +7,7 @@ import { getW300Url } from "@gallery/store/photos/photo.tools";
   templateUrl: './scroller-item.component.html',
   styleUrls: ['./scroller-item.component.scss']
 })
-export class ScrollerItemComponent {
+export class ScrollerItemComponent implements OnInit {
 
   @Input()
   photo: Photo;
@@ -18,11 +18,13 @@ export class ScrollerItemComponent {
   @Output()
   selectEvent = new EventEmitter<ScrollerItemComponent>();
 
-  onClickImage(): void {
-    this.selectEvent.emit(this);
+  imageUrl: string;
+
+  ngOnInit(): void {
+    this.imageUrl = getW300Url(this.photo.fileName);
   }
 
-  getThumbUrl(fileName: string): string {
-    return getW300Url(fileName);
+  onClickImage(): void {
+    this.selectEvent.emit(this);
   }
 }

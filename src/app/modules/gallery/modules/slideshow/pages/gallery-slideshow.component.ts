@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Select, Store } from "@ngxs/store";
-import { SetNextPhoto, SetPreviousPhoto } from "@gallery/store/photos/photo.actions";
 import { GalleryHorizontalScrollerComponent } from "@gallery/core";
-import { getPhotoUrl } from "@gallery/store/photos/photo.tools";
-import { PhotoState } from "@gallery/store/photos/photo.state";
-import { Observable, Subscription } from "rxjs";
+import { SetNextPhoto, SetPreviousPhoto } from "@gallery/store/photos/photo.actions";
 import { Photo } from "@gallery/store/photos/photo.model";
+import { PhotoState } from "@gallery/store/photos/photo.state";
+import { getPhotoUrl } from "@gallery/store/photos/photo.tools";
+import { Select, Store } from "@ngxs/store";
+import { Observable, Subscription, take } from "rxjs";
 
 @Component({
   selector: 'app-gallery-slideshow',
@@ -15,7 +15,7 @@ import { Photo } from "@gallery/store/photos/photo.model";
 export class GallerySlideshowComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild(GalleryHorizontalScrollerComponent)
-  horizontalScrollbarRef!: GalleryHorizontalScrollerComponent;
+  scroller!: GalleryHorizontalScrollerComponent;
 
   @Select(PhotoState.getCurrentPhoto)
   currentPhoto$: Observable<Photo>;
@@ -24,7 +24,7 @@ export class GallerySlideshowComponent implements OnInit, AfterViewInit, OnDestr
   currentIndex$: Observable<number>;
   currentIndex: number;
 
-  imgUrl = '';
+  imgUrl: string;
 
   private subscription: Subscription;
 
@@ -40,11 +40,10 @@ export class GallerySlideshowComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   ngAfterViewInit(): void {
-    this.subscription.add(
-      this.currentIndex$.subscribe(res => {
-        this.currentIndex = res;
-        this.scrollToActiveItem();
-      }));
+    this.currentIndex$.pipe(take(1)).subscribe(res => {
+      this.currentIndex = res;
+      this.scrollToActiveItem();
+    })
   }
 
   ngOnDestroy(): void {
@@ -60,7 +59,7 @@ export class GallerySlideshowComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   private scrollToActiveItem(): void {
-    this.horizontalScrollbarRef.scrollToIndex(this.currentIndex);
+    this.scroller.scrollToIndex(this.currentIndex);
   }
 
 }

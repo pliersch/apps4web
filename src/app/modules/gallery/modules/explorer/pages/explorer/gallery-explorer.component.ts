@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
+import { ExplorerPhotoControlComponent } from "@gallery/modules/explorer";
 import {
   AbstractExplorerComponent
 } from "@gallery/modules/explorer/pages/abstract-explorer/abstract-explorer.component";
@@ -26,6 +27,9 @@ enum ActionTypes {
   styleUrls: ['./gallery-explorer.component.scss']
 })
 export class GalleryExplorerComponent extends AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  @ViewChildren(ExplorerPhotoControlComponent, {read: ElementRef})
+  photoControls!: QueryList<ElementRef>;
 
   actions: Action[] = [
     {name: ActionTypes.SelectAll, icon: 'done_all', description: 'select all', handler: this},
@@ -95,6 +99,15 @@ export class GalleryExplorerComponent extends AbstractExplorerComponent implemen
 
   isDownload(photo: Photo): boolean {
     return this.selectedDownloads.includes(photo);
+  }
+
+  scrollToActiveItem(): void {
+    const elementRef = this.photoControls.get(this.currentIndex);
+    if (elementRef) {
+      void this.scrollbar.scrollToElement(elementRef.nativeElement, {
+        duration: 0
+      });
+    }
   }
 
   private downloadPhotos(): void {
