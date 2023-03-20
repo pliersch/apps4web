@@ -179,6 +179,7 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.resizeObserver.unobserve(this.content)
     // this.actionBarService.removeActions();
   }
 
