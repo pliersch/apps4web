@@ -13,7 +13,8 @@ const routes: Routes = [
     children: [
       {path: 'user', title: 'User', resolve: {userResolver: AdminUserResolver}, loadChildren: userModule},
       {path: 'photos', title: 'Photos', /*resolve: {userResolver: AdminUserResolver},*/ loadChildren: photosModule},
-      {path: '**', title: 'User', /*resolve: {userResolver: AdminUserResolver},*/ loadChildren: photosModule}
+      {path: '**', redirectTo: 'user', pathMatch: 'prefix'},
+      {path: '', redirectTo: 'user', pathMatch: 'prefix'},
     ]
   }
 ];

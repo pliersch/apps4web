@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-user-manger-layout',
+  selector: 'app-photo-admin-layout',
   templateUrl: './photos-layout.component.html',
   styleUrls: ['./photos-layout.component.scss']
 })

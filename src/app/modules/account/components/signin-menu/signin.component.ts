@@ -78,6 +78,6 @@ export class SigninComponent implements OnInit {
   }
 
   navigateToAccountProfile(): void {
-    void this.router.navigate(['account/profile']);
+    void this.router.navigate(['account']);
   }
 }

@@ -4,7 +4,7 @@ import { GalleryHomeComponent } from "@gallery/modules/home/pages/gallery-home.c
 
 const routes: Routes = [
   {
-    path: '', component: GalleryHomeComponent
+    path: '', component: GalleryHomeComponent,
   }
 ];
 
