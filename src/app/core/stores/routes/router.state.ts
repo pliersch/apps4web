@@ -20,22 +20,22 @@ interface RouterStateModel {
   defaults: {
     role: Role.Guest,
     routeBeforeSignin: '',
-    routes: [
-      {path: 'gallery', name: 'Galerie', accepted: Role.Guest},
-      {path: 'chat', name: 'Chat', accepted: Role.Guest},
-      {path: 'three', name: 'Three', accepted: Role.Guest},
-      {path: 'account', name: 'Account', accepted: Role.Guest},
-      {path: 'admin', name: 'Admin', accepted: Role.Guest},
-    ]
     // routes: [
-    //   {path: 'gallery', name: 'Galerie', accepted: Role.User},
-    //   {path: 'chat', name: 'Chat', accepted: Role.User},
+    //   {path: 'gallery', name: 'Galerie', accepted: Role.Guest},
+    //   {path: 'chat', name: 'Chat', accepted: Role.Guest},
     //   {path: 'three', name: 'Three', accepted: Role.Guest},
-    //   {path: 'account', name: 'Account', accepted: Role.User},
-    //   {path: 'admin', name: 'Admin', accepted: Role.Admin},
-    //   // {route: '/dashboard', name: 'Dashboard', accepted: Role.Guest},
-    //   // {route: '/recipes', name: 'Rezepte', accepted: Role.Guest},
+    //   {path: 'account', name: 'Account', accepted: Role.Guest},
+    //   {path: 'admin', name: 'Admin', accepted: Role.Guest},
     // ]
+    routes: [
+      {path: 'gallery', name: 'Galerie', accepted: Role.User},
+      {path: 'chat', name: 'Chat', accepted: Role.User},
+      {path: 'three', name: 'Three', accepted: Role.Guest},
+      {path: 'account', name: 'Account', accepted: Role.User},
+      {path: 'admin', name: 'Admin', accepted: Role.Admin},
+      // {route: '/dashboard', name: 'Dashboard', accepted: Role.Guest},
+      // {route: '/recipes', name: 'Rezepte', accepted: Role.Guest},
+    ]
   }
 })
 
