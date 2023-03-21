@@ -16,7 +16,9 @@ import { Observable } from 'rxjs';
 const PHOTO_BASE_URL = `${environment.apiUrl}/photos`;
 const DOWNLOAD_BASE_URL = `${environment.apiUrl}/download`;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class PhotoService {
 
   constructor(private http: HttpClient) { }
