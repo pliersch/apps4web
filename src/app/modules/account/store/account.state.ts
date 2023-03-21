@@ -38,8 +38,8 @@ export class AccountState {
   }
 
   @Selector()
-  static isAuthenticated(state: AccountStateModel): boolean {
-    return !!state.user;
+  static isUser(state: AccountStateModel): boolean {
+    return state.user?.role === Role.User;
   }
 
   @Selector()

@@ -26,7 +26,7 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   @ViewChild('scrollbar')
   scrollbar: NgScrollbar;
 
-  @Select(AccountState.isAuthenticated)
+  @Select(AccountState.isUser)
   isAuthenticated$: Observable<boolean>;
   isAuthenticated: boolean;
 

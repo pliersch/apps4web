@@ -14,6 +14,10 @@ export class AdminGuard implements CanActivate {
     if (this.store.selectSnapshot(AccountState.isAdmin)) {
       return true;
     }
+    if (this.store.selectSnapshot(AccountState.isUser)) {
+      void this.router.navigate(['/error']);
+      return false;
+    }
     this.store.dispatch(new SetRouteBeforeSignin(state.url))
     void this.router.navigate(['/account/login']);
     return false;

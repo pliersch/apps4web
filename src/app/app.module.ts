@@ -29,6 +29,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthLayoutComponent } from "./core/layouts/auth-layout/auth-layout.component";
 import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
+import { ErrorComponent } from './core/components/error/error.component';
 
 const ngxsConfig: NgxsModuleOptions = {
   developmentMode: !environment.production,
@@ -64,6 +65,7 @@ const ngxsConfig: NgxsModuleOptions = {
     DashboardCardComponent,
     WidgetComponent,
     WidgetDirective,
+    ErrorComponent,
     // DynamicAppbarDirective,
     // DynamicAppbarComponent,
     // LegalNoticeComponent,

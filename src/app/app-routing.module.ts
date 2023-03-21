@@ -1,6 +1,7 @@
 import { AuthGuard } from "@account/guards/auth.guard";
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ErrorComponent } from "@app/core/components/error/error.component";
 import { DashboardComponent } from "@modules/dashboard/dashboard.component";
 import { LegalNoticeComponent } from "@modules/legal-notice/legal-notice.component";
 import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
@@ -17,6 +18,7 @@ const routes: Routes = [{
   path: '', component: DefaultLayoutComponent, children: [
     {path: '', title: 'Home', component: DashboardComponent},
     {path: 'impressum', title: 'Impressum', component: LegalNoticeComponent},
+    {path: 'error', title: 'Impressum', component: ErrorComponent},
     {path: 'chat', title: 'Chat', loadChildren: chatModule, canActivate: [AuthGuard]},
     {path: 'admin', title: 'Administration', loadChildren: adminModule},
     {path: 'gallery', title: 'Photo Galerie', loadChildren: galleryModule, canActivate: [AuthGuard]},
