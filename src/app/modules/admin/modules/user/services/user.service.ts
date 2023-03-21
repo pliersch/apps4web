@@ -1,9 +1,8 @@
+import { CreateUserDto, User } from "@account/store/user.model";
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
-import { CreateUserDto, User } from "@account/store/user.model";
 
 const baseUrl = `${environment.apiUrl}/user`;
 

@@ -25,7 +25,6 @@ export class AdminLayoutComponent implements OnInit {
   }
 
   navigateUrl(url: string): void {
-    console.log('AdminLayoutComponent navigateUrl: ', url)
     void this.router.navigateByUrl(url);
   }
 
