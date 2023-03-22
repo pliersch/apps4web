@@ -1,1 +1,11 @@
-<p>generally works!</p>
+<mat-card class="card">
+  <mat-card-content>
+    <div class="action-container p5">
+      <span> Datenbank: {{availablePhotos$ | async}}</span>
+      <button mat-raised-button color="primary"
+              type="button" (click)="onClickDeletePhotos()">
+        <mat-icon> delete</mat-icon>
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>
