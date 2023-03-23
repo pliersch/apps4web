@@ -1,15 +1,15 @@
+import { AccountState } from "@account/store/account.state";
+import { User } from "@account/store/user.model";
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { parseExif } from "@app/common/util/date-util";
+import { PhotoService } from "@gallery/services/photo.service";
+import { TagService } from "@gallery/services/tag.service";
+import { AddPhoto } from "@gallery/store/photos/photo.actions";
+import { Tag, TagGroup } from "@gallery/store/tags/tag.model";
+import { TagState } from "@gallery/store/tags/tag.state";
 import { Select, Store } from "@ngxs/store";
 import * as ExifReader from 'exifreader';
-import { TagState } from "@gallery/store/tags/tag.state";
 import { from, Observable, ObservedValueOf } from "rxjs";
-import { Tag, TagGroup } from "@gallery/store/tags/tag.model";
-import { AddPhoto } from "@gallery/store/photos/photo.actions";
-import { TagService } from "@gallery/services/tag.service";
-import { PhotoService } from "@gallery/services/photo.service";
-import { User } from "@account/store/user.model";
-import { AccountState } from "@account/store/account.state";
-import { parseExif } from "@app/common/util/date-util";
 
 @Component({
   selector: 'app-gallery-upload',

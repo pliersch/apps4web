@@ -353,11 +353,13 @@ export class PhotoState {
   @Action(photoAction.AddPhotoSuccess)
   addPhotoSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoSuccess): void {
     const state = ctx.getState();
+    const photo: Photo = action.photo;
+    photo.recordDate = new Date(photo.recordDate);
     ctx.patchState({
       availableServerPhotos: state.availableServerPhotos + 1,
       photos: [
         ...state.photos,
-        action.photo,
+        photo,
       ],
     });
     this.alertService.success('Upload success');
