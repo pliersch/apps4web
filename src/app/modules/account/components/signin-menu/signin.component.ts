@@ -1,6 +1,7 @@
-import { SigninWithGoogle, SigninWithGoogleFail, SignoutWithGoogle } from "@account/store/account.actions";
+import { Logout, SigninWithGoogle, SigninWithGoogleFail } from "@account/store/account.actions";
 import { AccountState } from "@account/store/account.state";
 import { GoogleUser } from "@account/store/google-user.model";
+import { User } from "@account/store/user.model";
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { Select, Store } from "@ngxs/store";
@@ -15,15 +16,25 @@ import { Observable } from "rxjs";
 })
 export class SigninComponent implements OnInit {
 
+  @Select(AccountState.getUser)
+  user$: Observable<User>;
+  user: User;
+
   @Select(AccountState.getGoogleUser)
-  user$: Observable<GoogleUser>;
-  user: GoogleUser | null;
+  googleUser$: Observable<GoogleUser>;
+  googleUser: GoogleUser | null;
+
+  isUser: boolean;
+  photoUrl = '/assets/svg/broken_image.svg';
 
   constructor(private store: Store,
               private router: Router) { }
 
   @HostListener('window:load')
   onLoad(): void {
+    if (!window.google?.accounts) {
+      return;
+    }
     window.google.accounts.id.initialize({
       client_id: '334979481378-o30p8vigr8pma4sdod58qepl6ekk1k8b.apps.googleusercontent.com',
       auto_select: true,
@@ -35,7 +46,20 @@ export class SigninComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user$.subscribe(user => this.user = user);
+    this.googleUser$.subscribe(res => {
+      if (res) {
+        this.isUser = true;
+        this.googleUser = res;
+        this.photoUrl = res.photoUrl;
+      }
+    });
+    this.user$.subscribe(res => {
+      if (!this.googleUser && res) { // prefer google user to show photo
+        this.user = res;
+        this.isUser = true;
+      }
+      // this.photoUrl  = res.photoUrl;
+    });
   }
 
   handleCredentialResponse(response: CredentialResponse): void {
@@ -73,8 +97,8 @@ export class SigninComponent implements OnInit {
   }
 
   logout(): void {
-    window.google.accounts.id.disableAutoSelect();
-    this.store.dispatch(new SignoutWithGoogle());
+    window.google?.accounts?.id?.disableAutoSelect();
+    this.store.dispatch(new Logout());
   }
 
   navigateToAccountProfile(): void {

@@ -18,7 +18,7 @@ const routes: Routes = [{
   path: '', component: DefaultLayoutComponent, children: [
     {path: '', title: 'Home', component: DashboardComponent},
     {path: 'impressum', title: 'Impressum', component: LegalNoticeComponent},
-    {path: 'error', title: 'Impressum', component: ErrorComponent},
+    {path: 'error', title: 'Error', component: ErrorComponent},
     {path: 'chat', title: 'Chat', loadChildren: chatModule, canActivate: [AuthGuard]},
     {path: 'admin', title: 'Administration', loadChildren: adminModule},
     {path: 'gallery', title: 'Photo Galerie', loadChildren: galleryModule, canActivate: [AuthGuard]},

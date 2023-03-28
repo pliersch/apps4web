@@ -93,6 +93,12 @@ export class AccountState {
     this.alertService.error('Login fail');
   }
 
+  @Action(accountActions.Logout)
+  logOut(ctx: StateContext<AccountStateModel>): void {
+    ctx.patchState({googleUser: null, user: null});
+    ctx.dispatch(new SetUserRole(Role.Guest));
+  }
+
   @Action(accountActions.SigninWithGoogle)
   signinWithGoogle(ctx: StateContext<AccountStateModel>, action: accountActions.SigninWithGoogle): Observable<Subscription> {
     ctx.patchState({googleUser: action.user});
@@ -128,12 +134,6 @@ export class AccountState {
   @Action(accountActions.SigninWithGoogleFail)
   signinWithGoogleFail(): void {
     this.alertService.error('Signin with Google fail');
-  }
-
-  @Action(accountActions.SignoutWithGoogle)
-  signoutWithGoogle(ctx: StateContext<AccountStateModel>): void {
-    ctx.patchState({googleUser: null});
-    ctx.dispatch(new SetUserRole(Role.Guest));
   }
 
 }

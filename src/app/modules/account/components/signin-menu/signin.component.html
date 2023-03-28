@@ -1,6 +1,6 @@
-<ng-template [ngIf]="(user$ | async)" [ngIfElse]="noUser">
-  <button *ngIf="user$ | async as user" mat-icon-button [matMenuTriggerFor]="accountMenu">
-    <img class="avatar" [src]="user.photoUrl" alt="avatar">
+<ng-template [ngIf]="isUser" [ngIfElse]="noUser">
+  <button *ngIf="isUser" mat-icon-button [matMenuTriggerFor]="accountMenu">
+    <img class="avatar" [src]="photoUrl" alt="avatar">
   </button>
 </ng-template>
 
@@ -18,5 +18,5 @@
 
 <mat-menu #accountMenu="matMenu" yPosition="below">
   <button mat-menu-item style="margin: 0;" (click)="navigateToAccountProfile()">Account</button>
-  <button *ngIf="user" mat-menu-item style="margin: 0;" (click)="logout()">Logout</button>
+  <button *ngIf="isUser" mat-menu-item style="margin: 0;" (click)="logout()">Logout</button>
 </mat-menu>

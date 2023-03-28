@@ -51,7 +51,7 @@ export class SigninWithGoogleFail {
   }
 }
 
-export class SignoutWithGoogle {
-  static readonly type = '[Google Signin] Google Logout';
-}
+// export class SignoutWithGoogle {
+//   static readonly type = '[Google Signin] Google Logout';
+// }
 
