@@ -3,6 +3,7 @@ import { AccountState } from "@account/store/account.state";
 import { User } from "@account/store/user.model";
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
+import { AlertService } from "@app/common/services/alert.service";
 import { RouterState } from "@app/core/stores/routes/router.state";
 import { Select, Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
@@ -26,15 +27,22 @@ export class LoginComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   constructor(private store: Store,
+              private alertService: AlertService,
               private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.subscription = this.user$.subscribe(res => {
+      if (!res) {
+        return;
+      }
       this.user = res;
       if (this.routeBeforeSignin != '') {
         void this.router.navigateByUrl(this.routeBeforeSignin);
+      } else {
+        void this.router.navigateByUrl('');
       }
+      this.alertService.info('Hello Again ' + this.user.givenName);
     });
     this.subscription.add(this.route.queryParams
       .subscribe(params => {
