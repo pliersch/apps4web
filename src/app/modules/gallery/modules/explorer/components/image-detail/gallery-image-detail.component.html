@@ -3,8 +3,11 @@
   <!--    <mat-card-title>Details</mat-card-title>-->
   <!--  </mat-card-header>-->
   <mat-card-content *ngIf="currentPhoto$ | async; let currentPhoto">
-    <span> Name: {{currentPhoto.fileName}}</span><br>
+    <span> Name: {{currentPhoto.fileName}}</span>
+    <br>
     <span> Date: {{currentPhoto.recordDate | date}}</span>
+    <br>
+    <span> Owner: {{currentPhoto.user.givenName}} {{currentPhoto.user.surName}}</span>
     <app-gallery-rating></app-gallery-rating>
     <mat-chip-set>
       <mat-chip *ngFor="let tag of currentPhoto.tags">

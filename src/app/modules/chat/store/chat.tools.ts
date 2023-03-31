@@ -1,5 +1,6 @@
+import { UserIdentity } from "@app/core/interfaces/user-identiy";
 import { CHAT_CONSTANTS } from "@modules/chat/const";
-import { Message, MessageResultDto, UserIdentity } from "@modules/chat/store/chat.model";
+import { Message, MessageResultDto } from "@modules/chat/store/chat.model";
 
 const BASE_URL = CHAT_CONSTANTS.PHOTO_DOWNLOAD_BASE_URL;
 

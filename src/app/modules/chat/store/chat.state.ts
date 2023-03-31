@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
 import { AlertService } from "@app/common/services/alert.service";
 import { clone } from "@app/common/util/obj-utils";
+import { UserIdentity } from "@app/core/interfaces/user-identiy";
 import { CHAT_CONSTANTS } from "@modules/chat/const";
 import * as chatAction from "@modules/chat/store/chat.actions";
-import { Message, MessageResultDto, UserIdentity } from "@modules/chat/store/chat.model";
+import { Message, MessageResultDto } from "@modules/chat/store/chat.model";
 import { ChatService } from "@modules/chat/store/chat.service";
 import { addToUserIdentities, createMessage } from "@modules/chat/store/chat.tools";
 import { Action, Selector, State, StateContext } from "@ngxs/store";

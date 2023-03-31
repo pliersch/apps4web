@@ -1,8 +1,10 @@
+import { UserIdentity } from "@app/core/interfaces/user-identiy";
 import { Tag } from "@gallery/store/tags/tag.model";
 
 export interface Photo {
   id: string;
   fileName: string;
+  user: UserIdentity;
   isPrivate: boolean;
   tags: Tag[];
   // createDate: Date;

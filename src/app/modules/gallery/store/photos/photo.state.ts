@@ -35,7 +35,7 @@ export interface PhotoStateModel {
   filterRating: number;
   filterFrom: number;
   filterTo: number;
-  sortMode: SortMode
+  sortMode: SortMode;
   newDataAvailable: boolean;
   loaded: boolean;
   loading: boolean;

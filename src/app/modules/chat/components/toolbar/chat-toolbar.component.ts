@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { UserIdentity } from "@modules/chat/store/chat.model";
+import { UserIdentity } from "@app/core/interfaces/user-identiy";
 import { Observable } from "rxjs";
 
 @Component({

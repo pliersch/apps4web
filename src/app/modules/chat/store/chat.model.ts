@@ -1,3 +1,5 @@
+import { UserIdentity } from "@app/core/interfaces/user-identiy";
+
 export interface Message {
   id: string;
   userId: string;
@@ -23,12 +25,6 @@ export interface CreateMessageDto {
   // chatId: string;
   text: string;
   pictures?: File[];
-}
-
-export interface UserIdentity {
-  id: string;
-  givenName: string;
-  surName: string;
 }
 
 export interface MessageResultDto {
