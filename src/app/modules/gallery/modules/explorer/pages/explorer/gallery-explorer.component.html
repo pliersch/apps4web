@@ -23,12 +23,11 @@
       [actions]="actions" (actionEvent)="onAction($event)"></app-gallery-action-panel>
     <app-gallery-image-detail
       [currentPhoto$]="currentPhoto$"></app-gallery-image-detail>
-    <app-gallery-meta-panel
-      [selectedPhotosCount]="selectedDownloads.length"
+    <app-gallery-meta-explorer-panel
       [filteredPhotosCount]="photos.length"
       [loadedPhotos]="loadedPhotos"
       [finalDownloadsPhotosCount]="finalDownloads.length"
-      [availablePhotos]="availablePhotos"></app-gallery-meta-panel>
+      [availablePhotos]="availablePhotos"></app-gallery-meta-explorer-panel>
   </div>
   <div class="column-max-width">
     <div class="scrollbar-container">

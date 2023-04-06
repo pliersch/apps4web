@@ -19,9 +19,9 @@
     <app-gallery-action-panel
       [actions]="actions" (actionEvent)="onAction($event)"></app-gallery-action-panel>
     <app-gallery-image-detail [currentPhoto$]="currentPhoto$"></app-gallery-image-detail>
-    <app-gallery-meta-panel
+    <app-gallery-meta-editor-panel
       [selectedPhotosCount]="selection.length" [filteredPhotosCount]="photos.length"
-      [loadedPhotos]="loadedPhotos" [availablePhotos]="availablePhotos"></app-gallery-meta-panel>
+      [loadedPhotos]="loadedPhotos" [availablePhotos]="availablePhotos"></app-gallery-meta-editor-panel>
   </div>
   <div class="column-max-width">
     <div class="scrollbar-container">
