@@ -283,7 +283,6 @@ export class ThreeService implements OnDestroy {
   private renderer: THREE.WebGLRenderer;
   private camera: THREE.PerspectiveCamera;
   private scene: THREE.Scene;
-  private light: THREE.AmbientLight;
   private controls: OrbitControls;
   private frameId = 0;
 
@@ -301,24 +300,28 @@ export class ThreeService implements OnDestroy {
     // The first step is to get the reference of the canvas element from our HTML document
     this.canvas = canvas.nativeElement;
 
+    const width = this.canvas.clientWidth;
+    const height = this.canvas.clientHeight;
+
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
       alpha: true,    // transparent background
       antialias: true // smooth edges
     });
-    // this.renderer.setSize(this.canvas.width, this.canvas.height);
+    this.renderer.setSize(width, height, false);
+    this.renderer.setPixelRatio(devicePixelRatio);
+
     this.scene = new THREE.Scene();
 
     new RGBELoader()
       .setPath('/assets/3d/')
-      // .load('epping_forest_02_4k.hdr', (texture) => {
       .load('aristea_wreck_2k.hdr', (texture) => {
         texture.mapping = THREE.EquirectangularReflectionMapping;
-        // this.scene.background = texture;
+        this.scene.background = texture;
         this.scene.environment = texture;
       });
 
-    new GLTFLoader().load('/assets/3d/home.gltf', (gltf) => {
+    new GLTFLoader().load('/assets/3d/home.glb', (gltf) => {
       gltf.scene.scale.set(10, 10, 10);
       this.scene.add(gltf.scene);
       // gltf.scene.getObjectByName()
@@ -342,7 +345,8 @@ export class ThreeService implements OnDestroy {
 
     // this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.25, 20);
     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
-
+    this.camera.aspect = width / height;
+    this.camera.updateProjectionMatrix();
     // this.camera = new THREE.PerspectiveCamera(
     //   this.fieldOfView,
     //   aspectRatio,
@@ -353,9 +357,7 @@ export class ThreeService implements OnDestroy {
     this.camera.position.y = 60;
     this.camera.position.z = 200;
 
-    this.renderer = new THREE.WebGLRenderer({canvas: this.canvas});
-    this.renderer.setPixelRatio(devicePixelRatio);
-    this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
+    // this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     const c = this.controls;
