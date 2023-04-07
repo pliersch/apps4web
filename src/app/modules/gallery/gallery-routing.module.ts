@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { GalleryContainerComponent } from '@app/modules/gallery/core/components/container/gallery-container.component';
 import { GalleryResolver } from "@gallery/resolver/gallery.resolver";
+import { AdminGuard } from "@modules/admin/guards/admin-guard.service";
 
 const homeModule = () => import('./modules/home/home.module').then((x) => x.HomeModule);
 const uploadModule = () => import('./modules/upload/upload.module').then((x) => x.UploadModule);
@@ -14,7 +15,7 @@ const routes: Routes = [
     path: '', component: GalleryContainerComponent, resolve: {meta: GalleryResolver},
     children: [
       {path: 'home', title: 'Home', loadChildren: homeModule},
-      {path: 'upload', title: 'Upload', loadChildren: uploadModule},
+      {path: 'upload', title: 'Upload', loadChildren: uploadModule, canActivate: [AdminGuard]},
       {path: 'slideshow', title: 'Slideshow', loadChildren: slideShowModule},
       {path: 'lightbox', title: 'Lightbox', loadChildren: lightBoxModule},
       {path: 'explorer', title: 'Explorer', loadChildren: explorerModule},

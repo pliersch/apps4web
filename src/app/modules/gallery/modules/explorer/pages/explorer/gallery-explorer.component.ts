@@ -9,9 +9,11 @@ import { SortMode } from "@gallery/modules/share/sorter/gallery-sorter.component
 import { PhotoService } from "@gallery/services/photo.service";
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import { Photo } from '@gallery/store/photos/photo.model';
+import { PhotoState } from "@gallery/store/photos/photo.state";
 import { Action } from "@modules/action-bar/actions";
-import { Store } from "@ngxs/store";
+import { Select, Store } from "@ngxs/store";
 import { saveAs } from 'file-saver';
+import { Observable } from "rxjs";
 
 enum ActionTypes {
   SelectAll,
@@ -30,6 +32,9 @@ export class GalleryExplorerComponent extends AbstractExplorerComponent implemen
 
   @ViewChildren(ExplorerPhotoControlComponent, {read: ElementRef})
   photoControls!: QueryList<ElementRef>;
+
+  @Select(PhotoState.getFilteredDownloadablePhotos)
+  downloadablePhotos$: Observable<Photo[]>;
 
   actions: Action[] = [
     {name: ActionTypes.SelectAll, icon: 'done_all', description: 'select all', handler: this},

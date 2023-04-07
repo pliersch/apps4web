@@ -34,7 +34,7 @@
       <ng-scrollbar #scrollbar class="dark-scrollbar">
         <div class="images-wrapper">
           <app-explorer-photo-control
-            *ngFor="let photo of (photos$ | async); let i=index" class="selection-item"
+            *ngFor="let photo of (downloadablePhotos$ | async); let i=index" class="selection-item"
             [selected]="currentIndex === i"
             (click)="setCurrent(photo)" [photo]="photo"
             [download]="selectedDownloads.includes(photo)"

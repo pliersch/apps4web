@@ -96,15 +96,19 @@ export class PhotoState {
     return result;
   }
 
-  @Selector([PhotoState.getPhotosByTags, PhotoState.getFinalDownloads, PhotoState.getFilterRating,
+  @Selector([PhotoState.getPhotosByTags, PhotoState.getFilterRating,
     PhotoState.getFilterFrom, PhotoState.getFilterTo, PhotoState.getSortMode])
-  static getFilteredPhotos(photos: Photo[], downloads: Photo[], filterRating: number,
+  static getFilteredPhotos(photos: Photo[], filterRating: number,
                            filterFrom: number, filterTo: number, sortMode: SortMode): Photo[] {
-    let filteredPhotos: Photo[] = difference(photos, downloads);
-    filteredPhotos = filterByRating(filteredPhotos, filterRating);
+    let filteredPhotos: Photo[] = filterByRating(photos, filterRating);
     filteredPhotos = filterByYear(filteredPhotos, filterFrom, filterTo);
     filteredPhotos = sort(filteredPhotos, sortMode);
     return filteredPhotos;
+  }
+
+  @Selector([PhotoState.getFilteredPhotos, PhotoState.getFinalDownloads])
+  static getFilteredDownloadablePhotos(photos: Photo[], downloads: Photo[]): Photo[] {
+    return difference(photos, downloads);
   }
 
   @Selector([PhotoState.getFilteredPhotos, PhotoState.getCurrentIndex])
@@ -763,7 +767,6 @@ export class PhotoState {
   private _getFilteredPhotos(state: PhotoStateModel): Photo[] {
     return PhotoState.getFilteredPhotos(
       PhotoState.getPhotosByTags(PhotoState.getPhotos(state), PhotoState.getActiveTags(state)),
-      PhotoState.getFinalDownloads(state),
       PhotoState.getFilterRating(state),
       PhotoState.getFilterFrom(state),
       PhotoState.getFilterTo(state),
