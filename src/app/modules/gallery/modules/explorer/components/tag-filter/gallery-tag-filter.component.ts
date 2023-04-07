@@ -42,10 +42,12 @@ export class GalleryTagFilterComponent {
     return this.activeTags.includes(entry);
   }
 
-  getPhotoCount(tagId: string): string {
-    const countByTag = this.photoCounts.find(el => el.tagId === tagId);
-    const count = countByTag?.count;
-    return count ? count.toString() : '';
-  }
+  // fixme calls to often from template
+  // getPhotoCount(tagId: string): string {
+  //   console.log('GalleryTagFilterComponent getPhotoCount: ', tagId)
+  //   const countByTag = this.photoCounts.find(el => el.tagId === tagId);
+  //   const count = countByTag?.count;
+  //   return count ? count.toString() : '';
+  // }
 
 }
