@@ -601,12 +601,28 @@ export class PhotoState {
     const isDownload = ctx.getState().selectedDownloads.includes(action.photo);
     ctx.setState(
       patch({
-        finalDownloads:
+        selectedDownloads:
           isDownload
             ? removeItem<Photo>(photo => photo!.id === action.photo.id)
             : insertItem<Photo>(action.photo)
       })
     );
+  }
+
+  @Action(photoAction.SelectAllDownloads)
+  selectAllDownload(ctx: StateContext<PhotoStateModel>): void {
+    const filteredPhotos = this._getFilteredPhotos(ctx.getState());
+    ctx.setState(patch({selectedDownloads: filteredPhotos}));
+  }
+
+  @Action(photoAction.MoveToFinalDownloads)
+  moveToFinalDownload(ctx: StateContext<PhotoStateModel>): void {
+    const state = ctx.getState();
+    const cleared: Photo[] = [];
+    ctx.setState(patch({
+      finalDownloads: [...state.finalDownloads, ...state.selectedDownloads],
+      selectedDownloads: cleared
+    }));
   }
 
   @Action(photoAction.DeselectAllDownloads)
