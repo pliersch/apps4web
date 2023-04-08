@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTooltip } from "@angular/material/tooltip";
 import { WidgetService } from "@app/core/components/widget/widget.service";
+import radioFile from "@assets/json/radio.json";
+import { RadioStation } from "@modules/radio/components/player/player.component";
 import { PlayerService } from "@modules/radio/service/player.service";
-
 
 interface PlayerActionItem {
   name: string;
@@ -15,6 +17,11 @@ interface PlayerActionItem {
 })
 export class WidgetPlayerComponent implements OnInit {
 
+  @ViewChild('tooltip')
+  tooltip: MatTooltip
+
+  radios: RadioStation[] = [];
+  current: RadioStation;
   playToggleAction: PlayerActionItem;
 
   playAction: PlayerActionItem = {
@@ -35,6 +42,20 @@ export class WidgetPlayerComponent implements OnInit {
   constructor(private playerService: PlayerService,
               private widgetService: WidgetService) { }
 
+  ngOnInit(): void {
+    this.radios = radioFile.radiostations;
+    this.playerService.on("play", (radio) => {
+      this.current = radio;
+      this.playToggleAction = this.pauseAction;
+    })
+    this.playerService.on("pause", () => {
+      this.playToggleAction = this.playAction;
+    })
+    this.playerService.isPlaying() ?
+      this.playToggleAction = this.pauseAction :
+      this.playToggleAction = this.playAction;
+  }
+
   onClickTogglePlay(): void {
     this.playerService.togglePlayPause();
   }
@@ -44,15 +65,7 @@ export class WidgetPlayerComponent implements OnInit {
     this.widgetService.removeWidget(WidgetPlayerComponent);
   }
 
-  ngOnInit(): void {
-    this.playerService.on("play", () => {
-      this.playToggleAction = this.pauseAction;
-    })
-    this.playerService.on("pause", () => {
-      this.playToggleAction = this.playAction;
-    })
-    this.playerService.isPlaying() ?
-      this.playToggleAction = this.pauseAction :
-      this.playToggleAction = this.playAction;
+  onClickPlay(radio: RadioStation) {
+    this.playerService.play(radio);
   }
 }

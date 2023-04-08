@@ -20,11 +20,7 @@ export class PlayerComponent implements OnInit {
   current: RadioStation;
   empty: RadioStation;
   favorites: RadioStation[] = []
-
   playing = false;
-  // widget:HTMLElement;
-
-  // classic: RadioStation[] = []
 
   constructor(private widgetService: WidgetService,
               private playerService: PlayerService) { }
@@ -37,7 +33,8 @@ export class PlayerComponent implements OnInit {
       this.playing = true;
       this.current = this.playerService.getRadioStation();
     }
-    this.playerService.on("play", () => {
+    this.playerService.on("play", (radio) => {
+      this.current = radio;
       this.playing = true;
     })
     this.playerService.on("pause", () => {

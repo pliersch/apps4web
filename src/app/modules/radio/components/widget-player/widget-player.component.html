@@ -10,18 +10,12 @@
     <mat-icon>{{exitAction.symbol}}</mat-icon>
     <span>{{exitAction.name}}</span>
   </button>
-  <button mat-menu-item [matMenuTriggerFor]="vertebrates">Vertebrates</button>
-  <button mat-menu-item [matMenuTriggerFor]="invertebrates">Invertebrates</button>
+  <button mat-menu-item [matMenuTriggerFor]="radioStations">Sender</button>
 </mat-menu>
 
-<mat-menu #vertebrates="matMenu">
-  <button mat-menu-item>Birds</button>
-  <button mat-menu-item>Mammals</button>
+<mat-menu #radioStations="matMenu">
+  <button *ngFor="let radio of radios" mat-menu-item
+          (click)="onClickPlay(radio)" [class.active]="current === radio">
+    {{radio.name}}
+  </button>
 </mat-menu>
-
-<mat-menu #invertebrates="matMenu">
-  <button mat-menu-item>Insects</button>
-  <button mat-menu-item>Molluscs</button>
-  <button mat-menu-item>Crustaceans</button>
-</mat-menu>
-

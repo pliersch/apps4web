@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MatTooltipModule } from "@angular/material/tooltip";
 import { MaterialModule } from "@app/modules/share/material/material.module";
 import { PlayerComponent } from "@modules/radio/components/player/player.component";
 import { NgScrollbarModule } from "ngx-scrollbar";
@@ -21,7 +22,8 @@ import { RadioRoutingModule } from './radio-routing.module';
     CommonModule,
     RadioRoutingModule,
     MaterialModule,
-    NgScrollbarModule
+    NgScrollbarModule,
+    MatTooltipModule
   ]
 })
 export class RadioModule {}

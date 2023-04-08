@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EventEmitter } from "@app/common/base/event-emitter";
 import { RadioStation } from "@modules/radio/components/player/player.component";
-import { Subscription } from "rxjs";
 
 export type PlayerState = 'play' | 'pause'
 
@@ -9,18 +8,18 @@ export type PlayerState = 'play' | 'pause'
   providedIn: 'root'
 })
 
-export class PlayerService {
+export class PlayerService extends EventEmitter {
 
-  private eventEmitter: EventEmitter = new EventEmitter();
   private radioStation: RadioStation;
 
   constructor() {
+    super();
     this.audio = document.createElement("audio");
     this.audio.addEventListener('play', () => {
-      this.eventEmitter.emit('play')
+      this.emit('play', this.radioStation)
     });
     this.audio.addEventListener('pause', () => {
-      this.eventEmitter.emit('pause')
+      this.emit('pause')
     });
   }
 
@@ -61,7 +60,4 @@ export class PlayerService {
     void this.audio.play();
   }
 
-  on(eventName: PlayerState, callback: () => void): Subscription {
-    return this.eventEmitter.on(eventName, callback)
-  }
 }

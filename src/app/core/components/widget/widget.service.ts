@@ -6,13 +6,17 @@ import { WidgetComponent } from "@app/core/components/widget/widget.component";
 })
 export class WidgetService {
   private widgetHost: WidgetComponent;
+  private widget: any;
 
   setWidgetHost(component: WidgetComponent): void {
     this.widgetHost = component;
   }
 
   setWidget(widget: Type<any>): void {
-    this.widgetHost.loadWidget(widget);
+    if (this.widget != widget) {
+      this.widget = widget;
+      this.widgetHost.loadWidget(widget);
+    }
   }
 
   removeWidget(widget: Type<any>): void {
