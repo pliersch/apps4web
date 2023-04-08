@@ -1,7 +1,10 @@
 <ng-template [ngIf]="isUser" [ngIfElse]="noUser">
-  <button *ngIf="isUser" mat-icon-button [matMenuTriggerFor]="accountMenu">
+  <button *ngIf="isGoogleUser" mat-icon-button [matMenuTriggerFor]="accountMenu">
     <img class="avatar" [src]="photoUrl" alt="avatar">
   </button>
+  <!--  <button *ngIf="isUser" mat-icon-button [matMenuTriggerFor]="accountMenu">-->
+  <!--    <mat-icon>person</mat-icon>-->
+  <!--  </button>-->
 </ng-template>
 
 <ng-template #noUser>
