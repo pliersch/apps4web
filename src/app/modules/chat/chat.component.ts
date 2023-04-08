@@ -82,7 +82,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   scrollToEnd(): void {
-    void this.scrollbarRef.scrollTo({bottom: 0, end: 0, duration: 300});
+    void this.scrollbarRef.scrollTo({bottom: 0, end: 0, duration: 0});
   }
 
   sendMessage(content: string, pictures?: File[]): void {
@@ -92,8 +92,6 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
       text: content,
       pictures: pictures,
     }
-    // SocketManager.getInstance(this).sendMessage(msg)
-    // this.socketService.sendMessage(msg)
     this.store.dispatch(new SendMessage(msg))
   }
 

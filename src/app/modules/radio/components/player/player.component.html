@@ -12,7 +12,7 @@
                    class="thumbnail-item item" [class.active]="radio === current"
                    [style.background-image]="'url(' + radio.logoUrl + ')'"
                    (click)="onClickPlay(radio)">
-                <div class="info-container" [class.active]="radio === current && playing">
+                <div class="action-overlay" [class.active]="radio === current && playing">
                   <button mat-mini-fab color="primary">
                     <mat-icon>volume_mute</mat-icon>
                   </button>
@@ -22,8 +22,8 @@
           </div>
         </ng-scrollbar>
       </mat-tab>
-      <mat-tab label="Klassik Radio"> Content 2</mat-tab>
-      <mat-tab label="Leer"> Content 3</mat-tab>
+      <mat-tab label="Leer">Leer</mat-tab>
+      <mat-tab label="Leer">Content</mat-tab>
     </mat-tab-group>
     <audio #player></audio>
   </mat-card-content>
