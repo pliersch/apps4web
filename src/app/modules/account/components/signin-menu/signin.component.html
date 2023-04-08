@@ -1,10 +1,10 @@
-<ng-template [ngIf]="isUser" [ngIfElse]="noUser">
-  <button *ngIf="isGoogleUser" mat-icon-button [matMenuTriggerFor]="accountMenu">
-    <img class="avatar" [src]="photoUrl" alt="avatar">
+<ng-template [ngIf]="googleUser || user" [ngIfElse]="noUser">
+  <button *ngIf="googleUser" mat-icon-button [matMenuTriggerFor]="accountMenu">
+    <img class="avatar" [src]="googleUser.photoUrl" alt="avatar">
   </button>
-  <!--  <button *ngIf="isUser" mat-icon-button [matMenuTriggerFor]="accountMenu">-->
-  <!--    <mat-icon>person</mat-icon>-->
-  <!--  </button>-->
+  <button *ngIf="user" mat-icon-button [matMenuTriggerFor]="accountMenu">
+    <mat-icon>person</mat-icon>
+  </button>
 </ng-template>
 
 <ng-template #noUser>
@@ -21,5 +21,5 @@
 
 <mat-menu #accountMenu="matMenu" yPosition="below">
   <button mat-menu-item style="margin: 0;" (click)="navigateToAccountProfile()">Account</button>
-  <button *ngIf="isUser" mat-menu-item style="margin: 0;" (click)="logout()">Logout</button>
+  <button *ngIf="googleUser || user" mat-menu-item style="margin: 0;" (click)="logout()">Logout</button>
 </mat-menu>

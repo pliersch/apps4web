@@ -24,10 +24,6 @@ export class SigninComponent implements OnInit {
   googleUser$: Observable<GoogleUser>;
   googleUser: GoogleUser | null;
 
-  isUser: boolean;
-  isGoogleUser: boolean;
-  photoUrl = '/assets/svg/broken_image.svg';
-
   constructor(private store: Store,
               private router: Router) { }
 
@@ -48,16 +44,11 @@ export class SigninComponent implements OnInit {
 
   ngOnInit(): void {
     this.googleUser$.subscribe(res => {
-      if (res) {
-        this.isGoogleUser = true;
-        this.googleUser = res;
-        this.photoUrl = res.photoUrl;
-      }
+      this.googleUser = res;
     });
     this.user$.subscribe(res => {
-      if (!this.googleUser && res) { // prefer google user to show photo
+      if (!this.googleUser) { // prefer google user to show photo
         this.user = res;
-        this.isUser = true;
       }
     });
   }
