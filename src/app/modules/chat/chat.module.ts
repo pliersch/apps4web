@@ -6,7 +6,7 @@ import { ChatMessagesComponent } from "@modules/chat/components/messages/chat-me
 import { ChatResolver } from "@modules/chat/resolver/chat.resolver";
 import { ChatService } from "@modules/chat/store/chat.service";
 import { ChatState } from "@modules/chat/store/chat.state";
-import { FileDragDropModule } from "@modules/file-drag-drop/file-drag-drop.module";
+import { FileDragDropModule } from "@modules/share/file-drag-drop/file-drag-drop.module";
 import { NgxsModule } from "@ngxs/store";
 import { NgScrollbarModule } from "ngx-scrollbar";
 
@@ -17,7 +17,6 @@ import { ChatImageItemComponent } from './components/image-item/chat-image-item.
 import { ChatInputComponent } from './components/input/chat-input.component';
 import { ChatToolbarComponent } from './components/toolbar/chat-toolbar.component';
 import { ChatUploadDialogComponent } from './components/upload-dialog/chat-upload-dialog.component';
-
 
 @NgModule({
   declarations: [
