@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from "@angular/material/dialog";
 
-
 export interface Attachment {
   comment: string;
   pictures: File[];
