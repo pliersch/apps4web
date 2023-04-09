@@ -1,8 +1,8 @@
+import { User } from "@account/store/user.model";
+import { LiveAnnouncer } from "@angular/cdk/a11y";
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSort, Sort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { User } from "@account/store/user.model";
-import { LiveAnnouncer } from "@angular/cdk/a11y";
 
 @Component({
   selector: 'app-user-table',
@@ -22,9 +22,6 @@ export class UserTableComponent implements OnChanges {
 
   @Output()
   userDeleteEvent = new EventEmitter<User>();
-
-  @Output()
-  userLoginAsEvent = new EventEmitter<User>();
 
   displayedColumns: string[] = ['givenName', 'lastName', 'email', 'role', 'status', 'created', 'lastLogin', ' '];
   dataSource: MatTableDataSource<User>;
@@ -52,7 +49,4 @@ export class UserTableComponent implements OnChanges {
     this.userDeleteEvent.emit(user);
   }
 
-  onClickLoginAs(user: User): void {
-    this.userLoginAsEvent.emit(user);
-  }
 }

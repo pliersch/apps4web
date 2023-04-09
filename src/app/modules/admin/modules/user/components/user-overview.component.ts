@@ -1,4 +1,3 @@
-import { SetUser } from "@account/store/account.actions";
 import { CreateUserDto, User } from "@account/store/user.model";
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { UserFormComponent } from "@modules/admin/modules/user/components/user-form/user-form.component";
@@ -49,10 +48,6 @@ export class UserOverviewComponent implements OnInit, OnDestroy {
 
   handleDeleteEvent(user: User): void {
     this.store.dispatch(new userActions.DeleteUser(user.id))
-  }
-
-  handleLoginAsEvent(user: User): void {
-    this.store.dispatch(new SetUser(user));
   }
 
   addUser(): void {
