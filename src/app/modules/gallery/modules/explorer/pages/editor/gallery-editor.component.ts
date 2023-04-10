@@ -15,7 +15,7 @@ import {
 } from "@gallery/modules/explorer/pages/abstract-explorer/abstract-explorer.component";
 import { PhotoService } from "@gallery/services/photo.service";
 import * as photoAction from "@gallery/store/photos/photo.actions";
-import { Photo, PhotoUpdate } from '@gallery/store/photos/photo.model';
+import { Photo, PhotoFactory, PhotoUpdate } from '@gallery/store/photos/photo.model';
 
 import { Tag, TagGroup } from "@gallery/store/tags/tag.model";
 import { TagState } from "@gallery/store/tags/tag.state";
@@ -196,11 +196,7 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
 
   private updateTagsOfSelectedPhotos(photos: Photo[], res: EditPhotoPropertiesDialogResult): void {
     for (const photo of photos) {
-      const photoUpdate: PhotoUpdate = {
-        addedTagIds: [],
-        removedTagIds: [],
-        private: res.private
-      }
+      const photoUpdate: PhotoUpdate = PhotoFactory.createPhotoUpdate([], [], res.isPrivate)
       let tagIds: string[];
       tagIds = difference(this.getIdsOfTags(res.addedTags), this.getIdsOfTags(photo.tags));
       if (tagIds.length > 0) {

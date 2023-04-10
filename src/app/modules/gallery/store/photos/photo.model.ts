@@ -27,7 +27,7 @@ export interface PhotoUpdate {
   // id: string;
   addedTagIds?: string[];
   removedTagIds?: string[];
-  private?: boolean
+  isPrivate?: boolean
 }
 
 export interface DeletePhotoDto {
@@ -44,3 +44,26 @@ export interface PhotoCountByTag {
   count: number;
 }
 
+//////////////////////////////////////////////////////////
+//                   factories
+//////////////////////////////////////////////////////////
+
+export class PhotoFactory {
+
+  static createPhoto(
+    id: string, fileName: string, user: UserIdentity, isPrivate: boolean,
+    tags: Tag[], recordDate: Date, rating: number): Photo {
+    return {
+      id: id, fileName: fileName, user: user, isPrivate: isPrivate,
+      tags: tags, recordDate: recordDate, rating: rating,
+    }
+  }
+
+  static createPhotoUpdate(addedTagIds: string[], removedTagIds: string[], isPrivate: boolean): PhotoUpdate {
+    return {
+      addedTagIds: addedTagIds,
+      removedTagIds: removedTagIds,
+      isPrivate: isPrivate
+    }
+  }
+}

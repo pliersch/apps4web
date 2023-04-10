@@ -10,7 +10,7 @@ export interface EditPhotoPropertiesDialogData {
 export interface EditPhotoPropertiesDialogResult {
   addedTags: Tag[];
   removedTags: Tag[];
-  private: boolean;
+  isPrivate: boolean;
 }
 
 interface Changes {
@@ -70,7 +70,7 @@ export class GalleryEditPhotosComponent {
     const result: EditPhotoPropertiesDialogResult = {
       addedTags: changes.addedTags,
       removedTags: changes.removedTags,
-      private: this.private
+      isPrivate: this.private
     }
     this.dialogRef.close(result);
   }
