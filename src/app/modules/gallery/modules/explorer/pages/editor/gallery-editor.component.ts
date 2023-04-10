@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
-import { joinUnique } from "@app/common/util/array-utils";
+import { difference } from "@app/common/util/array-utils";
 import {
   EditorPhotoControlComponent,
   EditPhotoPropertiesDialogData,
@@ -201,22 +201,21 @@ export class GalleryEditorComponent extends AbstractExplorerComponent implements
         removedTagIds: [],
         private: res.private
       }
-      let tags: Tag[];
-      tags = joinUnique(photo.tags, res.addedTags);
-      if (tags.length > 0) {
-        photoUpdate.addedTagIds = this.getIdsFromTag(tags);
+      let tagIds: string[];
+      tagIds = difference(this.getIdsOfTags(res.addedTags), this.getIdsOfTags(photo.tags));
+      if (tagIds.length > 0) {
+        photoUpdate.addedTagIds = tagIds;
       }
-      // tags = difference2(photo.tags, res.removedTags);
-      tags = res.removedTags;
-      if (tags.length > 0) {
-        photoUpdate.removedTagIds = this.getIdsFromTag(tags);
+      tagIds = this.getIdsOfTags(res.removedTags);
+      if (tagIds.length > 0) {
+        photoUpdate.removedTagIds = tagIds;
       }
       this.store.dispatch(new photoAction.UpdatePhoto(photo, photoUpdate));
     }
     this.store.dispatch(new photoAction.DeselectAllPhotosEdit());
   }
 
-  private getIdsFromTag(tags: Tag[]): string[] {
+  private getIdsOfTags(tags: Tag[]): string[] {
     const ids: string[] = [];
     tags.forEach(tag => ids.push(tag.id));
     return ids;
