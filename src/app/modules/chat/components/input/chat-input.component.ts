@@ -1,5 +1,6 @@
 import { CdkTextareaAutosize } from "@angular/cdk/text-field";
 import { Component, EventEmitter, HostListener, Output, ViewChild } from '@angular/core';
+import { UserIdentity } from "@app/core/interfaces/user-identiy";
 import { Emoji } from "@modules/chat/store/chat.model";
 
 export interface HTMLInputEvent extends Event {
@@ -20,10 +21,15 @@ export class ChatInputComponent {
   @Output()
   showUploadEvent = new EventEmitter();
   @Output()
+  showSearchEvent = new EventEmitter();
+  @Output()
+  filterUserEvent = new EventEmitter<string>();
+  @Output()
   messageEvent = new EventEmitter<string>();
   @Output()
   fileChangeEvent = new EventEmitter<FileList>();
 
+  selected: UserIdentity;
   content = '';
   emojiPanel = false;
 
@@ -53,5 +59,9 @@ export class ChatInputComponent {
 
   showUpload(): void {
     this.showUploadEvent.emit();
+  }
+
+  showSearch(): void {
+    this.showSearchEvent.emit();
   }
 }

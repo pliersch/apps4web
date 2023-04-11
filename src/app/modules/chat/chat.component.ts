@@ -5,7 +5,7 @@ import { ViewportScroller } from "@angular/common";
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { UserIdentity } from "@app/core/interfaces/user-identiy";
-import { ChatToolbarComponent } from "@modules/chat/components/toolbar/chat-toolbar.component";
+import { FinderDialogComponent } from "@modules/chat/components/finder-dialog/finder-dialog.component";
 import { ChatUploadDialogComponent } from "@modules/chat/components/upload-dialog/chat-upload-dialog.component";
 import { MessagesFilter, SendMessage } from "@modules/chat/store/chat.actions";
 import { CreateMessageDto, Message } from "@modules/chat/store/chat.model";
@@ -44,9 +44,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Select(ChatState.getUserIdentities)
   userIdentities$: Observable<UserIdentity[]>;
-
-  @ViewChild(ChatToolbarComponent)
-  toolbar: ChatToolbarComponent;
+  userIdentities: UserIdentity[];
 
   @ViewChild(NgScrollbar)
   scrollbarRef: NgScrollbar;
@@ -63,6 +61,8 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription = this.user$.subscribe(res => this.user = res);
+    this.subscription.add(
+      this.userIdentities$.subscribe(res => this.userIdentities = res));
   }
 
   ngAfterViewInit(): void {
@@ -73,12 +73,6 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-  }
-
-  filterByUser(filter: string): void {
-    this.userFilter = filter;
-    this.store.dispatch(new MessagesFilter(filter))
-    this.scrollToEnd()
   }
 
   scrollToEnd(): void {
@@ -95,7 +89,27 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
     this.store.dispatch(new SendMessage(msg))
   }
 
-  handleUploadClick(): void {
+  openSearchDialog(): void {
+    const dialogRef = this.dialog.open(FinderDialogComponent, {
+      data: {userIdentities: this.userIdentities},
+      restoreFocus: false,
+      autoFocus: false
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.filterByUser(res)
+        console.log('ChatComponent : ', res)
+      }
+    });
+  }
+
+  filterByUser(filter: string): void {
+    this.userFilter = filter;
+    this.store.dispatch(new MessagesFilter(filter))
+    this.scrollToEnd()
+  }
+
+  openUploadDialog(): void {
     const dialogRef = this.dialog.open(ChatUploadDialogComponent, {
       restoreFocus: false,
       autoFocus: false

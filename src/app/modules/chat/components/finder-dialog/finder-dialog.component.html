@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>search</h1>
+<mat-dialog-content>
+
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>filter by user</mat-label>
+      <mat-select [(value)]="selected">
+        <mat-option>X</mat-option>
+        <mat-option *ngFor='let identity of userIdentities' [value]='identity'>
+          {{identity.givenName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <span class="spacer"></span>
+  <button mat-raised-button (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="sendFindOptions()">Search</button>
+</mat-dialog-actions>

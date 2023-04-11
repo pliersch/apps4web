@@ -1,17 +1,17 @@
 <div class="grid">
-  <div class="toolbar">
-    <app-chat-toolbar [userIdentities$]="userIdentities$"
-                      (filterUserEvent)="filterByUser($event)"></app-chat-toolbar>
-  </div>
   <div class="chat-container">
     <div class="column-max-height">
       <ng-scrollbar>
-        <app-chat-messages [user]="user" [messages]="messages$"
-                           (imageLoadEvent)="scrollToEnd()"></app-chat-messages>
+        <app-chat-messages
+          [user]="user" [messages]="messages$"
+          (imageLoadEvent)="scrollToEnd()"></app-chat-messages>
       </ng-scrollbar>
     </div>
   </div>
-  <app-chat-input class="input" (messageEvent)="sendMessage($event)"
-                  (showUploadEvent)="handleUploadClick()"></app-chat-input>
+  <app-chat-input class="input"
+                  (messageEvent)="sendMessage($event)"
+                  (filterUserEvent)="filterByUser($event)"
+                  (showSearchEvent)="openSearchDialog()"
+                  (showUploadEvent)="openUploadDialog()"></app-chat-input>
 </div>
 

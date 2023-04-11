@@ -13,20 +13,20 @@ import { NgScrollbarModule } from "ngx-scrollbar";
 import { ChatRoutingModule } from './chat-routing.module';
 import { ChatComponent } from './chat.component';
 import { ChatEmojiPickerComponent } from './components/emoji-picker/chat-emoji-picker.component';
+import { FinderDialogComponent } from './components/finder-dialog/finder-dialog.component';
 import { ChatImageItemComponent } from './components/image-item/chat-image-item.component';
 import { ChatInputComponent } from './components/input/chat-input.component';
-import { ChatToolbarComponent } from './components/toolbar/chat-toolbar.component';
 import { ChatUploadDialogComponent } from './components/upload-dialog/chat-upload-dialog.component';
 
 @NgModule({
   declarations: [
     ChatComponent,
     ChatInputComponent,
-    ChatToolbarComponent,
     ChatEmojiPickerComponent,
     ChatImageItemComponent,
     ChatMessagesComponent,
-    ChatUploadDialogComponent
+    ChatUploadDialogComponent,
+    FinderDialogComponent
   ],
   imports: [
     CommonModule,
