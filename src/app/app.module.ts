@@ -16,7 +16,6 @@ import { initTheme } from "@app/core/initializers/theme.initializer";
 import { RouterState } from "@app/core/stores/routes/router.state";
 import { MaterialModule } from "@app/modules/share/material/material.module";
 import { environment } from "@environments/environment";
-import { DashboardCardComponent } from "@modules/dashboard/cards/dashboard-card.component";
 import { DashboardComponent } from "@modules/dashboard/dashboard.component";
 import { RadioModule } from "@modules/radio/radio.module";
 import { RecipesModule } from "@modules/recipes/recipes.module";
@@ -27,9 +26,9 @@ import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
 import { NgxsModule, NgxsModuleOptions, Store } from '@ngxs/store';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ErrorComponent } from './core/components/error/error.component';
 import { AuthLayoutComponent } from "./core/layouts/auth-layout/auth-layout.component";
 import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
-import { ErrorComponent } from './core/components/error/error.component';
 
 const ngxsConfig: NgxsModuleOptions = {
   developmentMode: !environment.production,
@@ -62,7 +61,6 @@ const ngxsConfig: NgxsModuleOptions = {
     AppBarComponent,
     ThemeMenuComponent,
     DashboardComponent,
-    DashboardCardComponent,
     WidgetComponent,
     WidgetDirective,
     ErrorComponent,

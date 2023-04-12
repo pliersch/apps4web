@@ -11,12 +11,11 @@ export class SocketService {
 
   // emit event
   sendMessage(msg: any): void {
-    console.log('SocketService sendMessage: ',)
-    this.socket.emit('send-message', msg);
+    this.socket.emit('todo', msg);
   }
 
   // listen event
   onFetchMovies(): Observable<unknown> {
-    return this.socket.fromEvent('fetchMovies');
+    return this.socket.fromEvent('todo');
   }
 }
