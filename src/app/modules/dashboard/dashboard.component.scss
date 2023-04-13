@@ -1,9 +1,5 @@
-.test-container {
-  text-align: center;
-}
-
-.test-col {
-  background: green;
-  box-sizing: border-box;
-  border: 1px solid;
+.foo {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
