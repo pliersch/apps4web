@@ -96,10 +96,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
       autoFocus: false
     });
     dialogRef.afterClosed().subscribe(res => {
-      if (res) {
-        this.filterByUser(res)
-        console.log('ChatComponent : ', res)
-      }
+      this.filterByUser(res)
     });
   }
 
