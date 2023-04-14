@@ -1,6 +1,5 @@
 @use '@angular/material' as mat;
-@use './src/app/modules/waste-calendar/reminder/waste-reminder.component-theme' as waste-reminder;
-@use '../app/modules/gallery/modules/explorer/components/date-filter/gallery-date-filter.component-theme' as date-filter;
+@use '../app/modules/waste-calendar/reminder/waste-reminder.component-theme' as waste-reminder;
 @use './mat-btn-toggle' as btn-toggle;
 
 $light-primary: mat.define-palette(mat.$indigo-palette, 500);
@@ -56,7 +55,6 @@ $dark-theme: mat.define-dark-theme(
 @include mat.all-component-themes($dark-theme);
 @include btn-toggle.theme($dark-theme);
 @include waste-reminder.theme($dark-theme);
-@include date-filter.theme($dark-theme);
 
 // Apply the light theme only when the `.my-light-theme` CSS class is applied
 // to an ancestor element of the components (such as `body`).
@@ -66,5 +64,4 @@ $dark-theme: mat.define-dark-theme(
   @include mat.all-component-colors($light-theme);
   @include btn-toggle.theme($light-theme);
   @include waste-reminder.theme($light-theme);
-  @include date-filter.theme($light-theme);
 }

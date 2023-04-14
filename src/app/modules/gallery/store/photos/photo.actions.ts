@@ -1,6 +1,6 @@
 import { User } from "@account/store/user.model";
 import { HttpErrorResponse } from '@angular/common/http';
-import { SortMode } from "@gallery/modules/share/sorter/gallery-sorter.component";
+import { SortMode } from "@gallery/modules/explorer/components/sorter/gallery-sorter.component";
 import {
   DeletePhotoDto,
   Photo,

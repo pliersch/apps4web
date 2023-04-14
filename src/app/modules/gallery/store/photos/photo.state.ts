@@ -3,7 +3,7 @@ import { AlertService } from "@app/common/services/alert.service";
 import { ServerSentService } from "@app/common/services/server-sent.service";
 import { difference } from "@app/common/util/array-utils";
 import { GALLERY_CONSTANTS } from "@gallery/const";
-import { SortMode } from "@gallery/modules/share/sorter/gallery-sorter.component";
+import { SortMode } from "@gallery/modules/explorer/components/sorter/gallery-sorter.component";
 import { PhotoService } from "@gallery/services/photo.service";
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import {

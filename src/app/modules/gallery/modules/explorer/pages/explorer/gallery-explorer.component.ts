@@ -2,10 +2,10 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, Vie
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { ExplorerPhotoControlComponent } from "@gallery/modules/explorer";
+import { SortMode } from "@gallery/modules/explorer/components/sorter/gallery-sorter.component";
 import {
   AbstractExplorerComponent
 } from "@gallery/modules/explorer/pages/abstract-explorer/abstract-explorer.component";
-import { SortMode } from "@gallery/modules/share/sorter/gallery-sorter.component";
 import { PhotoService } from "@gallery/services/photo.service";
 import * as photoAction from "@gallery/store/photos/photo.actions";
 import { Photo } from '@gallery/store/photos/photo.model';

@@ -9,7 +9,7 @@ import {
 } from "@gallery/modules/share";
 import { MaterialModule } from "@modules/share";
 import { NgScrollbarModule } from "ngx-scrollbar";
-import { GallerySorterComponent } from './sorter/gallery-sorter.component';
+import { GallerySorterComponent } from '../explorer/components/sorter/gallery-sorter.component';
 
 
 @NgModule({

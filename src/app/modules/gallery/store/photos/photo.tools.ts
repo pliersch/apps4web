@@ -1,5 +1,5 @@
 import { GALLERY_CONSTANTS } from "@gallery/const";
-import { SortMode } from "@gallery/modules/share/sorter/gallery-sorter.component";
+import { SortMode } from "@gallery/modules/explorer/components/sorter/gallery-sorter.component";
 import { Photo } from "@gallery/store/photos/photo.model";
 import { Tag } from "@gallery/store/tags/tag.model";
 
