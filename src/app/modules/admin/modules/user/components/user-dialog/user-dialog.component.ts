@@ -1,23 +1,23 @@
 import { User } from "@account/store/user.model";
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from "@angular/forms";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { getValuesOfEnum } from "@app/common/util/enum-utils";
 import { Role } from "@modules/admin/modules/user/store/role";
 import { Status } from "@modules/admin/modules/user/store/status";
 
+export interface UserDialogData {
+  user: User;
+}
+
 @Component({
-  selector: 'app-user-form',
-  templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.scss']
+  selector: 'app-user-dialog',
+  templateUrl: './user-dialog.component.html',
+  styleUrls: ['./user-dialog.component.scss']
 })
-export class UserFormComponent implements OnInit, OnChanges {
+export class UserDialogComponent implements OnInit {
 
-  @Input()
   user: User | null;
-
-  @Output()
-  userEvent = new EventEmitter<Partial<User>>();
-
   userValues: any;
   changed = false;
   valid = false;
@@ -32,39 +32,38 @@ export class UserFormComponent implements OnInit, OnChanges {
     status: ['', Validators.required],
   });
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder,
+              @Inject(MAT_DIALOG_DATA) public data: User,
+              public dialogRef: MatDialogRef<UserDialogComponent>) {
+    this.user = data;
+  }
 
   ngOnInit(): void {
-    this.form.disable();
     this.form.valueChanges.subscribe(res => {
       this.changed =
         JSON.stringify(this.form.value) != JSON.stringify(this.userValues);
     });
     this.form.statusChanges.subscribe(result => {
-      this.valid = result == 'VALID';
+      this.valid = result === 'VALID';
     });
+    this.fillForm(this.user);
   }
 
   onSubmit(): void {
-    let user: Partial<User> = this.createUserByForm();
-
+    let user: Partial<User> = this.createUserFromForm();
     if (this.user) {
       user = this.deleteUnchangedProperties(user, this.user);
       user.id = this.user.id;
     }
-    this.userEvent.emit(user);
-    this.onCancel()
-    this.form.disable()
+    this.dialogRef.close(user);
   }
 
   onCancel(): void {
-    this.setUser(null)
-    this.form.reset();
+    this.dialogRef.close();
   }
 
-  public setUser(user: User | null): void {
+  public fillForm(user: User | null): void {
     this.user = user;
-    this.form.enable();
     if (user) {
       this.form.setValue({
         givenName: user.givenName,
@@ -80,16 +79,7 @@ export class UserFormComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.disabled.currentValue === true) {
-      this.form.disable();
-    } else if (changes.disabled.currentValue === false) {
-      this.form.enable();
-    }
-  }
-
   private deleteUnchangedProperties(after: Partial<User>, before: User): Partial<User> {
-    console.log('UserFormComponent deleteUnchangedProperties: ',)
     if (after.givenName == before.givenName) {
       delete after.givenName;
     }
@@ -108,7 +98,7 @@ export class UserFormComponent implements OnInit, OnChanges {
     return after;
   }
 
-  private createUserByForm(): Partial<User> {
+  private createUserFromForm(): Partial<User> {
     const controls = this.form.controls;
     const roleString = controls.role.value!;
     const statusString = controls.status.value!;

@@ -1,6 +1,7 @@
 import { CreateUserDto, User } from "@account/store/user.model";
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { UserFormComponent } from "@modules/admin/modules/user/components/user-form/user-form.component";
+import { MatDialog } from "@angular/material/dialog";
+import { UserDialogComponent } from "@modules/admin/modules/user/components/user-dialog/user-dialog.component";
 import { UserTableComponent } from "@modules/admin/modules/user/components/user-table/user-table.component";
 import * as userActions from "@modules/admin/modules/user/store/user.actions";
 import { UserState } from "@modules/admin/modules/user/store/user.state";
@@ -19,8 +20,8 @@ export enum Mode {
 })
 export class UserOverviewComponent implements OnInit, OnDestroy {
 
-  @ViewChild(UserFormComponent)
-  form: UserFormComponent;
+  @ViewChild(UserDialogComponent)
+  form: UserDialogComponent;
 
   @ViewChild(UserTableComponent)
   table: UserTableComponent;
@@ -33,7 +34,8 @@ export class UserOverviewComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
-  constructor(private store: Store) { }
+  constructor(private store: Store,
+              public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.subscription = this.users$.subscribe(res => {
@@ -41,31 +43,42 @@ export class UserOverviewComponent implements OnInit, OnDestroy {
     });
   }
 
-  handleEditEvent(user: User): void {
-    this.mode = Mode.EditUser;
-    this.form.setUser(user);
-  }
-
   handleDeleteEvent(user: User): void {
     this.store.dispatch(new userActions.DeleteUser(user.id))
   }
 
+  handleEditEvent(user: User): void {
+    this.openUserFormDialog(user);
+    this.mode = Mode.EditUser;
+  }
+
   addUser(): void {
+    this.openUserFormDialog();
     this.mode = Mode.AddUser;
-    this.form.setUser(null);
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  handleUserFormChanges($event: Partial<User>): void {
-    if (this.mode === Mode.AddUser) {
-      this.store.dispatch(new userActions.CreateUser($event as CreateUserDto))
-    } else {
-      const id = $event.id!;
-      delete $event.id
-      this.store.dispatch(new userActions.UpdateUser(id, $event))
-    }
+  openUserFormDialog(user?: User): void {
+    const dialogRef = this.dialog.open(UserDialogComponent, {
+      data: user,
+      restoreFocus: false,
+      autoFocus: false
+    });
+    dialogRef.afterClosed().subscribe((user: Partial<User>) => {
+      if (!user) {
+        return;
+      }
+      if (this.mode === Mode.AddUser) {
+        this.store.dispatch(new userActions.CreateUser(user as CreateUserDto))
+      } else {
+        const id = user.id!;
+        delete user.id
+        this.store.dispatch(new userActions.UpdateUser(id, user))
+      }
+    });
   }
+
 }
