@@ -13,10 +13,10 @@ export class WidgetService {
   }
 
   setWidget(widget: Type<any>): void {
-    if (this.widget != widget) {
-      this.widget = widget;
-      this.widgetHost.loadWidget(widget);
-    }
+    // if (this.widget != widget) {
+    this.widget = widget;
+    this.widgetHost.loadWidget(widget);
+    // }
   }
 
   removeWidget(widget: Type<any>): void {

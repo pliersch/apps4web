@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTooltip } from "@angular/material/tooltip";
+import { Component, OnInit } from '@angular/core';
 import { WidgetService } from "@app/core/components/widget/widget.service";
 import radioFile from "@assets/json/radio.json";
 import { RadioStation } from "@modules/radio/components/player/player.component";
@@ -16,9 +15,6 @@ interface PlayerActionItem {
   styleUrls: ['./widget-player.component.scss']
 })
 export class WidgetPlayerComponent implements OnInit {
-
-  @ViewChild('tooltip')
-  tooltip: MatTooltip
 
   radios: RadioStation[] = [];
   current: RadioStation;
@@ -39,12 +35,15 @@ export class WidgetPlayerComponent implements OnInit {
     symbol: 'close'
   }
 
+  // private playSubscription: Subscription;
+  // private pauseSubscription: Subscription;
+
   constructor(private playerService: PlayerService,
               private widgetService: WidgetService) { }
 
   ngOnInit(): void {
     this.radios = radioFile.radiostations;
-    this.playerService.on("play", (radio) => {
+    this.playerService.on("play", (radio: RadioStation) => {
       this.current = radio;
       this.playToggleAction = this.pauseAction;
     })
@@ -54,6 +53,9 @@ export class WidgetPlayerComponent implements OnInit {
     this.playerService.isPlaying() ?
       this.playToggleAction = this.pauseAction :
       this.playToggleAction = this.playAction;
+    // fixme buggy solution
+    // this.playSubscription = this.playerService.on("play", this.onPlay);
+    // this.pauseSubscription = this.playerService.on("pause", this.onPause);
   }
 
   onClickTogglePlay(): void {
@@ -68,4 +70,18 @@ export class WidgetPlayerComponent implements OnInit {
   onClickPlay(radio: RadioStation) {
     this.playerService.play(radio);
   }
+
+  // onPlay(radio: RadioStation): void {
+  //   this.current = radio;
+  //   this.playToggleAction = this.pauseAction;
+  // }
+  //
+  // onPause(): void {
+  //   this.playToggleAction = this.playAction;
+  // }
+
+  // ngOnDestroy(): void {
+  //   this.playSubscription.unsubscribe();
+  //   this.pauseSubscription.unsubscribe();
+  // }
 }
