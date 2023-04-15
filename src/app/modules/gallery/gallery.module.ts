@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { GalleryContainerComponent, GalleryToolbarComponent } from '@gallery/core';
+import { GalleryContainerComponent } from '@gallery/core';
 import { GalleryResolver } from "@gallery/resolver/gallery.resolver";
 import { PhotoService } from "@gallery/services/photo.service";
 import { TagService } from "@gallery/services/tag.service";
@@ -13,7 +13,6 @@ import { GalleryRoutingModule } from './gallery-routing.module';
 
 @NgModule({
   declarations: [
-    GalleryToolbarComponent,
     GalleryContainerComponent,
   ],
   imports: [
