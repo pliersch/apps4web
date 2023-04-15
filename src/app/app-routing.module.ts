@@ -2,6 +2,7 @@ import { AuthGuard } from "@account/guards/auth.guard";
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ErrorComponent } from "@app/core/components/error/error.component";
+import { AdminGuard } from "@modules/admin/guards/admin-guard.service";
 import { DashboardComponent } from "@modules/dashboard/dashboard.component";
 import { LegalNoticeComponent } from "@modules/legal-notice/legal-notice.component";
 import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
@@ -20,7 +21,7 @@ const routes: Routes = [{
     {path: 'impressum', title: 'Impressum', component: LegalNoticeComponent},
     {path: 'error', title: 'Error', component: ErrorComponent},
     {path: 'chat', title: 'Chat', loadChildren: chatModule, canActivate: [AuthGuard]},
-    {path: 'admin', title: 'Administration', loadChildren: adminModule},
+    {path: 'admin', title: 'Administration', loadChildren: adminModule, canActivate: [AdminGuard]},
     {path: 'gallery', title: 'Photo Galerie', loadChildren: galleryModule, canActivate: [AuthGuard]},
     {path: 'three', title: 'ThreeJS Playground', loadChildren: threeModule, canActivate: [AuthGuard]},
     {path: 'account', title: 'Account Info', loadChildren: accountModule},

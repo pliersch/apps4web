@@ -30,10 +30,11 @@ interface RouterStateModel {
     routes: [
       {path: 'gallery', name: 'Galerie', accepted: Role.User},
       {path: 'chat', name: 'Chat', accepted: Role.User},
-      {path: 'three', name: 'Three', accepted: Role.Guest},
+      {path: 'three', name: 'Three', accepted: Role.User},
       {path: 'account', name: 'Account', accepted: Role.User},
       {path: 'admin', name: 'Admin', accepted: Role.Admin},
       // {route: '/dashboard', name: 'Dashboard', accepted: Role.Guest},
+      // {route: '/recipes', name: 'Rezepte', accepted: Role.Guest},
       // {route: '/recipes', name: 'Rezepte', accepted: Role.Guest},
     ]
   }

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { GalleryAdminResolver } from "@gallery/modules/admin/resolver/gallery-admin.resolver";
-import { AdminGuard } from "@modules/admin/guards/admin-guard.service";
 import { AdminLayoutComponent } from "@modules/admin/layout/admin-layout.component";
 import { AdminUserResolver } from "@modules/admin/modules/user/resolver/admin-user.resolver";
 
@@ -10,7 +9,7 @@ const galleryAdmin = () => import('@modules/gallery/modules/admin/gallery-admin.
 
 const routes: Routes = [
   {
-    path: '', component: AdminLayoutComponent, canActivate: [AdminGuard],
+    path: '', component: AdminLayoutComponent,
     children: [
       {path: 'user', title: 'User', resolve: {resolver: AdminUserResolver}, loadChildren: userAdmin},
       {path: 'photos', title: 'Photos', resolve: {resolver: GalleryAdminResolver}, loadChildren: galleryAdmin},
