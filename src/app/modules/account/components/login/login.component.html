@@ -1,8 +1,10 @@
-<ng-template [ngIf]="user" [ngIfElse]="noUser">
-  <p *ngIf="user">You are logged in as {{ user.surName }}</p>
-</ng-template>
+<div class="page">
+  <ng-template [ngIf]="user" [ngIfElse]="noUser">
+    <p *ngIf="user">You are logged in as {{ user.surName }}</p>
+  </ng-template>
 
-<ng-template #noUser>
-  <p>You are not logged in.</p>
-  <p>You have to log in with google or a special url.</p>
-</ng-template>
+  <ng-template #noUser>
+    <p>You are not logged in.</p>
+    <p>You have to log in with google or a special url.</p>
+  </ng-template>
+</div>

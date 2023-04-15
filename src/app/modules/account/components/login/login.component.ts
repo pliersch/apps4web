@@ -9,7 +9,7 @@ import { Select, Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 
 @Component({
-  selector: 'app-hidden-login',
+  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })

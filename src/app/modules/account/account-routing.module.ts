@@ -8,6 +8,10 @@ import { LayoutComponent } from './layout/layout.component';
 
 const routes: Routes = [
   {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
     path: '',
     component: LayoutComponent,
     children: [
