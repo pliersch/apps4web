@@ -18,7 +18,8 @@ export class GalleryContainerComponent implements OnInit {
     {name: 'Editor', path: '/gallery/explorer/editor', accepted: Role.User},
     {name: 'Slideshow', path: '/gallery/slideshow', accepted: Role.User},
     {name: 'Lightbox', path: '/gallery/lightbox', accepted: Role.User},
-    {name: 'Upload', path: '/gallery/upload', accepted: Role.Admin},
+    //todo re-enable
+    // {name: 'Upload', path: '/gallery/upload', accepted: Role.Admin},
   ];
 
   activeLink = this.routes[0].path;

@@ -2,6 +2,10 @@
   display: flex;
 }
 
+mat-form-field {
+  width: 100px;
+}
+
 .mat-mdc-card-content:last-child {
   padding-bottom: 0;
 }
