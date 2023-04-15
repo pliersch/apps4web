@@ -11,6 +11,7 @@ import { AccountRoutingModule } from './account-routing.module';
 import { LoginComponent } from './components/login/login.component';
 import { AccountProfileComponent } from './components/profile/account-profile.component';
 import { LayoutComponent } from './layout/layout.component';
+import { PhotoSettingsComponent } from './components/photo-settings/photo-settings.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { LayoutComponent } from './layout/layout.component';
     LayoutComponent,
     SigninComponent,
     AccountProfileComponent,
-    LoginComponent
+    LoginComponent,
+    PhotoSettingsComponent
   ],
   exports: [
     SigninComponent

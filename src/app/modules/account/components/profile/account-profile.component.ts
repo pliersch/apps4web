@@ -13,6 +13,10 @@ export class AccountProfileComponent {
 
   @Select(AccountState.getUser)
   user$: Observable<User>;
+
   // user: User;
 
+  onClickEditAccount() {
+
+  }
 }

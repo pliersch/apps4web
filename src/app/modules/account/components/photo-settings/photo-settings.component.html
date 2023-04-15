@@ -1,13 +1,11 @@
 <mat-card class="card">
   <mat-card-content>
     <div class="action-container p5">
-      <span>Meine Daten</span>
+      <span>Meine Photos</span>
       <button mat-raised-button color="primary"
-              type="button" (click)="onClickEditAccount()">
+              type="button" (click)="onClickEditPhotos()">
         <mat-icon>edit</mat-icon>
       </button>
     </div>
   </mat-card-content>
 </mat-card>
-
-<p>Name: {{ (user$ | async)?.givenName }} {{ (user$ | async)?.surName }}</p>
