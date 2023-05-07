@@ -28,7 +28,8 @@ interface RouterStateModel {
     //   {path: 'admin', name: 'Admin', accepted: Role.Guest},
     // ]
     routes: [
-      {path: '', name: 'Home', accepted: Role.User},
+      // {path: '', name: 'Home', accepted: Role.User},
+      {path: 'dashboard', name: 'Dashboard', accepted: Role.User},
       {path: 'gallery', name: 'Galerie', accepted: Role.User},
       {path: 'chat', name: 'Chat', accepted: Role.User},
       {path: 'three', name: 'Three', accepted: Role.User},
