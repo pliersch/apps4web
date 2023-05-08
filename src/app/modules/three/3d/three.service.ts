@@ -289,10 +289,10 @@ export class ThreeService implements OnDestroy {
   public constructor(public ngZone: NgZone) {}
 
   ngOnDestroy(): void {
-    console.log('ThreeService ngOnDestroy: ',)
-    // if (this.frameId != null) {
-    //   cancelAnimationFrame(this.frameId);
-    // }
+    if (this.frameId != null) {
+      cancelAnimationFrame(this.frameId);
+    }
+    this.renderer.dispose();
   }
 
   public createScene(canvas: ElementRef<HTMLCanvasElement>): void {

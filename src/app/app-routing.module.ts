@@ -12,13 +12,10 @@ const accountModule = () => import('@app/modules/account/account.module').then((
 const adminModule = () => import('@modules/admin/admin.module').then((x) => x.AdminModule);
 const threeModule = () => import('@app/modules/three/three.module').then((x) => x.ThreeModule);
 const chatModule = () => import('@app/modules/chat/chat.module').then((x) => x.ChatModule);
-// const recipesModule = () => import('@app/modules/recipes/recipes.module').then((x) => x.RecipesModule);
-// const wasteModule = () => import('@app/modules/waste-calendar/waste-calendar.module').then((x) => x.WasteCalendarModule);
 
 const routes: Routes = [{
   path: '', component: DefaultLayoutComponent, children: [
-    {path: '', title: 'Home', component: ErrorComponent},
-    {path: 'dashboard', title: 'Dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
+    {path: '', title: 'Home', component: DashboardComponent},
     {path: 'impressum', title: 'Impressum', component: LegalNoticeComponent},
     {path: 'error', title: 'Error', component: ErrorComponent},
     {path: 'chat', title: 'Chat', loadChildren: chatModule, canActivate: [AuthGuard]},
@@ -26,8 +23,6 @@ const routes: Routes = [{
     {path: 'gallery', title: 'Photo Galerie', loadChildren: galleryModule, canActivate: [AuthGuard]},
     {path: 'three', title: 'ThreeJS Playground', loadChildren: threeModule, canActivate: [AuthGuard]},
     {path: 'account', title: 'Account Info', loadChildren: accountModule},
-    // {path: 'waste', loadChildren: wasteModule},
-    // {path: 'recipes', loadChildren: recipesModule},
   ]
 }];
 
