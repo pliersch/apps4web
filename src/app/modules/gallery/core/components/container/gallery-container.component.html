@@ -2,8 +2,8 @@
   <header class="nav-bar">
     <nav mat-tab-nav-bar [tabPanel]="tabPanel">
       <a mat-tab-link *ngFor="let item of routes"
-         (click)="navigateUrl(item.path)"
-         [active]="activeLink === item.path"> {{item.name}} </a>
+         (click)="navigateUrl(item.path!)"
+         [active]="activeLink === item.path!"> {{item.title}} </a>
     </nav>
   </header>
   <!--  <app-action-bar class="action-bar"></app-action-bar>-->

@@ -1,8 +1,6 @@
 ﻿import { Location } from "@angular/common";
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
-import { Route } from "@app/core/stores/routes/router.state";
-import { Role } from "@modules/admin/modules/user/store/role";
+import { Route, Router } from "@angular/router";
 
 @Component({
   templateUrl: 'layout.component.html',
@@ -11,8 +9,8 @@ import { Role } from "@modules/admin/modules/user/store/role";
 export class LayoutComponent implements OnInit {
 
   routes: Route[] = [
-    {name: 'Meine Daten', path: '/account/profile', accepted: Role.User},
-    {name: 'Meine Photos', path: '/account/photos', accepted: Role.User},
+    // {name: 'Meine Daten', path: '/account/profile', accepted: Role.User},
+    // {name: 'Meine Photos', path: '/account/photos', accepted: Role.User},
   ];
 
   activeLink = this.routes[0].path;

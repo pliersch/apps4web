@@ -1,8 +1,9 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Route } from "@angular/router";
 import { constants } from "@app/core/const/const";
-import { Route, RouterState } from "@app/core/stores/routes/router.state";
+import { RouterState } from "@app/core/stores/routes/router.state";
 import { ThemeState } from "@modules/themes/stores/theme-state";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from 'rxjs';

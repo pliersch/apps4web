@@ -1,16 +1,14 @@
 ﻿import { Location } from "@angular/common";
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
-import { Route } from "@app/core/stores/routes/router.state";
-import { Role } from "@modules/admin/modules/user/store/role";
+import { Route, Router } from "@angular/router";
 
 @Component({templateUrl: 'admin-layout.component.html'})
 
 export class AdminLayoutComponent implements OnInit {
 
   routes: Route[] = [
-    {name: 'User', path: '/admin/user', accepted: Role.Admin},
-    {name: 'Photos', path: '/admin/photos', accepted: Role.Admin},
+    // {name: 'User', path: '/admin/user', accepted: Role.Admin},
+    // {name: 'Photos', path: '/admin/photos', accepted: Role.Admin},
   ];
 
   activeLink = this.routes[0].path;

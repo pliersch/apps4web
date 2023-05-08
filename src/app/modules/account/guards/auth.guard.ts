@@ -1,7 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Route, Router, RouterStateSnapshot } from '@angular/router';
 import { SetRouteBeforeSignin } from "@app/core/stores/routes/router.actions";
-import { Route, RouterState } from "@app/core/stores/routes/router.state";
+import { RouterState } from "@app/core/stores/routes/router.state";
 import { Store } from "@ngxs/store";
 
 @Injectable({providedIn: 'root'})
@@ -11,9 +11,7 @@ export class AuthGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-
-    console.log('AuthGuard canActivate: ', this.router.config)
-
+    console.log('AuthGuard canActivate: ')
     const routes = this.store.selectSnapshot(RouterState.getAccessibleRoutes);
     if (this.canAccessRoute(route, routes)) {
       return true;

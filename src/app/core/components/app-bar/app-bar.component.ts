@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Route, RouterState } from "@app/core/stores/routes/router.state";
+import { Route } from "@angular/router";
+import { RouterState } from "@app/core/stores/routes/router.state";
 import { Select } from "@ngxs/store";
 import { Observable } from "rxjs";
 

@@ -17,7 +17,7 @@ const chatModule = () => import('@app/modules/chat/chat.module').then((x) => x.C
 
 const routes: Routes = [{
   path: '', component: DefaultLayoutComponent, children: [
-    {path: '', title: 'Home', component: ErrorComponent},
+    {path: '', title: 'Home', component: DashboardComponent},
     {path: 'dashboard', title: 'Dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
     {path: 'impressum', title: 'Impressum', component: LegalNoticeComponent},
     {path: 'error', title: 'Error', component: ErrorComponent},

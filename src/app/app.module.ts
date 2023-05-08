@@ -27,7 +27,6 @@ import { NgxsModule, NgxsModuleOptions, Store } from '@ngxs/store';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ErrorComponent } from './core/components/error/error.component';
-import { AuthLayoutComponent } from "./core/layouts/auth-layout/auth-layout.component";
 import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
 
 const ngxsConfig: NgxsModuleOptions = {
@@ -56,7 +55,6 @@ const ngxsConfig: NgxsModuleOptions = {
 @NgModule({
   declarations: [
     DefaultLayoutComponent,
-    AuthLayoutComponent,
     AppComponent,
     AppBarComponent,
     ThemeMenuComponent,
