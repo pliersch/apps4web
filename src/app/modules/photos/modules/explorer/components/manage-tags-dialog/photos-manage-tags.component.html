@@ -1,0 +1,40 @@
+<h1 mat-dialog-title>Manage Tags</h1>
+<mat-dialog-content>
+  <div class="row-no-wrap">
+    <div class="column col-s-3 height300">
+      <ng-scrollbar
+        [autoWidthDisabled]="false" class="dark-scrollbar"
+        track="vertical" visibility="always">
+        <mat-selection-list appNoPaddingTop multiple="false">
+          <mat-list-option
+            (click)="onSelectTagGroups(tag)"
+            *ngFor="let tag of tagGroups$ | async; let i = index"
+            [selected]="currentGroup.id === tag.id" [value]="tag">
+            {{tag.name}}
+          </mat-list-option>
+        </mat-selection-list>
+      </ng-scrollbar>
+      <button
+        (click)="onClickCreateGroup()" [disabled]="isCreatingGroup"
+        color="primary" mat-raised-button>New
+      </button>
+    </div>
+    <div class="column-max-width m10l">
+      <app-photos-manage-tag-detail
+        (deleteGroupEvent)="handleDeleteGroup($event)"
+        (tagChangesEvent)="handleEntriesChanged($event)"
+        [tagGroup]="currentGroup"
+        class="full-width-height">
+      </app-photos-manage-tag-detail>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <span class="spacer"></span>
+  <button (click)="onClickApply()" [disabled]="!hasChanges"
+          class="mat-primary" mat-raised-button>Apply
+  </button>
+  <button (click)="onClickClose()" mat-raised-button>Cancel</button>
+  <button (click)="onClickSave()" color="primary" mat-raised-button>Ok</button>
+</mat-dialog-actions>

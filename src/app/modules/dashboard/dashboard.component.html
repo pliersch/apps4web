@@ -1,6 +1,6 @@
 <ng-template [ngIf]="(user$ | async)" [ngIfElse]="noUser">
   <ng-template [ngIf]="(isHandset$ | async)" [ngIfElse]="desktop">
-    <div class="foo">
+    <div class="flex-row">
       <app-waste-reminder></app-waste-reminder>
       <app-ingredients></app-ingredients>
       <app-player></app-player>

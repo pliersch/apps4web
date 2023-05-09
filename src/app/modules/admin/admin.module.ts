@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from "@app/modules/share/material/material.module";
-import { PhotoState } from "@gallery/store/photos/photo.state";
+import { PhotoState } from "@modules/photos/store/photos/photo.state";
 import { NgxsModule } from "@ngxs/store";
 
 import { AdminRoutingModule } from './admin-routing.module';

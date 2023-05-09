@@ -1,0 +1,40 @@
+<div class="row-max-height">
+  <div class="column control-panel p5">
+    <div class="scrollbar-container">
+      <app-photos-tag-filter
+        [tagGroups]="tagGroups" [activeTags]="activeTags" [photoCounts]="photoCounts"
+        (addTagFilterEvent)="handleTagFilterChanged($event, true)"
+        (removeTagFilterEvent)="handleTagFilterChanged($event, false)"></app-photos-tag-filter>
+    </div>
+    <app-photos-rating-filter
+      [currentRating]="currentRating"
+      (changeRatingEvent)="handleRatingChange($event)"></app-photos-rating-filter>
+    <app-photos-date-filter></app-photos-date-filter>
+    <div class="column">
+      <button mat-raised-button color="primary" type="button" (click)="onClickClearFilter()">
+        Clear Filter
+        <mat-icon style="font-size: 1.5em">clear</mat-icon>
+      </button>
+    </div>
+    <app-photos-action-panel
+      [actions]="actions" (actionEvent)="onAction($event)"></app-photos-action-panel>
+    <app-photos-image-detail [currentPhoto$]="currentPhoto$"></app-photos-image-detail>
+    <app-photos-meta-editor-panel
+      [selectedPhotosCount]="selection.length" [filteredPhotosCount]="photos.length"
+      [loadedPhotos]="loadedPhotos" [availablePhotos]="availablePhotos"></app-photos-meta-editor-panel>
+  </div>
+  <div class="column-max-width">
+    <div class="scrollbar-container">
+      <ng-scrollbar #scrollbar class="dark-scrollbar">
+        <div class="images-wrapper">
+          <app-editor-photo-control
+            *ngFor="let photo of (photos$ | async); let i=index" class="selection-item" [photo]="photo"
+            [selected]="currentIndex === i" [hasRights]="true" [edit]="selection.includes(photo)"
+            (click)="setCurrent(photo)" (deleteEvent)="onSelectForDelete($event)"
+            (previewEvent)="onSelectForPreview($event)" (editEvent)="onSelectForEdit($event)"
+            (groupEditEvent)="onSelectGroupEdit($event)"></app-editor-photo-control>
+        </div>
+      </ng-scrollbar>
+    </div>
+  </div>
+</div>

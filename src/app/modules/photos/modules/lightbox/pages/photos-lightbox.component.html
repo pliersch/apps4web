@@ -1,0 +1,13 @@
+<div class="grid horizontal">
+  <div class="grid-detail">
+    <app-photos-image-grid (closeEvent)="onSelectImage($event)"></app-photos-image-grid>
+    <div class="caption-container">
+      <p>todo: info & actionbar</p>
+    </div>
+  </div>
+
+  <div class="grid-thumbs">
+    <app-photos-horizontal-scroller (selectEvent)="onSelectImage($event)">
+    </app-photos-horizontal-scroller>
+  </div>
+</div>

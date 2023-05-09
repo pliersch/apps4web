@@ -97,7 +97,6 @@ export class AccountState {
   logOut(ctx: StateContext<AccountStateModel>): void {
     ctx.patchState({googleUser: null, user: null});
     ctx.dispatch(new SetUserRole(Role.Guest));
-
   }
 
   @Action(accountActions.SigninWithGoogle)

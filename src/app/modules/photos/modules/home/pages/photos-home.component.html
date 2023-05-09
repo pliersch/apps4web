@@ -1,0 +1,6 @@
+<ng-scrollbar class="dark-scrollbar" track="vertical" visibility="always">
+  <div class="page">
+    <app-photos-highlight
+      *ngFor="let photo of (photos$ | async)" [photo]="photo"></app-photos-highlight>
+  </div>
+</ng-scrollbar>
