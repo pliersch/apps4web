@@ -14,9 +14,6 @@ import { map } from "rxjs/operators";
 })
 export class DashboardComponent implements OnInit {
 
-  @Select(AccountState.isUser)
-  isUser$: Observable<boolean>;
-
   @Select(AccountState.getUser)
   user$: Observable<User>;
 
@@ -33,9 +30,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentBreakpoint = this.breakpointService.breakpoint;
-
-    this.isUser$.subscribe(res => console.log(res))
-
   }
 
 }

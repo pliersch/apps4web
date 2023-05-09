@@ -90,6 +90,7 @@ export class SigninComponent implements OnInit {
   logout(): void {
     window.google?.accounts?.id?.disableAutoSelect();
     this.store.dispatch(new Logout());
+    void this.router.navigate(['']);
   }
 
   navigateToAccountProfile(): void {

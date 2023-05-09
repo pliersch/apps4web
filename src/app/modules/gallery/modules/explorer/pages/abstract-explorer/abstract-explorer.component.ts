@@ -26,9 +26,9 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   @ViewChild('scrollbar')
   scrollbar: NgScrollbar;
 
-  @Select(AccountState.isUser)
-  isAuthenticated$: Observable<boolean>;
-  isAuthenticated: boolean;
+  // @Select(AccountState.isUser)
+  // isAuthenticated$: Observable<boolean>;
+  // isAuthenticated: boolean;
 
   @Select(PhotoState.getAvailablePhotos)
   availablePhotos$: Observable<number>;
@@ -105,7 +105,7 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
     this.subscription.add(this.loadedPhotos$.subscribe(res => this.loadedPhotos = res));
     this.subscription.add(this.currentIndex$.subscribe(res => this.currentIndex = res));
     this.subscription.add(this.currentPhoto$.subscribe(res => this.currentPhoto = res));
-    this.subscription.add(this.isAuthenticated$.subscribe(res => this.isAuthenticated = res));
+    // this.subscription.add(this.isAuthenticated$.subscribe(res => this.isAuthenticated = res));
     this.subscription.add(this.availablePhotos$.subscribe(count => this.availablePhotos = count));
     this.subscription.add(this.currentRating$.subscribe(res => this.currentRating = res));
     this.subscription.add(this.tagGroups$.subscribe(res => this.tagGroups = res));
