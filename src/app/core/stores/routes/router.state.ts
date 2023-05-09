@@ -22,9 +22,9 @@ interface RouterStateModel {
     routeBeforeSignin: '',
     routes: [
       // {path: '', name: 'Home', accepted: Role.User},
-      {path: 'gallery', name: 'Galerie', accepted: Role.User},
+      {path: 'photos', name: 'Photos', accepted: Role.User},
       {path: 'chat', name: 'Chat', accepted: Role.User},
-      {path: 'three', name: 'Three', accepted: Role.User},
+      {path: 'three', name: 'ThreeJS', accepted: Role.User},
       {path: 'account', name: 'Account', accepted: Role.Admin},
       {path: 'admin', name: 'Admin', accepted: Role.Admin},
     ]

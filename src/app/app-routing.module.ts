@@ -18,7 +18,7 @@ const routes: Routes = [{
     // {path: 'error', title: 'Error', component: ErrorComponent},
     {path: 'chat', title: 'Chat', loadChildren: chatModule, canActivate: [AuthGuard]},
     {path: 'admin', title: 'Administration', loadChildren: adminModule, canActivate: [AdminGuard]},
-    {path: 'gallery', title: 'Photo Galerie', loadChildren: galleryModule, canActivate: [AuthGuard]},
+    {path: 'photos', title: 'Photos', loadChildren: galleryModule, canActivate: [AuthGuard]},
     {path: 'three', title: 'ThreeJS Playground', loadChildren: threeModule, canActivate: [AuthGuard]},
     {path: 'account', title: 'Account Info', loadChildren: accountModule},
   ]

@@ -13,11 +13,11 @@ export class GalleryContainerComponent implements OnInit {
 
   // fixme Role ignored
   routes: Route[] = [
-    {name: 'Home', path: '/gallery/home', accepted: Role.User},
-    {name: 'Explorer', path: '/gallery/explorer/finder', accepted: Role.User},
-    {name: 'Editor', path: '/gallery/explorer/editor', accepted: Role.User},
-    {name: 'Slideshow', path: '/gallery/slideshow', accepted: Role.User},
-    {name: 'Lightbox', path: '/gallery/lightbox', accepted: Role.User},
+    {name: 'Home', path: '/photos/home', accepted: Role.User},
+    {name: 'Explorer', path: '/photos/explorer/finder', accepted: Role.User},
+    {name: 'Editor', path: '/photos/explorer/editor', accepted: Role.User},
+    {name: 'Slideshow', path: '/photos/slideshow', accepted: Role.User},
+    {name: 'Lightbox', path: '/photos/lightbox', accepted: Role.User},
     //todo re-enable
     // {name: 'Upload', path: '/gallery/upload', accepted: Role.Admin},
   ];

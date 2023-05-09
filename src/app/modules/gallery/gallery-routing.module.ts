@@ -19,9 +19,8 @@ const routes: Routes = [
       {path: 'slideshow', title: 'Slideshow', loadChildren: slideShowModule},
       {path: 'lightbox', title: 'Lightbox', loadChildren: lightBoxModule},
       {path: 'explorer', title: 'Explorer', loadChildren: explorerModule},
-      // {path: 'editor', title: 'Editor', loadChildren: explorerModule},
-      {path: '**', redirectTo: '/gallery/home', pathMatch: 'full'},
-      {path: '', redirectTo: '/gallery/home', pathMatch: 'full'},
+      {path: '**', redirectTo: '/photos/home', pathMatch: 'full'},
+      {path: '', redirectTo: '/photos/home', pathMatch: 'full'},
     ]
   }
 ];
