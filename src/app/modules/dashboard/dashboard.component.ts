@@ -1,6 +1,9 @@
+import { AccountState } from "@account/store/account.state";
+import { User } from "@account/store/user.model";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { BreakpointService } from "@app/common/services/breakpoint.service";
+import { Select } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
@@ -10,6 +13,12 @@ import { map } from "rxjs/operators";
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+
+  @Select(AccountState.isUser)
+  isUser$: Observable<boolean>;
+
+  @Select(AccountState.getUser)
+  user$: Observable<User>;
 
   protected readonly Breakpoints = Breakpoints;
   currentBreakpoint: Observable<string>;
@@ -24,6 +33,9 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentBreakpoint = this.breakpointService.breakpoint;
+
+    this.isUser$.subscribe(res => console.log(res))
+
   }
 
 }

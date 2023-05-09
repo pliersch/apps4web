@@ -39,7 +39,7 @@ export class AccountState {
 
   @Selector()
   static isUser(state: AccountStateModel): boolean {
-    return state.user?.role === Role.User;
+    return state.user?.role === (Role.User || Role.Admin);
   }
 
   @Selector()

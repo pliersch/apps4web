@@ -1,20 +1,29 @@
-<ng-template [ngIf]="(isHandset$ | async)" [ngIfElse]="desktop">
-  <div class="foo">
-    <app-waste-reminder></app-waste-reminder>
-    <app-ingredients></app-ingredients>
-    <app-player></app-player>
-  </div>
+<ng-template [ngIf]="(user$ | async)" [ngIfElse]="noUser">
+  <ng-template [ngIf]="(isHandset$ | async)" [ngIfElse]="desktop">
+    <div class="foo">
+      <app-waste-reminder></app-waste-reminder>
+      <app-ingredients></app-ingredients>
+      <app-player></app-player>
+    </div>
+  </ng-template>
+
+  <ng-template #desktop>
+    <div class="row">
+      <div class="col-s-6">
+        <app-waste-reminder></app-waste-reminder>
+      </div>
+      <div class="col-s-6">
+        <app-ingredients></app-ingredients>
+      </div>
+      <app-player></app-player>
+    </div>
+  </ng-template>
 </ng-template>
 
-<ng-template #desktop>
-  <div class="row">
-    <div class="col-s-6">
-      <app-waste-reminder></app-waste-reminder>
-    </div>
-    <div class="col-s-6">
-      <app-ingredients></app-ingredients>
-    </div>
-    <app-player></app-player>
+<ng-template #noUser>
+  <div class="page">
+    <p>You are not logged in.</p>
+    <p>You have to log in with google or a special url.</p>
   </div>
 </ng-template>
 

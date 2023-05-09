@@ -50,29 +50,18 @@ export class RouterState {
     return accessibleRoutes;
   }
 
-  @Selector()
-  static getRoutesForGuests(state: RouterStateModel): Route[] {
-    const accessibleRoutes: Route[] = [];
-    for (const route of state.routes) {
-      if (state.role >= route.accepted) {
-        accessibleRoutes.push(route);
-      }
-    }
-    return accessibleRoutes;
-  }
-
   @Action(routerAction.SetUserRole)
   setRole(ctx: StateContext<RouterStateModel>, action: routerAction.SetUserRole): void {
     ctx.patchState({
       role: action.role
-    })
+    });
   }
 
   @Action(routerAction.SetRouteBeforeSignin)
   setRouteBeforeSignin(ctx: StateContext<RouterStateModel>, action: routerAction.SetRouteBeforeSignin): void {
     ctx.patchState({
       routeBeforeSignin: action.url
-    })
+    });
   }
 
 }
