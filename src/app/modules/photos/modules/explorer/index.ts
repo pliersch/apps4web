@@ -1,4 +1,4 @@
-export * from '@modules/photos/modules/explorer/explorer/photos-explorer.component'
+export * from '@modules/photos/modules/explorer/pages/explorer/photos-explorer.component'
 export * from '@modules/photos/modules/explorer/pages/editor/photos-editor.component'
 
 export * from '@modules/photos/modules/explorer/components/date-filter/photos-date-filter.component'

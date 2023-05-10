@@ -12,6 +12,9 @@ import {
   PhotosManageTagsComponent,
 } from "@modules/photos/modules/explorer";
 import {
+  EditorInstructionDialogComponent
+} from "@modules/photos/modules/explorer/components/editor-instruction-dialog/editor-instruction-dialog.component";
+import {
   AbstractExplorerComponent
 } from "@modules/photos/modules/explorer/pages/abstract-explorer/abstract-explorer.component";
 import { PhotoService } from "@modules/photos/services/photo.service";
@@ -54,6 +57,8 @@ export class PhotosEditorComponent extends AbstractExplorerComponent implements 
   tagGroups$: Observable<TagGroup[]>
   tagGroups: TagGroup[]
 
+  instructionDialogComponent = EditorInstructionDialogComponent;
+
   actions: Action[] = [
     {name: ActionTypes.SelectAll, icon: 'done_all', description: 'select all', handler: this},
     {name: ActionTypes.ToggleSelection, icon: 'published_with_changes', description: 'toggle selection', handler: this},
@@ -78,13 +83,13 @@ export class PhotosEditorComponent extends AbstractExplorerComponent implements 
     this.subscription.add(this.tags$.subscribe(res => this.tags = res));
   }
 
-  ngAfterViewInit(): void {
-    super.ngAfterViewInit();
-  }
-
-  ngOnDestroy(): void {
-    super.ngOnDestroy();
-  }
+  // ngAfterViewInit(): void {
+  //   super.ngAfterViewInit();
+  // }
+  //
+  // ngOnDestroy(): void {
+  //   super.ngOnDestroy();
+  // }
 
   onAction(action: Action): void {
     switch (action.name) {

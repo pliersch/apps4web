@@ -13,6 +13,7 @@ import { WidgetComponent } from "@app/core/components/widget/widget.component";
 import { WidgetDirective } from "@app/core/components/widget/widget.directive";
 import { initApplication } from "@app/core/initializers/app.initializer";
 import { initTheme } from "@app/core/initializers/theme.initializer";
+import { AppState } from "@app/core/stores/app/app.state";
 import { RouterState } from "@app/core/stores/routes/router.state";
 import { MaterialModule } from "@app/modules/share/material/material.module";
 import { environment } from "@environments/environment";
@@ -76,7 +77,7 @@ const ngxsConfig: NgxsModuleOptions = {
     MaterialModule,
     // AuthModule,
     //SocketIoModule.forRoot(config),
-    NgxsModule.forRoot([RouterState, ThemeState, AccountState], ngxsConfig),
+    NgxsModule.forRoot([AppState, RouterState, ThemeState, AccountState], ngxsConfig),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     // NgxsLoggerPluginModule.forRoot(),
     WasteCalendarModule,

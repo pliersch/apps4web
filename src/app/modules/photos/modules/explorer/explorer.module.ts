@@ -27,6 +27,7 @@ import { ShareModule } from "@modules/share/share.module";
 import { NgxsModule } from "@ngxs/store";
 import { NgScrollbarModule } from "ngx-scrollbar";
 import { ExplorerRoutingModule } from './explorer-routing.module';
+import { EditorInstructionDialogComponent } from './components/editor-instruction-dialog/editor-instruction-dialog.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { ExplorerRoutingModule } from './explorer-routing.module';
     PhotosRatingComponent,
     PhotosDateFilterComponent,
     PhotosDeletePhotoComponent,
+    EditorInstructionDialogComponent,
 
   ],
   imports: [

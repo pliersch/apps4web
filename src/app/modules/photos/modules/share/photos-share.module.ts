@@ -1,5 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import {
+  ExplorerInstructionDialogComponent
+} from '@modules/photos/modules/explorer/components/explorer-instruction-dialog/explorer-instruction-dialog.component';
 import { PhotosSorterComponent } from '@modules/photos/modules/explorer/components/sorter/photos-sorter.component';
 import {
   PhotosHorizontalScrollerComponent,
@@ -20,6 +23,7 @@ import { NgScrollbarModule } from "ngx-scrollbar";
     PhotosImagePlaceholderComponent,
     StarRatingComponent,
     PhotosSorterComponent,
+    ExplorerInstructionDialogComponent,
   ],
   imports: [
     CommonModule,

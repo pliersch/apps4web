@@ -3,6 +3,9 @@ import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { Action } from "@modules/action-bar/actions";
 import { ExplorerPhotoControlComponent } from "@modules/photos/modules/explorer";
+import {
+  ExplorerInstructionDialogComponent
+} from "@modules/photos/modules/explorer/components/explorer-instruction-dialog/explorer-instruction-dialog.component";
 import { SortMode } from "@modules/photos/modules/explorer/components/sorter/photos-sorter.component";
 import {
   AbstractExplorerComponent
@@ -36,6 +39,8 @@ export class PhotosExplorerComponent extends AbstractExplorerComponent implement
   @Select(PhotoState.getFilteredDownloadablePhotos)
   downloadablePhotos$: Observable<Photo[]>;
 
+  instructionDialogComponent = ExplorerInstructionDialogComponent;
+
   actions: Action[] = [
     {name: ActionTypes.SelectAll, icon: 'done_all', description: 'select all', handler: this},
     {name: ActionTypes.ToggleSelection, icon: 'published_with_changes', description: 'toggle selection', handler: this},
@@ -51,18 +56,6 @@ export class PhotosExplorerComponent extends AbstractExplorerComponent implement
     public store: Store,
   ) {
     super(photoService, router, dialog, store);
-  }
-
-  ngOnInit(): void {
-    super.ngOnInit();
-  }
-
-  ngAfterViewInit(): void {
-    super.ngAfterViewInit();
-  }
-
-  ngOnDestroy(): void {
-    super.ngOnDestroy();
   }
 
   onAction(action: Action): void {

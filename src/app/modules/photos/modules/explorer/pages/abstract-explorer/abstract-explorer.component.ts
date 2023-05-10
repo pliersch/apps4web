@@ -1,8 +1,11 @@
 import { AccountState } from "@account/store/account.state";
 import { User } from "@account/store/user.model";
+import { ComponentType } from "@angular/cdk/overlay";
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
+import { SetCheckedInstruction } from "@app/core/stores/app/app.actions";
+import { AppState } from "@app/core/stores/app/app.state";
 import { PhotoService } from "@modules/photos/services/photo.service";
 import * as photoAction from "@modules/photos/store/photos/photo.actions";
 import { AddTagFilter, RemoveTagFilter, SetRatingFilter } from "@modules/photos/store/photos/photo.actions";
@@ -26,9 +29,9 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   @ViewChild('scrollbar')
   scrollbar: NgScrollbar;
 
-  // @Select(AccountState.isUser)
-  // isAuthenticated$: Observable<boolean>;
-  // isAuthenticated: boolean;
+  @Select(AppState.getCheckedInstructions)
+  checkedInstructions$: Observable<string[]>;
+  checkedInstructions: string[];
 
   @Select(PhotoState.getAvailablePhotos)
   availablePhotos$: Observable<number>;
@@ -82,6 +85,7 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   photoCounts$: Observable<PhotoCountByTag[]>;
   photoCounts: PhotoCountByTag[];
 
+  protected instructionDialogComponent: ComponentType<any>;
   protected subscription: Subscription;
   protected absoluteHeight = 0;
   protected isRequesting: boolean;
@@ -105,7 +109,7 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
     this.subscription.add(this.loadedPhotos$.subscribe(res => this.loadedPhotos = res));
     this.subscription.add(this.currentIndex$.subscribe(res => this.currentIndex = res));
     this.subscription.add(this.currentPhoto$.subscribe(res => this.currentPhoto = res));
-    // this.subscription.add(this.isAuthenticated$.subscribe(res => this.isAuthenticated = res));
+    this.subscription.add(this.checkedInstructions$.subscribe(res => this.checkedInstructions = res));
     this.subscription.add(this.availablePhotos$.subscribe(count => this.availablePhotos = count));
     this.subscription.add(this.currentRating$.subscribe(res => this.currentRating = res));
     this.subscription.add(this.tagGroups$.subscribe(res => this.tagGroups = res));
@@ -132,11 +136,26 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
     this.currentIndex$.pipe(take(1)).subscribe(res => {
       this.currentIndex = res;
       this.scrollToActiveItem();
-    })
+    });
+    if (!this.checkedInstructions.includes(this.constructor.name)) {
+      this.showInstructionDialog();
+    }
   }
 
   protected scrollToActiveItem(): void {
     throw new Error('you must impl "scrollToActiveItem"')
+  }
+
+  showInstructionDialog(): void {
+    const dialogRef = this.dialog.open(this.instructionDialogComponent, {
+      restoreFocus: false,
+      autoFocus: false
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.store.dispatch(new SetCheckedInstruction(this.constructor.name));
+      }
+    });
   }
 
   observeScrollContent(): void {

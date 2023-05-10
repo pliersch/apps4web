@@ -31,9 +31,6 @@
       "@modules/*": [
         "app/modules/*"
       ],
-      "@gallery/*": [
-        "app/modules/gallery/*"
-      ],
       "@account/*": [
         "app/modules/account/*"
       ],
