@@ -1,7 +1,7 @@
 import { AccountState } from "@account/store/account.state";
 import { User } from "@account/store/user.model";
 import { Injectable } from '@angular/core';
-import { Resolve, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { PushMessageEvent, PushMessageListener, ServerSentService } from "@app/common/services/server-sent.service";
 import { AddMessage, LoadChat } from "@modules/chat/store/chat.actions";
 import { MessageResultDto } from "@modules/chat/store/chat.model";
@@ -12,7 +12,7 @@ import { filter } from "rxjs/operators";
 @Injectable({
   providedIn: 'root'
 })
-export class ChatResolver implements PushMessageListener, Resolve<boolean> {
+export class ChatResolver  implements PushMessageListener {
 
   private initialized = false;
   private messagesAdded = false;

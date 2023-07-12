@@ -59,10 +59,10 @@
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button *ngIf="imgFiles === undefined" mat-raised-button color="primary"
+      <button *ngIf="!imgFiles" mat-raised-button color="primary"
               type="button" (click)="openFile()">Open
       </button>
-      <button *ngIf="imgFiles !== undefined" mat-raised-button color="primary"
+      <button *ngIf="imgFiles" mat-raised-button color="primary"
               type="button" (click)="uploadImage()">Upload
       </button>
     </mat-card-actions>

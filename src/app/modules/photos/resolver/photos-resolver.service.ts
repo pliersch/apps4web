@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Resolve } from "@angular/router";
+
 import { PushMessageEvent, PushMessageListener, ServerSentService } from "@app/common/services/server-sent.service";
 import { LoadMetaData, LoadPhotos } from "@modules/photos/store/photos/photo.actions";
 import { LoadTags, SetNewTagsAvailable } from "@modules/photos/store/tags/tag.action";
@@ -7,7 +7,7 @@ import { Store } from "@ngxs/store";
 import { concatMap, Observable, of, Subscription } from "rxjs";
 
 @Injectable()
-export class PhotosResolver implements PushMessageListener, Resolve<boolean> {
+export class PhotosResolver  implements PushMessageListener {
 
   private initialized = false;
   private photosAdded = false

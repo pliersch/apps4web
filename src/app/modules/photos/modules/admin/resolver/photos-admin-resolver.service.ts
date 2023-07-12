@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { LoadMetaData } from "@modules/photos/store/photos/photo.actions";
 import { Store } from "@ngxs/store";
 import { Observable, of } from 'rxjs';
@@ -7,7 +7,7 @@ import { Observable, of } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class PhotosAdminResolver implements Resolve<boolean> {
+export class PhotosAdminResolver  {
 
   private initialized = false;
 

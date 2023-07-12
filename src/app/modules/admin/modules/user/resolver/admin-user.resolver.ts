@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Store } from "@ngxs/store";
 import { UserState } from "@modules/admin/modules/user/store/user.state";
@@ -8,7 +8,7 @@ import { LoadUsers } from "@modules/admin/modules/user/store/user.actions";
 @Injectable({
   providedIn: 'root'
 })
-export class AdminUserResolver implements Resolve<boolean> {
+export class AdminUserResolver  {
 
   constructor(private store: Store) {}
 
