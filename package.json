@@ -6,6 +6,7 @@
     "build": "ng build && gzipper compress ./dist",
     "serve": "http-server -a 127.0.0.1 -p 4300",
     "serve:build": "lite-server --baseDir=\"dist/apps4web\"\n",
+    "serve:build_lite": "lite-server --baseDir=\"dist/apps4web\"\n",
     "build:prod:serve": "ng build --configuration production && lite-server --baseDir=\"dist/apps4web\"\n",
     "watch": "ng build --watch --configuration development",
     "lint": "ng lint",
