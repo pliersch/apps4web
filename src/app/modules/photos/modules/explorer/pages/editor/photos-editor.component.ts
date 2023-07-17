@@ -60,12 +60,12 @@ export class PhotosEditorComponent extends AbstractExplorerComponent implements 
   instructionDialogComponent = EditorInstructionDialogComponent;
 
   actions: Action[] = [
-    {name: ActionTypes.SelectAll, icon: 'done_all', description: 'select all', handler: this},
-    {name: ActionTypes.ToggleSelection, icon: 'published_with_changes', description: 'toggle selection', handler: this},
-    {name: ActionTypes.DeselectAll, icon: 'remove_done', description: 'deselect all', handler: this},
-    {name: ActionTypes.EditPhotos, icon: 'edit', description: 'edit photos', handler: this},
-    {name: ActionTypes.DeleteMany, icon: 'delete', description: 'delete photos', handler: this},
-    {name: ActionTypes.ManageTags, icon: 'list', description: 'manage tags', handler: this},
+    {name: ActionTypes.SelectAll, icon: 'done_all', description: 'Alles auswählen', handler: this},
+    {name: ActionTypes.ToggleSelection, icon: 'published_with_changes', description: 'Auswahl umkehren', handler: this},
+    {name: ActionTypes.DeselectAll, icon: 'remove_done', description: 'Auswahl aufheben', handler: this},
+    {name: ActionTypes.EditPhotos, icon: 'edit', description: 'Bearbeiten', handler: this},
+    {name: ActionTypes.DeleteMany, icon: 'delete', description: 'Löschen', handler: this},
+    {name: ActionTypes.ManageTags, icon: 'list', description: 'Manage Tags', handler: this},
   ]
 
   constructor(

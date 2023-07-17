@@ -1,6 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Component, OnInit } from '@angular/core';
-import { environment } from "@environments/environment";
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -9,13 +8,13 @@ import { environment } from "@environments/environment";
 })
 
 
-export class AppComponent implements OnInit {
+export class AppComponent /*implements OnInit*/ {
 
   constructor(private http: HttpClient) { }
 
-  ngOnInit(): void {
-    const stringObservable = this.http.get<any>(environment.apiUrl);
-    stringObservable.subscribe(res => console.log(res.msg))
-  }
+  // ngOnInit(): void {
+  //   const stringObservable = this.http.get<any>(environment.apiUrl);
+  //   stringObservable.subscribe(res => console.log(res.msg))
+  // }
 
 }

@@ -42,11 +42,11 @@ export class PhotosExplorerComponent extends AbstractExplorerComponent implement
   instructionDialogComponent = ExplorerInstructionDialogComponent;
 
   actions: Action[] = [
-    {name: ActionTypes.SelectAll, icon: 'done_all', description: 'select all', handler: this},
-    {name: ActionTypes.ToggleSelection, icon: 'published_with_changes', description: 'toggle selection', handler: this},
-    {name: ActionTypes.DeselectAll, icon: 'remove_done', description: 'deselect all', handler: this},
-    {name: ActionTypes.Add, icon: 'add', description: 'add to downloads', handler: this},
-    {name: ActionTypes.Download, icon: 'download', description: 'download', handler: this},
+    {name: ActionTypes.SelectAll, icon: 'done_all', description: 'Alles auswählen', handler: this},
+    {name: ActionTypes.ToggleSelection, icon: 'published_with_changes', description: 'Auswahl umkehren', handler: this},
+    {name: ActionTypes.DeselectAll, icon: 'remove_done', description: 'Auswahl aufheben', handler: this},
+    {name: ActionTypes.Add, icon: 'add', description: 'zu Downloads hinzufügen', handler: this},
+    {name: ActionTypes.Download, icon: 'download', description: 'Download', handler: this},
   ]
 
   constructor(
