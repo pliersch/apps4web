@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '@environments/environment';
 
 export class PushMessageEvent<T> {
   static PHOTOS_ADDED = 'photos_added'
@@ -33,15 +34,15 @@ export class ServerSentService {
 
   // todo move to public method for setup by 'listener'
   constructor() {
-    const photoEventSource = new EventSource('http://localhost:3000/photos/sse');
+    const photoEventSource = new EventSource(`${environment.apiUrl}/photos/sse`);
     photoEventSource.onmessage = (event: MessageEvent): void => {
       this.handleServerSent(event)
     }
-    const tagEventSource = new EventSource('http://localhost:3000/tags/sse');
+    const tagEventSource = new EventSource(`${environment.apiUrl}/tags/sse`);
     tagEventSource.onmessage = (event: MessageEvent): void => {
       this.handleServerSent(event)
     }
-    const chatEventSource = new EventSource('http://localhost:3000/chat/sse');
+    const chatEventSource = new EventSource(`${environment.apiUrl}/chat/sse`);
     chatEventSource.onmessage = (event: MessageEvent): void => {
       this.handleServerSent(event)
     }
