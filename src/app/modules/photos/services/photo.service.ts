@@ -28,7 +28,7 @@ export class PhotoService {
   }
 
   getPhotos(from: number, take: number, tagIds: string[]): Observable<PhotoRequestResult> {
-    console.log('PhotoService getPhotos: ', from, take)
+    // console.log('PhotoService getPhotos: ', from, take)
     return this.http.get<PhotoRequestResult>(PHOTO_BASE_URL, {
       params: {
         from: from,

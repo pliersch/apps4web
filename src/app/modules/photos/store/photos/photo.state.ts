@@ -222,7 +222,7 @@ export class PhotoState {
 
   @Action(photoAction.LoadMetaDataSuccess)
   loadMetaDataSuccess(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadMetaDataSuccess): void {
-    console.log('PhotoState loadMetaDataSuccess: ', action.dto)
+    // console.log('PhotoState loadMetaDataSuccess: ', action.dto)
     ctx.patchState({
       availableServerPhotos: action.dto.allPhotosCount,
       photoCountByTags: action.dto.photoCountByTags
@@ -257,7 +257,7 @@ export class PhotoState {
       return of(Subscription.EMPTY);
     }
     const activeTags = this.store.selectSnapshot(PhotoState.getActiveTags);
-    console.log('PhotoState loadPhotos: ', from, count, activeTags)
+    // console.log('PhotoState loadPhotos: ', from, count, activeTags)
     const tagIds: string[] = [];
     activeTags.forEach(tag => tagIds.push(tag.id))
     return this.photoService.getPhotos(from, count, tagIds)
@@ -371,7 +371,6 @@ export class PhotoState {
 
   @Action(photoAction.AddPhotoFail)
   addPhotoFail(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoFail): void {
-    console.log(action.error)
     ctx.dispatch({loaded: false, loading: false});
     this.alertService.error('Upload fail');
   }
@@ -419,7 +418,6 @@ export class PhotoState {
   @Action(photoAction.UpdatePhotoFail)
   updatePhotoFail(ctx: StateContext<PhotoStateModel>, action: photoAction.UpdatePhotoFail): void {
     this.alertService.error('Add tag fail');
-    console.log(action.error)
   }
 
   // endregion

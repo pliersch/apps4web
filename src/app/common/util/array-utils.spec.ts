@@ -65,7 +65,6 @@ describe('array-utils', () => {
       const one = [{a: 1, b: 2}, {a: 2, b: 3}];
       const two = [{a: 1, b: 2}, {a: 2, b: 3}];
       const diff = joinUnique(one, two);
-      console.log('diff : ', diff)
       expect(diff).toEqual([{a: 1, b: 2}, {a: 2, b: 3}]);
     });
   });

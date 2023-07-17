@@ -31,9 +31,7 @@ export class PhotosAdminComponent implements OnInit, OnDestroy {
   }
 
   onClickDeletePhotos(): void {
-    this.service.deleteAllPhotos(this.user).subscribe(res => {
-      console.log('PhotosAdminComponent delete all result: ', res);
-    })
+    this.service.deleteAllPhotos(this.user);
   }
 
   ngOnDestroy(): void {
