@@ -1,9 +1,9 @@
-<h1 mat-dialog-title>search</h1>
+<h1 mat-dialog-title>Suche</h1>
 <mat-dialog-content>
 
   <div>
     <mat-form-field appearance="fill">
-      <mat-label>filter by user</mat-label>
+      <mat-label>Filter nach User</mat-label>
       <mat-select [(value)]="selected">
         <mat-option>X</mat-option>
         <mat-option *ngFor='let identity of userIdentities' [value]='identity'>

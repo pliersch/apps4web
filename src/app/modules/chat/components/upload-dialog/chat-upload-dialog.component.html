@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>add pictures</h1>
+<h1 mat-dialog-title>Bild hinzufügen</h1>
 <mat-dialog-content>
 
   <!--  <div class="thumbnail-list">-->
@@ -12,7 +12,7 @@
     (fileChangeEvent)="onFilesChange($event)"></app-drag-drop-input>
   <div class="example-form">
     <mat-form-field class="example-full-width">
-      <mat-label>Leave a comment</mat-label>
+      <mat-label>Schreib einen Kommentar</mat-label>
       <textarea matInput [(ngModel)]="comment"
                 placeholder="Ex. It makes me feel..."></textarea>
     </mat-form-field>
@@ -24,7 +24,6 @@
   <span class="spacer"></span>
   <button mat-raised-button (click)="onClickCancel()">Abbrechen</button>
   <button mat-raised-button color="primary"
-          (click)="onClickSend()" [disabled]="files.length === 0">
-    Ok
+          (click)="onClickSend()" [disabled]="files.length === 0"> Ok
   </button>
 </mat-dialog-actions>

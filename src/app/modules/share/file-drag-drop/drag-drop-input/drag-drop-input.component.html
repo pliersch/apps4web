@@ -1,12 +1,12 @@
 <div class="container">
   <div class="drag-drop-area" appDragDropDirective (fileDropped)="onFileDropped($event)">
     <input #fileInput style="display: none" type="file" (change)="fileBrowseHandler($event)" multiple accept="image/*">
-    <h3>Drag and drop file here</h3>
-    <h3>or</h3>
-    <button (click)="onClickBrowse()" mat-raised-button color="primary">Browse for file</button>
+    <h3>Drag and Drop</h3>
+    <h3>oder</h3>
+    <button (click)="onClickBrowse()" mat-raised-button color="primary">Browse</button>
   </div>
-  <p>todo: impl thumbs</p>
-  <p>pictures: {{ files.length }}</p>
+  <!--  <p>todo: impl thumbs</p>-->
+  <p>Bilder: {{ files.length }}</p>
   <!--  <div class="files-list">-->
   <!--    <div class="single-file" *ngFor="let file of files; let i = index">-->
   <!--      <div class="file-icon" style="width: 50px">-->
@@ -46,4 +46,5 @@
   <!--      </div>-->
   <!--    </div>-->
   <!--  </div>-->
+
 </div>
