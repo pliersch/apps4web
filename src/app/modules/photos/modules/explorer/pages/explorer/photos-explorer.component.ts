@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
+import { SetCheckedInstruction } from "@app/core/stores/app/app.actions";
 import { Action } from "@modules/action-bar/actions";
 import { ExplorerPhotoControlComponent } from "@modules/photos/modules/explorer";
 import {
@@ -56,6 +57,8 @@ export class PhotosExplorerComponent extends AbstractExplorerComponent implement
     public store: Store,
   ) {
     super(photoService, router, dialog, store);
+    // hack to disable instruction
+    this.store.dispatch(new SetCheckedInstruction(this.constructor.name));
   }
 
   onAction(action: Action): void {
