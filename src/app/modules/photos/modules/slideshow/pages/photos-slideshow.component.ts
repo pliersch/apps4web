@@ -1,18 +1,18 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { PhotosHorizontalScrollerComponent } from "@modules/photos/core";
 import { SetNextPhoto, SetPreviousPhoto } from "@modules/photos/store/photos/photo.actions";
 import { Photo } from "@modules/photos/store/photos/photo.model";
 import { PhotoState } from "@modules/photos/store/photos/photo.state";
 import { getPhotoUrl } from "@modules/photos/store/photos/photo.tools";
 import { Select, Store } from "@ngxs/store";
-import { Observable, Subscription, take } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 
 @Component({
   selector: 'app-photos-slideshow',
   templateUrl: './photos-slideshow.component.html',
   styleUrls: ['./photos-slideshow.component.scss']
 })
-export class PhotosSlideshowComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PhotosSlideshowComponent implements OnInit, OnDestroy {
 
   @ViewChild(PhotosHorizontalScrollerComponent)
   scroller!: PhotosHorizontalScrollerComponent;
@@ -39,13 +39,6 @@ export class PhotosSlideshowComponent implements OnInit, AfterViewInit, OnDestro
       });
   }
 
-  ngAfterViewInit(): void {
-    this.currentIndex$.pipe(take(1)).subscribe(res => {
-      this.currentIndex = res;
-      this.scrollToActiveItem();
-    })
-  }
-
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
@@ -56,10 +49,6 @@ export class PhotosSlideshowComponent implements OnInit, AfterViewInit, OnDestro
 
   prevSlide(): void {
     this.store.dispatch(new SetPreviousPhoto())
-  }
-
-  private scrollToActiveItem(): void {
-    this.scroller.scrollToIndex(this.currentIndex);
   }
 
 }

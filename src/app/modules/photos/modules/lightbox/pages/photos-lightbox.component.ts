@@ -34,7 +34,7 @@ export class PhotosLightboxComponent implements AfterViewInit {
   }
 
   private scrollToActiveItem(): void {
-    this.scroller.scrollToIndex(this.currentIndex);
+    this.scroller.scrollToActiveItem();
   }
 
 }

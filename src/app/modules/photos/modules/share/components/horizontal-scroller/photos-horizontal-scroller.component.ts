@@ -1,18 +1,18 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core';
 import { ScrollerItemComponent } from "@modules/photos/modules/share/components/scroller-item/scroller-item.component";
 import { SetCurrentPhoto } from "@modules/photos/store/photos/photo.actions";
 import { Photo } from '@modules/photos/store/photos/photo.model';
 import { PhotoState } from "@modules/photos/store/photos/photo.state";
 import { Select, Store } from '@ngxs/store';
 import { NgScrollbar } from 'ngx-scrollbar';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-photos-horizontal-scroller',
   templateUrl: './photos-horizontal-scroller.component.html',
   styleUrls: ['./photos-horizontal-scroller.component.scss']
 })
-export class PhotosHorizontalScrollerComponent implements OnInit {
+export class PhotosHorizontalScrollerComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild(NgScrollbar)
   scrollbar!: NgScrollbar;
@@ -26,45 +26,75 @@ export class PhotosHorizontalScrollerComponent implements OnInit {
   @Select(PhotoState.getCurrentIndex)
   currentIndex$: Observable<number>;
   currentIndex: number;
+  lastIndex: number;
 
   @Output()
   selectEvent = new EventEmitter<Photo>();
 
-  private currentItem: ScrollerItemComponent;
+  private readonly ITEM_WIDTH = 150;
+  private readonly STEPS = 3;
+
+  private subscription: Subscription;
 
   constructor(private store: Store) { }
 
-  ngOnInit(): void {
-    this.currentIndex$.subscribe(res => {
-      this.currentIndex = res;
-    });
+  ngAfterViewInit(): void {
+    this.subscription =
+      this.currentIndex$.subscribe(res => {
+        this.lastIndex = this.currentIndex;
+        this.currentIndex = res;
+        this.scrollToActiveItem();
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   onItemSelect($event: ScrollerItemComponent): void {
-    if (this.currentItem) {
-      this.currentItem.active = false;
-    }
-    this.currentItem = $event;
-    this.currentItem.active = true;
     this.store.dispatch(new SetCurrentPhoto($event.photo));
     this.selectEvent.emit($event.photo);
   }
 
   onScroll($event: WheelEvent): void {
     const scrollLeft = this.scrollbar.viewport.scrollLeft;
+    const diff = this.ITEM_WIDTH * this.STEPS;
     if ($event.deltaY > 0) {
-      this.scrollToPosition(scrollLeft + 450);
+      this.scrollToPosition(scrollLeft + diff);
     } else {
-      this.scrollToPosition(scrollLeft - 450);
+      this.scrollToPosition(scrollLeft - diff);
     }
     $event.preventDefault();
   }
 
-  scrollToIndex(index: number): void {
-    void this.scrollbar.scrollTo({
-      left: index * 150,
-      duration: 0
-    });
+  scrollToActiveItem(): void {
+    this.currentIndex > this.lastIndex ?
+      this.scrollRight() :
+      this.scrollLeft();
+  }
+
+  scrollRight(): void {
+    const scrollLeft = this.scrollbar.viewport.scrollLeft;
+    const width = this.scrollbar.nativeElement.clientWidth;
+    const position = (this.currentIndex + 1) * this.ITEM_WIDTH;
+    const diff = position - width;
+    if (position > width + scrollLeft) {
+      void this.scrollbar.scrollTo({
+        left: diff,
+        duration: 0
+      });
+    }
+  }
+
+  scrollLeft(): void {
+    const scrollLeft = this.scrollbar.viewport.scrollLeft;
+    const position = this.currentIndex * this.ITEM_WIDTH;
+    if (position < scrollLeft) {
+      void this.scrollbar.scrollTo({
+        left: position,
+        duration: 0
+      });
+    }
   }
 
   scrollToPosition(position: number): void {

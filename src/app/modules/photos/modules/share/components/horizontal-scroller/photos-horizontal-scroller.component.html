@@ -3,7 +3,7 @@
     <div class="thumbnail-list">
       <app-scroller-item
         class="thumbnail-item" *ngFor="let photo of (photos$ | async); let i = index"
-        [photo]="photo" (selectEvent)="onItemSelect($event)">
+        [photo]="photo" (selectEvent)="onItemSelect($event)" [active]="currentIndex === i">
       </app-scroller-item>
     </div>
   </div>
