@@ -313,20 +313,22 @@ export class PhotoState {
 
   @Action(photoAction.SetNextPhoto)
   setNextPhotoAction(ctx: StateContext<PhotoStateModel>): void {
-    // todo check max
     let index = ctx.getState().currentIndex;
-    ctx.patchState({
-      currentIndex: ++index
-    });
+    if (index < ctx.getState().photos.length - 1) {
+      ctx.patchState({
+        currentIndex: ++index
+      });
+    }
   }
 
   @Action(photoAction.SetPreviousPhoto)
   setPreviousPhotoAction(ctx: StateContext<PhotoStateModel>): void {
-    // todo check min
     let index = ctx.getState().currentIndex;
-    ctx.patchState({
-      currentIndex: --index
-    });
+    if (index > 0) {
+      ctx.patchState({
+        currentIndex: --index
+      });
+    }
   }
 
   // endregion

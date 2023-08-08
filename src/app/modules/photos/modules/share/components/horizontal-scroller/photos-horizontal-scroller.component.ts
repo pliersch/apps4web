@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ScrollerItemComponent } from "@modules/photos/modules/share/components/scroller-item/scroller-item.component";
 import { SetCurrentPhoto } from "@modules/photos/store/photos/photo.actions";
 import { Photo } from '@modules/photos/store/photos/photo.model';
@@ -12,7 +12,7 @@ import { Observable, Subscription } from 'rxjs';
   templateUrl: './photos-horizontal-scroller.component.html',
   styleUrls: ['./photos-horizontal-scroller.component.scss']
 })
-export class PhotosHorizontalScrollerComponent implements AfterViewInit, OnDestroy {
+export class PhotosHorizontalScrollerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild(NgScrollbar)
   scrollbar!: NgScrollbar;
@@ -38,13 +38,20 @@ export class PhotosHorizontalScrollerComponent implements AfterViewInit, OnDestr
 
   constructor(private store: Store) { }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
+    // not possible inside afterViewInit, expressionChange error is throwing
     this.subscription =
       this.currentIndex$.subscribe(res => {
         this.lastIndex = this.currentIndex;
         this.currentIndex = res;
-        this.scrollToActiveItem();
       });
+  }
+
+  ngAfterViewInit(): void {
+    this.subscription.add(
+      this.currentIndex$.subscribe(res => {
+        this.scrollToActiveItem();
+      }));
   }
 
   ngOnDestroy(): void {
