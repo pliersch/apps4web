@@ -78,7 +78,7 @@ const ngxsConfig: NgxsModuleOptions = {
     // AuthModule,
     //SocketIoModule.forRoot(config),
     NgxsModule.forRoot([AppState, RouterState, ThemeState, AccountState], ngxsConfig),
-    NgxsReduxDevtoolsPluginModule.forRoot({disabled: true}),
+    NgxsReduxDevtoolsPluginModule.forRoot({disabled: !isDevMode()}),
     // NgxsLoggerPluginModule.forRoot(),
     WasteCalendarModule,
     RecipesModule,

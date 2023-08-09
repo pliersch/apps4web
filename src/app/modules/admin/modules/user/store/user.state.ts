@@ -1,12 +1,12 @@
-import { Action, Selector, State, StateContext } from "@ngxs/store";
+import { User } from "@account/store/user.model";
 import { Injectable } from "@angular/core";
 import { AlertService } from "@app/common/services/alert.service";
+import { UserService } from "@modules/admin/modules/user/services/user.service";
+import * as userActions from "@modules/admin/modules/user/store/user.actions";
+import { Action, Selector, State, StateContext } from "@ngxs/store";
+import { patch, removeItem, updateItem } from "@ngxs/store/operators";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import { catchError, map } from "rxjs/operators";
-import { User } from "@account/store/user.model";
-import * as userActions from "@modules/admin/modules/user/store/user.actions";
-import { UserService } from "@modules/admin/modules/user/services/user.service";
-import { patch, removeItem, updateItem } from "@ngxs/store/operators";
 
 export interface UserStateModel {
   users: Array<User>;
@@ -66,20 +66,6 @@ export class UserState {
   }
 
   // endregion
-
-//   // region set current
-//   //////////////////////////////////////////////////////////
-//   //         set current
-//   //////////////////////////////////////////////////////////
-//
-//   @Action(userActions.SetCurrentUser)
-//   setCurrentUser(ctx: StateContext<UserStateModel>, action: userActions.SetCurrentUser): void {
-//     ctx.patchState({
-//       user: action.user
-//     });
-//   }
-//
-// // endregion
 
 // region create
 //////////////////////////////////////////////////////////

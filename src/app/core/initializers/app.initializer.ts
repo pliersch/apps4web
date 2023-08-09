@@ -1,39 +1,6 @@
-import { Store } from "@ngxs/store";
-
-export function initApplication(store: Store,
-                                /*userService: UserService*/): () => Promise<unknown> {
+export function initApplication(): () => Promise<unknown> {
   return () => new Promise(resolve => {
-    // console.log('initApplication: APP_INITIALIZER ')
-    // store.dispatch(new LoadUsers()) // todo execute after login
     resolve(true);
-    // authService.authState.subscribe((authUser) => {
-    //     if (authUser) {
-    //       userService.login(createUserByAuth(authUser)).subscribe((user) => {
-    //         return !!user;
-    //
-    //       });
-    //       // console.log(userService.getAll());
-    //       // store.dispatch(new StartAppInitializer());
-    //       // store.dispatch(new LoadUsers());
-    //       // store.select((state: any) => state.appState.users).pipe(
-    //       //   filter(users => users !== null && users !== undefined && users.length > 0),
-    //       //   take(1)
-    //       // ).subscribe((users) => {
-    //       //   store.dispatch(new FinishAppInitializer());
-    //       //   console.log('app init: login -> resolve "true"');
-    //       //   resolve(true);
-    //       // });
-    //     }
-    //     // reject();
-    //     resolve(false);
-    //     console.log('app init: no login -> resolve "false"');
-    //   },
-    //   error => {
-    //     console.log('app init: error', error);
-    //   },
-    //   () => {
-    //     console.log('app init: complete');
-    //   });
   });
 }
 

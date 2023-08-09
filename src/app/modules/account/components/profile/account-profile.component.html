@@ -1,13 +1,7 @@
-<mat-card class="card">
-  <mat-card-content>
-    <div class="action-container p5">
-      <span>Meine Daten</span>
-      <button mat-raised-button color="primary"
-              type="button" (click)="openProfileDialog()">
-        <mat-icon>edit</mat-icon>
-      </button>
-    </div>
-  </mat-card-content>
-</mat-card>
+<section>
+  <p>Login-Daten (by Google)</p>
+  <p>Name: {{ (user$ | async)?.givenName }} {{ (user$ | async)?.surName }}</p>
+  <p>Email: {{ (user$ | async)?.email }}</p>
+</section>
 
-<p>Name: {{ (user$ | async)?.givenName }} {{ (user$ | async)?.surName }}</p>
+
