@@ -6,16 +6,16 @@ import { getValuesOfEnum } from "@app/common/util/enum-utils";
 import { Role } from "@modules/admin/modules/user/store/role";
 import { Status } from "@modules/admin/modules/user/store/status";
 
-export interface UserDialogData {
+export interface EditUserDialogData {
   user: User;
 }
 
 @Component({
-  selector: 'app-user-dialog',
-  templateUrl: './user-dialog.component.html',
-  styleUrls: ['./user-dialog.component.scss']
+  selector: 'app-edit-user-dialog',
+  templateUrl: './edit-user-dialog.component.html',
+  styleUrls: ['./edit-user-dialog.component.scss']
 })
-export class UserDialogComponent implements OnInit {
+export class EditUserDialogComponent implements OnInit {
 
   user: User | null;
   userValues: any;
@@ -27,14 +27,14 @@ export class UserDialogComponent implements OnInit {
   form = this.fb.group({
     givenName: ['', Validators.required],
     lastName: ['', Validators.required],
-    email: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
     role: ['', Validators.required],
     status: ['', Validators.required],
   });
 
   constructor(private fb: FormBuilder,
               @Inject(MAT_DIALOG_DATA) public data: User,
-              public dialogRef: MatDialogRef<UserDialogComponent>) {
+              public dialogRef: MatDialogRef<EditUserDialogComponent>) {
     this.user = data;
   }
 
