@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>Edit User</h1>
 <mat-dialog-content>
-  <form [formGroup]="form" novalidate>
+  <form [formGroup]="form">
     <div class="p8t">
       <div class="row">
         <div class="col m10r">
@@ -33,34 +33,6 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="row">
-        <div class="col m10r">
-          <mat-form-field class="full-width" appearance="fill">
-            <mat-label>Role</mat-label>
-            <mat-select placeholder="Role" formControlName="role">
-              <mat-option *ngFor="let role of roles" [value]="role">
-                {{ role }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="form.controls['role'].hasError('required')">
-              Role is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width" appearance="fill">
-            <mat-label>Status</mat-label>
-            <mat-select placeholder="Status" formControlName="status">
-              <mat-option *ngFor="let status of statuses" [value]="status">
-                {{ status }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="form.controls['status'].hasError('required')">
-              Status is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
     </div>
   </form>
 </mat-dialog-content>
@@ -68,9 +40,9 @@
 <mat-dialog-actions>
   <span class="spacer"></span>
   <button mat-raised-button [disabled]="form.disabled"
-          (click)="onCancel()" type="button">Abbrechen
+          (click)="cancel()" type="button">Abbrechen
   </button>
-  <button mat-raised-button color="primary" (click)="onSubmit()"
+  <button mat-raised-button color="primary" (click)="saveChanges()"
           [disabled]="!(changed && valid)" type="button">Ok
   </button>
 </mat-dialog-actions>

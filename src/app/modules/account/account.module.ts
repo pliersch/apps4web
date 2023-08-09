@@ -3,15 +3,15 @@ import { AccountService } from "@account/store/account.service";
 import { AccountState } from "@account/store/account.state";
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-
 import { MaterialModule } from "@app/modules/share/material/material.module";
 import { ShareModule } from "@modules/share/share.module";
 import { NgxsModule } from "@ngxs/store";
 import { AccountRoutingModule } from './account-routing.module';
+import { EditProfileDialogComponent } from './components/edit-profile-dialog/edit-profile-dialog.component';
 import { LoginComponent } from './components/login/login.component';
+import { PhotoSettingsComponent } from './components/photo-settings/photo-settings.component';
 import { AccountProfileComponent } from './components/profile/account-profile.component';
 import { LayoutComponent } from './layout/layout.component';
-import { PhotoSettingsComponent } from './components/photo-settings/photo-settings.component';
 
 @NgModule({
   imports: [
@@ -26,7 +26,8 @@ import { PhotoSettingsComponent } from './components/photo-settings/photo-settin
     SigninComponent,
     AccountProfileComponent,
     LoginComponent,
-    PhotoSettingsComponent
+    PhotoSettingsComponent,
+    EditProfileDialogComponent,
   ],
   exports: [
     SigninComponent

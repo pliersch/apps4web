@@ -71,10 +71,8 @@ export class UserOverviewComponent implements OnInit, OnDestroy {
   }
 
   openCreateUserDialog(): void {
-    const dialogRef = this.dialog.open(CreateUserDialogComponent, {
-      restoreFocus: false,
-      autoFocus: false
-    });
+    const dialogRef =
+      this.dialog.open(CreateUserDialogComponent);
 
     dialogRef.afterClosed().subscribe((user: User) => {
       if (!user) {
@@ -84,12 +82,11 @@ export class UserOverviewComponent implements OnInit, OnDestroy {
     });
   }
 
-  openUpdateUserDialog(user?: User): void {
-    const dialogRef = this.dialog.open(EditUserDialogComponent, {
-      data: user,
-      restoreFocus: false,
-      autoFocus: false
-    });
+  openUpdateUserDialog(user: User): void {
+    const dialogRef =
+      this.dialog.open(EditUserDialogComponent, {
+        data: {user: user}
+      });
     dialogRef.afterClosed().subscribe((user: Partial<User>) => {
       if (!user) {
         return;

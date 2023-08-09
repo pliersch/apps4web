@@ -1,41 +1,32 @@
+import { EditProfileDialogData } from "@account/components/profile/account-profile.component";
 import { User } from "@account/store/user.model";
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { getValuesOfEnum } from "@app/common/util/enum-utils";
-import { Role } from "@modules/admin/modules/user/store/role";
-import { Status } from "@modules/admin/modules/user/store/status";
-
-export interface EditUserDialogData {
-  user: User;
-}
 
 @Component({
-  selector: 'app-edit-user-dialog',
-  templateUrl: './edit-user-dialog.component.html',
-  styleUrls: ['./edit-user-dialog.component.scss']
+  selector: 'app-edit-profile-dialog',
+  templateUrl: './edit-profile-dialog.component.html',
+  styleUrls: ['./edit-profile-dialog.component.scss']
 })
-export class EditUserDialogComponent implements OnInit {
+export class EditProfileDialogComponent implements OnInit {
 
-  user: User;
-  userValues: any;
-  changed = false;
+  private user: User;
   valid = false;
-  roles = getValuesOfEnum(Role);
-  statuses = getValuesOfEnum(Status);
+  changed = false;
+  userValues: any;
 
   form = this.fb.group({
     givenName: ['', Validators.required],
     lastName: ['', Validators.required],
     email: ['', [Validators.required, Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
-    role: ['', Validators.required],
-    status: ['', Validators.required],
   });
 
-  constructor(private fb: FormBuilder,
-              @Inject(MAT_DIALOG_DATA) public data: EditUserDialogData,
-              public dialogRef: MatDialogRef<EditUserDialogComponent>) {
-    this.user = data.user;
+  constructor(public dialogRef: MatDialogRef<EditProfileDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: EditProfileDialogData,
+              private fb: FormBuilder) {
+
+    data.user$.subscribe(user => this.user = user).unsubscribe();
   }
 
   ngOnInit(): void {
@@ -49,29 +40,27 @@ export class EditUserDialogComponent implements OnInit {
     this.fillForm(this.user);
   }
 
-  onSubmit(): void {
+  private fillForm(user: User): void {
+    this.form.setValue({
+      givenName: user.givenName,
+      lastName: user.surName,
+      email: user.email,
+    });
+    this.userValues = this.form.value;
+    this.changed = false;
+  }
+
+  cancel(): void {
+    this.dialogRef.close();
+  }
+
+  saveChanges(): void {
     let user: Partial<User> = this.createUserFromForm();
     if (this.user) {
       user = this.deleteUnchangedProperties(user, this.user);
       user.id = this.user.id;
     }
     this.dialogRef.close(user);
-  }
-
-  onCancel(): void {
-    this.dialogRef.close();
-  }
-
-  private fillForm(user: User): void {
-    this.form.setValue({
-      givenName: user.givenName,
-      lastName: user.surName,
-      email: user.email,
-      role: Role[user.role],
-      status: Status[user.status]
-    });
-    this.userValues = this.form.value;
-    this.changed = false;
   }
 
   private deleteUnchangedProperties(after: Partial<User>, before: User): Partial<User> {
@@ -95,15 +84,11 @@ export class EditUserDialogComponent implements OnInit {
 
   private createUserFromForm(): Partial<User> {
     const controls = this.form.controls;
-    const roleString = controls.role.value!;
-    const statusString = controls.status.value!;
 
     return {
       givenName: controls.givenName.value!,
       surName: controls.lastName.value!,
       email: controls.email.value!,
-      role: Role[roleString as keyof typeof Role],
-      status: Status[statusString as keyof typeof Status],
     };
   }
 }
