@@ -20,7 +20,7 @@ const routes: Routes = [{
     {path: 'admin', title: 'Administration', loadChildren: adminModule, canActivate: [AdminGuard]},
     {path: 'photos', title: 'Photos', loadChildren: photosModule, canActivate: [AuthGuard]},
     {path: 'three', title: 'ThreeJS Playground', loadChildren: threeModule, canActivate: [AuthGuard]},
-    {path: 'account', title: 'Account Info', loadChildren: accountModule},
+    {path: 'account', title: 'Account', loadChildren: accountModule},
   ]
 }];
 

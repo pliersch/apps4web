@@ -1,10 +1,42 @@
 <div class="page">
-  <ng-template [ngIf]="user" [ngIfElse]="noUser">
-    <p *ngIf="user">You are logged in as {{ user.surName }}</p>
-  </ng-template>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="example-form" autocomplete="off">
+    <mat-card class="card-size-m">
+      <mat-card-header>
+        <mat-card-title>Login</mat-card-title>
+        <mat-card-subtitle>temporäre Lösung für Präsentationszwecke</mat-card-subtitle>
+      </mat-card-header>
 
-  <ng-template #noUser>
-    <p>You are not logged in.</p>
-    <p>You have to log in with google or a special url.</p>
-  </ng-template>
+      <mat-card-content>
+        <div class="row m10t">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Email" formControlName="email" type="text" required/>
+              <mat-error *ngIf="form.controls['email'].hasError('required')">
+                Email fehlt
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Passwort</mat-label>
+              <input matInput placeholder="Mondgesicht :)" formControlName="password"
+                     type="password" required>
+              <mat-error *ngIf="form.controls['password'].hasError('required')">
+                Passwort fehlt
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <span class="spacer"></span>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!valid">
+          Login
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
 </div>

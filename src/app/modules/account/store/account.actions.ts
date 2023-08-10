@@ -7,6 +7,27 @@ export class SetUser {
   constructor(public readonly user: User) { }
 }
 
+export class LoginWithEmail {
+  static readonly type = '[Account] Login Email';
+
+  constructor(public readonly email: string,
+              public readonly password: string) { }
+}
+
+export class LoginWithEmailSuccess {
+  static readonly type = '[Account] Login Email Success';
+
+  constructor(public readonly user: User) {
+  }
+}
+
+export class LoginWithEmailFail {
+  static readonly type = '[Account] Login Email Fail';
+
+  constructor(public error: string) {
+  }
+}
+
 export class LoginWithId {
   static readonly type = '[Account] Login';
 

@@ -17,7 +17,11 @@ export class AccountService {
     return this.http.post<User>(baseUrl + '/signin', user);
   }
 
+  loginWithEmail(email: string, password: string): Observable<User> {
+    return this.http.post<User>(baseUrl + '/login', {email: email, password: password});
+  }
+
   loginWithId(id: string): Observable<User> {
-    return this.http.post<User>(baseUrl + '/login', {id: id});
+    return this.http.post<User>(baseUrl + '/login-id', {id: id});
   }
 }

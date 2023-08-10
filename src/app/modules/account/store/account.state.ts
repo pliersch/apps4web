@@ -1,5 +1,5 @@
 import * as accountActions from "@account/store/account.actions";
-import { LoginWithId, SetUser } from "@account/store/account.actions";
+import { LoginWithEmail, LoginWithId, SetUser } from "@account/store/account.actions";
 import { AccountService } from "@account/store/account.service";
 import { GoogleUser } from "@account/store/google-user.model";
 import { User } from "@account/store/user.model";
@@ -58,6 +58,41 @@ export class AccountState {
     });
   }
 
+  @Action(LoginWithEmail)
+  loginWithPassword(ctx: StateContext<AccountStateModel>, action: LoginWithEmail): Observable<Subscription> {
+    return this.accountService.loginWithEmail(action.email, action.password).pipe(
+      map((user: User) =>
+        asapScheduler.schedule(() =>
+          ctx.dispatch(new accountActions.LoginWithEmailSuccess(user))
+        )
+      ),
+      catchError(error =>
+        of(
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new accountActions.LoginWithEmailFail(error))
+          )
+        )
+      )
+    );
+  }
+
+  @Action(accountActions.LoginWithEmailSuccess)
+  loginWithPasswordSuccess(ctx: StateContext<AccountStateModel>, action: accountActions.LoginWithEmailSuccess): void {
+    if (action.user === null) {
+      this.alertService.warn("Sorry, aber da stimmt was nicht");
+    } else {
+      asapScheduler.schedule(() =>
+        ctx.dispatch((new SetUser(action.user))
+        ))
+      ctx.dispatch(new SetUserRole(action.user.role));
+    }
+  }
+
+  @Action(accountActions.LoginWithEmailFail)
+  loginWithPasswordFail(): void {
+    this.alertService.error('Login fehlgeschlagen');
+  }
+
   @Action(LoginWithId)
   loginWithId(ctx: StateContext<AccountStateModel>, action: LoginWithId): Observable<Subscription> {
     return this.accountService.loginWithId(action.id).pipe(
@@ -79,7 +114,7 @@ export class AccountState {
   @Action(accountActions.LoginWithIdSuccess)
   loginWithIdSuccess(ctx: StateContext<AccountStateModel>, action: accountActions.LoginWithIdSuccess): void {
     if (action.user === null) {
-      this.alertService.warn("You are not registered");
+      this.alertService.warn("Sorry, aber da stimmt was nicht");
     } else {
       asapScheduler.schedule(() =>
         ctx.dispatch((new SetUser(action.user))
@@ -90,7 +125,7 @@ export class AccountState {
 
   @Action(accountActions.LoginWithIdFail)
   loginWithIdFail(): void {
-    this.alertService.error('Login fail');
+    this.alertService.error('Login fehlgeschlagen');
   }
 
   @Action(accountActions.Logout)
