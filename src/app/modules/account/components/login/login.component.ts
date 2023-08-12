@@ -1,4 +1,4 @@
-import { LoginWithEmail, LoginWithId } from "@account/store/account.actions";
+import { LoginWithEmail } from "@account/store/account.actions";
 import { AccountState } from "@account/store/account.state";
 import { User } from "@account/store/user.model";
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -59,14 +59,14 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
       this.alertService.info('Hallo ' + this.user.givenName);
     });
-    this.subscription.add(this.route.queryParams
-      .subscribe(params => {
-          this.id = params.id;
-          if (params.id) {
-            this.store.dispatch(new LoginWithId(params.id));
-          }
-        }
-      ));
+    // this.subscription.add(this.route.queryParams
+    //   .subscribe(params => {
+    //       this.id = params.id;
+    //       if (params.id) {
+    //         this.store.dispatch(new LoginWithId(params.id));
+    //       }
+    //     }
+    //   ));
     this.subscription.add(
       this.routeBeforeSignin$.subscribe(url => this.routeBeforeSignin = url));
   }
