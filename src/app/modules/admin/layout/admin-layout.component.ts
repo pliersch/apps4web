@@ -10,6 +10,7 @@ export class AdminLayoutComponent implements OnInit {
 
   routes: Route[] = [
     {name: 'User', path: '/admin/user', accepted: Role.Admin},
+    {name: 'Visits', path: '/admin/visits', accepted: Role.Admin},
     {name: 'Photos', path: '/admin/photos', accepted: Role.Admin},
   ];
 
