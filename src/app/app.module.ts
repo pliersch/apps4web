@@ -1,7 +1,9 @@
 import { AccountModule } from "@account/account.module";
 import { AccountState } from "@account/store/account.state";
+import { registerLocaleData } from '@angular/common';
 import { HttpClientModule } from "@angular/common/http";
-import { APP_INITIALIZER, ErrorHandler, isDevMode, NgModule } from '@angular/core';
+import localeDe from '@angular/common/locales/de';
+import { APP_INITIALIZER, ErrorHandler, isDevMode, LOCALE_ID, NgModule } from '@angular/core';
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from "@angular/material-date-fns-adapter";
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from "@angular/material/core";
 import { BrowserModule } from '@angular/platform-browser';
@@ -29,6 +31,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthLayoutComponent } from "./core/layouts/auth-layout/auth-layout.component";
 import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
+
+
+registerLocaleData(localeDe);
 
 const ngxsConfig: NgxsModuleOptions = {
   developmentMode: !environment.production,
@@ -93,6 +98,7 @@ const ngxsConfig: NgxsModuleOptions = {
   ],
   exports: [],
   providers: [
+    {provide: LOCALE_ID, useValue: 'de'},
     {provide: DateAdapter, useClass: DateFnsAdapter, deps: [MAT_DATE_LOCALE]},
     {provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS},
     {provide: APP_INITIALIZER, useFactory: initApplication, multi: true, deps: [Store]},
