@@ -10,12 +10,12 @@ import { UserOverviewComponent } from "@modules/admin/modules/user/components/us
 import { DatePipe } from "@modules/admin/modules/user/pipes/date.pipe";
 import { UserState } from "@modules/admin/modules/user/store/user.state";
 import { NgxsModule } from "@ngxs/store";
+import { CreateUserDialogComponent } from './components/create-user-dialog/create-user-dialog.component';
 import { DeleteUserDialogComponent } from './components/delete-user-dialog/delete-user-dialog.component';
 import { UserTableComponent } from './components/user-table/user-table.component';
 import { RolePipe } from './pipes/role.pipe';
 import { StatusPipe } from './pipes/status.pipe';
 import { UserRoutingModule } from './user-routing.module';
-import { CreateUserDialogComponent } from './components/create-user-dialog/create-user-dialog.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,7 @@ import { CreateUserDialogComponent } from './components/create-user-dialog/creat
     UserTableComponent,
     EditUserDialogComponent,
     DeleteUserDialogComponent,
-    CreateUserDialogComponent
+    CreateUserDialogComponent,
   ],
   imports: [
     CommonModule,

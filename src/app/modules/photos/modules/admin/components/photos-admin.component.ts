@@ -30,6 +30,7 @@ export class PhotosAdminComponent implements OnInit, OnDestroy {
     })
   }
 
+  // todo use store (action)
   onClickDeletePhotos(): void {
     this.service.deleteAllPhotos(this.user);
   }

@@ -11,8 +11,7 @@ const baseUrl = `${environment.apiUrl}/user`;
 })
 export class UserService {
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
   getAll(): Observable<User[]> {
     return this.http.get<User[]>(baseUrl);
@@ -32,13 +31,5 @@ export class UserService {
 
   delete(id: string): Observable<any> {
     return this.http.delete(`${baseUrl}/${id}`);
-    // .pipe(
-    // finalize(() => {
-    // auto logout if the logged in account was deleted
-    // if (id === this.accountValue.id) {
-    //   // this.logout();
-    // }
-    // })
-    // );
   }
 }
