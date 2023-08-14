@@ -1,5 +1,9 @@
-<app-visits-history [visits$]="visits$"></app-visits-history>
-<button mat-raised-button color="primary"
-        type="button" (click)="deletePhotos()">
-  <mat-icon> delete</mat-icon>
-</button>
+<div class="component">
+  <app-visits-history [visits$]="visits$"></app-visits-history>
+  <div class="button-container">
+    <button mat-raised-button color="primary"
+            type="button" (click)="deletePhotos()">
+      <mat-icon> delete</mat-icon>
+    </button>
+  </div>
+</div>

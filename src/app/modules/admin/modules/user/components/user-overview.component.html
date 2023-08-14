@@ -1,9 +1,11 @@
-<app-user-table [users]="users"
-                (userEditEvent)="handleEditEvent($event)"
-                (userDeleteEvent)="handleDeleteEvent($event)">
-</app-user-table>
-<div class="button-container">
-  <button mat-raised-button color="primary" (click)="addUser()" class="demo-button">
-    Add User
-  </button>
+<div class="component">
+  <app-user-table [users]="users"
+                  (userEditEvent)="handleEditEvent($event)"
+                  (userDeleteEvent)="handleDeleteEvent($event)">
+  </app-user-table>
+  <div class="button-container">
+    <button mat-raised-button color="primary" (click)="addUser()" class="demo-button">
+      Add User
+    </button>
+  </div>
 </div>
