@@ -3,6 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { SortMode } from "@modules/photos/modules/explorer/components/sorter/photos-sorter.component";
 import {
   DeletePhotoDto,
+  FindOption,
   Photo,
   PhotoMetaData,
   PhotoRequestResult,
@@ -230,6 +231,25 @@ export class UpdatePhotoFail {
   constructor(public error: HttpErrorResponse) { }
 }
 
+// finding
+
+export class FindPhoto {
+  static readonly type = '[Photos] Find Photo';
+
+  constructor(public option: FindOption) { }
+}
+
+export class FindPhotoSuccess {
+  static readonly type = '[Photos] Find Photo success';
+
+  constructor(public photo: Photo) { }
+}
+
+export class FindPhotoFail {
+  static readonly type = '[Photos] Find Photo fail';
+
+  constructor(public error: HttpErrorResponse) { }
+}
 
 // rating
 

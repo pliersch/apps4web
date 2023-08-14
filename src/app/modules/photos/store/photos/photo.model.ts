@@ -44,6 +44,8 @@ export interface PhotoCountByTag {
   count: number;
 }
 
+export type FindOption = 'Newest' | 'BestRated' | 'MostViewed';
+
 //////////////////////////////////////////////////////////
 //                   factories
 //////////////////////////////////////////////////////////
