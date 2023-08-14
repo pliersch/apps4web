@@ -1,26 +1,21 @@
 import { LoginComponent } from "@account/components/login/login.component";
-import { PhotoSettingsComponent } from "@account/components/photo-settings/photo-settings.component";
+// import { PhotoSettingsComponent } from "@account/components/photo-settings/photo-settings.component";
 import { AccountProfileComponent } from "@account/components/profile/account-profile.component";
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { LayoutComponent } from './layout/layout.component';
+import { AccountOverviewComponent } from './components/overview/account-overview.component';
 
 const routes: Routes = [
-  {
-    path: 'login',
-    component: LoginComponent,
-  },
+  {path: 'login', title: 'Login', component: LoginComponent},
   {
     path: '',
-    component: LayoutComponent,
+    component: AccountOverviewComponent,
     children: [
-      {path: 'profile', component: AccountProfileComponent},
-      {path: 'photos', component: PhotoSettingsComponent},
-      {path: 'login', component: LoginComponent},
-      {path: '**', redirectTo: '/account/profile', pathMatch: 'full'},
-      {path: '', redirectTo: '/account/profile', pathMatch: 'full'},
-      // {path: '**', component: AccountProfileComponent, canActivate: [AuthGuard]},
+      {path: 'profile', title: 'Account', component: AccountProfileComponent},
+      // {path: 'photos', component: PhotoSettingsComponent},
+      {path: '**', redirectTo: 'profile', pathMatch: 'full'},
+      {path: '', redirectTo: 'profile', pathMatch: 'full'},
     ]
   }
 ];

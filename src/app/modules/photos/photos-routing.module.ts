@@ -15,10 +15,10 @@ const routes: Routes = [
     path: '', component: PhotosContainerComponent, resolve: {meta: PhotosResolver},
     children: [
       // {path: 'home', title: 'Home', loadChildren: homeModule},
-      {path: 'explorer', title: 'Explorer', loadChildren: explorerModule},
-      {path: 'upload', title: 'Upload', loadChildren: uploadModule, canActivate: [AdminGuard]},
-      {path: 'slideshow', title: 'Slideshow', loadChildren: slideShowModule},
-      {path: 'lightbox', title: 'Lightbox', loadChildren: lightBoxModule},
+      {path: 'explorer', title: 'Photo Explorer', loadChildren: explorerModule},
+      {path: 'upload', title: 'Photo Upload', loadChildren: uploadModule, canActivate: [AdminGuard]},
+      {path: 'slideshow', title: 'Photo Slideshow', loadChildren: slideShowModule},
+      {path: 'lightbox', title: 'Photo Lightbox', loadChildren: lightBoxModule},
       {path: '**', redirectTo: '/photos/explorer/finder', pathMatch: 'full'},
       {path: '', redirectTo: '/photos/explorer/finder', pathMatch: 'full'},
     ]

@@ -4,8 +4,8 @@ import { PhotosEditorComponent } from "@modules/photos/modules/explorer/pages/ed
 import { PhotosExplorerComponent } from "@modules/photos/modules/explorer/pages/explorer/photos-explorer.component";
 
 const routes: Routes = [
-  {path: 'editor', title: 'Editor', component: PhotosEditorComponent},
-  {path: 'finder', title: 'Finder', component: PhotosExplorerComponent},
+  {path: 'editor', title: 'Photo Editor', component: PhotosEditorComponent},
+  {path: 'finder', title: 'Photo Explorer', component: PhotosExplorerComponent},
 ];
 
 @NgModule({

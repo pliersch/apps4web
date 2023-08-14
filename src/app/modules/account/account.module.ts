@@ -8,9 +8,8 @@ import { ShareModule } from "@modules/share/share.module";
 import { NgxsModule } from "@ngxs/store";
 import { AccountRoutingModule } from './account-routing.module';
 import { LoginComponent } from './components/login/login.component';
-import { PhotoSettingsComponent } from './components/photo-settings/photo-settings.component';
+import { AccountOverviewComponent } from './components/overview/account-overview.component';
 import { AccountProfileComponent } from './components/profile/account-profile.component';
-import { LayoutComponent } from './layout/layout.component';
 
 @NgModule({
   imports: [
@@ -21,11 +20,10 @@ import { LayoutComponent } from './layout/layout.component';
     ShareModule,
   ],
   declarations: [
-    LayoutComponent,
+    AccountOverviewComponent,
     SigninComponent,
     AccountProfileComponent,
     LoginComponent,
-    PhotoSettingsComponent,
   ],
   exports: [
     SigninComponent

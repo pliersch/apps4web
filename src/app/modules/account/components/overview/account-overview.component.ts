@@ -5,10 +5,10 @@ import { Route } from "@app/core/stores/routes/router.state";
 import { Role } from "@modules/admin/modules/user/store/role";
 
 @Component({
-  templateUrl: 'layout.component.html',
-  styleUrls: ['./layout.component.scss']
+  templateUrl: 'account-overview.component.html',
+  styleUrls: ['./account-overview.component.scss']
 })
-export class LayoutComponent implements OnInit {
+export class AccountOverviewComponent implements OnInit {
 
   routes: Route[] = [
     {name: 'Meine Daten', path: '/account/profile', accepted: Role.User},

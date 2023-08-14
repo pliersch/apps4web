@@ -33,7 +33,6 @@ import { AppComponent } from './app.component';
 import { AuthLayoutComponent } from "./core/layouts/auth-layout/auth-layout.component";
 import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
 
-
 registerLocaleData(localeDe);
 
 const ngxsConfig: NgxsModuleOptions = {
@@ -47,9 +46,6 @@ const ngxsConfig: NgxsModuleOptions = {
   compatibility: {
     strictContentSecurityPolicy: true
   },
-  // Execution strategy overridden for illustrative purposes
-  // (only do this if you know what you are doing)
-  // executionStrategy: NoopNgxsExecutionStrategy
 };
 
 // const config: SocketIoConfig = {
@@ -69,23 +65,18 @@ const ngxsConfig: NgxsModuleOptions = {
     DashboardComponent,
     WidgetComponent,
     WidgetDirective,
-    // ErrorComponent,
     // DynamicAppbarDirective,
     // DynamicAppbarComponent,
-    // LegalNoticeComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    // NgScrollbarModule,
     MaterialModule,
-    // AuthModule,
     //SocketIoModule.forRoot(config),
     NgxsModule.forRoot([AppState, RouterState, ThemeState, AccountState], ngxsConfig),
     NgxsReduxDevtoolsPluginModule.forRoot({disabled: !isDevMode()}),
-    // NgxsLoggerPluginModule.forRoot(),
     WasteCalendarModule,
     RecipesModule,
     ServiceWorkerModule.register('ngsw-worker.js', {

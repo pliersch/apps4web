@@ -1,7 +1,13 @@
-<section>
-  <p>Login-Daten</p>
-  <p>Name: {{ (user$ | async)?.givenName }} {{ (user$ | async)?.surName }}</p>
-  <p>Email: {{ (user$ | async)?.email }}</p>
-</section>
+<mat-card class="card">
+  <!--    <mat-card-header>-->
+  <!--      <mat-card-title>Meine DAten</mat-card-title>-->
+  <!--    </mat-card-header>-->
+  <mat-card-content>
+    <section>
+      <p>Login-Daten</p>
+      <p>Name: {{ (user$ | async)?.givenName }} {{ (user$ | async)?.surName }}</p>
+      <p>Email: {{ (user$ | async)?.email }}</p>
+    </section>
 
-
+  </mat-card-content>
+</mat-card>
