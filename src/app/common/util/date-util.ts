@@ -1,6 +1,16 @@
-import parse from "date-fns/parse";
 import format from 'date-fns/format'
 import { de, enUS } from "date-fns/locale";
+import parse from "date-fns/parse";
+
+
+/**
+ * removes time
+ * @param date
+ */
+export function getDateWithoutTime(date: Date): Date {
+  date.setHours(0, 0, 0, 0);
+  return date;
+}
 
 /**
  * @param date like 10. Juni 2022

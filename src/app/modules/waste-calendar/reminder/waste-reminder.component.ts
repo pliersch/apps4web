@@ -1,11 +1,12 @@
 import { AfterViewInit, Component, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { DateAdapter } from "@angular/material/core";
+import { MatCalendar } from "@angular/material/datepicker";
+import { VisibilityStateService } from "@app/common/services/visibility-state.service";
+import { formatGermanDayAndMonth, getDateWithoutTime, parseEnglish, parseGerman } from "@app/common/util/date-util";
 import wasteFile from "@assets/json/abfall.json";
 import { WasteDate, WasteEvent, WasteKey } from "@modules/waste-calendar/waste-dates";
-import { MatCalendar } from "@angular/material/datepicker";
-import { formatGermanDayAndMonth, parseGerman, parseEnglish } from "@app/common/util/date-util";
 import differenceInDays from 'date-fns/differenceInDays'
 import { de } from 'date-fns/locale'
-import { DateAdapter } from "@angular/material/core";
 
 @Component({
   selector: 'app-waste-reminder',
@@ -14,11 +15,6 @@ import { DateAdapter } from "@angular/material/core";
 })
 
 export class WasteReminderComponent implements OnInit, AfterViewInit {
-
-  // @HostListener('window:focus', ['$event'])
-  // onFocus(event: FocusEvent): void {
-  //   // this.refreshCalendar();
-  // }
 
   @ViewChild('calendar')
   calendar: MatCalendar<Date>;
@@ -30,16 +26,17 @@ export class WasteReminderComponent implements OnInit, AfterViewInit {
   nextEventsOfSelectedMonth: WasteEvent[] = [];
   private rawEvents: { date: string, type: string }[];
 
-  constructor(private renderer: Renderer2,
-              private _adapter: DateAdapter<any>) {
-    // this._adapter.localeChanges.subscribe(evt => console.log('WasteReminderComponent : local changes muhaha ', evt))
-    this._adapter.setLocale(de);
+  constructor(private visibilityService: VisibilityStateService,
+              private renderer: Renderer2,
+              private adapter: DateAdapter<any>) {
+    this.adapter.setLocale(de);
   }
 
   ngOnInit(): void {
     this.rawEvents = wasteFile.events;
     this.eventsOfAllMonths = this.processJson();
     this.updateEventsOfMonth(new Date().getMonth());
+    this.listenVisibilityChange();
   }
 
   ngAfterViewInit(): void {
@@ -68,7 +65,7 @@ export class WasteReminderComponent implements OnInit, AfterViewInit {
 
           if (wasteEvent.date.getDate() == parseGerman(attribute).getDate()) {
             this.renderer.addClass(element, this.computeColor(wasteEvent.wasteType));
-            this.renderer.setAttribute(element, 'title', this.computeHint(wasteEvent.wasteType));
+            this.renderer.setAttribute(element, 'title', this.computeEvent(wasteEvent.wasteType));
           }
         }
       });
@@ -91,17 +88,17 @@ export class WasteReminderComponent implements OnInit, AfterViewInit {
 
   updateEventsOfMonth(month: number): void {
     this.eventsOfSelectedMonth = this.getEventsOfMonth(month);
-    const today = this.getDateWithoutHours(new Date());
+    const today = getDateWithoutTime(new Date());
     this.nextEventsOfSelectedMonth = this.eventsOfSelectedMonth.filter(event => event.date >= today);
   }
 
   getCountdown(event: WasteEvent): string {
-    const actualDate = this.getDateWithoutHours(new Date());
+    const actualDate = getDateWithoutTime(new Date());
     const difference = differenceInDays(event.date, actualDate);
-    const days = difference > 1 ? 'Tage' : 'Tag';
-    const hint = this.computeHint(event.wasteType);
+    const days = difference > 1 ? 'Tagen' : 'Tag';
+    const hint = this.computeEvent(event.wasteType);
     const result = formatGermanDayAndMonth(event.date) + ' in ' + difference + ' ' + days;
-    return result + ' ' + hint;
+    return `${result} ${hint}`;
   }
 
   private getEventsOfMonth(month: number): WasteEvent[] {
@@ -124,7 +121,7 @@ export class WasteReminderComponent implements OnInit, AfterViewInit {
   private generateWasteEvents(dates: WasteDate[]): WasteEvent[] {
     const events: WasteEvent[] = [];
     for (const event of dates) {
-      const date = parseEnglish(event.date);
+      const date: Date = parseEnglish(event.date);
       events.push({
         date: new Date(date),
         wasteType: event.type
@@ -149,7 +146,7 @@ export class WasteReminderComponent implements OnInit, AfterViewInit {
     return "";
   }
 
-  private computeHint(wasteType: string): string {
+  private computeEvent(wasteType: string): string {
     switch (wasteType) {
       case 'h':
         return 'Hausmüll'
@@ -165,8 +162,10 @@ export class WasteReminderComponent implements OnInit, AfterViewInit {
     return "";
   }
 
-  private getDateWithoutHours(date: Date): Date {
-    date.setHours(0, 0, 0, 0);
-    return date;
+  private listenVisibilityChange(): void {
+    this.visibilityService.on(VisibilityStateService.VISIBLE, () => {
+      this.updateEventsOfMonth(new Date().getMonth());
+    })
   }
+
 }
