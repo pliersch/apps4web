@@ -27,6 +27,7 @@ import { ThemeState } from "@modules/themes/stores/theme-state";
 import { WasteCalendarModule } from "@modules/waste-calendar/waste-calendar.module";
 import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
 import { NgxsModule, NgxsModuleOptions, Store } from '@ngxs/store';
+import { NgScrollbarModule } from "ngx-scrollbar";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthLayoutComponent } from "./core/layouts/auth-layout/auth-layout.component";
@@ -95,6 +96,7 @@ const ngxsConfig: NgxsModuleOptions = {
     }),
     RadioModule,
     AccountModule,
+    NgScrollbarModule,
   ],
   exports: [],
   providers: [
