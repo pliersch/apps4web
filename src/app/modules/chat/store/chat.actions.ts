@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { CreateMessageDto, MessageResultDto } from "@modules/chat/store/chat.model";
+import { DeleteResult } from "@modules/share/interfaces/models/delete-result";
 
 // loading chat
 
@@ -53,6 +54,27 @@ export class AddMessage {
   static readonly type = '[Chat] Add Message';
 
   constructor(public dto: MessageResultDto) {
+  }
+}
+
+// delete entries
+
+export class DeleteChatEntries {
+  static readonly type = '[Chat] Delete Entries';
+
+}
+
+export class DeleteChatEntriesSuccess {
+  static readonly type = '[Chat] Delete Entries Success';
+
+  constructor(public dto: DeleteResult) {
+  }
+}
+
+export class DeleteChatEntriesFail {
+  static readonly type = '[Chat] Delete Entries Fail';
+
+  constructor(public error: HttpErrorResponse) {
   }
 }
 

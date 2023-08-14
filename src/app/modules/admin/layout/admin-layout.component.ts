@@ -12,6 +12,7 @@ export class AdminLayoutComponent implements OnInit {
     {name: 'User', path: '/admin/user', accepted: Role.Admin},
     {name: 'Visits', path: '/admin/visits', accepted: Role.Admin},
     {name: 'Photos', path: '/admin/photos', accepted: Role.Admin},
+    {name: 'Chat', path: '/admin/chat', accepted: Role.Admin},
   ];
 
   activeLink = this.routes[0].path;

@@ -7,6 +7,7 @@ import { PhotosAdminResolver } from "@modules/photos/modules/admin/resolver/phot
 
 const protocolAdmin = () => import('./modules/protocol/protocol.module').then((x) => x.ProtocolModule);
 const userAdmin = () => import('./modules/user/user.module').then((x) => x.UserModule);
+const chatAdmin = () => import('./modules/chat/chat.module').then((x) => x.ChatModule);
 const photosAdmin = () => import('@modules/photos/modules/admin/photos-admin.module').then((x) => x.PhotosAdminModule);
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
       {path: 'visits', title: 'Admin Visits', resolve: {resolver: AdminProtocolResolver}, loadChildren: protocolAdmin},
       {path: 'user', title: 'Admin User', resolve: {resolver: AdminUserResolver}, loadChildren: userAdmin},
       {path: 'photos', title: 'Admin Photos', resolve: {resolver: PhotosAdminResolver}, loadChildren: photosAdmin},
+      {path: 'chat', title: 'Admin Chat', loadChildren: chatAdmin},
       {path: '**', redirectTo: 'user', pathMatch: 'prefix'},
       {path: '', redirectTo: 'user', pathMatch: 'prefix'},
     ]

@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { environment } from "@environments/environment";
 import { CreateMessageDto, MessageResultDto } from "@modules/chat/store/chat.model";
+import { DeleteResult } from "@modules/share/interfaces/models/delete-result";
 import { Observable } from "rxjs";
 
 const BASE_URL = `${environment.apiUrl}/chat`;
@@ -34,5 +35,9 @@ export class ChatService {
         take: take,
       }
     });
+  }
+
+  deleteEntries(): Observable<DeleteResult> {
+    return this.http.post<DeleteResult>(BASE_URL + '/deleteAll', null);
   }
 }

@@ -7,6 +7,7 @@ import * as chatAction from "@modules/chat/store/chat.actions";
 import { Message, MessageResultDto } from "@modules/chat/store/chat.model";
 import { ChatService } from "@modules/chat/store/chat.service";
 import { addToUserIdentities, createMessage } from "@modules/chat/store/chat.tools";
+import { DeleteResult } from "@modules/share/interfaces/models/delete-result";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { asapScheduler, Observable, of, Subscription } from "rxjs";
 import { catchError, map } from "rxjs/operators";
@@ -145,6 +146,41 @@ export class ChatState {
   addMessage(ctx: StateContext<ChatStateModel>, action: chatAction.AddMessage): void {
     this._addMessage(ctx, action)
   }
+
+  //////////////////////////////////////////////////////////
+  //          delete entries
+  //////////////////////////////////////////////////////////
+
+  @Action(chatAction.DeleteChatEntries)
+  deleteChatEntries(ctx: StateContext<ChatStateModel>): Observable<Subscription> {
+    return this.service.deleteEntries()
+      .pipe(
+        map((res: DeleteResult) =>
+          asapScheduler.schedule(() => {
+              ctx.dispatch(new chatAction.DeleteChatEntriesSuccess(res))
+            }
+          )
+        ),
+        catchError(error =>
+          of(
+            asapScheduler.schedule(() =>
+              ctx.dispatch(new chatAction.DeleteChatEntriesFail(error))
+            )
+          )
+        )
+      );
+  }
+
+  @Action(chatAction.DeleteChatEntriesSuccess)
+  deleteChatEntriesSuccess(ctx: StateContext<ChatStateModel>): void {
+    ctx.patchState({messages: []});
+  }
+
+  @Action(chatAction.DeleteChatEntriesFail)
+  deleteChatEntriesFail(): void {
+    this.alertService.error('Delete chat entries fail');
+  }
+
 
   //////////////////////////////////////////////////////////
   //                  filter messages
