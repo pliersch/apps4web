@@ -26,21 +26,19 @@ export function addToUserIdentities(identities: UserIdentity[], dto: MessageResu
 }
 
 export function getPhotoUrl(fileName: string): string {
-  return BASE_URL /*+ 'full/'*/ + fileName;
+  return BASE_URL + 'full/' + fileName;
 }
 
 export function getThumbUrls(fileNames: string[]): string[] {
   const urls: string[] = [];
   for (const fileName of fileNames) {
-    //todo provide thumb
-    // urls.push(getThumbUrl(fileName))
-    urls.push(getPhotoUrl(fileName))
+    urls.push(getThumbUrl(fileName))
   }
   return urls;
 }
 
 export function getThumbUrl(fileName: string): string {
-  return BASE_URL + 'thumbs/' + sliceExtension(fileName) + '-900.webp';
+  return BASE_URL + 'thumbs/' + sliceExtension(fileName) + '-300.webp';
 }
 
 function sliceExtension(fileName: string): string {
