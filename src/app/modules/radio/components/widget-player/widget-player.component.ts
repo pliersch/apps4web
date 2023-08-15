@@ -35,9 +35,6 @@ export class WidgetPlayerComponent implements OnInit {
     symbol: 'close'
   }
 
-  // private playSubscription: Subscription;
-  // private pauseSubscription: Subscription;
-
   constructor(private playerService: PlayerService,
               private widgetService: WidgetService) { }
 
@@ -53,9 +50,6 @@ export class WidgetPlayerComponent implements OnInit {
     this.playerService.isPlaying() ?
       this.playToggleAction = this.pauseAction :
       this.playToggleAction = this.playAction;
-    // fixme buggy solution
-    // this.playSubscription = this.playerService.on("play", this.onPlay);
-    // this.pauseSubscription = this.playerService.on("pause", this.onPause);
   }
 
   onClickTogglePlay(): void {
@@ -63,25 +57,12 @@ export class WidgetPlayerComponent implements OnInit {
   }
 
   onClickClose(): void {
-    this.playerService.pause();
+    this.playerService.stop();
     this.widgetService.removeWidget(WidgetPlayerComponent);
   }
 
-  onClickPlay(radio: RadioStation) {
+  onClickPlay(radio: RadioStation): void {
     this.playerService.play(radio);
   }
 
-  // onPlay(radio: RadioStation): void {
-  //   this.current = radio;
-  //   this.playToggleAction = this.pauseAction;
-  // }
-  //
-  // onPause(): void {
-  //   this.playToggleAction = this.playAction;
-  // }
-
-  // ngOnDestroy(): void {
-  //   this.playSubscription.unsubscribe();
-  //   this.pauseSubscription.unsubscribe();
-  // }
 }

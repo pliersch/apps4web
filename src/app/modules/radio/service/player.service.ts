@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { EventEmitter } from "@app/common/base/event-emitter";
+import { VisibilityStateService } from "@app/common/services/visibility-state.service";
 import { RadioStation } from "@modules/radio/components/player/player.component";
 
-export type PlayerState = 'play' | 'pause'
+export type PlayerState = 'play' | 'pause' | 'stop'
 
 @Injectable({
   providedIn: 'root'
@@ -10,20 +11,22 @@ export type PlayerState = 'play' | 'pause'
 
 export class PlayerService extends EventEmitter {
 
-  private radioStation: RadioStation;
+  private radioStation: RadioStation | null;
+  private audio: HTMLMediaElement;
+  // need to reactivate after device sleep
+  private shouldPlaying = false;
 
-  constructor() {
+  constructor(private visibilityService: VisibilityStateService) {
     super();
+    this.listenVisibilityChange();
     this.audio = document.createElement("audio");
     this.audio.addEventListener('play', () => {
-      this.emit('play', this.radioStation)
+      this.emit('play', this.radioStation);
     });
     this.audio.addEventListener('pause', () => {
-      this.emit('pause')
+      this.emit('pause');
     });
   }
-
-  private audio: HTMLMediaElement;
 
   play(radioStation: RadioStation): void {
     this.radioStation = radioStation;
@@ -38,12 +41,19 @@ export class PlayerService extends EventEmitter {
     this.audio.pause();
   }
 
+  stop(): void {
+    this.audio.pause();
+    this.shouldPlaying = false;
+    this.radioStation = null;
+    this.emit('stop');
+  }
+
   togglePlayPause(): PlayerState {
     if (this.isPlaying()) {
       this.pause();
       return "pause"
     } else {
-      this.play(this.radioStation);
+      this.play(this.radioStation!);
       return "play";
     }
   }
@@ -52,12 +62,20 @@ export class PlayerService extends EventEmitter {
     return !this.audio.paused
   }
 
-  getRadioStation(): RadioStation {
+  getRadioStation(): RadioStation | null {
     return this.radioStation;
   }
 
   private _play(): void {
     void this.audio.play();
+    this.shouldPlaying = true;
   }
 
+  private listenVisibilityChange(): void {
+    this.visibilityService.on(VisibilityStateService.VISIBLE, () => {
+      if (this.shouldPlaying && this.audio.paused) {
+        this._play()
+      }
+    });
+  }
 }

@@ -5,16 +5,17 @@
   <mat-card-content>
     <mat-tab-group>
       <mat-tab label="Favoriten">
-        <ng-scrollbar class="dark-scrollbar" [autoHeightDisabled]="false" track="horizontal" visibility="always">
+        <ng-scrollbar class="dark-scrollbar" [autoHeightDisabled]="false"
+                      track="horizontal" visibility="always">
           <div>
             <div class="thumbnail-list">
               <div *ngFor="let radio of favorites;"
                    class="thumbnail-item item" [class.active]="radio === current"
                    [style.background-image]="'url(' + radio.logoUrl + ')'"
                    (click)="onClickPlay(radio)">
-                <div class="action-overlay" [class.active]="radio === current && playing">
+                <div class="action-overlay" [class.active]="radio === current">
                   <button mat-mini-fab color="primary">
-                    <mat-icon>volume_mute</mat-icon>
+                    <mat-icon>{{icon}}</mat-icon>
                   </button>
                 </div>
               </div>

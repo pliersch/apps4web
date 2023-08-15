@@ -19,7 +19,7 @@ export class VisibilityStateService extends EventEmitter {
       if (document.visibilityState === "visible") {
         this.emit(VisibilityStateService.VISIBLE)
       } else {
-        this.emit(VisibilityStateService.VISIBLE)
+        this.emit(VisibilityStateService.HIDDEN)
       }
     });
   }
