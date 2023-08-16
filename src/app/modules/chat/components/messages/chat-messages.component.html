@@ -3,7 +3,8 @@
 
   <ng-template [ngIf]="message.userId !== user.id" [ngIfElse]="userMessage">
     <div class="username">
-      {{ message.userFirstName + ' ' + message.userLastName + ' ' + (message.date | date:'medium') }}</div>
+      {{ message.userFirstName }} {{message.userLastName }} {{ (message.date | date:'medium') }}
+    </div>
   </ng-template>
 
   <ng-template #userMessage>
@@ -18,4 +19,13 @@
       *ngIf="message.pictureUrls[0]" [src]="message.pictureUrls[0]"
       (imageLoadEvent)="onImageLoad()"></app-chat-image-item>
   </div>
+
+  <!--  <div class="content">-->
+  <!--    <ng-template [ngIf]="message.pictureUrls[0]">-->
+  <!--      <app-chat-image-item [src]="message.pictureUrls[0]"-->
+  <!--                           (imageLoadEvent)="onImageLoad()"></app-chat-image-item>-->
+  <!--    </ng-template>-->
+  <!--    <div>{{ message.text }}</div>-->
+  <!--  </div>-->
+
 </div>

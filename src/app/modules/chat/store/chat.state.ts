@@ -204,6 +204,7 @@ export class ChatState {
         message,
       ]
     });
+    // add user to state if not exist
     const userIdentity = action.dto.user;
     const exist = state.userIdentities.find(identity => identity.id === userIdentity.id);
     if (!exist) {
