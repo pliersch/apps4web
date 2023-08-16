@@ -18,9 +18,7 @@ export interface RadioStation {
 export class PlayerComponent implements OnInit {
 
   current: RadioStation | null;
-  empty: RadioStation;
   favorites: RadioStation[] = []
-  playing = false;
   icon = 'pause';
 
   constructor(private widgetService: WidgetService,
@@ -28,38 +26,45 @@ export class PlayerComponent implements OnInit {
 
   ngOnInit(): void {
     this.favorites = radioFile.radiostations;
-    this.empty = {name: '', logoUrl: '', stream: ''};
-    this.current = this.empty;
+    this.current = null;
     if (this.playerService.isPlaying()) {
-      this.playing = true;
       this.current = this.playerService.getRadioStation();
     }
     this.playerService.on("play", (radio) => {
       this.current = radio;
       this.icon = 'pause'
-      this.playing = true;
     })
     this.playerService.on("pause", () => {
-      this.playing = false;
       this.icon = 'play_arrow'
     })
     this.playerService.on("stop", () => {
-      console.log('PlayerComponent stop: ',)
-      this.playing = false;
       this.current = null;
     })
   }
 
   onClickPlay(radio: RadioStation): void {
-    if (this.current === radio) {
-      this.playerService.stop();
-      this.current = this.empty;
-      this.widgetService.removeWidget(WidgetPlayerComponent);
-    } else {
-      this.current = radio;
-      this.playerService.play(radio);
-      this.widgetService.setWidget(WidgetPlayerComponent);
+    radio == this.current
+      ? this.toggleCurrentRadioState(radio)
+      : this.playOtherRadio(radio);
+  }
+
+  toggleCurrentRadioState(radio: RadioStation): void {
+    switch (this.playerService.state) {
+      case "play":
+        this.playerService.stop();
+        this.current = null;
+        this.widgetService.removeWidget(WidgetPlayerComponent);
+        break;
+      case "pause":
+      case "stop":
+        this.playerService.play(radio);
+        break;
     }
   }
 
+  private playOtherRadio(radio: RadioStation): void {
+    this.current = radio;
+    this.playerService.play(radio);
+    this.widgetService.setWidget(WidgetPlayerComponent);
+  }
 }

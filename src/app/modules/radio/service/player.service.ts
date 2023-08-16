@@ -11,21 +11,25 @@ export type PlayerState = 'play' | 'pause' | 'stop'
 
 export class PlayerService extends EventEmitter {
 
+  private _state: PlayerState = "stop";
+  public get state(): PlayerState {
+    return this._state;
+  }
+
   private radioStation: RadioStation | null;
   private audio: HTMLMediaElement;
-  // need to reactivate after device sleep
-  private shouldPlaying = false;
 
   constructor(private visibilityService: VisibilityStateService) {
     super();
     this.listenVisibilityChange();
     this.audio = document.createElement("audio");
-    this.audio.addEventListener('play', () => {
-      this.emit('play', this.radioStation);
-    });
-    this.audio.addEventListener('pause', () => {
-      this.emit('pause');
-    });
+    // this.audio.addEventListener('play', () => {
+    //   this._state = 'play';
+    //   this.emit('play', this.radioStation);
+    // });
+    // this.audio.addEventListener('pause', () => {
+    //   this.emit('pause');
+    // });
   }
 
   play(radioStation: RadioStation): void {
@@ -33,17 +37,21 @@ export class PlayerService extends EventEmitter {
     this.audio.addEventListener('canplay', () => {
       this._play();
       this.audio.removeEventListener('canplay', this._play);
+      this.emit('play', this.radioStation);
+      this._state = 'play';
     });
     this.audio.src = radioStation.stream;
   }
 
   pause(): void {
     this.audio.pause();
+    this._state = 'pause';
+    this.emit('pause');
   }
 
   stop(): void {
+    this._state = 'stop';
     this.audio.pause();
-    this.shouldPlaying = false;
     this.radioStation = null;
     this.emit('stop');
   }
@@ -68,12 +76,11 @@ export class PlayerService extends EventEmitter {
 
   private _play(): void {
     void this.audio.play();
-    this.shouldPlaying = true;
   }
 
   private listenVisibilityChange(): void {
     this.visibilityService.on(VisibilityStateService.VISIBLE, () => {
-      if (this.shouldPlaying && this.audio.paused) {
+      if (this._state === 'play' && this.audio.paused) {
         this._play()
       }
     });
