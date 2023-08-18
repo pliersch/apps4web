@@ -13,11 +13,10 @@
   </ng-template>
 
   <div class="content">
-    <div>{{ message.text }}</div>
-
     <app-chat-image-item
       *ngIf="message.pictureUrls[0]" [src]="message.pictureUrls[0]"
       (imageLoadEvent)="onImageLoad()"></app-chat-image-item>
+    <div>{{ message.text }}</div>
   </div>
 
   <!--  <div class="content">-->

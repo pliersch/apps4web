@@ -76,7 +76,7 @@ const ngxsConfig: NgxsModuleOptions = {
     MaterialModule,
     //SocketIoModule.forRoot(config),
     NgxsModule.forRoot([AppState, RouterState, ThemeState, AccountState], ngxsConfig),
-    NgxsReduxDevtoolsPluginModule.forRoot({disabled: !isDevMode()}),
+    NgxsReduxDevtoolsPluginModule.forRoot(/*{disabled: !isDevMode()}*/),
     WasteCalendarModule,
     RecipesModule,
     ServiceWorkerModule.register('ngsw-worker.js', {

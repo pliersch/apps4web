@@ -21,6 +21,9 @@ const routes: Routes = [{
     {path: 'photos', title: 'Photos', loadChildren: photosModule, canActivate: [AuthGuard]},
     {path: 'three', title: 'ThreeJS Playground', loadChildren: threeModule, canActivate: [AuthGuard]},
     {path: 'account', title: 'Account', loadChildren: accountModule},
+    {path: '**', redirectTo: '', pathMatch: 'full'},
+    {path: '', redirectTo: '', pathMatch: 'full'},
+    {path: 'login', redirectTo: 'account/login', pathMatch: 'full'},
   ]
 }];
 
