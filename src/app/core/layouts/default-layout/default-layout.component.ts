@@ -1,5 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { DOCUMENT } from "@angular/common";
+import { Component, Inject, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { constants } from "@app/core/const/const";
 import { Route, RouterState } from "@app/core/stores/routes/router.state";
@@ -13,6 +14,7 @@ import { map } from 'rxjs/operators';
   templateUrl: './default-layout.component.html',
   styleUrls: ['./default-layout.component.scss']
 })
+// todo https://trello.com/c/SYgHLOUC/79-theme-switch-%C3%BCber-store-oder-komplett-ohne-mischmasch-zzt
 export class DefaultLayoutComponent implements OnInit {
 
   @ViewChild(MatSidenav) drawer!: MatSidenav;
@@ -24,12 +26,15 @@ export class DefaultLayoutComponent implements OnInit {
   theme = 'dark-theme';
 
   constructor(private breakpointObserver: BreakpointObserver,
+              @Inject(DOCUMENT) private document: Document,
+              private renderer: Renderer2,
               private store: Store) {
   }
 
   ngOnInit(): void {
     this.store.select(ThemeState.theme).subscribe((theme) => {
       this.theme = theme;
+      this.renderer.addClass(this.document.body, theme);
     });
   }
 
@@ -43,6 +48,8 @@ export class DefaultLayoutComponent implements OnInit {
   }
 
   onSwitchTheme($event: string): void {
+    this.renderer.addClass(this.document.body, $event);
+    this.renderer.removeClass(this.document.body, this.theme);
     this.theme = $event;
   }
 }

@@ -32,19 +32,17 @@ export class ServerSentService {
 
   private listeners: ServerPushListener[] = [];
 
-  // todo move to public method for setup by 'listener'
   constructor() {
-    const photoEventSource = new EventSource(`${environment.apiUrl}/photos/sse`);
-    photoEventSource.onmessage = (event: MessageEvent): void => {
-      this.handleServerSent(event)
-    }
-    const tagEventSource = new EventSource(`${environment.apiUrl}/tags/sse`);
-    tagEventSource.onmessage = (event: MessageEvent): void => {
-      this.handleServerSent(event)
-    }
-    const chatEventSource = new EventSource(`${environment.apiUrl}/chat/sse`);
-    chatEventSource.onmessage = (event: MessageEvent): void => {
-      this.handleServerSent(event)
+    this.setup()
+  }
+
+  private setup(): void {
+    const eventTypes = ['photos', 'tags', 'chat', 'admin'];
+    for (const eventType of eventTypes) {
+      const source = new EventSource(`${environment.apiUrl}/${eventType}/sse`);
+      source.onmessage = (event: MessageEvent): void => {
+        this.handleServerSent(event)
+      }
     }
   }
 
@@ -67,14 +65,15 @@ export class ServerSentService {
     this.listeners.push({type, handler: listener});
   }
 
-  removeListener(type: string, listener: PushMessageListener): void {
-    let instance: ServerPushListener;
-    this.listeners.forEach(l => {
-      if (l.handler === listener && l.type === type) {
-        instance = l;
-        return;
-      }
-    })
-    this.listeners = this.listeners.filter(item => item != instance);
-  }
+  // there is no reason for removing !?!
+  // removeListener(type: string, listener: PushMessageListener): void {
+  //   let instance: ServerPushListener;
+  //   this.listeners.forEach(l => {
+  //     if (l.handler === listener && l.type === type) {
+  //       instance = l;
+  //       return;
+  //     }
+  //   })
+  //   this.listeners = this.listeners.filter(item => item != instance);
+  // }
 }
