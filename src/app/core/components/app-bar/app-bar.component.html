@@ -1,4 +1,4 @@
-<ng-template [ngIf]="(isHandset$ | async)" [ngIfElse]="desktop">
+<ng-template [ngIf]="isHandset$ | async" [ngIfElse]="desktop">
   <mat-toolbar class="p8lr">
     <button mat-icon-button (click)="emitNavToggle()">
       <mat-icon>menu</mat-icon>
@@ -10,7 +10,9 @@
     </button>
     <span class="spacer"></span>
     <app-widget></app-widget>
-    <app-theme-menu (switchThemeEvent)="onSwitchTheme($event)"></app-theme-menu>
+    <ng-template [ngIf]="isDevMode()">
+      <app-theme-menu (switchThemeEvent)="onSwitchTheme($event)"></app-theme-menu>
+    </ng-template>
     <app-signin></app-signin>
   </mat-toolbar>
 </ng-template>
@@ -27,7 +29,9 @@
               *ngFor="let route of routes$ | async" [routerLink]="[route.path]">{{route.name}}</button>
     </mat-toolbar>
     <app-widget></app-widget>
-    <!--    <app-theme-menu (switchThemeEvent)="onSwitchTheme($event)"></app-theme-menu>-->
+    <ng-template [ngIf]="isDevMode()">
+      <app-theme-menu (switchThemeEvent)="onSwitchTheme($event)"></app-theme-menu>
+    </ng-template>
     <app-signin></app-signin>
   </mat-toolbar>
 </ng-template>

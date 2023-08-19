@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, isDevMode, Output } from '@angular/core';
 import { Route, RouterState } from "@app/core/stores/routes/router.state";
 import { Select } from "@ngxs/store";
 import { Observable } from "rxjs";
@@ -17,7 +17,7 @@ export class AppBarComponent {
 
   @Select(RouterState.getAccessibleRoutes)
   routes$: Observable<Route[]>;
-
+  protected readonly isDevMode = isDevMode;
 // @ViewChild("authMenuPlaceHolder", {read: ViewContainerRef})
   // authMenuPlaceHolder!: ViewContainerRef;
 
@@ -45,5 +45,6 @@ export class AppBarComponent {
   //   // manually call ngOnChanges for dynamically created components
   //   instance.ngOnChanges(); // necessary?
   // }
+
 
 }
