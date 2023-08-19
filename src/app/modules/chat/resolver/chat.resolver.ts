@@ -1,7 +1,7 @@
 import { AccountState } from "@account/store/account.state";
 import { User } from "@account/store/user.model";
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Resolve, Router } from '@angular/router';
 import { PushMessageEvent, PushMessageListener, ServerSentService } from "@app/common/services/server-sent.service";
 import { AddMessage, LoadChat } from "@modules/chat/store/chat.actions";
 import { MessageResultDto } from "@modules/chat/store/chat.model";
@@ -12,7 +12,7 @@ import { filter } from "rxjs/operators";
 @Injectable({
   providedIn: 'root'
 })
-export class ChatResolver  implements PushMessageListener {
+export class ChatResolver implements PushMessageListener, Resolve<boolean> {
 
   private initialized = false;
   private messagesAdded = false;
@@ -44,13 +44,13 @@ export class ChatResolver  implements PushMessageListener {
   }
 
   onServerPushMessage(event: PushMessageEvent<MessageResultDto>): void {
-    if (event.type === PushMessageEvent.MESSAGE_ADDED) {
-      if (this.router.url === '/chat' && event.payload!.user.id != this.user.id) {
-        this.store.dispatch(new AddMessage(event.payload!));
-      } else {
-        this.messagesAdded = true;
-      }
+    // if (event.type === PushMessageEvent.MESSAGE_ADDED) {
+    if (this.router.url === '/chat' && event.payload!.user.id != this.user.id) {
+      this.store.dispatch(new AddMessage(event.payload!));
+    } else {
+      this.messagesAdded = true;
     }
+    // }
   }
 
   private handleChanges(): void {

@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 
 export class PushMessageEvent<T> {
-  static PHOTOS_ADDED = 'photos_added'
-  static PHOTOS_CHANGED = 'photos_changed'
-  static TAGS_CHANGED = 'tags_changed'
-  static MESSAGE_ADDED = 'message_added'
+  static PHOTOS_ADDED = 'photos_added';
+  static PHOTOS_CHANGED = 'photos_changed';
+  static TAGS_CHANGED = 'tags_changed';
+  static MESSAGE_ADDED = 'message_added';
+  static VISIT_ADDED = 'visit_added';
+
   type: string;
   payload: T | undefined;
 
@@ -37,7 +39,7 @@ export class ServerSentService {
   }
 
   private setup(): void {
-    const eventTypes = ['photos', 'tags', 'chat', 'admin'];
+    const eventTypes = ['photos', 'tags', 'chat', 'user'];
     for (const eventType of eventTypes) {
       const source = new EventSource(`${environment.apiUrl}/${eventType}/sse`);
       source.onmessage = (event: MessageEvent): void => {

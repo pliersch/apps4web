@@ -33,3 +33,13 @@ export class DeleteVisitsFail {
 
   constructor(public error: HttpErrorResponse) { }
 }
+
+//////////////////////////////////////////////////////////
+//                   server sent
+//////////////////////////////////////////////////////////
+
+export class AddVisit {
+  static readonly type = '[User] Add Visit';
+
+  constructor(public readonly visit: Visit) { }
+}

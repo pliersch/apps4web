@@ -103,4 +103,19 @@ export class ProtocolState {
   }
 
   //endregion
+
+  // region add (by server sent)
+  //////////////////////////////////////////////////////////
+  //                   add
+  //////////////////////////////////////////////////////////
+
+  @Action(protocolActions.AddVisit)
+  addVisits(ctx: StateContext<ProtocolStateModel>, action: protocolActions.AddVisit): void {
+    const state = ctx.getState();
+    ctx.patchState({
+      visits: [...state.visits, action.visit]
+    })
+  }
+
+  //endregion
 }
