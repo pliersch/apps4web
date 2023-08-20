@@ -15,7 +15,7 @@ import { filter } from "rxjs/operators";
 export class ChatResolver implements PushMessageListener, Resolve<boolean> {
 
   private initialized = false;
-  private messagesAdded = false;
+  private newMessagesAdded = false;
   private user: User;
 
   constructor(private store: Store,
@@ -44,19 +44,25 @@ export class ChatResolver implements PushMessageListener, Resolve<boolean> {
   }
 
   onServerPushMessage(event: PushMessageEvent<MessageResultDto>): void {
-    // if (event.type === PushMessageEvent.MESSAGE_ADDED) {
-    if (this.router.url === '/chat' && event.payload!.user.id != this.user.id) {
+    if (this.isChatOpen() && this.isFromOtherUser(event)) {
       this.store.dispatch(new AddMessage(event.payload!));
     } else {
-      this.messagesAdded = true;
+      this.newMessagesAdded = true;
     }
-    // }
   }
 
   private handleChanges(): void {
-    if (this.messagesAdded) {
+    if (this.newMessagesAdded) {
       this.store.dispatch(new LoadChat());
-      this.messagesAdded = false;
+      this.newMessagesAdded = false;
     }
+  }
+
+  private isChatOpen(): boolean {
+    return this.router.url === '/chat';
+  }
+
+  private isFromOtherUser(event: PushMessageEvent<MessageResultDto>): boolean {
+    return event.payload!.user.id != this.user.id;
   }
 }

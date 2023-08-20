@@ -11,9 +11,10 @@ import { concatMap, Observable, of, Subscription } from "rxjs";
 export class PhotosResolver implements PushMessageListener, Resolve<boolean> {
 
   private initialized = false;
-  private photosAdded = false
-  private photosChanged = false
-  private tagsChanged = false
+  private photosAdded = false;
+  // todo not implemented
+  private photosChanged = false;
+  private tagsChanged = false;
 
   constructor(private store: Store,
               private pushService: ServerSentService) {
@@ -32,14 +33,14 @@ export class PhotosResolver implements PushMessageListener, Resolve<boolean> {
   }
 
   private initStore(): void {
-    of(Subscription.EMPTY).pipe( // yes, I know. but more readable ;)
+    of(Subscription.EMPTY).pipe( // useless but more readable ;)
       concatMap(() => this.store.dispatch(new LoadMetaData())),
       concatMap(() => this.store.dispatch(new LoadTags())),
       concatMap(() => this.store.dispatch(new LoadPhotos())))
       .subscribe();
   }
 
-  // current changes will handle when re-open photos
+  // todo ignore own like chat- or protocol-resolver
   onServerPushMessage(event: PushMessageEvent<any>): void {
     switch (event.type) {
       case PushMessageEvent.PHOTOS_ADDED:
