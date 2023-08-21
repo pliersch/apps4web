@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { TypedEventEmitter } from "@app/common/base/typed-event-emitter";
+import { EventEmitter } from "@app/common/base/event-emitter";
 
-export type VisibilityEventTypes = {
+export type VisibilityEvent = {
   'visible': undefined;
   'hidden': undefined;
 }
@@ -9,7 +9,7 @@ export type VisibilityEventTypes = {
 @Injectable({
   providedIn: 'root'
 })
-export class VisibilityStateService extends TypedEventEmitter<VisibilityEventTypes> {
+export class VisibilityStateService extends EventEmitter<VisibilityEvent> {
 
   constructor() {
     super();

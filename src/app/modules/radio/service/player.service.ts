@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { TypedEventEmitter } from "@app/common/base/typed-event-emitter";
+import { EventEmitter } from "@app/common/base/event-emitter";
 import { VisibilityStateService } from "@app/common/services/visibility-state.service";
 import { RadioStation } from "@modules/radio/components/player/player.component";
 
 export type PlayerState = 'play' | 'pause' | 'stop'
 
-export type RadioEventTypes = {
+export type RadioEvent = {
   'play': RadioStation;
   'pause': undefined;
   'stop': undefined;
@@ -15,7 +15,7 @@ export type RadioEventTypes = {
   providedIn: 'root'
 })
 
-export class PlayerService extends TypedEventEmitter<RadioEventTypes> {
+export class PlayerService extends EventEmitter<RadioEvent> {
 
   private radioStation: RadioStation | null;
   private audio: HTMLMediaElement;
