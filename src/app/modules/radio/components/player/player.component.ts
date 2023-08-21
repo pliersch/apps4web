@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { WidgetService } from "@app/core/components/widget/widget.service";
 import radioFile from "@assets/json/radio.json";
 import { WidgetPlayerComponent } from "@modules/radio/components/widget-player/widget-player.component";
@@ -15,14 +15,14 @@ export interface RadioStation {
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.scss']
 })
-export class PlayerComponent implements OnInit {
+export class PlayerComponent implements OnInit, OnDestroy {
 
   current: RadioStation | null;
   favorites: RadioStation[] = []
   icon = 'pause';
 
-  constructor(private widgetService: WidgetService,
-              private playerService: PlayerService) { }
+  constructor(private playerService: PlayerService,
+              private widgetService: WidgetService,) { }
 
   ngOnInit(): void {
     this.favorites = radioFile.radiostations;
@@ -30,30 +30,31 @@ export class PlayerComponent implements OnInit {
     if (this.playerService.isPlaying()) {
       this.current = this.playerService.getRadioStation();
     }
-    this.playerService.on("play", (radio) => {
-      this.current = radio;
-      this.icon = 'pause'
-    })
-    this.playerService.on("pause", () => {
-      this.icon = 'play_arrow'
-    })
-    this.playerService.on("stop", () => {
-      this.current = null;
-    })
+    this.playerService.on("play", (radio) => this.handlePlay(radio))
+    this.playerService.on("pause", () => this.handlePause())
+    this.playerService.on("stop", () => this.handleStop())
   }
 
-  onClickPlay(radio: RadioStation): void {
-    radio == this.current
-      ? this.toggleCurrentRadioState(radio)
-      : this.playOtherRadio(radio);
+  ngOnDestroy(): void {
+    this.playerService.off("play", this.handlePlay);
+    this.playerService.off("pause", this.handlePause);
+    this.playerService.off("stop", this.handleStop);
   }
 
-  toggleCurrentRadioState(radio: RadioStation): void {
+  private playRadio(radio: RadioStation): void {
+    if (!this.current) {
+      this.widgetService.setWidget(WidgetPlayerComponent);
+    }
+    this.current = radio;
+    this.playerService.play(radio);
+  }
+
+  toggleCurrentRadio(radio: RadioStation): void {
     switch (this.playerService.state) {
       case "play":
         this.playerService.stop();
-        this.current = null;
-        this.widgetService.removeWidget(WidgetPlayerComponent);
+        // this.current = null;
+        // this.widgetService.removeWidget(WidgetPlayerComponent);
         break;
       case "pause":
       case "stop":
@@ -62,9 +63,24 @@ export class PlayerComponent implements OnInit {
     }
   }
 
-  private playOtherRadio(radio: RadioStation): void {
-    this.current = radio;
-    this.playerService.play(radio);
-    this.widgetService.setWidget(WidgetPlayerComponent);
+  onClickPlay(radio: RadioStation): void {
+    radio !== this.current
+      ? this.playRadio(radio)
+      : this.toggleCurrentRadio(radio);
   }
+
+  private handlePlay(radio: RadioStation): void {
+    this.current = radio;
+    this.icon = 'pause'
+  }
+
+  private handlePause(): void {
+    this.icon = 'play_arrow'
+  }
+
+  private handleStop(): void {
+    this.current = null;
+    this.widgetService.removeWidget(WidgetPlayerComponent);
+  }
+
 }

@@ -1,4 +1,3 @@
-import { HttpClient } from "@angular/common/http";
 import { Component } from '@angular/core';
 
 @Component({
@@ -9,8 +8,6 @@ import { Component } from '@angular/core';
 
 
 export class AppComponent /*implements OnInit*/ {
-
-  constructor(private http: HttpClient) { }
 
   // ngOnInit(): void {
   //   const stringObservable = this.http.get<any>(environment.apiUrl);
