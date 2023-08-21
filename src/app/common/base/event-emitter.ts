@@ -8,17 +8,17 @@ export interface IEventEmitter<TEvents extends Record<string, any>> {
 
   on<TEventName extends keyof TEvents & string>(
     eventName: TEventName,
-    handler: (eventArg: TEvents[TEventName]) => void
+    callback: (eventArg: TEvents[TEventName]) => void
   ): void;
 
   once<TEventName extends keyof TEvents & string>(
     eventName: TEventName,
-    handler: (eventArg: TEvents[TEventName]) => void
+    callback: (eventArg: TEvents[TEventName]) => void
   ): void;
 
   off<TEventName extends keyof TEvents & string>(
     eventName: TEventName,
-    handler: (eventArg: TEvents[TEventName]) => void
+    callback: (eventArg: TEvents[TEventName]) => void
   ): void;
 }
 
@@ -34,22 +34,22 @@ export class EventEmitter<TEvents extends Record<string, any>> {
 
   on<TEventName extends keyof TEvents & string>(
     eventName: TEventName,
-    handler: (eventArg: TEvents[TEventName]) => void
+    callback: (eventArg: TEvents[TEventName]) => void
   ): void {
-    this.emitter.on(eventName, handler as any);
+    this.emitter.on(eventName, callback as any);
   }
 
   once<TEventName extends keyof TEvents & string>(
     eventName: TEventName,
-    handler: (eventArg: TEvents[TEventName]) => void
+    callback: (eventArg: TEvents[TEventName]) => void
   ): void {
-    this.emitter.once(eventName, handler as any);
+    this.emitter.once(eventName, callback as any);
   }
 
   off<TEventName extends keyof TEvents & string>(
     eventName: TEventName,
-    handler: (eventArg: TEvents[TEventName]) => void
+    callback: (eventArg: TEvents[TEventName]) => void
   ): void {
-    this.emitter.off(eventName, handler as any);
+    this.emitter.off(eventName, callback as any);
   }
 }

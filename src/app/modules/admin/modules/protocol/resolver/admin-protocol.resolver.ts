@@ -1,7 +1,7 @@
 import { AccountState } from "@account/store/account.state";
 import { Injectable } from '@angular/core';
 import { Resolve, Router } from '@angular/router';
-import { PushMessageEvent, PushMessageListener, ServerSentService } from "@app/common/services/server-sent.service";
+import { AdminSseService } from "@modules/admin/modules/protocol/service/admin-sse.service";
 import { AddVisit, LoadVisits } from "@modules/admin/modules/protocol/store/protocol.actions";
 import { ProtocolState } from "@modules/admin/modules/protocol/store/protocol.state";
 import { Visit } from "@modules/admin/modules/protocol/store/visit";
@@ -11,14 +11,14 @@ import { Observable, of } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AdminProtocolResolver implements Resolve<boolean>, PushMessageListener {
+export class AdminProtocolResolver implements Resolve<boolean> {
 
   newVisitExist = true;
 
   constructor(private store: Store,
-              private serverSentService: ServerSentService,
+              private adminSseService: AdminSseService,
               private router: Router) {
-    this.serverSentService.addListener(PushMessageEvent.VISIT_ADDED, this);
+    this.adminSseService.on('visit_added', (visit) => this.onServerSendVisit(visit));
   }
 
   resolve(): Observable<boolean> {
@@ -30,19 +30,19 @@ export class AdminProtocolResolver implements Resolve<boolean>, PushMessageListe
     return of(true);
   }
 
-  onServerPushMessage(event: PushMessageEvent<Visit>): void {
-    if (this.isAdminOpen() && this.isFromOtherUser(event)) {
-      this.store.dispatch(new AddVisit(event.payload!))
+  private onServerSendVisit(visit: Visit): void {
+    if (this.isVisitOpen() && this.isFromOtherUser(visit)) {
+      this.store.dispatch(new AddVisit(visit))
     } else {
       this.newVisitExist = true;
     }
   }
 
-  private isAdminOpen(): boolean {
+  private isVisitOpen(): boolean {
     return this.router.url.includes('/admin/visits');
   }
 
-  private isFromOtherUser(event: PushMessageEvent<Visit>): boolean {
-    return event.payload?.email != this.store.selectSnapshot(AccountState.getUser)?.email;
+  private isFromOtherUser(event: Visit): boolean {
+    return event.email != this.store.selectSnapshot(AccountState.getUser)?.email;
   }
 }
