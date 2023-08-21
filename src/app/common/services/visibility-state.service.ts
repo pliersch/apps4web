@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import { EventEmitter } from "@app/common/base/event-emitter";
+import { TypedEventEmitter } from "@app/common/base/typed-event-emitter";
+
+export type VisibilityEventTypes = {
+  'visible': undefined;
+  'hidden': undefined;
+}
 
 @Injectable({
   providedIn: 'root'
 })
-export class VisibilityStateService extends EventEmitter {
-
-  public static VISIBLE = 'visible';
-  public static HIDDEN = 'hidden';
+export class VisibilityStateService extends TypedEventEmitter<VisibilityEventTypes> {
 
   constructor() {
     super();
@@ -17,9 +19,9 @@ export class VisibilityStateService extends EventEmitter {
   private initListener(): void {
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === "visible") {
-        this.emit(VisibilityStateService.VISIBLE)
+        this.emit('visible')
       } else {
-        this.emit(VisibilityStateService.HIDDEN)
+        this.emit('hidden')
       }
     });
   }

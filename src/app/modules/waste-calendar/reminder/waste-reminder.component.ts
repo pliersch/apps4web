@@ -163,7 +163,7 @@ export class WasteReminderComponent implements OnInit, AfterViewInit {
   }
 
   private listenVisibilityChange(): void {
-    this.visibilityService.on(VisibilityStateService.VISIBLE, () => {
+    this.visibilityService.on("visible", () => {
       this.updateEventsOfMonth(new Date().getMonth());
     })
   }

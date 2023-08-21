@@ -79,7 +79,7 @@ export class PlayerService extends TypedEventEmitter<RadioEventTypes> {
   }
 
   private listenVisibilityChange(): void {
-    this.visibilityService.on(VisibilityStateService.VISIBLE, () => {
+    this.visibilityService.on("visible", () => {
       if (this._state === 'play' && this.audio.paused) {
         this.play(this.radioStation!)
       }
