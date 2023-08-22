@@ -18,7 +18,7 @@ export class AdminProtocolResolver implements Resolve<boolean> {
   constructor(private store: Store,
               private adminSseService: AdminSseService,
               private router: Router) {
-    this.adminSseService.on('visit_added', (visit) => this.onServerSend(visit));
+    this.adminSseService.on('visit_added', (visit) => this.onVisitAdded(visit));
   }
 
   resolve(): Observable<boolean> {
@@ -30,7 +30,7 @@ export class AdminProtocolResolver implements Resolve<boolean> {
     return of(true);
   }
 
-  private onServerSend(visit: Visit): void {
+  private onVisitAdded(visit: Visit): void {
     if (this.isUrlOpen() && this.isFromOtherUser(visit.userId)) {
       this.store.dispatch(new AddVisit(visit))
     } else {

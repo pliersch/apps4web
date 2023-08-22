@@ -1,27 +1,24 @@
 import { AccountState } from "@account/store/account.state";
-import { User } from "@account/store/user.model";
 import { Injectable } from '@angular/core';
 import { Resolve, Router } from '@angular/router';
-import { PushMessageEvent, PushMessageListener, ServerSentService } from "@app/common/services/server-sent.service";
+import { ChatSseService } from "@modules/chat/services/chat-sse.service";
 import { AddMessage, LoadChat } from "@modules/chat/store/chat.actions";
 import { MessageResultDto } from "@modules/chat/store/chat.model";
 import { Store } from "@ngxs/store";
 import { Observable, of } from 'rxjs';
-import { filter } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ChatResolver implements PushMessageListener, Resolve<boolean> {
+export class ChatResolver implements Resolve<boolean> {
 
   private initialized = false;
   private newMessagesAdded = false;
-  private user: User;
 
   constructor(private store: Store,
-              private serverSentService: ServerSentService,
+              private chatSseService: ChatSseService,
               private router: Router) {
-    this.serverSentService.addListener(PushMessageEvent.MESSAGE_ADDED, this);
+    this.chatSseService.on("message_added", (data) => this.onMessageAdded(data));
   }
 
   resolve(): Observable<boolean> {
@@ -34,18 +31,13 @@ export class ChatResolver implements PushMessageListener, Resolve<boolean> {
   }
 
   private initialize(): void {
-    this.store.select(AccountState.getUser).pipe(
-      filter((user) => user != null)
-    ).subscribe((user) => {
-      this.user = user!;
-      this.store.dispatch(new LoadChat())
-    })
+    this.store.dispatch(new LoadChat());
     this.initialized = true;
   }
 
-  onServerPushMessage(event: PushMessageEvent<MessageResultDto>): void {
-    if (this.isChatOpen() && this.isFromOtherUser(event)) {
-      this.store.dispatch(new AddMessage(event.payload!));
+  onMessageAdded(msg: MessageResultDto): void {
+    if (this.isChatOpen() && this.isFromOtherUser(msg.user.id)) {
+      this.store.dispatch(new AddMessage(msg));
     } else {
       this.newMessagesAdded = true;
     }
@@ -59,10 +51,10 @@ export class ChatResolver implements PushMessageListener, Resolve<boolean> {
   }
 
   private isChatOpen(): boolean {
-    return this.router.url === '/chat';
+    return this.router.url.includes('/chat');
   }
 
-  private isFromOtherUser(event: PushMessageEvent<MessageResultDto>): boolean {
-    return event.payload!.user.id != this.user.id;
+  private isFromOtherUser(userId: string): boolean {
+    return userId != this.store.selectSnapshot(AccountState.getUser)!.id;
   }
 }

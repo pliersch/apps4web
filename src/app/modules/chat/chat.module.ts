@@ -4,7 +4,7 @@ import { FormsModule } from "@angular/forms";
 import { MaterialModule } from "@app/modules/share/material/material.module";
 import { ChatMessagesComponent } from "@modules/chat/components/messages/chat-messages.component";
 import { ChatResolver } from "@modules/chat/resolver/chat.resolver";
-import { ChatService } from "@modules/chat/store/chat.service";
+import { ChatService } from "@modules/chat/services/chat.service";
 import { ChatState } from "@modules/chat/store/chat.state";
 import { FileDragDropModule } from "@modules/share/file-drag-drop/file-drag-drop.module";
 import { NgxsModule } from "@ngxs/store";

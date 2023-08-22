@@ -35,3 +35,7 @@ export interface MessageResultDto {
   fileNames: string[];
   created: Date;
 }
+
+export interface ChatSseData {
+  readonly userId: string;
+}
