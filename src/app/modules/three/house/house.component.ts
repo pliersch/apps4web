@@ -9,6 +9,8 @@ import { ThreeService } from "@modules/three/serivce/three.service";
 })
 export class HouseComponent implements AfterViewInit {
 
+  currentCamera = 'bird'
+
   @ViewChild('canvas')
   private canvasRef: ElementRef;
 

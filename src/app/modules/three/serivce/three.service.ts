@@ -1,9 +1,9 @@
 // import { ElementRef, Injectable, NgZone, OnDestroy } from '@angular/core';
+// import { loadGltfObject, loadHdrEnvironment } from "@modules/three/factories/asset.loader";
+// import { createWebGlRenderer } from "@modules/three/factories/renderer";
 // import * as THREE from "three";
 // import { Raycaster } from "three";
 // import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls";
-// import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-// import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
 //
 // @Injectable()
 // export class ThreeService implements OnDestroy {
@@ -15,6 +15,8 @@
 //   private controls: PointerLockControls;
 //   private frameId = 0;
 //
+//   private velocity = new THREE.Vector3(1, 1, 1);
+//   private direction = new THREE.Vector3();
 //   private moveForward = false;
 //   private moveBackward = false;
 //   private moveLeft = false;
@@ -22,80 +24,39 @@
 //   private raycaster: Raycaster;
 //   private prevTime = performance.now();
 //   private objects = [];
+//   private readonly assetPath = '/assets/3d/';
 //
 //   public constructor(public ngZone: NgZone) {}
 //
 //   ngOnDestroy(): void {
-//     console.log('ThreeService ngOnDestroy: ',)
-//     // if (this.frameId != null) {
-//     //   cancelAnimationFrame(this.frameId);
-//     // }
+//     if (this.frameId != null) {
+//       cancelAnimationFrame(this.frameId);
+//     }
+//     this.renderer.dispose();
 //   }
 //
-//   public createScene(canvas: ElementRef<HTMLCanvasElement>): void {
+//   public createScene(htmlCanvas: ElementRef<HTMLCanvasElement>): void {
+//     this.canvas = htmlCanvas.nativeElement;
 //
-//     // The first step is to get the reference of the canvas element from our HTML document
-//     this.canvas = canvas.nativeElement;
-//
-//     this.renderer = new THREE.WebGLRenderer({
-//       canvas: this.canvas,
-//       alpha: true,    // transparent background
-//       antialias: true // smooth edges
-//     });
-//     // this.renderer.setSize(this.canvas.width, this.canvas.height);
+//     this.renderer = createWebGlRenderer(htmlCanvas)
 //     this.scene = new THREE.Scene();
 //     this.scene.fog = new THREE.Fog(0xffffff, 0, 750);
 //
-//     new RGBELoader()
-//       .setPath('/assets/3d/')
-//       // .load('epping_forest_02_4k.hdr', (texture) => {
-//       .load('aristea_wreck_2k.hdr', (texture) => {
-//         texture.mapping = THREE.EquirectangularReflectionMapping;
-//         // this.scene.background = texture;
-//         this.scene.environment = texture;
-//       });
-//
-//     new GLTFLoader().load('/assets/3d/home.gltf', (gltf) => {
-//       gltf.scene.scale.set(10, 10, 10);
-//       this.scene.add(gltf.scene);
-//       this.objects.push(gltf.scene.children)
-//       // gltf.scene.getObjectByName()
-//     }, undefined, (error) => {
-//       console.error(error);
-//     });
+//     loadHdrEnvironment(this.scene, this.assetPath, 'aristea_wreck_2k.hdr');
+//     loadGltfObject(this.scene, this.assetPath, 'home.glb');
 //
 //     // this.scene.background = new THREE.Color(0x000000)
-//     this.scene.background = new THREE.Color(0x777777)
-//     // let aspectRatio = this.canvas.clientWidth / this.canvas.clientHeight;
+//     // let aspectRatio = this.htmlCanvas.clientWidth / this.htmlCanvas.clientHeight;
 //
 //     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
 //
-//     this.camera.position.y = 60;
+//     this.camera.position.y = 0;
 //     this.camera.position.z = 200;
 //
 //     this.renderer = new THREE.WebGLRenderer({canvas: this.canvas});
 //     this.renderer.setPixelRatio(devicePixelRatio);
 //     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
-//
-//     // this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-//     // const c = this.controls;
-//     // c.target.set(0, 0, 0);
-//     //
-//     // // c.minPolarAngle = Math.PI / 2;
-//     // // c.maxPolarAngle = Math.PI / 2;
-//     //
-//     // c.rotateSpeed = 5.0;
-//     // c.zoomSpeed = 1.2;
-//     // c.panSpeed = 0.01;
-//
-//     // c.noZoom = false;
-//     // c.noPan = false;
-//
-//     const light = new THREE.HemisphereLight(0xeeeeff, 0x777788, 0.75);
-//     light.position.set(0.5, 1, 0.75);
-//     this.scene.add(light);
-//
-//     this.controls = new PointerLockControls(this.camera, document.body);
+//     this.controls = new PointerLockControls(this.camera, this.renderer.domElement);
 //
 //     // const blocker = document.getElementById( 'blocker' );
 //     // const instructions = document.getElementById( 'instructions' );
@@ -124,12 +85,12 @@
 //
 //     this.raycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, -1, 0), 0, 10);
 //
-//     document.addEventListener('keydown', this.onKeyDown);
-//     document.addEventListener('keyup', this.onKeyUp);
+//     document.addEventListener('keydown', (e) => this.onKeyDown(e));
+//     document.addEventListener('keyup', (e) => this.onKeyUp(e));
 //
 //   }
 //
-//   private onKeyDown(event: Event): void {
+//   private onKeyDown(event: KeyboardEvent): void {
 //     switch (event.code) {
 //
 //       case 'ArrowUp':
@@ -154,7 +115,7 @@
 //     }
 //   }
 //
-//   private onKeyUp(event: Event): void {
+//   private onKeyUp(event: KeyboardEvent): void {
 //     switch (event.code) {
 //
 //       case 'ArrowUp':
@@ -204,58 +165,52 @@
 //     });
 //     const time = performance.now();
 //
-//     if (this.controls.isLocked) {
+//     if (!this.controls.isLocked) {
 //
 //       this.raycaster.ray.origin.copy(this.controls.getObject().position);
 //       this.raycaster.ray.origin.y -= 10;
 //
-//       const intersections = this.raycaster.intersectObjects(this.objects, false);
+//       // const intersections = this.raycaster.intersectObjects(this.objects, false);
 //
-//       const onObject = intersections.length > 0;
+//       // const onObject = intersections.length > 0;
 //
 //       const delta = (time - this.prevTime) / 1000;
 //
-//       velocity.x -= velocity.x * 10.0 * delta;
-//       velocity.z -= velocity.z * 10.0 * delta;
+//       this.velocity.x -= this.velocity.x * 10.0 * delta;
+//       this.velocity.z -= this.velocity.z * 10.0 * delta;
 //
-//       velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
+//       this.velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
 //
-//       direction.z = Number(moveForward) - Number(moveBackward);
-//       direction.x = Number(moveRight) - Number(moveLeft);
-//       direction.normalize(); // this ensures consistent movements in all directions
+//       this.direction.z = Number(this.moveForward) - Number(this.moveBackward);
+//       this.direction.x = Number(this.moveRight) - Number(this.moveLeft);
+//       this.direction.normalize(); // this ensures consistent movements in all directions
 //
-//       if (moveForward || moveBackward) {
-//         velocity.z -= direction.z * 400.0 * delta;
+//
+//       if (this.moveForward || this.moveBackward) {
+//         this.velocity.z -= this.direction.z * 400.0 * delta;
 //       }
-//       if (moveLeft || moveRight) {
-//         velocity.x -= direction.x * 400.0 * delta;
-//       }
-//
-//       if (onObject === true) {
-//
-//         velocity.y = Math.max(0, velocity.y);
-//         canJump = true;
-//
+//       if (this.moveLeft || this.moveRight) {
+//         this.velocity.x -= this.direction.x * 400.0 * delta;
 //       }
 //
-//       controls.moveRight(-velocity.x * delta);
-//       controls.moveForward(-velocity.z * delta);
+//       // if (onObject) {
+//       //   this.velocity.y = Math.max(0, this.velocity.y);
+//       // }
 //
-//       controls.getObject().position.y += (velocity.y * delta); // new behavior
+//       this.controls.moveRight(-this.velocity.x * delta);
+//       this.controls.moveForward(-this.velocity.z * delta);
 //
-//       if (controls.getObject().position.y < 10) {
+//       this.controls.getObject().position.y += (this.velocity.y * delta); // new behavior
 //
-//         velocity.y = 0;
-//         controls.getObject().position.y = 10;
+//       if (this.controls.getObject().position.y < 10) {
 //
-//         canJump = true;
-//
+//         this.velocity.y = 0;
+//         this.controls.getObject().position.y = 10;
 //       }
 //
 //     }
 //
-//     prevTime = time;
-//
+//     this.prevTime = time;
 //     this.renderer.render(this.scene, this.camera);
 //   }
 //

@@ -2,7 +2,7 @@
   <canvas #canvas class="three-container"></canvas>
 
   <div class="column button-container">
-    <mat-button-toggle-group name="controlToggle">
+    <mat-button-toggle-group [(value)]="currentCamera" name="controlToggle">
       <mat-button-toggle value="bird">Vogel</mat-button-toggle>
       <mat-button-toggle value="person">Person</mat-button-toggle>
     </mat-button-toggle-group>
