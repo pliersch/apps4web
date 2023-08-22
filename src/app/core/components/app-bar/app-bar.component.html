@@ -25,8 +25,8 @@
           APPS<span class='logo-color'>4</span>WEB
         </div>
       </button>
-      <button mat-flat-button routerLinkActive='active-route' [routerLinkActiveOptions]="{exact: true}"
-              *ngFor="let route of routes$ | async" [routerLink]="[route.path]">{{route.name}}</button>
+      <a mat-flat-button routerLinkActive='active-route'
+         *ngFor="let route of routes$ | async" [routerLink]="[route.path]">{{route.name}}</a>
     </mat-toolbar>
     <app-widget></app-widget>
     <ng-template [ngIf]="isDevMode()">

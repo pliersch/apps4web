@@ -8,26 +8,22 @@
   color: red;
 }
 
-mat-nav-list.list-horizontal {
-  padding: 0;
-
-  a {
-    display: inline-block;
-    height: auto;
-    width: auto;
-  }
+a {
+  text-decoration-line: none;
 }
 
 .active-route {
-  color: var(--primary-color-light) !important;
-  background-color: var(--mdc-filled-button-container-color, transparent) !important;
-  //background-color: var(--primary-color-dark) !important;
+  background-color: var(--primary-color-dark) !important;
+
   &.mat-mdc-unelevated-button:not(:disabled) {
     background-color: var(--mdc-filled-button-container-color, transparent) !important;
   }
 
+  &.mdc-button__label:not(:disabled) {
+    background-color: var(--mdc-filled-button-label-text-color, inherit) !important;
+  }
 }
 
 .mat-mdc-unelevated-button:not(:disabled) {
-  background-color: var(--primary-color-dark) !important;
+  background-color: transparent !important;
 }
