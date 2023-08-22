@@ -1,3 +1,11 @@
 <div class="three-container">
-  <canvas #canvas style="height: calc(100% - 6px); width: 100%;"></canvas>
+  <canvas #canvas class="three-container"></canvas>
+
+  <div class="column button-container">
+    <mat-button-toggle-group name="controlToggle">
+      <mat-button-toggle value="bird">Vogel</mat-button-toggle>
+      <mat-button-toggle value="person">Person</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
 </div>

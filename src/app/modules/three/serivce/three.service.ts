@@ -272,19 +272,22 @@
 
 
 import { ElementRef, Injectable, NgZone, OnDestroy } from '@angular/core';
+import { loadGltfObject, loadHdrEnvironment } from "@modules/three/factories/asset.loader";
+import { createPerspectiveCamera } from "@modules/three/factories/camera";
+import { createOrbitControls } from "@modules/three/factories/controls";
+import { createWebGlRenderer } from "@modules/three/factories/renderer";
 import * as THREE from 'three';
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
 
 @Injectable()
 export class ThreeService implements OnDestroy {
-  private canvas: HTMLCanvasElement;
   private renderer: THREE.WebGLRenderer;
   private camera: THREE.PerspectiveCamera;
   private scene: THREE.Scene;
   private controls: OrbitControls;
   private frameId = 0;
+
+  private readonly assetPath = '/assets/3d/';
 
   public constructor(public ngZone: NgZone) {}
 
@@ -295,103 +298,15 @@ export class ThreeService implements OnDestroy {
     this.renderer.dispose();
   }
 
-  public createScene(canvas: ElementRef<HTMLCanvasElement>): void {
-
-    // The first step is to get the reference of the canvas element from our HTML document
-    this.canvas = canvas.nativeElement;
-
-    const width = this.canvas.clientWidth;
-    const height = this.canvas.clientHeight;
-
-    this.renderer = new THREE.WebGLRenderer({
-      canvas: this.canvas,
-      alpha: true,    // transparent background
-      antialias: true // smooth edges
-    });
-    this.renderer.setSize(width, height, false);
-    this.renderer.setPixelRatio(devicePixelRatio);
-
+  public createScene(htmlCanvas: ElementRef<HTMLCanvasElement>): void {
+    this.renderer = createWebGlRenderer(htmlCanvas);
     this.scene = new THREE.Scene();
-
-    new RGBELoader()
-      .setPath('/assets/3d/')
-      .load('aristea_wreck_2k.hdr', (texture) => {
-        texture.mapping = THREE.EquirectangularReflectionMapping;
-        this.scene.background = texture;
-        this.scene.environment = texture;
-      });
-
-    new GLTFLoader().load('/assets/3d/home.glb', (gltf) => {
-      gltf.scene.scale.set(10, 10, 10);
-      this.scene.add(gltf.scene);
-      // gltf.scene.getObjectByName()
-    }, undefined, (error) => {
-      console.error(error);
-    });
-
-    // const ambientLight = new THREE.AmbientLight(0xcccccc);
-    // this.scene.add(ambientLight);
-    //
-    // const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
-    // directionalLight.position.set(1, 1, 0.5).normalize();
-    // this.scene.add(directionalLight);
-
-
+    loadHdrEnvironment(this.scene, this.assetPath, 'aristea_wreck_2k.hdr');
+    loadGltfObject(this.scene, this.assetPath, 'home.glb');
+    this.camera = createPerspectiveCamera(htmlCanvas);
+    // no effect if using hdr (only light and disable image is possible )
     // this.scene.background = new THREE.Color(0x000000)
-    this.scene.background = new THREE.Color(0x777777)
-    // this.scene.add(this.cube);
-    //*Camera
-    // let aspectRatio = this.canvas.clientWidth / this.canvas.clientHeight;
-
-    // this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.25, 20);
-    this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
-    this.camera.aspect = width / height;
-    this.camera.updateProjectionMatrix();
-    // this.camera = new THREE.PerspectiveCamera(
-    //   this.fieldOfView,
-    //   aspectRatio,
-    //   this.nearClippingPlane,
-    //   this.farClippingPlane
-    // )
-
-    this.camera.position.y = 60;
-    this.camera.position.z = 200;
-
-    // this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
-
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    const c = this.controls;
-    c.target.set(0, 0, 0);
-
-    // c.minPolarAngle = Math.PI / 2;
-    // c.maxPolarAngle = Math.PI / 2;
-
-    c.rotateSpeed = 5.0;
-    c.zoomSpeed = 1.2;
-    c.panSpeed = 0.01;
-
-    // c.noZoom = false;
-    // c.noPan = false;
-
-    // c.staticMoving = false;
-    // c.dynamicDampingFactor = 0.15;
-    // c.keys = ['KeyA', 'KeyS', 'KeyD']; not working
-    const spotLight = new THREE.SpotLight(0xffffff, 10);
-    spotLight.position.set(2, 5, 2);
-    spotLight.angle = Math.PI / 6;
-    spotLight.penumbra = 1;
-    spotLight.decay = 2;
-    spotLight.distance = 100;
-    // spotLight.map = textures[ 'disturb.jpg' ];
-
-    spotLight.castShadow = true;
-    spotLight.shadow.mapSize.width = 1024;
-    spotLight.shadow.mapSize.height = 1024;
-    spotLight.shadow.camera.near = 10;
-    spotLight.shadow.camera.far = 200;
-    spotLight.shadow.focus = 1;
-    this.scene.add(spotLight);
-
+    this.controls = createOrbitControls(this.camera, this.renderer);
   }
 
   public animate(): void {

@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { ThreeService } from "@modules/three/3d/three.service";
+import { ThreeService } from "@modules/three/serivce/three.service";
 
 @Component({
   selector: 'app-house',
@@ -20,4 +20,7 @@ export class HouseComponent implements AfterViewInit {
     this.three.animate();
   }
 
+  testBtn(): void {
+    console.log('HouseComponent testBtn: ',)
+  }
 }

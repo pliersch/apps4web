@@ -1,4 +1,15 @@
-.three-container {
+.three-page {
   width: 100%;
   height: 100%;
+  position: relative;
+}
+
+.three-container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.button-container {
+  position: absolute;
 }
