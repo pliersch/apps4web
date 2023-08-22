@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { PhotosContainerComponent } from '@modules/photos/core';
-import { PhotosResolver } from "@modules/photos/resolver/photos-resolver.service";
+import { PhotosResolver } from "@modules/photos/resolver/photos.resolver";
 import { PhotoService } from "@modules/photos/services/photo.service";
 import { TagService } from "@modules/photos/services/tag.service";
 import { PhotoState } from "@modules/photos/store/photos/photo.state";

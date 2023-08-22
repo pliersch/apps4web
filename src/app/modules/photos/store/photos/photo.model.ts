@@ -44,6 +44,10 @@ export interface PhotoCountByTag {
   count: number;
 }
 
+export interface PhotoSseData {
+  readonly userId: string;
+}
+
 export type FindOption = 'Newest' | 'BestRated' | 'MostViewed';
 
 //////////////////////////////////////////////////////////

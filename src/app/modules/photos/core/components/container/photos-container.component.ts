@@ -19,7 +19,7 @@ export class PhotosContainerComponent implements OnInit {
     {name: 'Slideshow', path: '/photos/slideshow', accepted: Role.User},
     {name: 'Lightbox', path: '/photos/lightbox', accepted: Role.User},
     //todo re-enable
-    // {name: 'Upload', path: '/photos/upload', accepted: Role.Admin},
+    {name: 'Upload', path: '/photos/upload', accepted: Role.User},
   ];
 
   activeLink = this.routes[0].path;

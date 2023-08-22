@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminGuard } from "@modules/admin/guards/admin-guard.service";
 import { PhotosContainerComponent } from '@modules/photos/core/components/container/photos-container.component';
-import { PhotosResolver } from "@modules/photos/resolver/photos-resolver.service";
+import { PhotosResolver } from "@modules/photos/resolver/photos.resolver";
 
 // const homeModule = () => import('./modules/home/home.module').then((x) => x.HomeModule);
 const uploadModule = () => import('./modules/upload/upload.module').then((x) => x.UploadModule);
@@ -16,7 +15,7 @@ const routes: Routes = [
     children: [
       // {path: 'home', title: 'Home', loadChildren: homeModule},
       {path: 'explorer', title: 'Photo Explorer', loadChildren: explorerModule},
-      {path: 'upload', title: 'Photo Upload', loadChildren: uploadModule, canActivate: [AdminGuard]},
+      {path: 'upload', title: 'Photo Upload', loadChildren: uploadModule, /*canActivate: [AdminGuard]*/},
       {path: 'slideshow', title: 'Photo Slideshow', loadChildren: slideShowModule},
       {path: 'lightbox', title: 'Photo Lightbox', loadChildren: lightBoxModule},
       {path: '**', redirectTo: '/photos/explorer/finder', pathMatch: 'full'},

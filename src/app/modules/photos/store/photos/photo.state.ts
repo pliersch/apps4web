@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { AlertService } from "@app/common/services/alert.service";
-import { ServerSentService } from "@app/common/services/server-sent.service";
 import { difference } from "@app/common/util/array-utils";
 import { PHOTOS_CONSTANTS } from "@modules/photos/const";
 import { SortMode } from "@modules/photos/modules/explorer/components/sorter/photos-sorter.component";
@@ -67,7 +66,6 @@ export interface PhotoStateModel {
 export class PhotoState {
 
   constructor(private photoService: PhotoService,
-              private pushService: ServerSentService,
               private store: Store,
               private alertService: AlertService) { }
 
