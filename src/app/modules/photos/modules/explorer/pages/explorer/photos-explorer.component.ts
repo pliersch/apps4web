@@ -91,7 +91,7 @@ export class PhotosExplorerComponent extends AbstractExplorerComponent implement
 
   onSelectForPreview($event: Photo): void {
     this.setCurrent($event);
-    void this.router.navigate(['photos/slideshow']);
+    void this.router.navigate(['photos/slideshow/:id']);
   }
 
   onClickClearFilter(): void {

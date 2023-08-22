@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from "@angular/router";
 import { PhotosHorizontalScrollerComponent } from "@modules/photos/core";
 import { SetNextPhoto, SetPreviousPhoto } from "@modules/photos/store/photos/photo.actions";
 import { Photo } from "@modules/photos/store/photos/photo.model";
@@ -22,13 +23,13 @@ export class PhotosSlideshowComponent implements OnInit, OnDestroy {
 
   @Select(PhotoState.getCurrentIndex)
   currentIndex$: Observable<number>;
-  currentIndex: number;
 
   imgUrl: string;
 
   private subscription: Subscription;
 
-  constructor(private store: Store) { }
+  constructor(private store: Store,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.subscription =
@@ -37,6 +38,11 @@ export class PhotosSlideshowComponent implements OnInit, OnDestroy {
           this.imgUrl = getPhotoUrl(res.fileName);
         }
       });
+    this.subscription.add(
+      this.currentIndex$.subscribe(index => {
+        void this.router.navigateByUrl('/photos/slideshow/' + index)
+      })
+    )
   }
 
   ngOnDestroy(): void {

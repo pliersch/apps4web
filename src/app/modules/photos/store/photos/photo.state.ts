@@ -309,6 +309,13 @@ export class PhotoState {
     });
   }
 
+  @Action(photoAction.SetCurrentIndex)
+  setCurrentIndex(ctx: StateContext<PhotoStateModel>, action: photoAction.SetCurrentIndex): void {
+    ctx.patchState({
+      currentIndex: action.index
+    });
+  }
+
   @Action(photoAction.SetNextPhoto)
   setNextPhotoAction(ctx: StateContext<PhotoStateModel>): void {
     let index = ctx.getState().currentIndex;

@@ -16,7 +16,7 @@ export class PhotosContainerComponent implements OnInit {
     // {name: 'Home', path: '/photos/home', accepted: Role.User},
     {name: 'Explorer', path: '/photos/explorer/finder', accepted: Role.User},
     {name: 'Editor', path: '/photos/explorer/editor', accepted: Role.User},
-    {name: 'Slideshow', path: '/photos/slideshow', accepted: Role.User},
+    {name: 'Slideshow', path: '/photos/slideshow/:id', accepted: Role.User},
     {name: 'Lightbox', path: '/photos/lightbox', accepted: Role.User},
     //todo re-enable
     {name: 'Upload', path: '/photos/upload', accepted: Role.User},

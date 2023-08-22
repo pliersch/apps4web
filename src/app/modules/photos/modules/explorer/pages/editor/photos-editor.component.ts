@@ -124,7 +124,7 @@ export class PhotosEditorComponent extends AbstractExplorerComponent implements 
 
   onSelectForPreview($event: Photo): void {
     this.setCurrent($event);
-    void this.router.navigate(['photos/slideshow']);
+    void this.router.navigate(['photos/slideshow/:id']);
   }
 
   onSelectForDelete($event: Photo): void {

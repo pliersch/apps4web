@@ -85,6 +85,12 @@ export class SetCurrentPhoto {
   constructor(public photo: Photo) { }
 }
 
+export class SetCurrentIndex {
+  static readonly type = '[Photos] Set Current Index';
+
+  constructor(public index: number) { }
+}
+
 export class SetNextPhoto {
   static readonly type = '[Photos] Set Next Photo';
 }
