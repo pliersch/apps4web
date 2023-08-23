@@ -1,27 +1,7 @@
-mat-form-field {
-  width: 100%;
-}
-
-mat-card {
-  width: 550px;
-}
-
-.select svg {
-  fill: white;
-}
-
-mat-chip {
-  &.active {
-    background-color: green;
-  }
-}
-
-img {
-  height: 80px;
-  object-fit: contain;
-}
-
-.images-container {
+.page {
+  height: 100%;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

@@ -1,0 +1,27 @@
+mat-form-field {
+  width: 100%;
+}
+
+mat-card {
+  width: 550px;
+}
+
+.select svg {
+  fill: white;
+}
+
+mat-chip {
+  &.active {
+    background-color: green;
+  }
+}
+
+img {
+  height: 80px;
+  object-fit: contain;
+}
+
+.images-container {
+  display: flex;
+  flex-wrap: wrap;
+}

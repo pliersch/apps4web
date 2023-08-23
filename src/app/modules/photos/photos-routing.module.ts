@@ -15,7 +15,7 @@ const routes: Routes = [
     children: [
       // {path: 'home', title: 'Home', loadChildren: homeModule},
       {path: 'explorer', title: 'Photo Explorer', loadChildren: explorerModule},
-      {path: 'upload', title: 'Photo Upload', loadChildren: uploadModule, /*canActivate: [AdminGuard]*/},
+      {path: 'upload', title: 'Photo Upload', loadChildren: uploadModule},
       {path: 'slideshow/:id', title: 'Photo Slideshow', loadChildren: slideShowModule},
       {path: 'lightbox', title: 'Photo Lightbox', loadChildren: lightBoxModule},
       {path: '**', redirectTo: '/photos/explorer/finder', pathMatch: 'full'},

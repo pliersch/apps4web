@@ -1,0 +1,69 @@
+<mat-card class="card-size-l component">
+  <mat-card-title>Image Upload</mat-card-title>
+  <mat-card-content>
+
+    <div class="row">
+      <div class="col-s-3">
+        <div style="width: auto; height: 300px;">
+          <ng-scrollbar class="dark-scrollbar" [autoWidthDisabled]="false"
+                        track="vertical" visibility="always">
+            <mat-selection-list appNoPaddingTop multiple="false">
+              <mat-list-option *ngFor="let group of tagGroups$ | async; let i = index"
+                               [selected]="tagGroups[index].name === group.name"
+                               [value]="group" (click)="onGroupSelect(i)">
+                {{group.name}}
+              </mat-list-option>
+            </mat-selection-list>
+          </ng-scrollbar>
+        </div>
+      </div>
+      <!--    <mat-divider [vertical]="true"></mat-divider>-->
+      <div class="col-s-9">
+        <div class="row">
+          <div>
+            <mat-chip-listbox>
+              <mat-chip *ngFor="let tagName of copies[index]"
+                        (click)="onSelectChip(tagName)"
+                        (removed)="onSelectChip(tagName)">
+                {{tagName}}
+                <button matChipRemove>
+                  <mat-icon>check_circle</mat-icon>
+                </button>
+              </mat-chip>
+            </mat-chip-listbox>
+          </div>
+        </div>
+        <div class="row">
+          <div class="images-container">
+            <img *ngFor="let url of imgUrls" [src]="url">
+          </div>
+        </div>
+        <div class="row">
+          <mat-checkbox [(ngModel)]="isPrivate">privat</mat-checkbox>
+        </div>
+        <div class="row">
+          Fotos zum Upload: {{ count }}
+        </div>
+        <div class="row">
+          <mat-chip-listbox>
+            <mat-chip *ngFor="let tagName of selectedTagNames">
+              {{tagName}}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+          </mat-chip-listbox>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button *ngIf="!imgFiles" mat-raised-button color="primary"
+            type="button" (click)="openFile()">Open
+    </button>
+    <button *ngIf="imgFiles" mat-raised-button color="primary"
+            type="button" (click)="uploadImage()">Upload
+    </button>
+  </mat-card-actions>
+</mat-card>
+<input #fileInput style="display: none" type="file" (change)="onChange($event)" multiple accept="image/*">

@@ -8,13 +8,15 @@ import { MaterialModule } from "@modules/share/material/material.module";
 import { ShareModule } from "@modules/share/share.module";
 import { NgxsModule } from "@ngxs/store";
 import { NgScrollbarModule } from "ngx-scrollbar";
+import { UploadPanelComponent } from './components/upload/upload-panel.component';
 
 import { UploadRoutingModule } from './upload-routing.module';
 
 
 @NgModule({
   declarations: [
-    PhotosUploadComponent
+    PhotosUploadComponent,
+    UploadPanelComponent
   ],
   imports: [
     CommonModule,
