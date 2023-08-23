@@ -1,10 +1,16 @@
+import { Role } from "@modules/admin/modules/user/store/role";
+
 export interface Action {
-  name: any;
+  name: ActionTypes;
   description: string;
   icon: string;
-  handler: ActionProvider;
+  role?: Role;
+  handler: ActionHandler;
 }
 
-export interface ActionProvider {
+export type ActionTypes = 'SelectAll' | 'DeselectAll' | 'ToggleSelection' | 'DeleteMany' |
+  'ManageTags' | 'AddToDownload' | 'Download' | 'EditPhotos';
+
+export interface ActionHandler {
   onAction(action: Action): void;
 }

@@ -19,14 +19,6 @@ import { Select, Store } from "@ngxs/store";
 import { saveAs } from 'file-saver';
 import { Observable } from "rxjs";
 
-enum ActionTypes {
-  SelectAll,
-  Add,
-  DeselectAll,
-  ToggleSelection,
-  Download,
-}
-
 @Component({
   selector: 'app-photos-explorer',
   templateUrl: './photos-explorer.component.html',
@@ -41,14 +33,13 @@ export class PhotosExplorerComponent extends AbstractExplorerComponent implement
   downloadablePhotos$: Observable<Photo[]>;
 
   instructionDialogComponent = ExplorerInstructionDialogComponent;
-
-  actions: Action[] = [
-    {name: ActionTypes.SelectAll, icon: 'done_all', description: 'Alles auswählen', handler: this},
-    {name: ActionTypes.ToggleSelection, icon: 'published_with_changes', description: 'Auswahl umkehren', handler: this},
-    {name: ActionTypes.DeselectAll, icon: 'remove_done', description: 'Auswahl aufheben', handler: this},
-    {name: ActionTypes.Add, icon: 'add', description: 'zu Downloads hinzufügen', handler: this},
-    {name: ActionTypes.Download, icon: 'download', description: 'Download', handler: this},
-  ]
+  availableActions: Action[] = [
+    {name: "SelectAll", icon: 'done_all', description: 'Alles auswählen', handler: this},
+    {name: "ToggleSelection", icon: 'published_with_changes', description: 'Auswahl umkehren', handler: this},
+    {name: "DeselectAll", icon: 'remove_done', description: 'Auswahl aufheben', handler: this},
+    {name: "AddToDownload", icon: 'add', description: 'zu Downloads hinzufügen', handler: this},
+    {name: "Download", icon: 'download', description: 'Download', handler: this},
+  ];
 
   constructor(
     public photoService: PhotoService,
@@ -63,19 +54,19 @@ export class PhotosExplorerComponent extends AbstractExplorerComponent implement
 
   onAction(action: Action): void {
     switch (action.name) {
-      case ActionTypes.SelectAll:
+      case "SelectAll":
         this.store.dispatch(new photoAction.SelectAllDownloads());
         break;
-      case ActionTypes.Add:
-        this.store.dispatch(new photoAction.MoveToFinalDownloads());
-        break;
-      case ActionTypes.DeselectAll:
+      case "DeselectAll":
         this.store.dispatch(new photoAction.DeselectAllDownloads());
         break;
-      case ActionTypes.ToggleSelection:
+      case "ToggleSelection":
         this.store.dispatch(new photoAction.ToggleAllDownload());
         break;
-      case ActionTypes.Download:
+      case "AddToDownload":
+        this.store.dispatch(new photoAction.MoveToFinalDownloads());
+        break;
+      case "Download":
         this.downloadPhotos();
         break;
     }

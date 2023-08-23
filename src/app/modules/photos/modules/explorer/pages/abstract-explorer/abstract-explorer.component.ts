@@ -6,6 +6,8 @@ import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { SetCheckedInstruction } from "@app/core/stores/app/app.actions";
 import { AppState } from "@app/core/stores/app/app.state";
+import { Action } from "@modules/action-bar/actions";
+import { Role } from "@modules/admin/modules/user/store/role";
 import { PhotoService } from "@modules/photos/services/photo.service";
 import * as photoAction from "@modules/photos/store/photos/photo.actions";
 import { AddTagFilter, RemoveTagFilter, SetRatingFilter } from "@modules/photos/store/photos/photo.actions";
@@ -18,13 +20,12 @@ import { NgScrollbar } from "ngx-scrollbar";
 import { Observable, Subscription, take } from "rxjs";
 import { tap } from "rxjs/operators";
 
-
 @Component({
   selector: 'app-abstract-explorer',
   templateUrl: './abstract-explorer.component.html',
   styleUrls: ['./abstract-explorer.component.scss']
 })
-export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestroy {
+export abstract class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('scrollbar')
   scrollbar: NgScrollbar;
@@ -90,10 +91,12 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   protected absoluteHeight = 0;
   protected isRequesting: boolean;
   protected resizeObserver: ResizeObserver;
+  protected availableActions: Action[] = [];
+  protected allowedActions: Action[] = [];
   private content: Element;
   private viewport: Element;
 
-  constructor(
+  protected constructor(
     public photoService: PhotoService,
     public router: Router,
     public dialog: MatDialog,
@@ -102,7 +105,10 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   ngOnInit(): void {
-    this.subscription = this.user$.subscribe(res => this.user = res);
+    this.subscription = this.user$.subscribe(user => {
+      this.user = user;
+      this.computeAllowedActions(user.role);
+    });
     this.subscription.add(this.selection$.subscribe(res => this.selection = res));
     this.subscription.add(this.selectedDownloads$.subscribe(res => this.selectedDownloads = res));
     this.subscription.add(this.finalDownloads$.subscribe(res => this.finalDownloads = res));
@@ -141,6 +147,19 @@ export class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestr
       this.showInstructionDialog();
     }
   }
+
+  private computeAllowedActions(role: Role): void {
+    this.allowedActions = []
+    for (const action of this.availableActions) {
+      if (!action.role) { // for every user
+        this.allowedActions.push(action);
+      } else if (action.role && action.role <= role) {
+        this.allowedActions.push(action);
+      }
+    }
+  }
+
+  abstract onAction(action: Action): void;
 
   protected scrollToActiveItem(): void {
     throw new Error('you must impl "scrollToActiveItem"')

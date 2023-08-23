@@ -14,7 +14,7 @@ export class PhotosContainerComponent implements OnInit {
   // fixme Role ignored
   routes: Route[] = [
     // {name: 'Home', path: '/photos/home', accepted: Role.User},
-    {name: 'Explorer', path: '/photos/explorer/finder', accepted: Role.User},
+    {name: 'Finder', path: '/photos/explorer/finder', accepted: Role.User},
     {name: 'Editor', path: '/photos/explorer/editor', accepted: Role.User},
     {name: 'Slideshow', path: '/photos/slideshow/:id', accepted: Role.User},
     {name: 'Lightbox', path: '/photos/lightbox', accepted: Role.User},

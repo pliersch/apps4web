@@ -17,7 +17,7 @@
       </button>
     </div>
     <app-photos-action-panel
-      [actions]="actions" (actionEvent)="onAction($event)"></app-photos-action-panel>
+      [actions]="allowedActions" (actionEvent)="onAction($event)"></app-photos-action-panel>
     <app-photos-image-detail [currentPhoto$]="currentPhoto$"></app-photos-image-detail>
     <app-photos-meta-editor-panel
       [selectedPhotosCount]="selection.length" [filteredPhotosCount]="photos.length"

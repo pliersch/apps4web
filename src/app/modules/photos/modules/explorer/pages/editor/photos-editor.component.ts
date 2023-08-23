@@ -3,6 +3,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { difference } from "@app/common/util/array-utils";
 import { Action } from "@modules/action-bar/actions";
+import { Role } from "@modules/admin/modules/user/store/role";
 import {
   EditorPhotoControlComponent,
   EditPhotoPropertiesDialogData,
@@ -30,15 +31,6 @@ export interface DeletePhotoDialogData {
   photo: Photo;
 }
 
-enum ActionTypes {
-  SelectAll,
-  DeselectAll,
-  ToggleSelection,
-  EditPhotos,
-  DeleteMany,
-  ManageTags,
-}
-
 @Component({
   selector: 'app-photos-editor',
   templateUrl: './photos-editor.component.html',
@@ -58,15 +50,14 @@ export class PhotosEditorComponent extends AbstractExplorerComponent implements 
   tagGroups: TagGroup[]
 
   instructionDialogComponent = EditorInstructionDialogComponent;
-
-  actions: Action[] = [
-    {name: ActionTypes.SelectAll, icon: 'done_all', description: 'Alles auswählen', handler: this},
-    {name: ActionTypes.ToggleSelection, icon: 'published_with_changes', description: 'Auswahl umkehren', handler: this},
-    {name: ActionTypes.DeselectAll, icon: 'remove_done', description: 'Auswahl aufheben', handler: this},
-    {name: ActionTypes.EditPhotos, icon: 'edit', description: 'Bearbeiten', handler: this},
-    {name: ActionTypes.DeleteMany, icon: 'delete', description: 'Löschen', handler: this},
-    {name: ActionTypes.ManageTags, icon: 'list', description: 'Manage Tags', handler: this},
-  ]
+  availableActions: Action[] = [
+    {name: "SelectAll", icon: 'done_all', description: 'Alles auswählen', handler: this},
+    {name: "ToggleSelection", icon: 'published_with_changes', description: 'Auswahl umkehren', handler: this},
+    {name: "DeselectAll", icon: 'remove_done', description: 'Auswahl aufheben', handler: this},
+    {name: "EditPhotos", icon: 'edit', description: 'Bearbeiten', role: Role.Admin, handler: this},
+    {name: "DeleteMany", icon: 'delete', description: 'Löschen', role: Role.Admin, handler: this},
+    {name: "ManageTags", icon: 'list', description: 'Manage Tags', role: Role.Admin, handler: this},
+  ];
 
   constructor(
     public photoService: PhotoService,
@@ -83,32 +74,24 @@ export class PhotosEditorComponent extends AbstractExplorerComponent implements 
     this.subscription.add(this.tags$.subscribe(res => this.tags = res));
   }
 
-  // ngAfterViewInit(): void {
-  //   super.ngAfterViewInit();
-  // }
-  //
-  // ngOnDestroy(): void {
-  //   super.ngOnDestroy();
-  // }
-
   onAction(action: Action): void {
     switch (action.name) {
-      case ActionTypes.SelectAll:
+      case "SelectAll":
         this.store.dispatch(new photoAction.SelectAllFilteredPhotosEdit());
         break;
-      case ActionTypes.DeselectAll:
+      case "DeselectAll":
         this.store.dispatch(new photoAction.DeselectAllPhotosEdit());
         break;
-      case ActionTypes.ToggleSelection:
+      case "ToggleSelection":
         this.store.dispatch(new photoAction.ToggleSelection());
         break;
-      case ActionTypes.DeleteMany:
+      case "DeleteMany":
         this.deletePhotos();
         break;
-      case ActionTypes.EditPhotos:
+      case "EditPhotos":
         this.editTags(this.selection);
         break;
-      case ActionTypes.ManageTags:
+      case "ManageTags":
         this.openEditTagDialog();
         break;
     }
