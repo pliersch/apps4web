@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { WidgetService } from "@app/core/components/widget/widget.service";
 import radioFile from "@assets/json/radio.json";
 import { WidgetPlayerComponent } from "@modules/radio/components/widget-player/widget-player.component";
@@ -53,8 +53,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
     switch (this.playerService.state) {
       case "play":
         this.playerService.stop();
-        // this.current = null;
-        // this.widgetService.removeWidget(WidgetPlayerComponent);
         break;
       case "pause":
       case "stop":
@@ -83,4 +81,10 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.widgetService.removeWidget(WidgetPlayerComponent);
   }
 
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent): void {
+    if (event.code === 'Space' && this.current) {
+      this.playerService.togglePlayPause();
+    }
+  }
 }
