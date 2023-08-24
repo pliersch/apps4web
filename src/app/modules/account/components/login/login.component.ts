@@ -3,7 +3,7 @@ import { AccountState } from "@account/store/account.state";
 import { User } from "@account/store/user.model";
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { AlertService } from "@app/common/services/alert.service";
 import { RouterState } from "@app/core/stores/routes/router.state";
 import { Select, Store } from "@ngxs/store";
@@ -36,8 +36,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(private store: Store,
               private fb: FormBuilder,
               private alertService: AlertService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+              private router: Router) { }
 
   ngOnInit(): void {
     this.form.setValue({
@@ -59,14 +58,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
       this.alertService.info('Hallo ' + this.user.givenName);
     });
-    // this.subscription.add(this.route.queryParams
-    //   .subscribe(params => {
-    //       this.id = params.id;
-    //       if (params.id) {
-    //         this.store.dispatch(new LoginWithId(params.id));
-    //       }
-    //     }
-    //   ));
     this.subscription.add(
       this.routeBeforeSignin$.subscribe(url => this.routeBeforeSignin = url));
   }
