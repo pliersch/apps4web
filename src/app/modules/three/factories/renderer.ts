@@ -16,3 +16,10 @@ export function createWebGlRenderer(htmlCanvas: ElementRef<HTMLCanvasElement>): 
   renderer.setPixelRatio(devicePixelRatio);
   return renderer;
 }
+
+// export function createWebGlRenderer2(htmlCanvas: ElementRef<HTMLCanvasElement>): WebGLRenderer {
+//     const renderer = new THREE.WebGLRenderer({canvas: this.canvas});
+//     renderer.setPixelRatio(devicePixelRatio);
+//     renderer.setSize(htmlCanvas.clientWidth, htmlCanvas.clientHeight);
+//     return renderer;
+// }

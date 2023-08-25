@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { ThreeService } from "@modules/three/serivce/three.service";
+import { MatButtonToggleChange } from "@angular/material/button-toggle";
+import { ThreeEventHandler, ThreeService } from "@modules/three/serivce/three.service";
 
 @Component({
   selector: 'app-house',
@@ -7,22 +8,35 @@ import { ThreeService } from "@modules/three/serivce/three.service";
   styleUrls: ['./house.component.scss'],
   providers: [ThreeService]
 })
-export class HouseComponent implements AfterViewInit {
+export class HouseComponent implements AfterViewInit, ThreeEventHandler {
 
-  currentCamera = 'bird'
+  camera = 'bird'
+  showInstruction = true;
 
   @ViewChild('canvas')
   private canvasRef: ElementRef;
 
-  constructor(private three: ThreeService) {
-  }
+  constructor(private three: ThreeService) { }
 
   ngAfterViewInit(): void {
-    this.three.createScene(this.canvasRef);
+    this.three.createScene(this, this.canvasRef);
     this.three.animate();
   }
 
-  testBtn(): void {
-    console.log('HouseComponent testBtn: ',)
+  toggleCamera($event: MatButtonToggleChange): void {
+    console.log('Camera: ', $event.value);
+    // this.three
+  }
+
+  lockControls(): void {
+    this.three.lockControls()
+  }
+
+  onControlsLock(): void {
+    this.showInstruction = false;
+  }
+
+  onControlsUnlock(): void {
+    this.showInstruction = true;
   }
 }

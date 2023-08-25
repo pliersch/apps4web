@@ -2,11 +2,12 @@ import { ElementRef } from "@angular/core";
 import * as THREE from "three";
 import { PerspectiveCamera } from "three";
 
-export function createPerspectiveCamera(htmlCanvas: ElementRef<HTMLCanvasElement>): PerspectiveCamera {
-  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
-  camera.aspect = htmlCanvas.nativeElement.clientWidth / htmlCanvas.nativeElement.clientHeight;
+export function createPerspectiveCamera(position: THREE.Vector3, canvas: ElementRef<HTMLCanvasElement>): PerspectiveCamera {
+  const aspect = canvas.nativeElement.clientWidth / canvas.nativeElement.clientHeight;
+  const camera = new THREE.PerspectiveCamera(45, aspect, 1, 1000);
   camera.updateProjectionMatrix();
-  camera.position.y = 60;
-  camera.position.z = 200;
+  camera.position.x = position.x;
+  camera.position.y = position.y;
+  camera.position.z = position.z;
   return camera;
 }
