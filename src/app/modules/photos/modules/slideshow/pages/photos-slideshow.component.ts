@@ -33,9 +33,9 @@ export class PhotosSlideshowComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription =
-      this.currentPhoto$.subscribe(res => {
-        if (res) {
-          this.imgUrl = getPhotoUrl(res.fileName);
+      this.currentPhoto$.subscribe(photo => {
+        if (photo) {
+          this.imgUrl = getPhotoUrl(photo.fileName);
         }
       });
     this.subscription.add(

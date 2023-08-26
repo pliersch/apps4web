@@ -1,0 +1,12 @@
+<div class="info-container">
+  <app-star-rating
+    [rate]="(photo$ | async)?.rating || 0"></app-star-rating>
+  <div>
+    <a>Aufnahme Datum: {{ (photo$ | async)?.recordDate | date}}</a>
+  </div>
+  <div class="flex">
+    <mat-chip-listbox>
+      <mat-chip *ngFor="let tag of (photo$ | async)?.tags" color="primary">{{tag.name}}</mat-chip>
+    </mat-chip-listbox>
+  </div>
+</div>
