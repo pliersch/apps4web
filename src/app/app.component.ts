@@ -6,12 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 
-
-export class AppComponent /*implements OnInit*/ {
-
-  // ngOnInit(): void {
-  //   const stringObservable = this.http.get<any>(environment.apiUrl);
-  //   stringObservable.subscribe(res => console.log(res.msg))
-  // }
-
-}
+export class AppComponent {}

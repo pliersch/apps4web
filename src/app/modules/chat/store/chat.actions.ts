@@ -14,7 +14,7 @@ export class LoadChat {
 export class LoadChatSuccess {
   static readonly type = '[Chat] Load Chat Success';
 
-  constructor(public messageDtos: MessageResultDto[]) {
+  constructor(public result: MessageResultDto[]) {
   }
 }
 

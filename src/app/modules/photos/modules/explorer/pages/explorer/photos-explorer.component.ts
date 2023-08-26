@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
+import { Action } from "@app/core/interfaces/action";
 import { SetCheckedInstruction } from "@app/core/stores/app/app.actions";
-import { Action } from "@modules/action-bar/actions";
+
 import { ExplorerPhotoControlComponent } from "@modules/photos/modules/explorer";
 import {
   ExplorerInstructionDialogComponent

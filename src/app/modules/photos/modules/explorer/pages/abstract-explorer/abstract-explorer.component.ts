@@ -4,9 +4,9 @@ import { ComponentType } from "@angular/cdk/overlay";
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
+import { Action } from "@app/core/interfaces/action";
 import { SetCheckedInstruction } from "@app/core/stores/app/app.actions";
 import { AppState } from "@app/core/stores/app/app.state";
-import { Action } from "@modules/action-bar/actions";
 import { Role } from "@modules/admin/modules/user/store/role";
 import { PhotoService } from "@modules/photos/services/photo.service";
 import * as photoAction from "@modules/photos/store/photos/photo.actions";
@@ -218,7 +218,6 @@ export abstract class AbstractExplorerComponent implements OnInit, AfterViewInit
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
     this.resizeObserver.unobserve(this.content)
-    // this.actionBarService.removeActions();
   }
 
 }

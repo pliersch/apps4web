@@ -85,7 +85,7 @@ export class ChatState {
       userIdentities.push(clone(userIdentity));
     }
     // const userIds: UserIdentity[] = state.userIdentities.slice();
-    for (const dto of action.messageDtos) {
+    for (const dto of action.result) {
       messages.push(createMessage(dto))
       addToUserIdentities(userIdentities, dto)
     }

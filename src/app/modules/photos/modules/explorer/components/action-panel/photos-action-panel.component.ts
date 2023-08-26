@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Action } from "@modules/action-bar/actions";
+import { Action } from "@app/core/interfaces/action";
 
 @Component({
   selector: 'app-photos-action-panel',

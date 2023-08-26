@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, Vie
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { difference } from "@app/common/util/array-utils";
-import { Action } from "@modules/action-bar/actions";
+import { Action } from "@app/core/interfaces/action";
 import { Role } from "@modules/admin/modules/user/store/role";
 import {
   EditorPhotoControlComponent,
