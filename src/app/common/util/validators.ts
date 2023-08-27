@@ -20,7 +20,7 @@ function isValidGermanPhone(txt: string): boolean {
 
 function test(value: string, regex: string | RegExp): boolean {
   const pattern = new RegExp(regex);
-  return !!pattern.test(value); // TODO simplify?!
+  return pattern.test(value);
 }
 
 const URL_REGEX = '^((http|https)\\:\\/\\/|)([\\w|\\-]+\\.)+\\w+($|[\\w\\-\\/\\.]+$|[\\w\\/\\.]+\\?[\\w\\=\\&\\.]+$)';
@@ -28,8 +28,6 @@ const EMAIL_REGEX = /.+@.+\..+/gm;
 const GERMAN_ZIP_REGEX = '^([0]{1}[1-9]{1}|[1-9]{1}[0-9]{1})[0-9]{3}$';
 const GERMAN_STREET_REGEX = /^([A-ZÄÖÜ][a-zäöüß]+(([.] )|( )|([-]))*)+/gm;
 const GERMAN_PHONE_REGEX = /(\+49|0)([- ()]?\d[- ()]?){6,11}$/g;
-
-// export
 
 export const regExValidator = {
   isValidUrl,
