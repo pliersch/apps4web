@@ -1,5 +1,6 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from "@angular/router";
+import { AlertService } from "@app/common/services/alert.service";
 import { PhotosHorizontalScrollerComponent } from "@modules/photos/core";
 import { SetNextPhoto, SetPreviousPhoto } from "@modules/photos/store/photos/photo.actions";
 import { Photo } from "@modules/photos/store/photos/photo.model";
@@ -29,6 +30,7 @@ export class PhotosSlideshowComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   constructor(private store: Store,
+              private alertService: AlertService,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -43,10 +45,12 @@ export class PhotosSlideshowComponent implements OnInit, OnDestroy {
         void this.router.navigateByUrl('/photos/slideshow/' + index)
       })
     )
+    this.alertService.tip('Benutze die Pfeiltasten ← → für Navigation');
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.closeSnackBar();
   }
 
   nextSlide(): void {
@@ -55,6 +59,21 @@ export class PhotosSlideshowComponent implements OnInit, OnDestroy {
 
   prevSlide(): void {
     this.store.dispatch(new SetPreviousPhoto())
+  }
+
+  closeSnackBar(): void {
+    this.alertService.closeSnackBar();
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent): void {
+    if (event.code == 'ArrowLeft') {
+      this.prevSlide();
+      this.closeSnackBar();
+    } else if (event.code == 'ArrowRight') {
+      this.nextSlide();
+      this.closeSnackBar();
+    }
   }
 
 }

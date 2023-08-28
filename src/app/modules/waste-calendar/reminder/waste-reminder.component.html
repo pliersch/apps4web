@@ -1,7 +1,4 @@
 <mat-card class="card component">
-  <mat-card-header>
-    <mat-card-title>Abfall Kalender</mat-card-title>
-  </mat-card-header>
   <mat-calendar #calendar [(selected)]="selected"
                 (monthSelected)="onMonthSelected($event)"
                 (viewChanged)="onViewChanged()"

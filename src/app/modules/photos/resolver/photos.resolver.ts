@@ -9,7 +9,7 @@ import { Store } from "@ngxs/store";
 import { concatMap, Observable, of, Subscription } from "rxjs";
 
 @Injectable()
-export class PhotosResolver  {
+export class PhotosResolver {
 
   private initialized = false;
   private photosAdded = false;
@@ -51,11 +51,10 @@ export class PhotosResolver  {
   }
 
   private onPhotosAdded(data: PhotoSseData): void {
-    console.log('PhotosResolver onPhotosAdded: ',)
     if (this.isFromOtherUser(data.userId)) {
       if (this.isUrlOpen()) {
         this.store.dispatch(new LoadMetaData());
-        console.log('PhotosResolver pop up?')
+        // pop up "load data?"
       } else {
         this.photosAdded = true;
       }
@@ -87,9 +86,7 @@ export class PhotosResolver  {
   // todo
   // https://trello.com/c/nZOOBVNo/84-sse-photos-ausimplementieren
   private handleChanges(): void {
-    console.log('PhotosResolver handleChanges: 1',)
     if (this.photosAdded) {
-      console.log('PhotosResolver handleChanges: 2',)
       this.store.dispatch(new LoadMetaData());
       this.photosAdded = false;
     }
