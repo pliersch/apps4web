@@ -1,13 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { OverlayContainer } from "@angular/cdk/overlay";
 import { Themes } from "@modules/themes/themes";
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-theme-menu',
-  templateUrl: './theme-menu.component.html',
-  styleUrls: ['./theme-menu.component.scss']
+    selector: 'app-theme-menu',
+    templateUrl: './theme-menu.component.html',
+    styleUrls: ['./theme-menu.component.scss'],
+    standalone: true,
+    imports: [MatButtonModule, MatIconModule]
 })
 export class ThemeMenuComponent implements OnInit {
 

@@ -1,7 +1,8 @@
 import {Directive, ElementRef, Renderer2} from '@angular/core';
 
 @Directive({
-  selector: '[appNoPaddingTop]'
+    selector: '[appNoPaddingTop]',
+    standalone: true
 })
 export class MatListRemovePaddingDirective {
 

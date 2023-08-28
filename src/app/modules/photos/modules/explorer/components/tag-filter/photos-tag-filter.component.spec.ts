@@ -21,9 +21,9 @@ describe('PhotosTagFilterComponent', () => {
 
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-        declarations: [PhotosTagFilterComponent],
-        schemas: [NO_ERRORS_SCHEMA],
-      }).compileComponents();
+    imports: [PhotosTagFilterComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+}).compileComponents();
       fixture = TestBed.createComponent(PhotosTagFilterComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
@@ -52,14 +52,14 @@ describe('PhotosTagFilterComponent', () => {
       fooBarTagGroups = getFooBarTagGroups();
 
       await TestBed.configureTestingModule({
-        declarations: [PhotosTagFilterComponent],
-        imports: [
-          NgScrollbarModule,
-          NoopAnimationsModule,
-          MatListModule,
-          MatExpansionModule
-        ]
-      }).compileComponents();
+    imports: [
+        NgScrollbarModule,
+        NoopAnimationsModule,
+        MatListModule,
+        MatExpansionModule,
+        PhotosTagFilterComponent
+    ]
+}).compileComponents();
       fixture = TestBed.createComponent(PhotosTagFilterComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();

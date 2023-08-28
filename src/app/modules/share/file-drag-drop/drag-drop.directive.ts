@@ -1,9 +1,10 @@
-import {Directive, EventEmitter, HostBinding, HostListener, Output} from '@angular/core';
+import { Directive, EventEmitter, HostBinding, HostListener, Output } from '@angular/core';
 
 @Directive({
-  selector: '[appDragDropDirective]'
+  selector: '[appDragDropDirective]',
+  standalone: true
 })
-export class DragDropDirectiveDirective {
+export class DragDropDirective {
 
   @HostBinding('class.fileover')
   fileOver: boolean;

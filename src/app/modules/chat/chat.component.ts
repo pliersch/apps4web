@@ -14,23 +14,27 @@ import { ChatState } from "@modules/chat/store/chat.state";
 import { Select, Store } from "@ngxs/store";
 import { NgScrollbar } from "ngx-scrollbar";
 import { Observable, Subscription } from "rxjs";
+import { ChatInputComponent } from "./components/input/chat-input.component";
+import { ChatMessagesComponent } from "./components/messages/chat-messages.component";
 
 @Component({
-  selector: 'app-chat',
-  templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss'],
-  animations: [
-    trigger('show', [
-      transition(':enter', [
-        style({opacity: 0}),
-        animate(200, style({opacity: 1}))
-      ]),
-      transition(':leave', [
-        style({opacity: 1}),
-        animate(200, style({opacity: 0}))
-      ])
-    ])
-  ]
+    selector: 'app-chat',
+    templateUrl: './chat.component.html',
+    styleUrls: ['./chat.component.scss'],
+    animations: [
+        trigger('show', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate(200, style({ opacity: 1 }))
+            ]),
+            transition(':leave', [
+                style({ opacity: 1 }),
+                animate(200, style({ opacity: 0 }))
+            ])
+        ])
+    ],
+    standalone: true,
+    imports: [NgScrollbar, ChatMessagesComponent, ChatInputComponent]
 })
 
 export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {

@@ -7,9 +7,11 @@ import { NgScrollbar } from 'ngx-scrollbar';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-photos-vertical-scroller',
-  templateUrl: './photos-vertical-scroller.component.html',
-  styleUrls: ['./photos-vertical-scroller.component.scss']
+    selector: 'app-photos-vertical-scroller',
+    templateUrl: './photos-vertical-scroller.component.html',
+    styleUrls: ['./photos-vertical-scroller.component.scss'],
+    standalone: true,
+    imports: [NgScrollbar]
 })
 export class PhotosVerticalScrollerComponent implements OnInit {
 

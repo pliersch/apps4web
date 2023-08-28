@@ -5,11 +5,17 @@ import { PhotosAdminService } from "@modules/photos/modules/admin/service/photos
 import { PhotoState } from "@modules/photos/store/photos/photo.state";
 import { Select } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
+import { AsyncPipe } from "@angular/common";
+import { MatIconModule } from "@angular/material/icon";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
 
 @Component({
-  selector: 'app-photos-admin',
-  templateUrl: './photos-admin.component.html',
-  styleUrls: ['./photos-admin.component.scss']
+    selector: 'app-photos-admin',
+    templateUrl: './photos-admin.component.html',
+    styleUrls: ['./photos-admin.component.scss'],
+    standalone: true,
+    imports: [MatCardModule, MatButtonModule, MatIconModule, AsyncPipe]
 })
 export class PhotosAdminComponent implements OnInit, OnDestroy {
 

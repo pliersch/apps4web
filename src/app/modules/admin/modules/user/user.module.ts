@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from "@angular/material/table";
-import { MaterialModule } from "@app/modules/share/material/material.module";
+
 import {
   EditUserDialogComponent
 } from '@modules/admin/modules/user/components/edit-user-dialog/edit-user-dialog.component';
@@ -18,7 +18,12 @@ import { StatusPipe } from './pipes/status.pipe';
 import { UserRoutingModule } from './user-routing.module';
 
 @NgModule({
-  declarations: [
+    imports: [
+    CommonModule,
+    UserRoutingModule,
+    MatTableModule,
+    MatSortModule,
+    NgxsModule.forFeature([UserState]),
     UserOverviewComponent,
     DatePipe,
     RolePipe,
@@ -27,14 +32,6 @@ import { UserRoutingModule } from './user-routing.module';
     EditUserDialogComponent,
     DeleteUserDialogComponent,
     CreateUserDialogComponent,
-  ],
-  imports: [
-    CommonModule,
-    UserRoutingModule,
-    MatTableModule,
-    MatSortModule,
-    MaterialModule,
-    NgxsModule.forFeature([UserState]),
-  ]
+]
 })
 export class UserModule {}

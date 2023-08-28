@@ -1,12 +1,15 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { MatButtonToggleChange } from "@angular/material/button-toggle";
+import { MatButtonToggleChange, MatButtonToggleModule } from "@angular/material/button-toggle";
 import { ThreeEventHandler, ThreeService } from "@modules/three/serivce/three.service";
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-house',
-  templateUrl: './house.component.html',
-  styleUrls: ['./house.component.scss'],
-  providers: [ThreeService]
+    selector: 'app-house',
+    templateUrl: './house.component.html',
+    styleUrls: ['./house.component.scss'],
+    providers: [ThreeService],
+    standalone: true,
+    imports: [NgIf, MatButtonToggleModule]
 })
 export class HouseComponent implements AfterViewInit, ThreeEventHandler {
 

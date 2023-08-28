@@ -7,15 +7,13 @@ import { ThreeRoutingModule } from "@modules/three/three-routing.module";
 import { HouseComponent } from './house/house.component';
 
 @NgModule({
-  declarations: [
-    HouseComponent
-  ],
-  imports: [
-    CommonModule,
-    ThreeRoutingModule,
-    MatButtonModule,
-    MatIconModule,
-    MatButtonToggleModule
-  ]
+    imports: [
+        CommonModule,
+        ThreeRoutingModule,
+        MatButtonModule,
+        MatIconModule,
+        MatButtonToggleModule,
+        HouseComponent
+    ]
 })
 export class ThreeModule {}

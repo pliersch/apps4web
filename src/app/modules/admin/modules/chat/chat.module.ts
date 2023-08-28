@@ -8,15 +8,13 @@ import { AdminChatOverviewComponent } from './components/admin-chat-overview.com
 
 
 @NgModule({
-  declarations: [
-    AdminChatOverviewComponent
-  ],
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-    ChatRoutingModule,
-  ]
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatCardModule,
+        MatIconModule,
+        ChatRoutingModule,
+        AdminChatOverviewComponent,
+    ]
 })
 export class ChatModule {}

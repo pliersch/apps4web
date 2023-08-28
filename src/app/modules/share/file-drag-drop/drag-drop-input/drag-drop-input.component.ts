@@ -1,10 +1,14 @@
 import { Component, ElementRef, EventEmitter, Input, Output, Renderer2, ViewChild } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { HTMLInputEvent } from "@modules/chat/components/input/chat-input.component";
+import { DragDropDirective } from '../drag-drop.directive';
 
 @Component({
   selector: 'app-drag-drop-input',
   templateUrl: './drag-drop-input.component.html',
-  styleUrls: ['./drag-drop-input.component.scss']
+  styleUrls: ['./drag-drop-input.component.scss'],
+  standalone: true,
+  imports: [DragDropDirective, MatButtonModule]
 })
 export class DragDropInputComponent {
 

@@ -1,9 +1,15 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes'; // FIXME obsolete, use KeyboardEvent.code
 import { Component, EventEmitter, Input, OnChanges, Output, Renderer2, SimpleChanges } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
-import { MatChipInputEvent } from '@angular/material/chips';
+import { UntypedFormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { intersect } from "@app/common/util/array-utils";
 import { TagGroup } from '@modules/photos/store/tags/tag.model';
+import { FocusDirective } from '../../../../../../share/directives/focus.directive';
+import { NgFor, NgIf } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 export interface TagChanges {
   name: string;
@@ -12,9 +18,11 @@ export interface TagChanges {
 }
 
 @Component({
-  selector: 'app-photos-manage-tag-detail',
-  templateUrl: './photos-manage-tag-detail.component.html',
-  styleUrls: ['./photos-manage-tag-detail.component.scss']
+    selector: 'app-photos-manage-tag-detail',
+    templateUrl: './photos-manage-tag-detail.component.html',
+    styleUrls: ['./photos-manage-tag-detail.component.scss'],
+    standalone: true,
+    imports: [MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, MatChipsModule, NgFor, ReactiveFormsModule, FormsModule, FocusDirective, NgIf]
 })
 export class PhotosManageTagDetailComponent implements OnChanges {
 

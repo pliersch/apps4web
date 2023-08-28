@@ -1,7 +1,8 @@
 import {Directive, ElementRef, OnInit} from '@angular/core';
 
 @Directive({
-  selector: '[appCardNoHeaderImgFix]'
+    selector: '[appCardNoHeaderImgFix]',
+    standalone: true
 })
 export class CardNoHeaderImgMarginFixDirective implements OnInit {
 

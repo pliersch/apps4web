@@ -1,5 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { MatSelectChange } from "@angular/material/select";
+import { MatSelectChange, MatSelectModule } from "@angular/material/select";
+import { MatOptionModule } from '@angular/material/core';
+import { NgFor } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
 
 export enum SortMode {
   Newest,
@@ -14,9 +18,11 @@ interface Sort {
 }
 
 @Component({
-  selector: 'app-photos-sorter',
-  templateUrl: './photos-sorter.component.html',
-  styleUrls: ['./photos-sorter.component.scss']
+    selector: 'app-photos-sorter',
+    templateUrl: './photos-sorter.component.html',
+    styleUrls: ['./photos-sorter.component.scss'],
+    standalone: true,
+    imports: [MatCardModule, MatFormFieldModule, MatSelectModule, NgFor, MatOptionModule]
 })
 export class PhotosSorterComponent {
 

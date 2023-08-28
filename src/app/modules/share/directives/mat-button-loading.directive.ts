@@ -14,10 +14,11 @@ import { MatButton } from '@angular/material/button';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Directive({
-  // eslint-disable-next-line @angular-eslint/directive-selector
-  selector: `button[mat-button][loading], button[mat-raised-button][loading], button[mat-icon-button][loading],
+    // eslint-disable-next-line @angular-eslint/directive-selector
+    selector: `button[mat-button][loading], button[mat-raised-button][loading], button[mat-icon-button][loading],
              button[mat-fab][loading], button[mat-mini-fab][loading], button[mat-stroked-button][loading],
-             button[mat-flat-button][loading]`
+             button[mat-flat-button][loading]`,
+    standalone: true
 })
 export class MatButtonLoadingDirective implements OnChanges {
   private readonly spinnerFactory: ComponentFactory<MatProgressSpinner>;

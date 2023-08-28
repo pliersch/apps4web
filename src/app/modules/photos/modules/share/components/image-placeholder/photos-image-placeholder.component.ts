@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-photos-image-placeholder',
-  templateUrl: './photos-image-placeholder.component.svg',
-  styleUrls: ['./photos-image-placeholder.component.scss']
+    selector: 'app-photos-image-placeholder',
+    templateUrl: './photos-image-placeholder.component.svg',
+    styleUrls: ['./photos-image-placeholder.component.scss'],
+    standalone: true
 })
 export class PhotosImagePlaceholderComponent {
 

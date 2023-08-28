@@ -19,11 +19,25 @@ import { PhotoState } from "@modules/photos/store/photos/photo.state";
 import { Select, Store } from "@ngxs/store";
 import { saveAs } from 'file-saver';
 import { Observable } from "rxjs";
+import { ExplorerPhotoControlComponent as ExplorerPhotoControlComponent_1 } from '../../components/explorer-photo-control/explorer-photo-control.component';
+import { NgFor, AsyncPipe } from '@angular/common';
+import { NgScrollbar } from 'ngx-scrollbar';
+import { PhotosMetaPanelExplorerComponent } from '../../components/explorer-meta-panel/photos-meta-panel-explorer.component';
+import { PhotosImageDetailComponent } from '../../components/image-detail/photos-image-detail.component';
+import { PhotosActionPanelComponent } from '../../components/action-panel/photos-action-panel.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { PhotosSorterComponent } from '../../components/sorter/photos-sorter.component';
+import { PhotosDateFilterComponent } from '../../components/date-filter/photos-date-filter.component';
+import { PhotosRatingFilterComponent } from '../../components/rating-filter/photos-rating-filter.component';
+import { PhotosTagFilterComponent } from '../../components/tag-filter/photos-tag-filter.component';
 
 @Component({
-  selector: 'app-photos-explorer',
-  templateUrl: './photos-explorer.component.html',
-  styleUrls: ['./photos-explorer.component.scss']
+    selector: 'app-photos-explorer',
+    templateUrl: './photos-explorer.component.html',
+    styleUrls: ['./photos-explorer.component.scss'],
+    standalone: true,
+    imports: [PhotosTagFilterComponent, PhotosRatingFilterComponent, PhotosDateFilterComponent, PhotosSorterComponent, MatButtonModule, MatIconModule, PhotosActionPanelComponent, PhotosImageDetailComponent, PhotosMetaPanelExplorerComponent, NgScrollbar, NgFor, ExplorerPhotoControlComponent_1, AsyncPipe]
 })
 export class PhotosExplorerComponent extends AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestroy {
 

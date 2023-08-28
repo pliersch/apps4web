@@ -1,11 +1,17 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PhotoCountByTag } from "@modules/photos/store/photos/photo.model";
 import { Tag, TagGroup } from '@modules/photos/store/tags/tag.model';
+import { MatListModule } from '@angular/material/list';
+import { NgFor } from '@angular/common';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { NgScrollbar } from 'ngx-scrollbar';
 
 @Component({
-  selector: 'app-photos-tag-filter',
-  templateUrl: './photos-tag-filter.component.html',
-  styleUrls: ['./photos-tag-filter.component.scss']
+    selector: 'app-photos-tag-filter',
+    templateUrl: './photos-tag-filter.component.html',
+    styleUrls: ['./photos-tag-filter.component.scss'],
+    standalone: true,
+    imports: [NgScrollbar, MatExpansionModule, NgFor, MatListModule]
 })
 export class PhotosTagFilterComponent {
 

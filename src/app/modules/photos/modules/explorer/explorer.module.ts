@@ -19,11 +19,11 @@ import {
   PhotosRatingFilterComponent,
   PhotosTagFilterComponent
 } from "@modules/photos/modules/explorer/index";
-import { PhotosShareModule } from "@modules/photos/modules/share/photos-share.module";
+
 import { PhotoState } from "@modules/photos/store/photos/photo.state";
 import { TagState } from "@modules/photos/store/tags/tag.state";
-import { MaterialModule } from "@modules/share/material/material.module";
-import { ShareModule } from "@modules/share/share.module";
+
+
 import { NgxsModule } from "@ngxs/store";
 import { NgScrollbarModule } from "ngx-scrollbar";
 import {
@@ -32,7 +32,12 @@ import {
 import { ExplorerRoutingModule } from './explorer-routing.module';
 
 @NgModule({
-  declarations: [
+    imports: [
+    CommonModule,
+    ExplorerRoutingModule,
+    NgScrollbarModule,
+    NgxsModule.forFeature([PhotoState, TagState]),
+    FormsModule,
     // AbstractExplorerComponent,
     PhotosExplorerComponent,
     PhotosEditorComponent,
@@ -51,17 +56,6 @@ import { ExplorerRoutingModule } from './explorer-routing.module';
     PhotosDateFilterComponent,
     PhotosDeletePhotoComponent,
     EditorInstructionDialogComponent,
-
-  ],
-  imports: [
-    CommonModule,
-    ExplorerRoutingModule,
-    MaterialModule,
-    PhotosShareModule,
-    ShareModule,
-    NgScrollbarModule,
-    NgxsModule.forFeature([PhotoState, TagState]),
-    FormsModule,
-  ]
+]
 })
 export class ExplorerModule {}

@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-chat-image-item',
-  templateUrl: './chat-image-item.component.html',
-  styleUrls: ['./chat-image-item.component.scss']
+    selector: 'app-chat-image-item',
+    templateUrl: './chat-image-item.component.html',
+    styleUrls: ['./chat-image-item.component.scss'],
+    standalone: true
 })
 export class ChatImageItemComponent {
 

@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
-import { MatDialogRef } from "@angular/material/dialog";
+import { MatDialogRef, MatDialogModule } from "@angular/material/dialog";
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-editor-instruction-dialog',
-  templateUrl: './editor-instruction-dialog.component.html',
-  styleUrls: ['./editor-instruction-dialog.component.scss']
+    selector: 'app-editor-instruction-dialog',
+    templateUrl: './editor-instruction-dialog.component.html',
+    styleUrls: ['./editor-instruction-dialog.component.scss'],
+    standalone: true,
+    imports: [MatDialogModule, MatButtonModule]
 })
 export class EditorInstructionDialogComponent {
 

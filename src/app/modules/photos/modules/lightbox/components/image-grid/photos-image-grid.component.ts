@@ -4,11 +4,16 @@ import { PhotoState } from '@modules/photos/store/photos/photo.state';
 import { getW900Url } from "@modules/photos/store/photos/photo.tools";
 import { Select } from "@ngxs/store";
 import { Observable } from 'rxjs';
+import { ImageFallbackDirective } from '../../../../../share/directives/image-fallback-directive';
+import { NgFor, AsyncPipe } from '@angular/common';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
-  selector: 'app-photos-image-grid',
-  templateUrl: './photos-image-grid.component.html',
-  styleUrls: ['./photos-image-grid.component.scss']
+    selector: 'app-photos-image-grid',
+    templateUrl: './photos-image-grid.component.html',
+    styleUrls: ['./photos-image-grid.component.scss'],
+    standalone: true,
+    imports: [MatGridListModule, NgFor, ImageFallbackDirective, AsyncPipe]
 })
 export class PhotosImageGridComponent implements OnInit {
 

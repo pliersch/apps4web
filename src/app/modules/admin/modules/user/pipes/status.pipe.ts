@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Status } from "@modules/admin/modules/user/store/status";
 
 @Pipe({
-  name: 'status'
+    name: 'status',
+    standalone: true
 })
 export class StatusPipe implements PipeTransform {
 

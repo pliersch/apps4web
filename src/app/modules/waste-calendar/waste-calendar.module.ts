@@ -4,21 +4,18 @@ import { WasteReminderComponent } from './reminder/waste-reminder.component';
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { WasteRoutingModule } from "@modules/waste-calendar/waste-routing.module";
 import { MatNativeDateModule } from "@angular/material/core";
-import { MaterialModule } from "@app/modules/share/material/material.module";
+
 
 @NgModule({
-  declarations: [
-    WasteReminderComponent
-  ],
-  exports: [
-    WasteReminderComponent
-  ],
-  imports: [
+    exports: [
+        WasteReminderComponent
+    ],
+    imports: [
     CommonModule,
     MatNativeDateModule,
     MatDatepickerModule,
     WasteRoutingModule,
-    MaterialModule
-  ]
+    WasteReminderComponent
+]
 })
 export class WasteCalendarModule {}

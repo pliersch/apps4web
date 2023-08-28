@@ -18,9 +18,9 @@ describe('PhotosRatingFilter', () => {
   describe('unit tests', () => {
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-        declarations: [PhotosRatingFilterComponent, MockStarRatingComponent],
-        schemas: [NO_ERRORS_SCHEMA],
-      }).compileComponents();
+    imports: [PhotosRatingFilterComponent, MockStarRatingComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+}).compileComponents();
       fixture = TestBed.createComponent(PhotosRatingFilterComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
@@ -58,9 +58,8 @@ describe('PhotosRatingFilter', () => {
 
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-        imports: [MatCardModule, PhotosShareModule],
-        declarations: [PhotosRatingFilterComponent],
-      })
+    imports: [MatCardModule, PhotosShareModule, PhotosRatingFilterComponent],
+})
         .compileComponents();
       fixture = TestBed.createComponent(PhotosRatingFilterComponent);
       component = fixture.componentInstance;
@@ -90,8 +89,9 @@ describe('PhotosRatingFilter', () => {
 //////////////////////////////////////////////////////////
 
 @Component({
-  selector: 'app-photos-star-rating',
-  template: '',
+    selector: 'app-photos-star-rating',
+    template: '',
+    standalone: true,
 })
 class MockStarRatingComponent implements Partial<StarRatingComponent> {
   @Input()

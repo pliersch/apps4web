@@ -1,11 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import emoji from "@assets/json/emoji.json";
 import { Emoji } from "@modules/chat/store/chat.model";
+import { MatCardModule } from '@angular/material/card';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-chat-emoji-picker',
-  templateUrl: './chat-emoji-picker.component.html',
-  styleUrls: ['./chat-emoji-picker.component.scss']
+    selector: 'app-chat-emoji-picker',
+    templateUrl: './chat-emoji-picker.component.html',
+    styleUrls: ['./chat-emoji-picker.component.scss'],
+    standalone: true,
+    imports: [NgIf, MatCardModule, NgFor]
 })
 export class ChatEmojiPickerComponent implements OnInit {
 

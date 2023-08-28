@@ -3,9 +3,10 @@ import { Photo } from "@modules/photos/store/photos/photo.model";
 import { getW300Url } from "@modules/photos/store/photos/photo.tools";
 
 @Component({
-  selector: 'app-scroller-item',
-  templateUrl: './scroller-item.component.html',
-  styleUrls: ['./scroller-item.component.scss']
+    selector: 'app-scroller-item',
+    templateUrl: './scroller-item.component.html',
+    styleUrls: ['./scroller-item.component.scss'],
+    standalone: true
 })
 export class ScrollerItemComponent implements OnInit {
 

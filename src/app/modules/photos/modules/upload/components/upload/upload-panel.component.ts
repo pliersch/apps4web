@@ -1,17 +1,29 @@
 import { AccountState } from "@account/store/account.state";
 import { User } from "@account/store/user.model";
+import { AsyncPipe, NgFor, NgIf } from "@angular/common";
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatChipsModule } from "@angular/material/chips";
+import { MatIconModule } from "@angular/material/icon";
+import { MatListModule } from "@angular/material/list";
 import { parseExif } from "@app/common/util/date-util";
 import { AddPhoto } from "@modules/photos/store/photos/photo.actions";
 import { Tag, TagGroup } from "@modules/photos/store/tags/tag.model";
 import { TagState } from "@modules/photos/store/tags/tag.state";
 import { Select, Store } from "@ngxs/store";
+import { NgScrollbar } from "ngx-scrollbar";
 import { from, Observable, ObservedValueOf } from "rxjs";
+import { MatListRemovePaddingDirective } from "../../../../../share/directives/mat-list-remove-padding.directive";
 
 @Component({
   selector: 'app-upload-panel',
   templateUrl: './upload-panel.component.html',
-  styleUrls: ['./upload-panel.component.scss']
+  styleUrls: ['./upload-panel.component.scss'],
+  standalone: true,
+  imports: [MatCardModule, NgScrollbar, MatListModule, MatListRemovePaddingDirective, NgFor, MatChipsModule, MatIconModule, MatCheckboxModule, ReactiveFormsModule, FormsModule, NgIf, MatButtonModule, AsyncPipe]
 })
 export class UploadPanelComponent implements OnInit {
 
@@ -120,6 +132,7 @@ export class UploadPanelComponent implements OnInit {
   }
 
   private async getExifDate(file: File): Promise<Date> {
+    // todo re-enable
     // let exifDate:  string | string[] | ExifReader.XmpTags | ExifReader.XmpTag[] | undefined;
     // let value: string | ExifReader.XmpTag | ExifReader.XmpTags;
     //

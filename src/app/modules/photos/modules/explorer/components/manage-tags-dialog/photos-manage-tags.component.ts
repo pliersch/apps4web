@@ -1,11 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { TagChanges } from "@modules/photos/modules/explorer";
 import * as tagActions from "@modules/photos/store/tags/tag.action";
 import { TagGroup } from '@modules/photos/store/tags/tag.model';
 import { TagState } from "@modules/photos/store/tags/tag.state";
 import { Select, Store } from "@ngxs/store";
 import { Observable, Subscription } from 'rxjs';
+import { PhotosManageTagDetailComponent } from './manage-tag-detail/photos-manage-tag-detail.component';
+import { MatButtonModule } from '@angular/material/button';
+import { NgFor, AsyncPipe } from '@angular/common';
+import { MatListRemovePaddingDirective } from '../../../../../share/directives/mat-list-remove-padding.directive';
+import { MatListModule } from '@angular/material/list';
+import { NgScrollbar } from 'ngx-scrollbar';
 
 interface Changes {
   tagGroup: TagGroup;
@@ -22,9 +28,11 @@ export enum CrudAction {
 }
 
 @Component({
-  selector: 'app-photos-edit-tags',
-  templateUrl: './photos-manage-tags.component.html',
-  styleUrls: ['./photos-manage-tags.component.scss']
+    selector: 'app-photos-edit-tags',
+    templateUrl: './photos-manage-tags.component.html',
+    styleUrls: ['./photos-manage-tags.component.scss'],
+    standalone: true,
+    imports: [MatDialogModule, NgScrollbar, MatListModule, MatListRemovePaddingDirective, NgFor, MatButtonModule, PhotosManageTagDetailComponent, AsyncPipe]
 })
 export class PhotosManageTagsComponent implements OnInit, OnDestroy {
 

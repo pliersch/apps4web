@@ -1,5 +1,9 @@
 import { AfterContentInit, Component } from '@angular/core';
-import { UntypedFormControl } from "@angular/forms";
+import { UntypedFormControl, ReactiveFormsModule } from "@angular/forms";
+import { NgFor } from '@angular/common';
+import { MatListModule } from '@angular/material/list';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCardModule } from '@angular/material/card';
 
 export interface Ingredient {
   name: string;
@@ -7,9 +11,11 @@ export interface Ingredient {
 }
 
 @Component({
-  selector: 'app-ingredients',
-  templateUrl: './pizza.component.html',
-  styleUrls: ['./pizza.component.scss']
+    selector: 'app-ingredients',
+    templateUrl: './pizza.component.html',
+    styleUrls: ['./pizza.component.scss'],
+    standalone: true,
+    imports: [MatCardModule, MatButtonToggleModule, ReactiveFormsModule, MatListModule, NgFor]
 })
 export class PizzaComponent implements AfterContentInit {
 

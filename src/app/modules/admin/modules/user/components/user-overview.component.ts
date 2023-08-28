@@ -15,11 +15,15 @@ import * as userActions from "@modules/admin/modules/user/store/user.actions";
 import { UserState } from "@modules/admin/modules/user/store/user.state";
 import { Select, Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
+import { MatButtonModule } from "@angular/material/button";
+import { UserTableComponent as UserTableComponent_1 } from "./user-table/user-table.component";
 
 @Component({
-  selector: 'app-user-overview',
-  templateUrl: './user-overview.component.html',
-  styleUrls: ['./user-overview.component.scss']
+    selector: 'app-user-overview',
+    templateUrl: './user-overview.component.html',
+    styleUrls: ['./user-overview.component.scss'],
+    standalone: true,
+    imports: [UserTableComponent_1, MatButtonModule]
 })
 export class UserOverviewComponent implements OnInit, OnDestroy {
 

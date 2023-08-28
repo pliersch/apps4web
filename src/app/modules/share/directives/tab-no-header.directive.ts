@@ -1,7 +1,8 @@
 import {Directive, ElementRef, OnInit} from '@angular/core';
 
 @Directive({
-  selector: '[appNoHeader]'
+    selector: '[appNoHeader]',
+    standalone: true
 })
 export class TabNoHeaderDirective implements OnInit {
 

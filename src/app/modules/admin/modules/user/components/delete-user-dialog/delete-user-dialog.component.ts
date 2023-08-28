@@ -1,15 +1,18 @@
 import { User } from "@account/store/user.model";
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from "@angular/material/dialog";
+import { MatButtonModule } from "@angular/material/button";
 
 export interface DeleteUserDialogData {
   user: User;
 }
 
 @Component({
-  selector: 'app-delete-user-dialog',
-  templateUrl: './delete-user-dialog.component.html',
-  styleUrls: ['./delete-user-dialog.component.scss']
+    selector: 'app-delete-user-dialog',
+    templateUrl: './delete-user-dialog.component.html',
+    styleUrls: ['./delete-user-dialog.component.scss'],
+    standalone: true,
+    imports: [MatDialogModule, MatButtonModule]
 })
 export class DeleteUserDialogComponent {
 

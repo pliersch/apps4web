@@ -8,8 +8,8 @@ describe('WidgetPlayerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WidgetPlayerComponent ]
-    })
+    imports: [WidgetPlayerComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(WidgetPlayerComponent);

@@ -7,12 +7,18 @@ import { Router } from "@angular/router";
 import { Select, Store } from "@ngxs/store";
 import { CredentialResponse } from "google-one-tap";
 import { Observable } from "rxjs";
+import { MatIconModule } from "@angular/material/icon";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatButtonModule } from "@angular/material/button";
+import { NgIf } from "@angular/common";
 
 @Component({
-  // standalone: true,
-  selector: 'app-signin',
-  templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.scss']
+    // standalone: true,
+    selector: 'app-signin',
+    templateUrl: './signin.component.html',
+    styleUrls: ['./signin.component.scss'],
+    standalone: true,
+    imports: [NgIf, MatButtonModule, MatMenuModule, MatIconModule]
 })
 export class SigninComponent implements OnInit {
 

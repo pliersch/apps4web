@@ -9,17 +9,15 @@ import { NgScrollbarModule } from "ngx-scrollbar";
 import { ProtocolOverviewComponent } from './components/protocol-overview.component';
 
 @NgModule({
-  declarations: [
-    ProtocolOverviewComponent,
-    VisitsTableComponent
-  ],
-  imports: [
-    CommonModule,
-    ProtocolRoutingModule,
-    MatTableModule,
-    NgScrollbarModule,
-    MatButtonModule,
-    MatIconModule
-  ]
+    imports: [
+        CommonModule,
+        ProtocolRoutingModule,
+        MatTableModule,
+        NgScrollbarModule,
+        MatButtonModule,
+        MatIconModule,
+        ProtocolOverviewComponent,
+        VisitsTableComponent
+    ]
 })
 export class ProtocolModule {}

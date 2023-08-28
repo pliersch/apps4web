@@ -8,11 +8,16 @@ import { PhotoState } from "@modules/photos/store/photos/photo.state";
 import { getPhotoUrl } from "@modules/photos/store/photos/photo.tools";
 import { Select, Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
+import { PhotosHorizontalScrollerComponent as PhotosHorizontalScrollerComponent_1 } from '../../share/components/horizontal-scroller/photos-horizontal-scroller.component';
+import { SlideShowControlBarComponent } from '../components/controlbar/slide-show-control-bar.component';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-photos-slideshow',
-  templateUrl: './photos-slideshow.component.html',
-  styleUrls: ['./photos-slideshow.component.scss']
+    selector: 'app-photos-slideshow',
+    templateUrl: './photos-slideshow.component.html',
+    styleUrls: ['./photos-slideshow.component.scss'],
+    standalone: true,
+    imports: [NgIf, SlideShowControlBarComponent, PhotosHorizontalScrollerComponent_1]
 })
 export class PhotosSlideshowComponent implements OnInit, OnDestroy {
 

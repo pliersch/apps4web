@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSelectChange } from "@angular/material/select";
+import { MatSelectChange, MatSelectModule } from "@angular/material/select";
 import { SetFromYearFilter, SetToYearFilter } from "@modules/photos/store/photos/photo.actions";
 import { Photo } from "@modules/photos/store/photos/photo.model";
 import { PhotoState } from "@modules/photos/store/photos/photo.state";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
+import { NgFor } from '@angular/common';
+import { MatOptionModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
-  selector: 'app-photos-date-filter',
-  templateUrl: './photos-date-filter.component.html',
-  styleUrls: ['./photos-date-filter.component.scss']
+    selector: 'app-photos-date-filter',
+    templateUrl: './photos-date-filter.component.html',
+    styleUrls: ['./photos-date-filter.component.scss'],
+    standalone: true,
+    imports: [MatCardModule, MatFormFieldModule, MatSelectModule, MatOptionModule, NgFor]
 })
 export class PhotosDateFilterComponent implements OnInit {
 

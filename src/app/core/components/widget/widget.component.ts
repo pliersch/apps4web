@@ -5,7 +5,9 @@ import { WidgetService } from "@app/core/components/widget/widget.service";
 @Component({
   selector: 'app-widget',
   templateUrl: './widget.component.html',
-  styleUrls: ['./widget.component.scss']
+  styleUrls: ['./widget.component.scss'],
+  standalone: true,
+  imports: [WidgetDirective]
 })
 export class WidgetComponent implements OnInit {
 

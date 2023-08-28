@@ -1,6 +1,12 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from "@angular/material/dialog";
 import { Tag, TagGroup } from "@modules/photos/store/tags/tag.model";
+import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NgFor } from '@angular/common';
+import { NgScrollbar } from 'ngx-scrollbar';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 export interface EditPhotoPropertiesDialogData {
   tags: Tag[];
@@ -31,9 +37,11 @@ interface CheckListItem {
 }
 
 @Component({
-  selector: 'app-photos-edit-image-tags',
-  templateUrl: './photos-edit-photos.component.html',
-  styleUrls: ['./photos-edit-photos.component.scss']
+    selector: 'app-photos-edit-image-tags',
+    templateUrl: './photos-edit-photos.component.html',
+    styleUrls: ['./photos-edit-photos.component.scss'],
+    standalone: true,
+    imports: [MatDialogModule, MatFormFieldModule, NgScrollbar, NgFor, MatCheckboxModule, ReactiveFormsModule, FormsModule, MatButtonModule]
 })
 
 export class PhotosEditPhotosComponent {

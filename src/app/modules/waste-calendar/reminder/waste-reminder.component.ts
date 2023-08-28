@@ -1,17 +1,29 @@
 import { AfterViewInit, Component, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { DateAdapter } from "@angular/material/core";
-import { MatCalendar } from "@angular/material/datepicker";
+import { MatCalendar, MatDatepickerModule } from "@angular/material/datepicker";
 import { VisibilityStateService } from "@app/common/services/visibility-state.service";
 import { formatGermanDayAndMonth, getDateWithoutTime, parseEnglish, parseGerman } from "@app/common/util/date-util";
 import wasteFile from "@assets/json/abfall.json";
 import { WasteDate, WasteEvent, WasteKey } from "@modules/waste-calendar/waste-dates";
 import differenceInDays from 'date-fns/differenceInDays'
 import { de } from 'date-fns/locale'
+import { NgFor } from '@angular/common';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
-  selector: 'app-waste-reminder',
-  templateUrl: './waste-reminder.component.html',
-  styleUrls: ['./waste-reminder.component.scss'],
+    selector: 'app-waste-reminder',
+    templateUrl: './waste-reminder.component.html',
+    styleUrls: ['./waste-reminder.component.scss'],
+    standalone: true,
+    imports: [
+        MatCardModule,
+        MatDatepickerModule,
+        MatDividerModule,
+        MatListModule,
+        NgFor,
+    ],
 })
 
 export class WasteReminderComponent implements OnInit, AfterViewInit {

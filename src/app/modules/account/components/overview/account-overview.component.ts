@@ -3,10 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { Route } from "@app/core/stores/routes/router.state";
 import { Role } from "@modules/admin/modules/user/store/role";
+import { AccountProfileComponent } from "../profile/account-profile.component";
 
 @Component({
-  templateUrl: 'account-overview.component.html',
-  styleUrls: ['./account-overview.component.scss']
+    templateUrl: 'account-overview.component.html',
+    styleUrls: ['./account-overview.component.scss'],
+    standalone: true,
+    imports: [AccountProfileComponent]
 })
 export class AccountOverviewComponent implements OnInit {
 

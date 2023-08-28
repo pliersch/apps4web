@@ -1,10 +1,15 @@
-﻿import { Location } from "@angular/common";
+﻿import { Location, NgFor } from "@angular/common";
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router, RouterOutlet } from "@angular/router";
 import { Route } from "@app/core/stores/routes/router.state";
 import { Role } from "@modules/admin/modules/user/store/role";
+import { MatTabsModule } from "@angular/material/tabs";
 
-@Component({templateUrl: 'admin-layout.component.html'})
+@Component({
+    templateUrl: 'admin-layout.component.html',
+    standalone: true,
+    imports: [MatTabsModule, NgFor, RouterOutlet]
+})
 
 export class AdminLayoutComponent implements OnInit {
 
