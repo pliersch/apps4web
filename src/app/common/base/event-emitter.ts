@@ -1,3 +1,4 @@
+// @ts-ignore
 import { EventEmitter as NodeEventEmitter } from 'events'
 
 export interface IEventEmitter<TEvents extends Record<string, any>> {

@@ -1,6 +1,6 @@
 import { AccountState } from "@account/store/account.state";
 import { Injectable } from '@angular/core';
-import { Resolve, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { PhotosSseService } from "@modules/photos/services/photos-sse.service";
 import { LoadMetaData, LoadPhotos } from "@modules/photos/store/photos/photo.actions";
 import { PhotoSseData } from "@modules/photos/store/photos/photo.model";
@@ -9,7 +9,7 @@ import { Store } from "@ngxs/store";
 import { concatMap, Observable, of, Subscription } from "rxjs";
 
 @Injectable()
-export class PhotosResolver implements Resolve<boolean> {
+export class PhotosResolver  {
 
   private initialized = false;
   private photosAdded = false;

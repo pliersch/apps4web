@@ -6,7 +6,6 @@ import { AddPhoto } from "@modules/photos/store/photos/photo.actions";
 import { Tag, TagGroup } from "@modules/photos/store/tags/tag.model";
 import { TagState } from "@modules/photos/store/tags/tag.state";
 import { Select, Store } from "@ngxs/store";
-import * as ExifReader from "exifreader";
 import { from, Observable, ObservedValueOf } from "rxjs";
 
 @Component({
@@ -121,29 +120,31 @@ export class UploadPanelComponent implements OnInit {
   }
 
   private async getExifDate(file: File): Promise<Date> {
-    let exifDate: undefined | string | Array<string>;
-    let value: string | undefined;
+    // let exifDate:  string | string[] | ExifReader.XmpTags | ExifReader.XmpTag[] | undefined;
+    // let value: string | ExifReader.XmpTag | ExifReader.XmpTags;
+    //
+    // try {
+    //   const tags = await ExifReader.load(file);
+    //   exifDate = tags.DateTimeOriginal?.value;
+    //   if (!exifDate) {
+    //     return new Date(file.lastModified);
+    //   }
+    // } catch (e: any) {
+    //   console.log('exif reader error: ', e)
+    //   return new Date(file.lastModified);
+    // }
+    // if (Array.isArray(exifDate)) {
+    //   value = exifDate[0]
+    // } else {
+    //   value = exifDate;
+    // }
 
-    try {
-      const tags = await ExifReader.load(file);
-      exifDate = tags.DateTimeOriginal?.value;
-      if (!exifDate) {
-        return new Date(file.lastModified);
-      }
-    } catch (e: any) {
-      console.log('exif reader error: ', e)
-      return new Date(file.lastModified);
-    }
-    if (Array.isArray(exifDate)) {
-      value = exifDate[0]
-    } else {
-      value = exifDate;
-    }
-
-    if (this.isWrongFormat(value)) {
-      return this.fixExif(value);
-    }
-    return new Date(value);
+    // if (this.isWrongFormat(value)) {
+    //   return this.fixExif(value);
+    // }
+    // return new Date(value);
+    throw new Error('fix XmpTags tasks')
+    // return new Date(value);
   }
 
   // need for exif dates like '2013:05:01 07:15:28'

@@ -1,6 +1,6 @@
 import { AccountState } from "@account/store/account.state";
 import { Injectable } from '@angular/core';
-import { Resolve, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AdminSseService } from "@modules/admin/modules/protocol/service/admin-sse.service";
 import { AddVisit, LoadVisits } from "@modules/admin/modules/protocol/store/protocol.actions";
 import { ProtocolState } from "@modules/admin/modules/protocol/store/protocol.state";
@@ -11,7 +11,7 @@ import { Observable, of } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AdminProtocolResolver implements Resolve<boolean> {
+export class AdminProtocolResolver  {
 
   newVisitExist = true;
 

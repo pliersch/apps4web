@@ -1,6 +1,6 @@
 import { AccountState } from "@account/store/account.state";
 import { Injectable } from '@angular/core';
-import { Resolve, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ChatSseService } from "@modules/chat/services/chat-sse.service";
 import { AddMessage, LoadChat } from "@modules/chat/store/chat.actions";
 import { MessageResultDto } from "@modules/chat/store/chat.model";
@@ -10,7 +10,7 @@ import { Observable, of } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ChatResolver implements Resolve<boolean> {
+export class ChatResolver  {
 
   private initialized = false;
   private newMessagesAdded = false;
