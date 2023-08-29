@@ -1,9 +1,10 @@
 ﻿import { Injectable } from '@angular/core';
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Injectable({providedIn: 'root'})
 export class AlertService {
 
-  constructor(/*private snackBar: MatSnackBar*/) { }
+  constructor(private snackBar: MatSnackBar) { }
 
   //////////////////////////////////////////////////////////
   //                   alerts
@@ -35,18 +36,18 @@ export class AlertService {
 
   openSnackBar(message: string, duration: number, action?: string): void {
     console.log('AlertService openSnackBar: ', message, duration, action)
-    // const matSnackBarRef = this.snackBar.open(message, action,
-    //   {
-    //     duration,
-    //     horizontalPosition: 'end'
-    //   });
-    // matSnackBarRef.onAction().subscribe(() => {
-    //   matSnackBarRef.dismiss();
-    // });
+    const matSnackBarRef = this.snackBar.open(message, action,
+      {
+        duration,
+        horizontalPosition: 'end'
+      });
+    matSnackBarRef.onAction().subscribe(() => {
+      matSnackBarRef.dismiss();
+    });
   }
 
   closeSnackBar(): void {
-    // this.snackBar.dismiss();
+    this.snackBar.dismiss();
   }
 
 }

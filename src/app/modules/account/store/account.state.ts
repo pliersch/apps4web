@@ -53,6 +53,7 @@ export class AccountState {
 
   @Action(SetUser)
   setCurrentUser(ctx: StateContext<AccountStateModel>, action: SetUser): void {
+    console.log('AccountState setUser: ',)
     ctx.patchState({
       user: action.user
     });
@@ -135,24 +136,33 @@ export class AccountState {
   }
 
   @Action(accountActions.SigninWithGoogle)
-  signinWithGoogle(ctx: StateContext<AccountStateModel>, action: accountActions.SigninWithGoogle): Observable<Subscription> {
+  signinWithGoogle(ctx: StateContext<AccountStateModel>, action: accountActions.SigninWithGoogle): Observable<void> {
     ctx.patchState({googleUser: action.user});
 
     return this.accountService.signin(action.user).pipe(
-      map((user: User) =>
-        asapScheduler.schedule(() =>
-          ctx.dispatch(new accountActions.SigninWithGoogleSuccess(user))
-        )
-      ),
-      catchError(error =>
-        of(
-          asapScheduler.schedule(() =>
-            ctx.dispatch(new accountActions.SigninWithGoogleFail(error))
-          )
-        )
+      map((user: User) => {
+          console.log('AccountState  signin: ',)
+          if (user === null) {
+            this.alertService.warn("You are not registered");
+          } else {
+
+            ctx.dispatch(new SetUser(user))
+
+            ctx.dispatch(new SetUserRole(user.role));
+          }
+        }
+
+        // catchError(error =>
+        //   of(
+        //     asapScheduler.schedule(() =>
+        //       ctx.dispatch(new accountActions.SigninWithGoogleFail(error))
+        //     )
+        //   )
+        // )
       )
-    );
+    )
   }
+
 
   @Action(accountActions.SigninWithGoogleSuccess)
   signinWithGoogleSuccess(ctx: StateContext<AccountStateModel>, action: accountActions.SigninWithGoogleSuccess): void {
