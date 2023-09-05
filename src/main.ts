@@ -36,8 +36,6 @@ import { WasteCalendarModule } from '@modules/waste-calendar/waste-calendar.modu
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsModule, NgxsModuleOptions, Store } from '@ngxs/store';
 import { NgScrollbarModule } from 'ngx-scrollbar';
-import { provideStore } from '@ngrx/store';
-import { reducers, metaReducers } from './app/reducers';
 
 const ngxsConfig: NgxsModuleOptions = {
   developmentMode: !environment.production,
@@ -60,26 +58,25 @@ registerLocaleData(localeDe);
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(BrowserModule, AppRoutingModule, MatSnackBarModule, MatDialogModule, 
-    //SocketIoModule.forRoot(config),
-    NgxsModule.forRoot([AppState, RouterState, ThemeState, AccountState], ngxsConfig), NgxsReduxDevtoolsPluginModule.forRoot( /*{disabled: !isDevMode()}*/), WasteCalendarModule, RecipesModule, ServiceWorkerModule.register('ngsw-worker.js', {
+    importProvidersFrom(BrowserModule, AppRoutingModule, MatSnackBarModule, MatDialogModule,
+      //SocketIoModule.forRoot(config),
+      NgxsModule.forRoot([AppState, RouterState, ThemeState, AccountState], ngxsConfig), NgxsReduxDevtoolsPluginModule.forRoot( /*{disabled: !isDevMode()}*/), WasteCalendarModule, RecipesModule, ServiceWorkerModule.register('ngsw-worker.js', {
         enabled: !isDevMode(),
         // Register the ServiceWorker as soon as the application is stable
         // or after 30 seconds (whichever comes first).
         registrationStrategy: 'registerWhenStable:30000'
-    }), RadioModule, AccountModule, NgScrollbarModule),
-    { provide: LOCALE_ID, useValue: 'de' },
-    { provide: DateAdapter, useClass: DateFnsAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS },
-    { provide: APP_INITIALIZER, useFactory: initApplication, multi: true, deps: [Store] },
-    { provide: APP_INITIALIZER, useFactory: initTheme, multi: true, deps: [Store] },
+      }), RadioModule, AccountModule, NgScrollbarModule),
+    {provide: LOCALE_ID, useValue: 'de'},
+    {provide: DateAdapter, useClass: DateFnsAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS},
+    {provide: APP_INITIALIZER, useFactory: initApplication, multi: true, deps: [Store]},
+    {provide: APP_INITIALIZER, useFactory: initTheme, multi: true, deps: [Store]},
     // {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-    { provide: ErrorHandler, useClass: GlobalErrorHandler },
-    { provide: AlertService, useClass: AlertService },
+    {provide: ErrorHandler, useClass: GlobalErrorHandler},
+    {provide: AlertService, useClass: AlertService},
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),
-    provideStore(reducers, { metaReducers })
-]
+  ]
 })
   .then((moduleRef) => {
     AppInjectorService.setInjector(moduleRef.injector)

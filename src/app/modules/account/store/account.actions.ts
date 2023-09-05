@@ -14,65 +14,24 @@ export class LoginWithEmail {
               public readonly password: string) { }
 }
 
-export class LoginWithEmailSuccess {
-  static readonly type = '[Account] Login Email Success';
+export class LoginWithGoogle {
+  static readonly type = '[Account] Google Login';
 
-  constructor(public readonly user: User) {
-  }
+  constructor(public readonly user: GoogleUser) { }
 }
 
-export class LoginWithEmailFail {
-  static readonly type = '[Account] Login Email Fail';
-
-  constructor(public error: string) {
-  }
-}
-
-export class LoginWithId {
-  static readonly type = '[Account] Login';
-
-  constructor(public readonly id: string) { }
-}
-
-export class LoginWithIdSuccess {
+export class LoginSuccess {
   static readonly type = '[Account] Login Success';
 
-  constructor(public readonly user: User) {
-  }
+  constructor(public readonly user: User) { }
 }
 
-export class LoginWithIdFail {
+export class LoginFail {
   static readonly type = '[Account] Login Fail';
 
-  constructor(public error: string) {
-  }
+  constructor(public error: string) { }
 }
 
 export class Logout {
   static readonly type = '[Account] Logout';
 }
-
-export class SigninWithGoogle {
-  static readonly type = '[Google Signin] Google Login';
-
-  constructor(public readonly user: GoogleUser) { }
-}
-
-export class SigninWithGoogleSuccess {
-  static readonly type = '[Google Signin] Google Login Success';
-
-  constructor(public readonly user: User) {
-  }
-}
-
-export class SigninWithGoogleFail {
-  static readonly type = '[Google Signin] Google Login Fail';
-
-  constructor(public error: string) {
-  }
-}
-
-// export class SignoutWithGoogle {
-//   static readonly type = '[Google Signin] Google Logout';
-// }
-

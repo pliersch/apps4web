@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -15,7 +15,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         if ([401, 403].includes(err.status)/* && this.accountService.accountValue*/) {
           // this.accountService.logout();
         }
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
