@@ -4,17 +4,17 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
 import { ChatRoutingModule } from "@modules/admin/modules/chat/chat-routing.module";
-import { AdminChatOverviewComponent } from './components/admin-chat-overview.component';
+import { AdminChatComponent } from './admin-chat.component';
 
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MatButtonModule,
-        MatCardModule,
-        MatIconModule,
-        ChatRoutingModule,
-        AdminChatOverviewComponent,
-    ]
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    ChatRoutingModule,
+    AdminChatComponent,
+  ]
 })
 export class ChatModule {}

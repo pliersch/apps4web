@@ -35,7 +35,6 @@ export class AlertService {
   }
 
   openSnackBar(message: string, duration: number, action?: string): void {
-    console.log('AlertService openSnackBar: ', message, duration, action)
     const matSnackBarRef = this.snackBar.open(message, action,
       {
         duration,

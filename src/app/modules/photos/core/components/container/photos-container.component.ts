@@ -1,20 +1,20 @@
 import { Location, NgFor } from "@angular/common";
 import { Component, OnInit } from '@angular/core';
+import { MatTabsModule } from "@angular/material/tabs";
 import { Router, RouterOutlet } from "@angular/router";
 import { Route } from "@app/core/stores/routes/router.state";
 import { Role } from "@modules/admin/modules/user/store/role";
-import { MatTabsModule } from "@angular/material/tabs";
 
 @Component({
-    selector: 'app-photos-container',
-    templateUrl: './photos-container.component.html',
-    styleUrls: ['./photos-container.component.scss'],
-    standalone: true,
-    imports: [
-        MatTabsModule,
-        NgFor,
-        RouterOutlet,
-    ],
+  selector: 'app-photos-container',
+  templateUrl: './photos-container.component.html',
+  styleUrls: ['./photos-container.component.scss'],
+  standalone: true,
+  imports: [
+    MatTabsModule,
+    NgFor,
+    RouterOutlet,
+  ],
 })
 export class PhotosContainerComponent implements OnInit {
 
@@ -39,8 +39,8 @@ export class PhotosContainerComponent implements OnInit {
     this.location.onUrlChange(url => this.activeLink = url);
   }
 
-  navigateUrl(link: string): void {
-    void this.router.navigateByUrl(link);
+  navigateUrl(url: string): void {
+    void this.router.navigateByUrl(url);
   }
 
 }

@@ -1,16 +1,20 @@
 import { AuthGuard } from "@account/guards/auth.guard";
-import { NgModule } from '@angular/core';
+import { importProvidersFrom, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AlertService } from "@app/common/services/alert.service";
 import { AdminGuard } from "@modules/admin/guards/admin-guard.service";
+import { ProtocolState } from "@modules/admin/modules/protocol/store/protocol.state";
+import { UserState } from "@modules/admin/modules/user/store/user.state";
 import { ChatResolver } from "@modules/chat/resolver/chat.resolver";
 import { ChatService } from "@modules/chat/services/chat.service";
 import { DashboardComponent } from "@modules/dashboard/dashboard.component";
+import { NgxsModule } from "@ngxs/store";
 import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
 
 const photosModule = () => import('@modules/photos/photos.module').then((x) => x.PhotosModule);
 const accountModule = () => import('@app/modules/account/account.module').then((x) => x.AccountModule);
-const adminModule = () => import('@modules/admin/admin.module').then((x) => x.AdminModule);
+const adminRoutes = import('@modules/admin/admin-routes');
+// const adminComponent = import('@modules/admin/admin.component').then(x => x.AdminComponent);
 const three = import('@modules/three/three.component').then(x => x.ThreeComponent);
 const chat = import('@app/modules/chat/chat.component').then(x => x.ChatComponent);
 
@@ -27,7 +31,19 @@ const routes: Routes = [{
       resolve: {data: ChatResolver},
       canActivate: [AuthGuard]
     },
-    {path: 'admin', title: 'Administration', loadChildren: adminModule, canActivate: [AdminGuard]},
+    {
+      path: 'admin',
+      // loadComponent: () => adminComponent,
+      // component: AdminComponent,
+      loadChildren: () => adminRoutes,
+      title: 'Administration',
+      canActivate: [AdminGuard],
+      providers: [
+        importProvidersFrom(
+          NgxsModule.forFeature([UserState, ProtocolState])
+        )
+      ]
+    },
     {path: 'photos', title: 'Photos', loadChildren: photosModule, canActivate: [AuthGuard]},
     {path: 'three', title: 'ThreeJS', loadComponent: () => three, canActivate: [AuthGuard]},
     {path: 'account', title: 'Account', loadChildren: accountModule},

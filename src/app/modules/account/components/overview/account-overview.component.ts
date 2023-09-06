@@ -6,10 +6,10 @@ import { Role } from "@modules/admin/modules/user/store/role";
 import { AccountProfileComponent } from "../profile/account-profile.component";
 
 @Component({
-    templateUrl: 'account-overview.component.html',
-    styleUrls: ['./account-overview.component.scss'],
-    standalone: true,
-    imports: [AccountProfileComponent]
+  templateUrl: 'account-overview.component.html',
+  styleUrls: ['./account-overview.component.scss'],
+  standalone: true,
+  imports: [AccountProfileComponent]
 })
 export class AccountOverviewComponent implements OnInit {
 
@@ -29,8 +29,8 @@ export class AccountOverviewComponent implements OnInit {
     this.location.onUrlChange(url => this.activeLink = url);
   }
 
-  navigateUrl(url: string): void {
-    void this.router.navigateByUrl(url);
-  }
+  // navigateUrl(url: string): void {
+  //   void this.router.navigateByUrl(url);
+  // }
 
 }

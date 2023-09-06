@@ -1,31 +1,24 @@
 import { CreateUserDto, User } from "@account/store/user.model";
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatButtonModule } from "@angular/material/button";
 import { MatDialog } from "@angular/material/dialog";
-import {
-  CreateUserDialogComponent
-} from "@modules/admin/modules/user/components/create-user-dialog/create-user-dialog.component";
-import {
-  DeleteUserDialogComponent
-} from "@modules/admin/modules/user/components/delete-user-dialog/delete-user-dialog.component";
-import {
-  EditUserDialogComponent
-} from "@modules/admin/modules/user/components/edit-user-dialog/edit-user-dialog.component";
-import { UserTableComponent } from "@modules/admin/modules/user/components/user-table/user-table.component";
-import * as userActions from "@modules/admin/modules/user/store/user.actions";
-import { UserState } from "@modules/admin/modules/user/store/user.state";
 import { Select, Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
-import { MatButtonModule } from "@angular/material/button";
-import { UserTableComponent as UserTableComponent_1 } from "./user-table/user-table.component";
+import { CreateUserDialogComponent } from "./components/create-user-dialog/create-user-dialog.component";
+import { DeleteUserDialogComponent } from "./components/delete-user-dialog/delete-user-dialog.component";
+import { EditUserDialogComponent } from "./components/edit-user-dialog/edit-user-dialog.component";
+import { UserTableComponent } from "./components/user-table/user-table.component";
+import * as userActions from "./store/user.actions";
+import { UserState } from "./store/user.state";
 
 @Component({
-    selector: 'app-user-overview',
-    templateUrl: './user-overview.component.html',
-    styleUrls: ['./user-overview.component.scss'],
-    standalone: true,
-    imports: [UserTableComponent_1, MatButtonModule]
+  selector: 'app-user-overview',
+  templateUrl: './user-admin.component.html',
+  styleUrls: ['./user-admin.component.scss'],
+  standalone: true,
+  imports: [UserTableComponent, MatButtonModule]
 })
-export class UserOverviewComponent implements OnInit, OnDestroy {
+export class UserAdminComponent implements OnInit, OnDestroy {
 
   @ViewChild(EditUserDialogComponent)
   form: EditUserDialogComponent;

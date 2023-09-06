@@ -22,7 +22,7 @@ import { AppRoutingModule } from '@app/app-routing.module';
 import { AppComponent } from '@app/app.component';
 import { GlobalErrorHandler } from '@app/common/helpers/global-error-handler';
 import { AlertService } from "@app/common/services/alert.service";
-import { AppInjectorService } from "@app/common/services/app-injector.service";
+// import { AppInjectorService } from "@app/common/services/app-injector.service";
 import { initApplication } from '@app/core/initializers/app.initializer';
 import { initTheme } from '@app/core/initializers/theme.initializer';
 import { AppState } from '@app/core/stores/app/app.state';
@@ -60,12 +60,19 @@ bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(BrowserModule, AppRoutingModule, MatSnackBarModule, MatDialogModule,
       //SocketIoModule.forRoot(config),
-      NgxsModule.forRoot([AppState, RouterState, ThemeState, AccountState], ngxsConfig), NgxsReduxDevtoolsPluginModule.forRoot( /*{disabled: !isDevMode()}*/), WasteCalendarModule, RecipesModule, ServiceWorkerModule.register('ngsw-worker.js', {
+      NgxsModule.forRoot([AppState, RouterState, ThemeState, AccountState], ngxsConfig),
+      NgxsReduxDevtoolsPluginModule.forRoot( /*{disabled: !isDevMode()}*/),
+      WasteCalendarModule,
+      RecipesModule,
+      ServiceWorkerModule.register('ngsw-worker.js', {
         enabled: !isDevMode(),
         // Register the ServiceWorker as soon as the application is stable
         // or after 30 seconds (whichever comes first).
         registrationStrategy: 'registerWhenStable:30000'
-      }), RadioModule, AccountModule, NgScrollbarModule),
+      }),
+      RadioModule,
+      AccountModule,
+      NgScrollbarModule),
     {provide: LOCALE_ID, useValue: 'de'},
     {provide: DateAdapter, useClass: DateFnsAdapter, deps: [MAT_DATE_LOCALE]},
     {provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS},
@@ -78,7 +85,7 @@ bootstrapApplication(AppComponent, {
     provideAnimations(),
   ]
 })
-  .then((moduleRef) => {
-    AppInjectorService.setInjector(moduleRef.injector)
-  })
+  // .then((moduleRef) => {
+  //   AppInjectorService.setInjector(moduleRef.injector)
+  // })
   .catch(err => console.error(err));
