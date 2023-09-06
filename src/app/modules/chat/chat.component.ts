@@ -1,13 +1,11 @@
 import { AccountState } from "@account/store/account.state";
 import { User } from "@account/store/user.model";
 import { animate, style, transition, trigger } from "@angular/animations";
-import { ViewportScroller } from "@angular/common";
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { UserIdentity } from "@app/core/interfaces/user-identiy";
 import { FinderDialogComponent } from "@modules/chat/components/finder-dialog/finder-dialog.component";
 import { ChatUploadDialogComponent } from "@modules/chat/components/upload-dialog/chat-upload-dialog.component";
-import { ChatService } from "@modules/chat/services/chat.service";
 import { MessagesFilter, SendMessage } from "@modules/chat/store/chat.actions";
 import { CreateMessageDto, Message } from "@modules/chat/store/chat.model";
 import { ChatState } from "@modules/chat/store/chat.state";
@@ -18,23 +16,23 @@ import { ChatInputComponent } from "./components/input/chat-input.component";
 import { ChatMessagesComponent } from "./components/messages/chat-messages.component";
 
 @Component({
-    selector: 'app-chat',
-    templateUrl: './chat.component.html',
-    styleUrls: ['./chat.component.scss'],
-    animations: [
-        trigger('show', [
-            transition(':enter', [
-                style({ opacity: 0 }),
-                animate(200, style({ opacity: 1 }))
-            ]),
-            transition(':leave', [
-                style({ opacity: 1 }),
-                animate(200, style({ opacity: 0 }))
-            ])
-        ])
-    ],
-    standalone: true,
-    imports: [NgScrollbar, ChatMessagesComponent, ChatInputComponent]
+  selector: 'app-chat',
+  templateUrl: './chat.component.html',
+  styleUrls: ['./chat.component.scss'],
+  animations: [
+    trigger('show', [
+      transition(':enter', [
+        style({opacity: 0}),
+        animate(200, style({opacity: 1}))
+      ]),
+      transition(':leave', [
+        style({opacity: 1}),
+        animate(200, style({opacity: 0}))
+      ])
+    ])
+  ],
+  standalone: true,
+  imports: [NgScrollbar, ChatMessagesComponent, ChatInputComponent]
 })
 
 export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -56,12 +54,11 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   private subscription: Subscription;
   userFilter = '';
 
-  constructor(private chatService: ChatService,
-              /*private socketService: SocketService,*/
-              public dialog: MatDialog,
-              private scroller: ViewportScroller,
-              private store: Store) {
-  }
+  protected resizeObserver: ResizeObserver;
+  private scrollContent: Element;
+
+  constructor(public dialog: MatDialog,
+              private store: Store) { }
 
   ngOnInit(): void {
     this.subscription = this.user$.subscribe(res => this.user = res);
@@ -70,9 +67,8 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.messages$.subscribe(messages => {
-      this.scrollToEnd();
-    })
+    this.scrollContent = this.scrollbarRef.nativeElement.querySelector('.ng-scroll-content')!;
+    this.observeScrollContent();
   }
 
   ngOnDestroy(): void {
@@ -81,6 +77,13 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   scrollToEnd(): void {
     void this.scrollbarRef.scrollTo({bottom: 0, end: 0, duration: 0});
+  }
+
+  observeScrollContent(): void {
+    this.resizeObserver = new ResizeObserver(res => {
+      this.scrollToEnd();
+    });
+    this.resizeObserver.observe(this.scrollContent);
   }
 
   sendMessage(content: string, pictures?: File[]): void {

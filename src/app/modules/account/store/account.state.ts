@@ -59,14 +59,17 @@ export class AccountState {
 
   @Action(LoginWithEmail)
   loginWithPassword(ctx: StateContext<AccountStateModel>, action: LoginWithEmail): Observable<User> {
-    return this.accountService.loginWithEmail(action.email, action.password).pipe(
-      tap(user => asapScheduler.schedule(() =>
-        ctx.dispatch(new accountActions.LoginSuccess(user)))),
-      catchError(error => {
-        asapScheduler.schedule(() => ctx.dispatch(new accountActions.LoginFail(error)))
-        return throwError(() => error);
-      })
-    );
+    return this.accountService.loginWithEmail(action.email, action.password)
+      .pipe(
+        tap(user =>
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new accountActions.LoginSuccess(user)))),
+        catchError(error => {
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new accountActions.LoginFail(error)))
+          return throwError(() => error);
+        })
+      );
   }
 
   @Action(accountActions.LoginWithGoogle, {cancelUncompleted: true})

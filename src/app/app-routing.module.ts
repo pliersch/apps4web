@@ -7,6 +7,7 @@ import { ProtocolState } from "@modules/admin/modules/protocol/store/protocol.st
 import { UserState } from "@modules/admin/modules/user/store/user.state";
 import { ChatResolver } from "@modules/chat/resolver/chat.resolver";
 import { ChatService } from "@modules/chat/services/chat.service";
+import { ChatState } from "@modules/chat/store/chat.state";
 import { DashboardComponent } from "@modules/dashboard/dashboard.component";
 import { NgxsModule } from "@ngxs/store";
 import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
@@ -27,7 +28,9 @@ const routes: Routes = [{
       path: 'chat',
       title: 'Chat',
       loadComponent: () => chat,
-      providers: [ChatService],
+      providers: [ChatService, importProvidersFrom(
+        NgxsModule.forFeature([ChatState])
+      )],
       resolve: {data: ChatResolver},
       canActivate: [AuthGuard]
     },

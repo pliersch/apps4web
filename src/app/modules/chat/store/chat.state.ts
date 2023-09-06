@@ -9,8 +9,8 @@ import { Message, MessageResultDto } from "@modules/chat/store/chat.model";
 import { addToUserIdentities, createMessage } from "@modules/chat/store/chat.tools";
 import { DeleteResult } from "@modules/share/interfaces/models/delete-result";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { asapScheduler, Observable, of, Subscription } from "rxjs";
-import { catchError, map } from "rxjs/operators";
+import { asapScheduler, Observable, throwError } from "rxjs";
+import { catchError, tap } from "rxjs/operators";
 
 export interface ChatStateModel {
   messages: Message[];
@@ -55,23 +55,21 @@ export class ChatState {
   //////////////////////////////////////////////////////////
 
   @Action(chatAction.LoadChat)
-  loadChat(ctx: StateContext<ChatStateModel>, action: chatAction.LoadChat): Observable<Subscription> {
+  loadChat(ctx: StateContext<ChatStateModel>, /*action: chatAction.LoadChat*/): Observable<MessageResultDto[]> {
     const length = ctx.getState().messages.length;
     const from = length > 0 ? length : 0;
     return this.service.loadChat('not_impl', from, CHAT_CONSTANTS.MESSAGE_LOAD_COUNT)
       .pipe(
-        map((messages: MessageResultDto[]) =>
+        tap((messages: MessageResultDto[]) =>
           asapScheduler.schedule(() => {
               ctx.dispatch(new chatAction.LoadChatSuccess(messages))
             }
           )
         ),
-        catchError(error =>
-          of(
-            asapScheduler.schedule(() =>
-              ctx.dispatch(new chatAction.LoadChatFail(error))
-            )
-          )
+        catchError(error => {
+            asapScheduler.schedule(() => ctx.dispatch(new chatAction.LoadChatFail(error)))
+            return throwError(() => error);
+          }
         )
       );
   }
@@ -108,24 +106,16 @@ export class ChatState {
   //////////////////////////////////////////////////////////
 
   @Action(chatAction.SendMessage)
-  sendMessage(ctx: StateContext<ChatStateModel>, action: chatAction.SendMessage): Observable<Subscription> {
+  sendMessage(ctx: StateContext<ChatStateModel>, action: chatAction.SendMessage): Observable<MessageResultDto> {
     return this.service.sendMessage(action.dto)
       .pipe(
-        map((message: MessageResultDto) =>
-          asapScheduler.schedule(() => {
-              ctx.dispatch(new chatAction.SendMessageSuccess(message))
-            }
-          )
-        ),
-        catchError(error =>
-          of(
-            asapScheduler.schedule(() =>
-              ctx.dispatch(new chatAction.SendMessageFail(error))
-            )
-          )
-        )
-      )
-      ;
+        tap(message => asapScheduler.schedule(() =>
+          ctx.dispatch(new chatAction.SendMessageSuccess(message)))),
+        catchError(error => {
+          asapScheduler.schedule(() => ctx.dispatch(new chatAction.SendMessageFail(error)))
+          return throwError(() => error);
+        })
+      );
   }
 
   @Action(chatAction.SendMessageSuccess)
@@ -152,22 +142,19 @@ export class ChatState {
   //////////////////////////////////////////////////////////
 
   @Action(chatAction.DeleteChatEntries)
-  deleteChatEntries(ctx: StateContext<ChatStateModel>): Observable<Subscription> {
+  deleteChatEntries(ctx: StateContext<ChatStateModel>): Observable<DeleteResult> {
     return this.service.deleteEntries()
       .pipe(
-        map((res: DeleteResult) =>
-          asapScheduler.schedule(() => {
-              ctx.dispatch(new chatAction.DeleteChatEntriesSuccess(res))
-            }
+        tap((res: DeleteResult) =>
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new chatAction.DeleteChatEntriesSuccess(res))
           )
         ),
-        catchError(error =>
-          of(
-            asapScheduler.schedule(() =>
-              ctx.dispatch(new chatAction.DeleteChatEntriesFail(error))
-            )
-          )
-        )
+        catchError(error => {
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new chatAction.DeleteChatEntriesFail(error)))
+          return throwError(() => error);
+        })
       );
   }
 
