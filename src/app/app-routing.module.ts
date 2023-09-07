@@ -9,6 +9,7 @@ import { ChatResolver } from "@modules/chat/resolver/chat.resolver";
 import { ChatService } from "@modules/chat/services/chat.service";
 import { ChatState } from "@modules/chat/store/chat.state";
 import { DashboardComponent } from "@modules/dashboard/dashboard.component";
+import { PhotoState } from "@modules/photos/store/photos/photo.state";
 import { NgxsModule } from "@ngxs/store";
 import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
 
@@ -43,7 +44,7 @@ const routes: Routes = [{
       canActivate: [AdminGuard],
       providers: [
         importProvidersFrom(
-          NgxsModule.forFeature([UserState, ProtocolState])
+          NgxsModule.forFeature([UserState, ProtocolState, PhotoState])
         )
       ]
     },

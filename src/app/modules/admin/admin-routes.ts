@@ -7,7 +7,7 @@ import { PhotosAdminResolver } from "@modules/photos/modules/admin/resolver/phot
 const userAdmin = () => import('./modules/user/user-admin.component').then((x) => x.UserAdminComponent);
 const protocolAdmin = () => import('./modules/protocol/admin-protocol.component').then((x) => x.AdminProtocolComponent);
 const chatAdmin = () => import('./modules/chat/admin-chat.component').then((x) => x.AdminChatComponent);
-const photosAdmin = () => import('@modules/photos/modules/admin/photos-admin.module').then((x) => x.PhotosAdminModule);
+const photosAdmin = () => import('@modules/photos/modules/admin/photos-admin.component').then((x) => x.PhotosAdminComponent);
 
 export default [
   {

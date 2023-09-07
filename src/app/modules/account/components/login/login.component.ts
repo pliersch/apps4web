@@ -1,25 +1,25 @@
 import { LoginWithEmail } from "@account/store/account.actions";
 import { AccountState } from "@account/store/account.state";
 import { User } from "@account/store/user.model";
+import { NgIf } from "@angular/common";
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, Validators, ReactiveFormsModule } from "@angular/forms";
+import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
 import { Router } from "@angular/router";
 import { AlertService } from "@app/common/services/alert.service";
 import { RouterState } from "@app/core/stores/routes/router.state";
 import { Select, Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
-import { MatButtonModule } from "@angular/material/button";
-import { NgIf } from "@angular/common";
-import { MatInputModule } from "@angular/material/input";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatCardModule } from "@angular/material/card";
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    standalone: true,
-    imports: [ReactiveFormsModule, MatCardModule, MatFormFieldModule, MatInputModule, NgIf, MatButtonModule]
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
+  standalone: true,
+  imports: [ReactiveFormsModule, MatCardModule, MatFormFieldModule, MatInputModule, NgIf, MatButtonModule]
 })
 export class LoginComponent implements OnInit, OnDestroy {
 

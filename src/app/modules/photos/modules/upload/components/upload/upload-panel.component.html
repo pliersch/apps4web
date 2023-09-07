@@ -7,7 +7,7 @@
         <div style="width: auto; height: 300px;">
           <ng-scrollbar class="dark-scrollbar" [autoWidthDisabled]="false"
                         track="vertical" visibility="always">
-            <mat-selection-list appNoPaddingTop multiple="false">
+            <mat-selection-list appNoPaddingTop hideSingleSelectionIndicator multiple="false">
               <mat-list-option *ngFor="let group of tagGroups$ | async; let i = index"
                                [selected]="tagGroups[index].name === group.name"
                                [value]="group" (click)="onGroupSelect(i)">
