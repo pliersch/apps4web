@@ -1,8 +1,12 @@
+import { AsyncPipe, NgFor } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from "@angular/material/dialog";
+import { MatIconModule } from '@angular/material/icon';
 import { Router } from "@angular/router";
 import { difference } from "@app/common/util/array-utils";
 import { Action } from "@app/core/interfaces/action";
+import { SetCheckedInstruction } from "@app/core/stores/app/app.actions";
 import { Role } from "@modules/admin/modules/user/store/role";
 import {
   EditorPhotoControlComponent,
@@ -25,16 +29,15 @@ import { Photo, PhotoFactory, PhotoUpdate } from '@modules/photos/store/photos/p
 import { Tag, TagGroup } from "@modules/photos/store/tags/tag.model";
 import { TagState } from "@modules/photos/store/tags/tag.state";
 import { Select, Store } from "@ngxs/store";
-import { Observable } from "rxjs";
-import { EditorPhotoControlComponent as EditorPhotoControlComponent_1 } from '../../components/editor-photo-control/editor-photo-control.component';
-import { NgFor, AsyncPipe } from '@angular/common';
 import { NgScrollbar } from 'ngx-scrollbar';
-import { PhotosMetaPanelEditorComponent } from '../../components/editor-meta-panel/photos-meta-panel-editor.component';
-import { PhotosImageDetailComponent } from '../../components/image-detail/photos-image-detail.component';
+import { Observable } from "rxjs";
 import { PhotosActionPanelComponent } from '../../components/action-panel/photos-action-panel.component';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 import { PhotosDateFilterComponent } from '../../components/date-filter/photos-date-filter.component';
+import { PhotosMetaPanelEditorComponent } from '../../components/editor-meta-panel/photos-meta-panel-editor.component';
+import {
+  EditorPhotoControlComponent as EditorPhotoControlComponent_1
+} from '../../components/editor-photo-control/editor-photo-control.component';
+import { PhotosImageDetailComponent } from '../../components/image-detail/photos-image-detail.component';
 import { PhotosRatingFilterComponent } from '../../components/rating-filter/photos-rating-filter.component';
 import { PhotosTagFilterComponent } from '../../components/tag-filter/photos-tag-filter.component';
 
@@ -43,11 +46,11 @@ export interface DeletePhotoDialogData {
 }
 
 @Component({
-    selector: 'app-photos-editor',
-    templateUrl: './photos-editor.component.html',
-    styleUrls: ['./photos-editor.component.scss'],
-    standalone: true,
-    imports: [PhotosTagFilterComponent, PhotosRatingFilterComponent, PhotosDateFilterComponent, MatButtonModule, MatIconModule, PhotosActionPanelComponent, PhotosImageDetailComponent, PhotosMetaPanelEditorComponent, NgScrollbar, NgFor, EditorPhotoControlComponent_1, AsyncPipe]
+  selector: 'app-photos-editor',
+  templateUrl: './photos-editor.component.html',
+  styleUrls: ['./photos-editor.component.scss'],
+  standalone: true,
+  imports: [PhotosTagFilterComponent, PhotosRatingFilterComponent, PhotosDateFilterComponent, MatButtonModule, MatIconModule, PhotosActionPanelComponent, PhotosImageDetailComponent, PhotosMetaPanelEditorComponent, NgScrollbar, NgFor, EditorPhotoControlComponent_1, AsyncPipe]
 })
 export class PhotosEditorComponent extends AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -79,6 +82,8 @@ export class PhotosEditorComponent extends AbstractExplorerComponent implements 
     public store: Store,
   ) {
     super(photoService, router, dialog, store);
+    // todo hack to disable instruction
+    this.store.dispatch(new SetCheckedInstruction(this.constructor.name));
   }
 
   ngOnInit(): void {

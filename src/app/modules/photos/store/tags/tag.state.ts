@@ -7,8 +7,8 @@ import { Tag, TagGroup, UpdateTagGroupResultDto } from "@modules/photos/store/ta
 import { DeleteResult } from "@modules/share/interfaces/models/delete-result";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { patch, removeItem, updateItem } from "@ngxs/store/operators";
-import { asapScheduler, Observable, of, Subscription } from "rxjs";
-import { catchError, map } from "rxjs/operators";
+import { asapScheduler, EMPTY, Observable, Subscription, throwError } from "rxjs";
+import { catchError, map, tap } from "rxjs/operators";
 
 export interface TagStateModel {
   tagGroups: TagGroup[];
@@ -50,25 +50,24 @@ export class TagState {
   //////////////////////////////////////////////////////////
 
   @Action(tagActions.LoadTags)
-  loadTags(ctx: StateContext<TagStateModel>): Observable<Subscription> {
+  loadTags(ctx: StateContext<TagStateModel>): Observable<TagGroup[]> {
     const state = ctx.getState();
     if (!state.newDataAvailable) {
-      return of(Subscription.EMPTY);
+      return EMPTY;
     }
     return this.tagService.getAll()
       .pipe(
-        map((tags: TagGroup[]) =>
+        tap((tags: TagGroup[]) =>
           asapScheduler.schedule(() =>
             ctx.dispatch(new tagActions.LoadTagsSuccess(tags))
           )
         ),
-        catchError(error =>
-          of(
-            asapScheduler.schedule(() =>
-              ctx.dispatch(new tagActions.LoadTagsFail(error))
-            )
+        catchError(error => {
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new tagActions.LoadTagsFail(error))
           )
-        )
+          return throwError(() => error);
+        })
       );
   }
 
@@ -106,9 +105,9 @@ export class TagState {
 
 // endregion
 
-  // region add
+  // region add group
   //////////////////////////////////////////////////////////
-  //          add
+  //          add group
   //////////////////////////////////////////////////////////
 
   @Action(tagActions.AddTagGroup)
@@ -120,13 +119,12 @@ export class TagState {
             ctx.dispatch(new tagActions.AddTagGroupSuccess(tag))
           )
         ),
-        catchError(error =>
-          of(
-            asapScheduler.schedule(() =>
-              ctx.dispatch(new tagActions.AddTagGroupFail(error))
-            )
+        catchError(error => {
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new tagActions.AddTagGroupFail(error))
           )
-        )
+          return throwError(() => error);
+        })
       );
   }
 
@@ -150,21 +148,20 @@ export class TagState {
   //////////////////////////////////////////////////////////
 
   @Action(tagActions.UpdateTagGroup)
-  updateGroup(ctx: StateContext<TagStateModel>, action: tagActions.UpdateTagGroup): Observable<Subscription> {
+  updateGroup(ctx: StateContext<TagStateModel>, action: tagActions.UpdateTagGroup): Observable<UpdateTagGroupResultDto> {
     return this.tagService.updateTagGroup(action.dto)
       .pipe(
-        map((res: UpdateTagGroupResultDto) =>
+        tap((res: UpdateTagGroupResultDto) =>
           asapScheduler.schedule(() =>
             ctx.dispatch(new tagActions.UpdateTagGroupSuccess(res))
           )
         ),
-        catchError(error =>
-          of(
-            asapScheduler.schedule(() =>
-              ctx.dispatch(new tagActions.UpdateTagGroupFail(error))
-            )
+        catchError(error => {
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new tagActions.UpdateTagGroupFail(error))
           )
-        )
+          return throwError(() => error);
+        })
       );
   }
 
@@ -203,21 +200,20 @@ export class TagState {
   //////////////////////////////////////////////////////////
 
   @Action(tagActions.DeleteTagGroup)
-  deleteGroup(ctx: StateContext<TagStateModel>, action: tagActions.DeleteTagGroup): Observable<Subscription> {
+  deleteGroup(ctx: StateContext<TagStateModel>, action: tagActions.DeleteTagGroup): Observable<DeleteResult> {
     return this.tagService.deleteTagGroup(action.id)
       .pipe(
-        map((result: DeleteResult) =>
+        tap((result: DeleteResult) =>
           asapScheduler.schedule(() =>
             ctx.dispatch(new tagActions.DeleteTagGroupSuccess(action.id))
           )
         ),
-        catchError(error =>
-          of(
-            asapScheduler.schedule(() =>
-              ctx.dispatch(new tagActions.DeleteTagGroupFail(error))
-            )
+        catchError(error => {
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new tagActions.DeleteTagGroupFail(error))
           )
-        )
+          return throwError(() => error);
+        })
       );
   }
 

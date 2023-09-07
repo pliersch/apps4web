@@ -5,7 +5,7 @@ import { SetRouteBeforeSignin } from "@app/core/stores/routes/router.actions";
 import { Store } from "@ngxs/store";
 
 @Injectable({providedIn: 'root'})
-export class AdminGuard  {
+export class AdminGuard {
   constructor(private router: Router,
               private store: Store) {
   }
@@ -15,7 +15,7 @@ export class AdminGuard  {
       return true;
     }
     if (this.store.selectSnapshot(AccountState.isUser)) {
-      void this.router.navigate(['/error']);
+      // void this.router.navigate(['/error']);
       return false;
     }
     this.store.dispatch(new SetRouteBeforeSignin(state.url))

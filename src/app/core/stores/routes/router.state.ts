@@ -18,7 +18,7 @@ interface RouterStateModel {
 @State<RouterStateModel>({
   name: 'Routes',
   defaults: {
-    role: Role.Guest,
+    role: Role.Guest, // fixme guest should not provide
     routeBeforeSignin: '',
     routes: [
       // {path: '', name: 'Home', accepted: Role.User},

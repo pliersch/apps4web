@@ -91,10 +91,10 @@ export class AccountState {
       this.alertService.warn("Du bist nicht registriert");
     } else {
       asyncScheduler.schedule(() =>
-        ctx.dispatch(new SetUser(action.user))
+        ctx.dispatch(new SetUserRole(action.user.role))
       )
       asyncScheduler.schedule(() =>
-        ctx.dispatch(new SetUserRole(action.user.role))
+        ctx.dispatch(new SetUser(action.user))
       )
     }
   }

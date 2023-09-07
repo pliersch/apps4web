@@ -18,8 +18,8 @@ import { Tag } from "@modules/photos/store/tags/tag.model";
 import { DeleteResult } from "@modules/share/interfaces/models/delete-result";
 import { Action, Selector, State, StateContext, Store } from "@ngxs/store";
 import { append, insertItem, patch, removeItem, updateItem } from "@ngxs/store/operators";
-import { asapScheduler, Observable, of, Subscription } from "rxjs";
-import { catchError, map } from "rxjs/operators";
+import { asapScheduler, EMPTY, Observable, of, Subscription, throwError } from "rxjs";
+import { catchError, map, tap } from "rxjs/operators";
 
 export interface PhotoStateModel {
   photos: Photo[];
@@ -201,20 +201,18 @@ export class PhotoState {
   //////////////////////////////////////////////////////////
 
   @Action(photoAction.LoadMetaData)
-  loadMetaData(ctx: StateContext<PhotoStateModel>): Observable<Subscription> {
+  loadMetaData(ctx: StateContext<PhotoStateModel>): Observable<PhotoMetaData> {
     return this.photoService.loadMetaData().pipe(
-      map((metaDto: PhotoMetaData) =>
+      tap((metaDto: PhotoMetaData) =>
         asapScheduler.schedule(() =>
           ctx.dispatch(new photoAction.LoadMetaDataSuccess(metaDto))
         )
       ),
-      catchError(error =>
-        of(
-          asapScheduler.schedule(() =>
-            ctx.dispatch(new photoAction.LoadMetaDataFail(error))
-          )
-        )
-      )
+      catchError(error => {
+        asapScheduler.schedule(() =>
+          ctx.dispatch(new photoAction.LoadMetaDataFail(error)))
+        return throwError(() => error);
+      })
     );
   }
 
@@ -241,10 +239,10 @@ export class PhotoState {
   //////////////////////////////////////////////////////////
 
   @Action(photoAction.LoadPhotos)
-  loadPhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadPhotos): Observable<Subscription> {
+  loadPhotos(ctx: StateContext<PhotoStateModel>, action: photoAction.LoadPhotos): Observable<PhotoRequestResult> {
     const state = ctx.getState();
     if (state.loading) {
-      return of(Subscription.EMPTY);
+      return EMPTY;
     }
     ctx.patchState({loading: true, loaded: false});
     const from: number = action.from ? action.from : state.photos.length;
@@ -252,7 +250,7 @@ export class PhotoState {
     let count: number = action.count ? action.count : PHOTOS_CONSTANTS.PHOTO_LOAD_COUNT;
     count = unloadedPhotos < count ? unloadedPhotos : count;
     if (count == 0) {
-      return of(Subscription.EMPTY);
+      return EMPTY;
     }
     const activeTags = this.store.selectSnapshot(PhotoState.getActiveTags);
     // console.log('PhotoState loadPhotos: ', from, count, activeTags)
@@ -260,19 +258,17 @@ export class PhotoState {
     activeTags.forEach(tag => tagIds.push(tag.id))
     return this.photoService.getPhotos(from, count, tagIds)
       .pipe(
-        map((dto: PhotoRequestResult) =>
+        tap((dto: PhotoRequestResult) =>
           asapScheduler.schedule(() => {
               ctx.dispatch(new photoAction.LoadPhotosSuccess(dto))
             }
           )
         ),
-        catchError(error =>
-          of(
-            asapScheduler.schedule(() =>
-              ctx.dispatch(new photoAction.LoadPhotosFail(error))
-            )
-          )
-        )
+        catchError(error => {
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new photoAction.LoadPhotosFail(error)))
+          return throwError(() => error);
+        })
       );
   }
 
@@ -344,20 +340,18 @@ export class PhotoState {
   //////////////////////////////////////////////////////////
 
   @Action(photoAction.AddPhoto)
-  addPhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhoto): Observable<Subscription> {
+  addPhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhoto): Observable<Photo> {
     return this.photoService.create(action.photo, action.user.id, action.tags, action.created, action.isPrivate).pipe(
-      map((photo: Photo) =>
+      tap((photo: Photo) =>
         asapScheduler.schedule(() =>
           ctx.dispatch(new photoAction.AddPhotoSuccess(photo))
         )
       ),
-      catchError(error =>
-        of(
-          asapScheduler.schedule(() =>
-            ctx.dispatch(new photoAction.AddPhotoFail(error))
-          )
-        )
-      )
+      catchError(error => {
+        asapScheduler.schedule(() =>
+          ctx.dispatch(new photoAction.AddPhotoFail(error)))
+        return throwError(() => error);
+      })
     );
   }
 
@@ -377,7 +371,7 @@ export class PhotoState {
   }
 
   @Action(photoAction.AddPhotoFail)
-  addPhotoFail(ctx: StateContext<PhotoStateModel>, action: photoAction.AddPhotoFail): void {
+  addPhotoFail(ctx: StateContext<PhotoStateModel>): void {
     ctx.dispatch({loaded: false, loading: false});
     this.alertService.error('Upload fail');
   }
@@ -390,22 +384,19 @@ export class PhotoState {
   //////////////////////////////////////////////////////////
 
   @Action(photoAction.UpdatePhoto)
-  updatePhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.UpdatePhoto): Observable<Subscription> {
-    // const photo = ctx.getState().photos[action.dto.index];
+  updatePhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.UpdatePhoto): Observable<Photo> {
     return this.photoService.updatePhoto(action.photo.id, action.dto)
       .pipe(
-        map((photo: Photo) =>
+        tap((photo: Photo) =>
           asapScheduler.schedule(() =>
             ctx.dispatch(new photoAction.UpdatePhotoSuccess(photo))
           )
         ),
-        catchError(error =>
-          of(
-            asapScheduler.schedule(() =>
-              ctx.dispatch(new photoAction.UpdatePhotoFail(error))
-            )
-          )
-        )
+        catchError(error => {
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new photoAction.UpdatePhotoFail(error)))
+          return throwError(() => error);
+        })
       );
   }
 
@@ -423,7 +414,7 @@ export class PhotoState {
   }
 
   @Action(photoAction.UpdatePhotoFail)
-  updatePhotoFail(ctx: StateContext<PhotoStateModel>, action: photoAction.UpdatePhotoFail): void {
+  updatePhotoFail(/*ctx: StateContext<PhotoStateModel>*/): void {
     this.alertService.error('Add tag fail');
   }
 
@@ -435,20 +426,18 @@ export class PhotoState {
   //////////////////////////////////////////////////////////
 
   @Action(photoAction.DeletePhoto)
-  deletePhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhoto): Observable<Subscription> {
+  deletePhoto(ctx: StateContext<PhotoStateModel>, action: photoAction.DeletePhoto): Observable<DeletePhotoDto> {
     return this.photoService.delete(action.id).pipe(
-      map((dto: DeletePhotoDto) =>
+      tap((dto: DeletePhotoDto) =>
         asapScheduler.schedule(() =>
           ctx.dispatch(new photoAction.DeletePhotoSuccess(dto))
         )
       ),
-      catchError(error =>
-        of(
-          asapScheduler.schedule(() =>
-            ctx.dispatch(new photoAction.DeletePhotoFail(error))
-          )
-        )
-      )
+      catchError(error => {
+        asapScheduler.schedule(() =>
+          ctx.dispatch(new photoAction.DeletePhotoFail(error)))
+        return throwError(() => error);
+      })
     );
   }
 
@@ -660,20 +649,18 @@ export class PhotoState {
   //////////////////////////////////////////////////////////
 
   @Action(photoAction.SetRating)
-  setRating(ctx: StateContext<PhotoStateModel>, action: photoAction.SetRating): Observable<Subscription> {
+  setRating(ctx: StateContext<PhotoStateModel>, action: photoAction.SetRating): Observable<PhotoUpdate> {
     return this.photoService.setRating(action.photo, action.rate).pipe(
-      map((update: PhotoUpdate) =>
+      tap((/*update: PhotoUpdate*/) =>
         asapScheduler.schedule(() =>
           ctx.dispatch(new photoAction.SetRatingSuccess(action.photo, action.rate))
         )
       ),
-      catchError(error =>
-        of(
-          asapScheduler.schedule(() =>
-            ctx.dispatch(new photoAction.SetRatingFail(error))
-          )
-        )
-      )
+      catchError(error => {
+        asapScheduler.schedule(() =>
+          ctx.dispatch(new photoAction.SetRatingFail(error)))
+        return throwError(() => error);
+      })
     );
   }
 

@@ -2,7 +2,7 @@ import { AuthGuard } from "@account/guards/auth.guard";
 import { importProvidersFrom, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AlertService } from "@app/common/services/alert.service";
-import { AdminGuard } from "@modules/admin/guards/admin-guard.service";
+import { AdminGuard } from "@modules/admin/guards/admin.guard";
 import { ProtocolState } from "@modules/admin/modules/protocol/store/protocol.state";
 import { UserState } from "@modules/admin/modules/user/store/user.state";
 import { ChatResolver } from "@modules/chat/resolver/chat.resolver";

@@ -50,6 +50,7 @@ export class ChatState {
   constructor(private service: ChatService,
               private alertService: AlertService) { }
 
+  // region load
   //////////////////////////////////////////////////////////
   //          load chat
   //////////////////////////////////////////////////////////
@@ -101,6 +102,9 @@ export class ChatState {
     this.alertService.error('Load chat fail');
   }
 
+  // endregion
+
+  // region send
   //////////////////////////////////////////////////////////
   //          send message
   //////////////////////////////////////////////////////////
@@ -128,6 +132,9 @@ export class ChatState {
     this.alertService.error('Send message fail');
   }
 
+  // endregion
+
+  // region add
   //////////////////////////////////////////////////////////
   //                   add message
   //////////////////////////////////////////////////////////
@@ -137,6 +144,9 @@ export class ChatState {
     this._addMessage(ctx, action)
   }
 
+  // endregion
+
+  // region delete
   //////////////////////////////////////////////////////////
   //          delete entries
   //////////////////////////////////////////////////////////
@@ -168,7 +178,9 @@ export class ChatState {
     this.alertService.error('Delete chat entries fail');
   }
 
+  // endregion
 
+  // region filter
   //////////////////////////////////////////////////////////
   //                  filter messages
   //////////////////////////////////////////////////////////
@@ -178,6 +190,9 @@ export class ChatState {
     ctx.patchState({filter: action.filter});
   }
 
+  // endregion
+
+  // region helper
   //////////////////////////////////////////////////////////
   //                   helper
   //////////////////////////////////////////////////////////
@@ -203,4 +218,6 @@ export class ChatState {
       });
     }
   }
+
+  // endregion
 }
