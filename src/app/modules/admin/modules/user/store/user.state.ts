@@ -5,8 +5,8 @@ import { UserService } from "@modules/admin/modules/user/services/user.service";
 import * as userActions from "@modules/admin/modules/user/store/user.actions";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { patch, removeItem, updateItem } from "@ngxs/store/operators";
-import { asapScheduler, Observable, of, Subscription } from "rxjs";
-import { catchError, map } from "rxjs/operators";
+import { asapScheduler, Observable, throwError } from "rxjs";
+import { catchError, tap } from "rxjs/operators";
 
 export interface UserStateModel {
   users: Array<User>;
@@ -37,21 +37,20 @@ export class UserState {
   //////////////////////////////////////////////////////////
 
   @Action(userActions.LoadUsers)
-  loadUsers(ctx: StateContext<UserStateModel>): Observable<Subscription> {
+  loadUsers(ctx: StateContext<UserStateModel>): Observable<User[]> {
     return this.userService.getAll()
       .pipe(
-        map((users: User[]) =>
+        tap((users: User[]) =>
           asapScheduler.schedule(() =>
             ctx.dispatch(new userActions.LoadUsersSuccess(users))
           )
         ),
-        catchError(error =>
-          of(
-            asapScheduler.schedule(() =>
-              ctx.dispatch(new userActions.LoadUsersFail(error))
-            )
+        catchError(error => {
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new userActions.LoadUsersFail(error))
           )
-        )
+          return throwError(() => error);
+        })
       );
   }
 
@@ -73,21 +72,20 @@ export class UserState {
 //////////////////////////////////////////////////////////
 
   @Action(userActions.CreateUser)
-  createUser(ctx: StateContext<UserStateModel>, action: userActions.CreateUser): Observable<Subscription> {
+  createUser(ctx: StateContext<UserStateModel>, action: userActions.CreateUser): Observable<User> {
     return this.userService.create(action.dto)
       .pipe(
-        map((user: User) =>
+        tap((user: User) =>
           asapScheduler.schedule(() =>
             ctx.dispatch(new userActions.CreateUserSuccess(user))
           )
         ),
-        catchError(error =>
-          of(
-            asapScheduler.schedule(() =>
-              ctx.dispatch(new userActions.CreateUserFail(error))
-            )
+        catchError(error => {
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new userActions.CreateUserFail(error))
           )
-        )
+          return throwError(() => error);
+        })
       );
   }
 
@@ -115,21 +113,20 @@ export class UserState {
 //////////////////////////////////////////////////////////
 
   @Action(userActions.UpdateUser)
-  updateUser(ctx: StateContext<UserStateModel>, action: userActions.UpdateUser): Observable<Subscription> {
+  updateUser(ctx: StateContext<UserStateModel>, action: userActions.UpdateUser): Observable<User> {
     return this.userService.update(action.id, action.partialUser)
       .pipe(
-        map((typeOrmUpdateVal: any) =>
+        tap((/*typeOrmUpdateVal: any*/) =>
           asapScheduler.schedule(() =>
             ctx.dispatch(new userActions.UpdateUserSuccess(action.id, action.partialUser))
           )
         ),
-        catchError(error =>
-          of(
-            asapScheduler.schedule(() =>
-              ctx.dispatch(new userActions.UpdateUserFail(error))
-            )
+        catchError(error => {
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new userActions.UpdateUserFail(error))
           )
-        )
+          return throwError(() => error);
+        })
       );
   }
 
@@ -157,21 +154,20 @@ export class UserState {
 //////////////////////////////////////////////////////////
 
   @Action(userActions.DeleteUser)
-  deleteUser(ctx: StateContext<UserStateModel>, action: userActions.DeleteUser): Observable<Subscription> {
+  deleteUser(ctx: StateContext<UserStateModel>, action: userActions.DeleteUser): Observable<User> {
     return this.userService.delete(action.id)
       .pipe(
-        map(() =>
+        tap(() =>
           asapScheduler.schedule(() =>
             ctx.dispatch(new userActions.DeleteUserSuccess(action.id))
           )
         ),
-        catchError(error =>
-          of(
-            asapScheduler.schedule(() =>
-              ctx.dispatch(new userActions.DeleteUserFail(error))
-            )
+        catchError(error => {
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new userActions.DeleteUserFail(error))
           )
-        )
+          return throwError(() => error);
+        })
       );
   }
 

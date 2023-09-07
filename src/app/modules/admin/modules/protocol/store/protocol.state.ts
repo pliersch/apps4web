@@ -6,8 +6,8 @@ import { Visit } from "@modules/admin/modules/protocol/store/visit";
 import { TagStateModel } from "@modules/photos/store/tags/tag.state";
 import { DeleteResult } from "@modules/share/interfaces/models/delete-result";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { asapScheduler, Observable, of, Subscription } from "rxjs";
-import { catchError, map } from "rxjs/operators";
+import { asapScheduler, Observable, throwError } from "rxjs";
+import { catchError, tap } from "rxjs/operators";
 
 export interface ProtocolStateModel {
   visits: Array<Visit>;
@@ -38,21 +38,20 @@ export class ProtocolState {
   //////////////////////////////////////////////////////////
 
   @Action(protocolActions.LoadVisits)
-  loadVisits(ctx: StateContext<ProtocolStateModel>): Observable<Subscription> {
+  loadVisits(ctx: StateContext<ProtocolStateModel>): Observable<Visit[]> {
     return this.visitsService.getAll()
       .pipe(
-        map((visits: Visit[]) =>
+        tap((visits: Visit[]) =>
           asapScheduler.schedule(() =>
             ctx.dispatch(new protocolActions.LoadVisitsSuccess(visits))
           )
         ),
-        catchError(error =>
-          of(
-            asapScheduler.schedule(() =>
-              ctx.dispatch(new protocolActions.LoadVisitsFail(error))
-            )
+        catchError(error => {
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new protocolActions.LoadVisitsFail(error))
           )
-        )
+          return throwError(() => error);
+        })
       );
   }
 
@@ -74,31 +73,30 @@ export class ProtocolState {
   //////////////////////////////////////////////////////////
 
   @Action(protocolActions.DeleteVisits)
-  deleteGroup(ctx: StateContext<TagStateModel>): Observable<Subscription> {
+  deleteVisits(ctx: StateContext<TagStateModel>): Observable<DeleteResult> {
     return this.visitsService.deleteAll()
       .pipe(
-        map((result: DeleteResult) =>
+        tap((result: DeleteResult) =>
           asapScheduler.schedule(() =>
             ctx.dispatch(new protocolActions.DeleteVisitsSuccess(result))
           )
         ),
-        catchError(error =>
-          of(
-            asapScheduler.schedule(() =>
-              ctx.dispatch(new protocolActions.DeleteVisitsFail(error))
-            )
+        catchError(error => {
+          asapScheduler.schedule(() =>
+            ctx.dispatch(new protocolActions.DeleteVisitsFail(error))
           )
-        )
+          return throwError(() => error);
+        })
       );
   }
 
   @Action(protocolActions.DeleteVisitsSuccess)
-  deleteGroupSuccess({patchState}: StateContext<ProtocolStateModel>): void {
+  deleteVisitsSuccess({patchState}: StateContext<ProtocolStateModel>): void {
     patchState({visits: []});
   }
 
   @Action(protocolActions.DeleteVisitsFail)
-  deleteGroupFail(): void {
+  deleteVisitsFail(): void {
     this.alertService.error('Delete Visits fail');
   }
 
