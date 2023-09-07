@@ -1,22 +1,9 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { Store } from "@ngxs/store";
-import { UserState } from "@modules/admin/modules/user/store/user.state";
+import { inject } from '@angular/core';
+import { ResolveFn } from "@angular/router";
 import { LoadUsers } from "@modules/admin/modules/user/store/user.actions";
+import { Store } from "@ngxs/store";
 
-@Injectable({
-  providedIn: 'root'
-})
-export class AdminUserResolver  {
-
-  constructor(private store: Store) {}
-
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    if (this.store.selectSnapshot(UserState.getUsers).length === 0) {
-      return this.store.dispatch(new LoadUsers())
-    }
-
-    return of(true);
-  }
-}
+export const adminUserResolver: ResolveFn<void> =
+  (/*route: ActivatedRouteSnapshot, state: RouterStateSnapshot*/) => {
+    return inject(Store).dispatch(new LoadUsers())
+  };

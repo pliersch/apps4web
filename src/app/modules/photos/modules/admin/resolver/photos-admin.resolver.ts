@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { LoadMetaData } from "@modules/photos/store/photos/photo.actions";
 import { Store } from "@ngxs/store";
 import { Observable, of } from 'rxjs';
@@ -13,11 +12,12 @@ export class PhotosAdminResolver {
 
   constructor(private store: Store) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+  resolve(): Observable<boolean> {
     if (!this.initialized) {
-      this.initStore();
       this.initialized = true;
+      return this.initStore();
     }
+    // fixme if backend down, true is bad.
     return of(true);
   }
 

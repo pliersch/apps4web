@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AdminSseService } from "@modules/admin/modules/protocol/service/admin-sse.service";
 import { AddVisit, LoadVisits } from "@modules/admin/modules/protocol/store/protocol.actions";
-import { ProtocolState } from "@modules/admin/modules/protocol/store/protocol.state";
 import { Visit } from "@modules/admin/modules/protocol/store/visit";
 import { Store } from "@ngxs/store";
 import { Observable, of } from 'rxjs';
@@ -11,9 +10,10 @@ import { Observable, of } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AdminProtocolResolver  {
+export class AdminProtocolResolver {
 
-  newVisitExist = true;
+  private initialized = false;
+  newVisitExist = false;
 
   constructor(private store: Store,
               private adminSseService: AdminSseService,
@@ -22,12 +22,25 @@ export class AdminProtocolResolver  {
   }
 
   resolve(): Observable<boolean> {
-    const noVisits = this.store.selectSnapshot(ProtocolState.getVisits).length === 0;
-    // todo use 'handleChanges' like chat- and photo-resolver
-    if (noVisits || this.newVisitExist) {
-      this.store.dispatch(new LoadVisits())
+    if (!this.initialized) {
+      this.initialize();
+    } else {
+      this.handleChanges()
     }
     return of(true);
+  }
+
+  private initialize(): void {
+    this.store.dispatch(new LoadVisits());
+    this.initialized = true;
+  }
+
+  private handleChanges(): void {
+    if (this.newVisitExist) {
+      console.log('AdminProtocolResolver handleChanges: ',)
+      this.store.dispatch(new LoadVisits());
+      this.newVisitExist = false;
+    }
   }
 
   private onVisitAdded(visit: Visit): void {
