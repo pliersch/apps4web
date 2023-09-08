@@ -1,0 +1,26 @@
+@use '@angular/material' as mat;
+
+@mixin theme-color($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+
+  .primaryColor {
+    color: mat.get-color-from-palette($primary);
+  }
+  .primaryBgColor {
+    background-color: mat.get-color-from-palette($primary);
+  }
+  .accentColor {
+    color: mat.get-color-from-palette($accent);
+  }
+  .accentBgColor {
+    background-color: mat.get-color-from-palette($accent);
+  }
+  .warnColor {
+    color: mat.get-color-from-palette($warn);
+  }
+  .warnBgColor {
+    background-color: mat.get-color-from-palette($warn);
+  }
+}
