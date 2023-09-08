@@ -1,9 +1,9 @@
-import { LoginFail, LoginWithGoogle, Logout } from "@account/store/account.actions";
+import { LoginFail, LoginWithEmail, LoginWithGoogle, Logout } from "@account/store/account.actions";
 import { AccountState } from "@account/store/account.state";
 import { GoogleUser } from "@account/store/google-user.model";
 import { User } from "@account/store/user.model";
 import { NgIf } from "@angular/common";
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, isDevMode, OnInit } from '@angular/core';
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
@@ -30,11 +30,16 @@ export class SigninComponent implements OnInit {
   googleUser$: Observable<GoogleUser>;
   googleUser: GoogleUser | null;
 
+  isDevMode = isDevMode;
+
   constructor(private store: Store,
               private router: Router) { }
 
   @HostListener('window:load')
   onLoad(): void {
+    if (isDevMode()) {
+      return;
+    }
     if (!window.google?.accounts) {
       return;
     }
@@ -49,6 +54,10 @@ export class SigninComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (isDevMode()) {
+      this.store.dispatch(new LoginWithEmail('test.admin@a4w.de', '..,-fidM'))
+      return;
+    }
     this.googleUser$.subscribe(res => {
       this.googleUser = res;
     });
@@ -56,11 +65,13 @@ export class SigninComponent implements OnInit {
       if (!this.googleUser) { // prefer google user to show photo
         this.user = res;
       }
-
     });
   }
 
   handleCredentialResponse(response: CredentialResponse): void {
+    if (isDevMode()) {
+      return;
+    }
     const user = this.decodeCredentialResponse(response);
     if (user) {
       this.store.dispatch(new LoginWithGoogle(user));
