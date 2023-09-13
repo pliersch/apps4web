@@ -1,4 +1,4 @@
-import { AccountModule } from '@account/account.module';
+import { AccountService } from "@account/store/account.service";
 import { AccountState } from '@account/store/account.state';
 import { registerLocaleData } from '@angular/common';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -29,10 +29,7 @@ import { AppState } from '@app/core/stores/app/app.state';
 import { RouterState } from '@app/core/stores/routes/router.state';
 
 import { environment } from '@environments/environment';
-import { RadioModule } from '@modules/radio/radio.module';
-import { RecipesModule } from '@modules/recipes/recipes.module';
 import { ThemeState } from '@modules/themes/stores/theme-state';
-import { WasteCalendarModule } from '@modules/waste-calendar/waste-calendar.module';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsModule, NgxsModuleOptions, Store } from '@ngxs/store';
 import { NgScrollbarModule } from 'ngx-scrollbar';
@@ -62,16 +59,13 @@ bootstrapApplication(AppComponent, {
       //SocketIoModule.forRoot(config),
       NgxsModule.forRoot([AppState, RouterState, ThemeState, AccountState], ngxsConfig),
       NgxsReduxDevtoolsPluginModule.forRoot( /*{disabled: !isDevMode()}*/),
-      WasteCalendarModule,
-      RecipesModule,
+      // WasteCalendarModule,
       ServiceWorkerModule.register('ngsw-worker.js', {
         enabled: !isDevMode(),
         // Register the ServiceWorker as soon as the application is stable
         // or after 30 seconds (whichever comes first).
         registrationStrategy: 'registerWhenStable:30000'
       }),
-      RadioModule,
-      AccountModule,
       NgScrollbarModule),
     {provide: LOCALE_ID, useValue: 'de'},
     {provide: DateAdapter, useClass: DateFnsAdapter, deps: [MAT_DATE_LOCALE]},
@@ -81,6 +75,7 @@ bootstrapApplication(AppComponent, {
     // {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: ErrorHandler, useClass: GlobalErrorHandler},
     {provide: AlertService, useClass: AlertService},
+    {provide: AccountService, useClass: AccountService},
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),
   ]

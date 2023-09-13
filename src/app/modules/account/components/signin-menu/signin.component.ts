@@ -30,14 +30,16 @@ export class SigninComponent implements OnInit {
   googleUser$: Observable<GoogleUser>;
   googleUser: GoogleUser | null;
 
-  isDevMode = isDevMode;
+  isDevMode = isDevMode();
+
+  // isDevMode = false;
 
   constructor(private store: Store,
               private router: Router) { }
 
   @HostListener('window:load')
   onLoad(): void {
-    if (isDevMode()) {
+    if (this.isDevMode) {
       return;
     }
     if (!window.google?.accounts) {
@@ -54,7 +56,7 @@ export class SigninComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (isDevMode()) {
+    if (this.isDevMode) {
       this.store.dispatch(new LoginWithEmail('test.admin@a4w.de', '..,-fidM'))
       return;
     }
@@ -69,7 +71,7 @@ export class SigninComponent implements OnInit {
   }
 
   handleCredentialResponse(response: CredentialResponse): void {
-    if (isDevMode()) {
+    if (this.isDevMode) {
       return;
     }
     const user = this.decodeCredentialResponse(response);

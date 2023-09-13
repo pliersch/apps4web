@@ -9,16 +9,20 @@ import { ChatResolver } from "@modules/chat/resolver/chat.resolver";
 import { ChatService } from "@modules/chat/services/chat.service";
 import { ChatState } from "@modules/chat/store/chat.state";
 import { DashboardComponent } from "@modules/dashboard/dashboard.component";
+import { PhotosResolver } from "@modules/photos/resolver/photos.resolver";
+import { PhotoService } from "@modules/photos/services/photo.service";
+import { TagService } from "@modules/photos/services/tag.service";
 import { PhotoState } from "@modules/photos/store/photos/photo.state";
+import { TagState } from "@modules/photos/store/tags/tag.state";
 import { NgxsModule } from "@ngxs/store";
 import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
 
-const photosModule = () => import('@modules/photos/photos.module').then((x) => x.PhotosModule);
-const accountModule = () => import('@app/modules/account/account.module').then((x) => x.AccountModule);
 const adminRoutes = import('@modules/admin/admin-routes');
+const photosRoutes = import('@modules/photos/photos-routes');
+const accountComponent = () => import('@app/modules/account/account.component').then((x) => x.AccountComponent);
 // const adminComponent = import('@modules/admin/admin.component').then(x => x.AdminComponent);
-const three = import('@modules/three/three.component').then(x => x.ThreeComponent);
-const chat = import('@app/modules/chat/chat.component').then(x => x.ChatComponent);
+const three = () => import('@modules/three/three.component').then(x => x.ThreeComponent);
+const chat = () => import('@app/modules/chat/chat.component').then(x => x.ChatComponent);
 
 const routes: Routes = [{
   path: '', component: DefaultLayoutComponent, providers: [AlertService], children: [
@@ -28,7 +32,7 @@ const routes: Routes = [{
     {
       path: 'chat',
       title: 'Chat',
-      loadComponent: () => chat,
+      loadComponent: chat,
       providers: [ChatService, importProvidersFrom(
         NgxsModule.forFeature([ChatState])
       )],
@@ -48,9 +52,23 @@ const routes: Routes = [{
         )
       ]
     },
-    {path: 'photos', title: 'Photos', loadChildren: photosModule, canActivate: [AuthGuard]},
-    {path: 'three', title: 'ThreeJS', loadComponent: () => three, canActivate: [AuthGuard]},
-    {path: 'account', title: 'Account', loadChildren: accountModule},
+    {
+      path: 'photos',
+      // loadComponent: () => adminComponent,
+      // component: AdminComponent,
+      loadChildren: () => photosRoutes,
+      title: 'Photos',
+      canActivate: [AuthGuard],
+      providers: [
+        TagService, PhotoService, PhotosResolver,
+        importProvidersFrom(
+          NgxsModule.forFeature([PhotoState, TagState])
+        )
+      ]
+    },
+    // {path: 'photos', title: 'Photos', loadChildren: photosModule, canActivate: [AuthGuard]},
+    {path: 'three', title: 'ThreeJS', loadComponent: three, canActivate: [AuthGuard]},
+    {path: 'account', title: 'Account', loadComponent: accountComponent},
     {path: '**', redirectTo: '', pathMatch: 'full'},
     {path: '', redirectTo: '', pathMatch: 'full'},
     {path: 'login', redirectTo: 'account/login', pathMatch: 'full'},

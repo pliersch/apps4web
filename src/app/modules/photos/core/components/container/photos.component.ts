@@ -7,8 +7,8 @@ import { Role } from "@modules/admin/modules/user/store/role";
 
 @Component({
   selector: 'app-photos-container',
-  templateUrl: './photos-container.component.html',
-  styleUrls: ['./photos-container.component.scss'],
+  templateUrl: './photos.component.html',
+  styleUrls: ['./photos.component.scss'],
   standalone: true,
   imports: [
     MatTabsModule,
@@ -16,7 +16,7 @@ import { Role } from "@modules/admin/modules/user/store/role";
     RouterOutlet,
   ],
 })
-export class PhotosContainerComponent implements OnInit {
+export class PhotosComponent implements OnInit {
 
   // fixme Role ignored
   routes: Route[] = [
