@@ -17,8 +17,10 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { bootstrapApplication, BrowserModule } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideRouter } from "@angular/router";
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { AppRoutingModule } from '@app/app-routing.module';
+
+import { ROUTES } from '@app/app-routes';
 import { AppComponent } from '@app/app.component';
 import { GlobalErrorHandler } from '@app/common/helpers/global-error-handler';
 import { AlertService } from "@app/common/services/alert.service";
@@ -55,7 +57,8 @@ registerLocaleData(localeDe);
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(BrowserModule, AppRoutingModule, MatSnackBarModule, MatDialogModule,
+    provideRouter(ROUTES),
+    importProvidersFrom(BrowserModule, MatSnackBarModule, MatDialogModule,
       //SocketIoModule.forRoot(config),
       NgxsModule.forRoot([AppState, RouterState, ThemeState, AccountState], ngxsConfig),
       NgxsReduxDevtoolsPluginModule.forRoot( /*{disabled: !isDevMode()}*/),
