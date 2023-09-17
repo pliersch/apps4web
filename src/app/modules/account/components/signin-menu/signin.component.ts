@@ -8,6 +8,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { Router } from "@angular/router";
+import { RouterState } from "@app/core/stores/routes/router.state";
 import { Select, Store } from "@ngxs/store";
 import { CredentialResponse } from "google-one-tap";
 import { Observable } from "rxjs";
@@ -58,13 +59,16 @@ export class SigninComponent implements OnInit {
   ngOnInit(): void {
     if (this.isDevMode) {
       this.store.dispatch(new LoginWithEmail('test.admin@a4w.de', '..,-fidM'))
-      return;
     }
     this.googleUser$.subscribe(res => {
       this.googleUser = res;
     });
     this.user$.subscribe(res => {
-      if (!this.googleUser) { // prefer google user to show photo
+      const routeBeforeSignin = this.store.selectSnapshot(RouterState.getRouteBeforeSignin);
+      if (routeBeforeSignin != '') {
+        void this.router.navigateByUrl(routeBeforeSignin);
+      }
+      if (!this.googleUser) { // prefer google user to show avatar
         this.user = res;
       }
     });
