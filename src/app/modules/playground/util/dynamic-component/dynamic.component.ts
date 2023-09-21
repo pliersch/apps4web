@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, Type, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, Type, ViewChild } from '@angular/core';
 import { DynamicDirective } from "@modules/playground/util/dynamic-component/dynamic.directive";
 import { DynamicService } from "@modules/playground/util/dynamic-component/dynamic.service";
 
@@ -9,21 +9,21 @@ import { DynamicService } from "@modules/playground/util/dynamic-component/dynam
   standalone: true,
   imports: [DynamicDirective]
 })
-export class DynamicComponent implements OnInit, AfterViewInit {
+export class DynamicComponent implements OnInit {
 
   @ViewChild(DynamicDirective, {static: true})
   appDynamicHost!: DynamicDirective;
+
+  @Input({required: true})
+  componentName!: string;
 
   private currentComponent: Type<Component>;
 
   constructor(private dynamicService: DynamicService) { }
 
   ngOnInit(): void {
-    // this.dynamicService.setComponentHost(this);
-  }
-
-  ngAfterViewInit(): void {
     this.dynamicService.setComponentHost(this);
+    this.dynamicService.addHost(this);
   }
 
   loadComponent(component: Type<Component>): void {
@@ -41,5 +41,6 @@ export class DynamicComponent implements OnInit, AfterViewInit {
     }
     this.appDynamicHost.viewContainerRef.clear();
   }
+
 
 }

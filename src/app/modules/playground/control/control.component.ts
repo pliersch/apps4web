@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { ComponentChooserService } from "@modules/playground/common/services/component-chooser.service";
@@ -13,10 +13,17 @@ import { ComponentChooserService } from "@modules/playground/common/services/com
 })
 export class ControlComponent {
 
-  constructor(private componentService: ComponentChooserService) {
-  }
+  @Output()
+  toggleFullscreenEvent = new EventEmitter<void>();
+
+  constructor(private componentService: ComponentChooserService) { }
 
   setAppbar(): void {
     this.componentService.setAppbar();
   }
+
+  emitFullscreen(): void {
+    this.toggleFullscreenEvent.emit();
+  }
+
 }

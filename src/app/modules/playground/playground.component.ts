@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ControlComponent } from "@modules/playground/control/control.component";
 import { SiteComponent } from "@modules/playground/site/site.component";
 import { NgScrollbar } from "ngx-scrollbar";
@@ -13,4 +13,15 @@ import { NgScrollbar } from "ngx-scrollbar";
 })
 export class PlaygroundComponent {
 
+  @ViewChild('fullScreen')
+  divRef: ElementRef;
+
+  toggleFullScreen(): void {
+    const elem = this.divRef.nativeElement;
+    if (!document.fullscreenElement) {
+      elem.requestFullscreen()
+    } else {
+      void document.exitFullscreen()
+    }
+  }
 }

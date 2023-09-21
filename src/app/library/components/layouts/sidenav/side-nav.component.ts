@@ -9,7 +9,6 @@ import { constants } from "@app/core/const/const";
 import { Route, RouterState } from "@app/core/stores/routes/router.state";
 import { DynamicComponent } from "@modules/playground/util/dynamic-component/dynamic.component";
 import { DynamicDirective } from "@modules/playground/util/dynamic-component/dynamic.directive";
-import { DynamicService } from "@modules/playground/util/dynamic-component/dynamic.service";
 import { ThemeState } from "@modules/themes/stores/theme-state";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from 'rxjs';
@@ -36,7 +35,6 @@ export class SideNavComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver,
               @Inject(DOCUMENT) private document: Document,
               private renderer: Renderer2,
-              private dynamicService: DynamicService,
               private store: Store) {
   }
 
