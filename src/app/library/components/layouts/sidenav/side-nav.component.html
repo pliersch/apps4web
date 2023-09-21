@@ -1,0 +1,25 @@
+<div class="grid" [class]="theme">
+
+  <app-dynamic/>
+  <!--  <ng-template appDynamicHost></ng-template>-->
+  <!--  <app-appbar class="appbar mat-elevation-z6" [appName]="appName" [isHandset$]="isHandset$"-->
+  <!--              (switchThemeEvent)="onSwitchTheme($event)" (toggleNavEvent)="toggleNav()"></app-appbar>-->
+
+  <mat-sidenav-container class="main">
+    <mat-sidenav mode="over">
+
+      <mat-nav-list>
+        <nav>
+          <a mat-list-item *ngFor="let route of routes$ | async" [routerLink]="[route.path]"
+             [routerLinkActive]="['active-route']">{{route.name}}</a>
+        </nav>
+      </mat-nav-list>
+
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="full-width-height">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

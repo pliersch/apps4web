@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { SimpleAppBarComponent } from "@app/library/components/toolbars/appbar/simple-app-bar.component";
-import { ControlComponent } from "@modules/playground/control/control.component";
+import { DefaultLayoutComponent } from "@app/core/layouts/default-layout/default-layout.component";
+import { SideNavComponent } from "@app/library/components/layouts/sidenav/side-nav.component";
+import { NgScrollbar } from "ngx-scrollbar";
 
 @Component({
   selector: 'app-site',
   standalone: true,
-  imports: [CommonModule, SimpleAppBarComponent, ControlComponent],
+  imports: [CommonModule, NgScrollbar, DefaultLayoutComponent, SideNavComponent],
   templateUrl: './site.component.html',
   styleUrls: ['./site.component.scss']
 })

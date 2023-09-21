@@ -12,10 +12,10 @@ import { Observable } from "rxjs";
   selector: 'lib-appbar',
   standalone: true,
   imports: [CommonModule, MatToolbarModule, MatIconModule, MatButtonModule, RouterLinkActive, RouterLink],
-  templateUrl: './simple-app-bar.component.html',
-  styleUrls: ['./simple-app-bar.component.scss']
+  templateUrl: './app-bar.component.html',
+  styleUrls: ['./app-bar.component.scss']
 })
-export class SimpleAppBarComponent {
+export class AppBarComponent {
 
   @Input() appName: string;
   @Input() isHandset$: Observable<boolean>;
