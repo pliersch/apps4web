@@ -16,12 +16,13 @@ import { TagState } from "@modules/photos/store/tags/tag.state";
 import { NgxsModule } from "@ngxs/store";
 import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
 
-const adminRoutes = import('@modules/admin/admin-routes');
-const photosRoutes = import('@modules/photos/photos-routes');
+const adminRoutes = () => import('@modules/admin/admin-routes');
+const photosRoutes = () => import('@modules/photos/photos-routes');
+const playgroundRoutes = () => import('@modules/playground/playground-routes');
 const accountComponent = () => import('@app/modules/account/account.component').then((x) => x.AccountComponent);
 // const adminComponent = import('@modules/admin/admin.component').then(x => x.AdminComponent);
 const three = () => import('@modules/three/three.component').then(x => x.ThreeComponent);
-const playground = () => import('@modules/playground/playground.component').then(x => x.PlaygroundComponent);
+// const playground = () => import('@modules/playground/playground.component').then(x => x.PlaygroundComponent);
 const chat = () => import('@app/modules/chat/chat.component').then(x => x.ChatComponent);
 
 export const ROUTES: Route[] = [
@@ -42,9 +43,7 @@ export const ROUTES: Route[] = [
       },
       {
         path: 'admin',
-        // loadComponent: () => adminComponent,
-        // component: AdminComponent,
-        loadChildren: () => adminRoutes,
+        loadChildren: adminRoutes,
         title: 'Administration',
         canActivate: [AdminGuard],
         providers: [
@@ -55,9 +54,7 @@ export const ROUTES: Route[] = [
       },
       {
         path: 'photos',
-        // loadComponent: () => adminComponent,
-        // component: AdminComponent,
-        loadChildren: () => photosRoutes,
+        loadChildren: photosRoutes,
         title: 'Photos',
         canActivate: [AuthGuard],
         providers: [
@@ -67,9 +64,8 @@ export const ROUTES: Route[] = [
           )
         ]
       },
-      // {path: 'photos', title: 'Photos', loadChildren: photosModule, canActivate: [AuthGuard]},
+      {path: 'playground', title: 'Playground', loadChildren: playgroundRoutes, canActivate: [AuthGuard]},
       {path: 'three', title: 'ThreeJS', loadComponent: three, canActivate: [AuthGuard]},
-      {path: 'playground', title: 'Playground', loadComponent: playground, canActivate: [AuthGuard]},
       {path: 'account', title: 'Account', loadComponent: accountComponent},
       {path: '**', redirectTo: '', pathMatch: 'full'},
       {path: '', redirectTo: '', pathMatch: 'full'},

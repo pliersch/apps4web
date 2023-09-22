@@ -26,4 +26,11 @@ export class ControlComponent {
     this.toggleFullscreenEvent.emit();
   }
 
+  setComp1(): void {
+    this.componentService.setComp1();
+  }
+
+  setComp2(): void {
+    this.componentService.setComp2();
+  }
 }

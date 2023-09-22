@@ -1,10 +1,5 @@
-<div class="grid" [class]="theme">
-
-  <app-dynamic [componentName]="'foo'"/>
-  <app-dynamic [componentName]="'bar'"/>
-  <!--  <ng-template appDynamicHost></ng-template>-->
-  <!--  <app-appbar class="appbar mat-elevation-z6" [appName]="appName" [isHandset$]="isHandset$"-->
-  <!--              (switchThemeEvent)="onSwitchTheme($event)" (toggleNavEvent)="toggleNav()"></app-appbar>-->
+<div class="column-max-width">
+  <app-dynamic [componentName]="'appbar'"/>
 
   <mat-sidenav-container class="main">
     <mat-sidenav mode="over">
@@ -18,9 +13,7 @@
 
     </mat-sidenav>
     <mat-sidenav-content>
-      <div class="full-width-height">
-        <router-outlet></router-outlet>
-      </div>
+      <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
