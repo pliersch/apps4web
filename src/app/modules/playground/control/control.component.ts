@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
+import { EventBusService } from "@app/common/services/event-bus.service";
 import { ComponentChooserService } from "@modules/playground/common/services/component-chooser.service";
 
 @Component({
@@ -16,14 +17,11 @@ export class ControlComponent {
   @Output()
   toggleFullscreenEvent = new EventEmitter<void>();
 
-  constructor(private componentService: ComponentChooserService) { }
+  constructor(private componentService: ComponentChooserService,
+              private eventBus: EventBusService) { }
 
   setAppbar(): void {
     this.componentService.setAppbar();
-  }
-
-  emitFullscreen(): void {
-    this.toggleFullscreenEvent.emit();
   }
 
   setComp1(): void {
@@ -32,5 +30,14 @@ export class ControlComponent {
 
   setComp2(): void {
     this.componentService.setComp2();
+  }
+
+  toggleFullscreen(): void {
+    this.toggleFullscreenEvent.emit();
+  }
+
+  switchTheme(): void {
+    // todo use store value as payload
+    this.eventBus.emit({name: 'switch-theme'})
   }
 }

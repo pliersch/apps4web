@@ -8,7 +8,7 @@ export default [
     // path: '', component: FlexColumnComponent,
     path: '', component: PlaygroundComponent,
     children: [
-      {path: '', title: 'Admin Chat', loadComponent: placeholder},
+      {path: '', title: 'Playground', loadComponent: placeholder},
       // {path: '**', redirectTo: 'user', pathMatch: 'prefix'},
       // {path: '', redirectTo: 'user', pathMatch: 'prefix'}
     ]

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { SideNavComponent } from "@app/library/components/layouts/sidenav/side-nav.component";
 import { ControlComponent } from "@modules/playground/control/control.component";
 import { NgScrollbar } from "ngx-scrollbar";
@@ -15,6 +15,8 @@ export class PlaygroundComponent {
 
   @ViewChild('fullScreen')
   divRef: ElementRef;
+
+  constructor(private renderer: Renderer2) {}
 
   toggleFullScreen(): void {
     const elem = this.divRef.nativeElement;

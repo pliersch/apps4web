@@ -1,9 +1,10 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AsyncPipe, DOCUMENT, NgFor } from "@angular/common";
-import { Component, Inject, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { EventBusService } from "@app/common/services/event-bus.service";
 import { WidgetDirective } from "@app/core/components/widget/widget.directive";
 import { constants } from "@app/core/const/const";
 import { Route, RouterState } from "@app/core/stores/routes/router.state";
@@ -24,23 +25,32 @@ import { map } from 'rxjs/operators';
 
 export class SideNavComponent implements OnInit {
 
-  @ViewChild(MatSidenav) drawer!: MatSidenav;
+  @ViewChild(MatSidenav)
+  drawer!: MatSidenav;
+
+  @ViewChild('themeRef')
+  themeRef: ElementRef;
 
   @Select(RouterState.getAccessibleRoutes)
   routes$: Observable<Route[]>;
 
   appName = constants.APP_NAME;
+  // todo use store value, remove prop
   theme = 'dark-theme';
 
   constructor(private breakpointObserver: BreakpointObserver,
               @Inject(DOCUMENT) private document: Document,
               private renderer: Renderer2,
+              private eventBus: EventBusService,
               private store: Store) {
   }
 
   ngOnInit(): void {
+    // todo don't switch theme here, set store value
+    this.eventBus.on('switch-theme', () => this.switchTheme(''))
     this.store.select(ThemeState.theme).subscribe((theme) => {
       this.theme = theme;
+      // todo problem site-build vs. final. use "config.theme-root: 'document'" for build!?
       this.renderer.addClass(this.document.body, theme);
     });
   }
@@ -54,10 +64,11 @@ export class SideNavComponent implements OnInit {
     void this.drawer.toggle();
   }
 
-  onSwitchTheme($event: string): void {
-    this.renderer.addClass(this.document.body, $event);
-    this.renderer.removeClass(this.document.body, this.theme);
-    this.theme = $event;
+  switchTheme($event: string): void {
+    this.renderer.removeClass(this.themeRef.nativeElement, this.theme);
+    this.theme = this.theme == 'dark-theme' ? 'light-theme' : 'dark-theme'
+    this.renderer.addClass(this.themeRef.nativeElement, this.theme);
+    // this.theme = $event;
   }
 
 }
