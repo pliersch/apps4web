@@ -19,7 +19,9 @@
       "name": "Klassik Radio Schiller Berlin",
       "logoUrl": "/assets/radio/Klassik_Radio_schiller-berlin.jpg",
       "stream": "https://klassikr.streamabc.net/klr-schillerberlin-mp3-192-6610643?sABC=636o609n%230%231sn661781pp10567n0q87oq4r97q0n6o%23cubabfgne&aw_0_1st.playerid=phonostar&amsparams=playerid:phonostar;skey:1667981466"
-    },
+    }
+  ],
+  "classic-radio": [
     {
       "name": "Klassik Radio Healing Spirit",
       "logoUrl": "/assets/radio/Klassik_Radio_Healing_Spirit.png",
@@ -29,6 +31,11 @@
       "name": "Klassik Radio Lounge",
       "logoUrl": "/assets/radio/Klassik_Radio_Lounge.png",
       "stream": "https://stream.klassikradio.de/lounge/mp3-192/radioplayer?rp_source=1&=&&___cb=181660938504788"
+    },
+    {
+      "name": "Klassik Radio Lounge Beat",
+      "logoUrl": "/assets/radio/Klassik_Radio_Lounge_Beat.png",
+      "stream": "https://stream.klassikradio.de/lounge-beat/mp3-192/radioplayer?rp_source=1&=&&___cb=528560840129615"
     }
   ],
   "classic-radio": [
