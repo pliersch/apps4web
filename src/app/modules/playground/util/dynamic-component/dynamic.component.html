@@ -1,11 +1,14 @@
 <div class="image-container dynamic-wrapper-container" [class.no-child]="!currentComponent">
   <ng-template appDynamicHost></ng-template>
-  <div class="column action-container">
+  <!--  todo use cdk overlay for action container (trigger by eventbus)-->
+  <!--  https://stackblitz.com/edit/custom-position-strategy?file=app%2Fapp.component.ts-->
+  <!--  https://stackblitz.com/edit/update-position-strategy?file=app%2Fapp.component.ts-->
+  <div class="action-container defaultBgColor">
     <button mat-icon-button (click)="onClickConfigure()">
-      <mat-icon>visibility</mat-icon>
+      <mat-icon>edit</mat-icon>
     </button>
     <button mat-icon-button (click)="onClickSwitch()">
-      <mat-icon>visibility</mat-icon>
+      <mat-icon>delete</mat-icon>
     </button>
   </div>
 </div>

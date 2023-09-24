@@ -4,7 +4,13 @@
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);
   $warn: map-get($theme, warn);
+  //$colorBackground: map-get($theme, background-palette);
+  //@debug "Fuck: #{$colorBackground}";
 
+  .defaultBgColor {
+    color: #46a246;
+    //background-color: mat.get-color-from-palette($colorBackground);
+  }
   .primaryColor {
     color: mat.get-color-from-palette($primary);
   }
@@ -24,3 +30,4 @@
     background-color: mat.get-color-from-palette($warn);
   }
 }
+
