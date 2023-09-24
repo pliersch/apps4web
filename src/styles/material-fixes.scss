@@ -2,3 +2,7 @@
   margin-right: 0 !important;
   margin-left: 0 !important;
 }
+
+mat-form-field mat-label {
+  color: var(--mdc-filled-text-field-label-text-color);
+}
