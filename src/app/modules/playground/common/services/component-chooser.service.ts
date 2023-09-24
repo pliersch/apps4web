@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SimpleAppBarComponent } from "@app/library/components/toolbars/simple-appbar/simple-app-bar.component";
+import { DefaultAppBarComponent } from "@app/library/components/toolbars/appbar/default-app-bar.component";
 import { DynamicService } from "@modules/playground/util/dynamic-component/dynamic.service";
 import { PlayerComponent } from "@modules/radio/components/player/player.component";
 import { PizzaComponent } from "@modules/recipes/pizza/pizza.component";
@@ -12,7 +12,7 @@ export class ComponentChooserService {
   constructor(private dynamicService: DynamicService) { }
 
   setAppbar(): void {
-    this.dynamicService.setComponent('appbar', SimpleAppBarComponent)
+    this.dynamicService.setComponent('appbar', DefaultAppBarComponent)
     // this.dynamicService.setComponent('bar', SimpleAppBarComponent)
   }
 

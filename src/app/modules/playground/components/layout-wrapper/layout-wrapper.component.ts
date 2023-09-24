@@ -12,7 +12,13 @@ import { DynamicComponent } from "@modules/playground/util/dynamic-component/dyn
 })
 export class LayoutWrapperComponent {
 
+  dynamicComponentNames: string[] = [];
+  count = 0;
+  locked = false;
+
   onClickAddComponent(): void {
+    this.locked = true;
+    this.dynamicComponentNames.push('dyn' + this.count++);
 
   }
 }

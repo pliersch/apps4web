@@ -7,14 +7,11 @@ import { DynamicComponent } from "@modules/playground/util/dynamic-component/dyn
 export class DynamicService {
   private dynamicHost: DynamicComponent;
   private hosts: DynamicComponent[] = [];
-  private component: any;
+
+  // private component: any;
 
   addHost(component: DynamicComponent): void {
     this.hosts.push(component);
-  }
-
-  setComponentHost(component: DynamicComponent): void {
-    this.dynamicHost = component;
   }
 
   setComponent(hostName: string, component: Type<any>): void {
@@ -24,8 +21,8 @@ export class DynamicService {
     }
   }
 
-  removeComponent(component: Type<any>): void {
-    this.dynamicHost.removeComponent(component);
-  }
+  // removeComponent(component: Type<any>): void {
+  //   this.dynamicHost.removeComponent(component);
+  // }
 
 }

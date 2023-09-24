@@ -1,3 +1,4 @@
+import { NgIf } from "@angular/common";
 import { Component, Input, OnInit, Type, ViewChild } from '@angular/core';
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
@@ -12,7 +13,7 @@ import { ImageFallbackDirective } from "@modules/share/directives/image-fallback
   templateUrl: './dynamic.component.html',
   styleUrls: ['./dynamic.component.scss'],
   standalone: true,
-  imports: [DynamicDirective, ImageFallbackDirective, MatButtonModule, MatIconModule, MatCardModule, MatTooltipModule]
+  imports: [DynamicDirective, ImageFallbackDirective, MatButtonModule, MatIconModule, MatCardModule, MatTooltipModule, NgIf]
 })
 export class DynamicComponent implements OnInit {
 
@@ -27,7 +28,6 @@ export class DynamicComponent implements OnInit {
   constructor(private dynamicService: DynamicService) { }
 
   ngOnInit(): void {
-    this.dynamicService.setComponentHost(this);
     this.dynamicService.addHost(this);
   }
 

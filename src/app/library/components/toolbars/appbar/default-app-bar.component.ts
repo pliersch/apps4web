@@ -9,13 +9,13 @@ import { Select } from "@ngxs/store";
 import { Observable } from "rxjs";
 
 @Component({
-  selector: 'lib-appbar',
+  selector: 'lib-appbar-default',
   standalone: true,
   imports: [CommonModule, MatToolbarModule, MatIconModule, MatButtonModule, RouterLinkActive, RouterLink],
-  templateUrl: './app-bar.component.html',
-  styleUrls: ['./app-bar.component.scss']
+  templateUrl: './default-app-bar.component.html',
+  styleUrls: ['./default-app-bar.component.scss']
 })
-export class AppBarComponent {
+export class DefaultAppBarComponent {
 
   @Input() appName: string;
   @Input() isHandset$: Observable<boolean>;
