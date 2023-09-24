@@ -1,6 +1,8 @@
 import { Component, Input, OnInit, Type, ViewChild } from '@angular/core';
 import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
+import { MatTooltipModule } from "@angular/material/tooltip";
 import { DynamicDirective } from "@modules/playground/util/dynamic-component/dynamic.directive";
 import { DynamicService } from "@modules/playground/util/dynamic-component/dynamic.service";
 import { ImageFallbackDirective } from "@modules/share/directives/image-fallback-directive";
@@ -10,7 +12,7 @@ import { ImageFallbackDirective } from "@modules/share/directives/image-fallback
   templateUrl: './dynamic.component.html',
   styleUrls: ['./dynamic.component.scss'],
   standalone: true,
-  imports: [DynamicDirective, ImageFallbackDirective, MatButtonModule, MatIconModule]
+  imports: [DynamicDirective, ImageFallbackDirective, MatButtonModule, MatIconModule, MatCardModule, MatTooltipModule]
 })
 export class DynamicComponent implements OnInit {
 
@@ -52,5 +54,9 @@ export class DynamicComponent implements OnInit {
 
   onClickSwitch(): void {
 
+  }
+
+  onClickDelete(): void {
+    this.removeComponent(this.currentComponent);
   }
 }
