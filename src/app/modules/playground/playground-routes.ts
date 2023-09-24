@@ -1,7 +1,7 @@
 import { Route } from '@angular/router';
 import { PlaygroundComponent } from "@modules/playground/playground.component";
 
-const placeholder = () => import('./components/placeholder/placeholder.component').then((x) => x.PlaceholderComponent);
+const placeholder = () => import('@modules/playground/components/layout-wrapper/layout-wrapper.component').then((x) => x.LayoutWrapperComponent);
 
 export default [
   {

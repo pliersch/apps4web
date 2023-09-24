@@ -1,0 +1,40 @@
+.dynamic-wrapper-container {
+  min-height: 60px;
+  display: flex;
+  //flex-direction: column;
+  //justify-content: center;
+  //align-items: center;
+  //text-align: center;
+  //border: dashed 1px #979797;
+  margin: 0 auto;
+}
+
+.image-container {
+  //position: relative;
+  //display: flex;
+  //margin: 10px;
+  //transition: .2s ease;
+  //opacity: 1;
+
+  &:hover {
+    border-color: darkgray;
+
+    .action-container {
+      opacity: 1;
+    }
+  }
+
+  &.active {
+    border-color: darkgray;
+    //border-color: var(--primary-color);
+  }
+}
+
+.no-child {
+  border: dashed 1px #979797;
+}
+
+.action-container {
+  transition: .2s ease;
+  opacity: 0;
+}

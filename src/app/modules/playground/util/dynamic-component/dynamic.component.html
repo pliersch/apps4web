@@ -1,2 +1,11 @@
-<ng-template appDynamicHost></ng-template>
-
+<div class="image-container dynamic-wrapper-container" [class.no-child]="!currentComponent">
+  <ng-template appDynamicHost></ng-template>
+  <div class="column action-container">
+    <button mat-icon-button (click)="onClickConfigure()">
+      <mat-icon>visibility</mat-icon>
+    </button>
+    <button mat-icon-button (click)="onClickSwitch()">
+      <mat-icon>visibility</mat-icon>
+    </button>
+  </div>
+</div>

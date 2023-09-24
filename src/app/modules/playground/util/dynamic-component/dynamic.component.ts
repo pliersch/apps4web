@@ -1,13 +1,16 @@
 import { Component, Input, OnInit, Type, ViewChild } from '@angular/core';
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
 import { DynamicDirective } from "@modules/playground/util/dynamic-component/dynamic.directive";
 import { DynamicService } from "@modules/playground/util/dynamic-component/dynamic.service";
+import { ImageFallbackDirective } from "@modules/share/directives/image-fallback-directive";
 
 @Component({
   selector: 'app-dynamic',
   templateUrl: './dynamic.component.html',
   styleUrls: ['./dynamic.component.scss'],
   standalone: true,
-  imports: [DynamicDirective]
+  imports: [DynamicDirective, ImageFallbackDirective, MatButtonModule, MatIconModule]
 })
 export class DynamicComponent implements OnInit {
 
@@ -17,7 +20,7 @@ export class DynamicComponent implements OnInit {
   @Input({required: true})
   componentName!: string;
 
-  private currentComponent: Type<Component>;
+  currentComponent: Type<Component>;
 
   constructor(private dynamicService: DynamicService) { }
 
@@ -35,6 +38,7 @@ export class DynamicComponent implements OnInit {
 
   removeComponent(component: Type<Component>): void {
     if (component.name !== this.currentComponent.name) {
+      // todo remove log when stable
       console.log('DynamicComponent removeComponent not possible: ',
         component.name, this.currentComponent.name)
       return;
@@ -42,5 +46,11 @@ export class DynamicComponent implements OnInit {
     this.appDynamicHost.viewContainerRef.clear();
   }
 
+  onClickConfigure(): void {
 
+  }
+
+  onClickSwitch(): void {
+
+  }
 }
