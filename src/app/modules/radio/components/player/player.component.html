@@ -23,8 +23,25 @@
           </div>
         </ng-scrollbar>
       </mat-tab>
-      <mat-tab label="Leer">Leer</mat-tab>
-      <mat-tab label="Leer">Content</mat-tab>
+      <mat-tab label="Klassik Radio">
+        <ng-scrollbar class="dark-scrollbar" [autoHeightDisabled]="false"
+                      track="horizontal" visibility="always">
+          <div>
+            <div class="thumbnail-list">
+              <div *ngFor="let radio of classic;"
+                   class="thumbnail-item item" [class.active]="radio === current"
+                   [style.background-image]="'url(' + radio.logoUrl + ')'"
+                   (click)="onClickPlay(radio)">
+                <div class="action-overlay" [class.active]="radio === current">
+                  <button mat-mini-fab color="primary">
+                    <mat-icon>{{icon}}</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-scrollbar>
+      </mat-tab>
     </mat-tab-group>
     <audio #player></audio>
   </mat-card-content>

@@ -1,12 +1,12 @@
+import { NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { WidgetService } from "@app/core/components/widget/widget.service";
 import radioFile from "@assets/json/radio.json";
 import { RadioStation } from "@modules/radio/components/player/player.component";
 import { PlayerService } from "@modules/radio/service/player.service";
-import { NgFor } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatButtonModule } from '@angular/material/button';
 
 interface PlayerActionItem {
   name: string;
@@ -14,11 +14,11 @@ interface PlayerActionItem {
 }
 
 @Component({
-    selector: 'app-widget-player',
-    templateUrl: './widget-player.component.html',
-    styleUrls: ['./widget-player.component.scss'],
-    standalone: true,
-    imports: [MatButtonModule, MatMenuModule, MatIconModule, NgFor]
+  selector: 'app-widget-player',
+  templateUrl: './widget-player.component.html',
+  styleUrls: ['./widget-player.component.scss'],
+  standalone: true,
+  imports: [MatButtonModule, MatMenuModule, MatIconModule, NgFor]
 })
 export class WidgetPlayerComponent implements OnInit {
 
@@ -45,7 +45,7 @@ export class WidgetPlayerComponent implements OnInit {
               private widgetService: WidgetService) { }
 
   ngOnInit(): void {
-    this.radios = radioFile.radiostations;
+    this.radios = radioFile.favorites;
     this.playerService.on("play", (radio: RadioStation) => {
       this.current = radio;
       this.playToggleAction = this.pauseAction;
