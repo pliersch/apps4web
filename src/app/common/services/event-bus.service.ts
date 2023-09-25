@@ -11,7 +11,11 @@ export class EventBusService {
   constructor() {
   }
 
-  emit(event: EventData): void {
+  emit(name: string, payload?: any): void {
+    const event: EventData = {
+      name: name,
+      value: payload
+    }
     this.subject$.next(event);
   }
 

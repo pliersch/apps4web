@@ -4,6 +4,7 @@
   min-height: 60px;
   display: inline-flex;
   border: dashed 1px #979797;
+  box-sizing: border-box;
   //flex-direction: column;
   //justify-content: center;
   //align-items: center;
@@ -30,6 +31,7 @@
 }
 
 .component-exist {
+  box-sizing: border-box;
   border: dashed 1px #979797;
   width: 100%;
 }

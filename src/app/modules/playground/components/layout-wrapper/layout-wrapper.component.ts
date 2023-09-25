@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatButtonModule } from "@angular/material/button";
+import { EventBusService } from "@app/common/services/event-bus.service";
 import { DynamicComponent } from "@modules/playground/util/dynamic-component/dynamic.component";
 
 @Component({
@@ -16,9 +17,14 @@ export class LayoutWrapperComponent {
   count = 0;
   locked = false;
 
+
+  constructor(private eventBus: EventBusService) {
+  }
+
   onClickAddComponent(): void {
     this.locked = true;
     this.dynamicComponentNames.push('dyn' + this.count++);
+    this.eventBus.emit('show-component-browser')
 
   }
 }

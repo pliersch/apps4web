@@ -38,6 +38,6 @@ export class ControlComponent {
 
   switchTheme(): void {
     // todo use store value as payload
-    this.eventBus.emit({name: 'switch-theme'})
+    this.eventBus.emit('switch-theme');
   }
 }
