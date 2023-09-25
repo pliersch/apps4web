@@ -36,6 +36,11 @@
       "name": "Klassik Radio Lounge Beat",
       "logoUrl": "/assets/radio/Klassik_Radio_Lounge_Beat.png",
       "stream": "https://stream.klassikradio.de/lounge-beat/mp3-192/radioplayer?rp_source=1&=&&___cb=528560840129615"
+    },
+    {
+      "name": "Klassik Radio Easy Relax",
+      "logoUrl": "/assets/radio/Klassik_Radio_Easy_Relax.png",
+      "stream": "https://stream.klassikradio.de/relax/mp3-192/radioplayer?rp_source=1&=&&___cb=306304213647935"
     }
   ],
   "classic-radio": [
