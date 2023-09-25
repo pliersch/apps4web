@@ -1,16 +1,16 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Photo } from "@modules/photos/store/photos/photo.model";
-import { getW300Url } from "@modules/photos/store/photos/photo.tools";
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { ImageFallbackDirective } from '../../../../../share/directives/image-fallback-directive';
+import { ImageFallbackDirective } from '@app/common/directives/image-fallback-directive';
+import { Photo } from "@modules/photos/store/photos/photo.model";
+import { getW300Url } from "@modules/photos/store/photos/photo.tools";
 
 @Component({
-    selector: 'app-editor-photo-control',
-    templateUrl: './editor-photo-control.component.html',
-    styleUrls: ['./editor-photo-control.component.scss'],
-    standalone: true,
-    imports: [ImageFallbackDirective, MatIconModule, MatButtonModule]
+  selector: 'app-editor-photo-control',
+  templateUrl: './editor-photo-control.component.html',
+  styleUrls: ['./editor-photo-control.component.scss'],
+  standalone: true,
+  imports: [ImageFallbackDirective, MatIconModule, MatButtonModule]
 })
 export class EditorPhotoControlComponent {
 

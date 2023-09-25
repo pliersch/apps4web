@@ -9,6 +9,7 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
+import { MatListRemovePaddingDirective } from "@app/common/directives/mat-list-remove-padding.directive";
 import { parseExif } from "@app/common/util/date-util";
 import { AddPhoto } from "@modules/photos/store/photos/photo.actions";
 import { Tag, TagGroup } from "@modules/photos/store/tags/tag.model";
@@ -16,7 +17,6 @@ import { TagState } from "@modules/photos/store/tags/tag.state";
 import { Select, Store } from "@ngxs/store";
 import { NgScrollbar } from "ngx-scrollbar";
 import { from, Observable, ObservedValueOf } from "rxjs";
-import { MatListRemovePaddingDirective } from "../../../../../share/directives/mat-list-remove-padding.directive";
 
 @Component({
   selector: 'app-upload-panel',

@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { MatDialogRef, MatDialogModule } from "@angular/material/dialog";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { DragDropInputComponent } from '../../../share/file-drag-drop/drag-drop-input/drag-drop-input.component';
+import { MatInputModule } from '@angular/material/input';
+import {
+  DragDropInputComponent
+} from '@app/common/components/file-drag-drop/drag-drop-input/drag-drop-input.component';
 
 export interface Attachment {
   comment: string;
@@ -12,11 +14,11 @@ export interface Attachment {
 }
 
 @Component({
-    selector: 'app-chat-upload-dialog',
-    templateUrl: './chat-upload-dialog.component.html',
-    styleUrls: ['./chat-upload-dialog.component.scss'],
-    standalone: true,
-    imports: [MatDialogModule, DragDropInputComponent, MatFormFieldModule, MatInputModule, ReactiveFormsModule, FormsModule, MatButtonModule]
+  selector: 'app-chat-upload-dialog',
+  templateUrl: './chat-upload-dialog.component.html',
+  styleUrls: ['./chat-upload-dialog.component.scss'],
+  standalone: true,
+  imports: [MatDialogModule, DragDropInputComponent, MatFormFieldModule, MatInputModule, ReactiveFormsModule, FormsModule, MatButtonModule]
 })
 export class ChatUploadDialogComponent {
 
