@@ -3,8 +3,6 @@
   <app-dynamic *ngFor="let component of dynamicComponentNames; let i=index"
                [componentName]="'c'+i"/>
 
-  <!--  <app-dynamic [componentName]="'p1'"/>-->
-  <!--  <app-dynamic [componentName]="'p2'"/>-->
   <div class="btn-container m10t">
     <button (click)="onClickAddComponent()" mat-raised-button
             color="primary" [disabled]="locked">Add Component

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ScrollSpyDirective } from "@app/common/directives/scroll-spy.directive";
 
 @Component({
   selector: 'app-landing',

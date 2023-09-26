@@ -24,14 +24,6 @@ export class ControlComponent {
     this.componentService.setAppbar();
   }
 
-  setComp1(): void {
-    this.componentService.setComp1();
-  }
-
-  setComp2(): void {
-    this.componentService.setComp2();
-  }
-
   toggleFullscreen(): void {
     this.toggleFullscreenEvent.emit();
   }

@@ -4,9 +4,9 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { ImageFallbackDirective } from "@app/common/directives/image-fallback-directive";
 import { DynamicDirective } from "@modules/playground/util/dynamic-component/dynamic.directive";
 import { DynamicService } from "@modules/playground/util/dynamic-component/dynamic.service";
-import { ImageFallbackDirective } from "@modules/share/directives/image-fallback-directive";
 
 @Component({
   selector: 'app-dynamic',

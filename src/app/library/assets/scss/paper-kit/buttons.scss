@@ -1,0 +1,41 @@
+.btn[class*=btn-outline-] {
+  /* background-image: none; */
+  background-color: transparent;
+}
+
+.btn-round {
+  border-radius: 30px;
+
+  border-color: white;
+  border-style: solid;
+}
+
+.btn-outline-neutral {
+  border-color: #FFFFFF;
+  color: #FFFFFF;
+  opacity: 1;
+  filter: alpha(opacity=100);
+
+  &:hover, :focus {
+    color: #403D39;
+    background-color: #FFFFFF;
+  }
+}
+
+.btn {
+  box-sizing: border-box;
+  border-width: 2px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 0.5rem 18px;
+  line-height: 1.75;
+  margin-right: 3px;
+  cursor: pointer;
+  text-transform: uppercase;
+  //background-color: #66615B;
+  //border-color: #66615B;
+  color: #FFFFFF;
+  opacity: 1;
+  filter: alpha(opacity=100);
+  transition: all 150ms linear;
+}
