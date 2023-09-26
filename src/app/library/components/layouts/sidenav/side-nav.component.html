@@ -1,4 +1,5 @@
-<div #themeRef class="column-max-width">
+<div #themeRef class="full-width-height">
+  <app-dynamic [componentName]="'appbar'"/>
   <mat-sidenav-container class="main">
     <mat-sidenav mode="over">
       <mat-nav-list>
@@ -9,7 +10,6 @@
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-      <app-dynamic [componentName]="'appbar'"/>
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>

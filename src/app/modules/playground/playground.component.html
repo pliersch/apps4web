@@ -1,12 +1,12 @@
 <div #fullScreen class="flex playground-container">
   <lib-control class="column" (toggleFullscreenEvent)="toggleFullScreen()"/>
-  <mat-drawer-container class="full-width" autosize>
+  <mat-drawer-container class="full-width-height" autosize>
     <mat-drawer #drawer class="example-sidenav" mode="over" opened="false" position="end">
       <app-component-browser (selectEvent)="toggleDrawer()"/>
     </mat-drawer>
 
     <!--        <app-side-nav-layout class="flex-max-width"/>-->
-    <app-side-nav-layout/>
+    <app-side-nav-layout class="hack-layout-overflow"/>
     <!--  <div class="example-sidenav-content">-->
     <!--    <button type="button" mat-button (click)="drawer.toggle()">-->
     <!--      Toggle sidenav-->

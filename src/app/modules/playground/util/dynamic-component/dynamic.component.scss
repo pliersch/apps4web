@@ -26,11 +26,12 @@
 .action-container {
   position: absolute;
   height: fit-content;
-  right: 16px;
-  top: 16px;
+  top: 50%;
+  right: 50%;
   transition: .2s ease;
   //visibility: hidden;
   opacity: 0;
+  z-index: 2;
 
   &:hover {
     border-color: darkgray;
