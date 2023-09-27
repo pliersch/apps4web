@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { EventData } from "@app/common/services/event-bus.service";
+import { Subject, Subscription } from "rxjs";
+import { filter, map } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
-export class EventBusService {
+export class WindowScrollSpyService {
+
   private subject$ = new Subject();
 
   constructor() { }
@@ -24,14 +26,6 @@ export class EventBusService {
       filter((e: EventData) => e.name === eventName),
       map((e: EventData) => e.value)).subscribe(action);
   }
-}
 
-export class EventData {
-  name: string;
-  value?: any;
 
-  constructor(name: string, value?: any) {
-    this.name = name;
-    this.value = value;
-  }
 }

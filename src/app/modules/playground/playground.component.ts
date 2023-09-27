@@ -25,7 +25,7 @@ export class PlaygroundComponent implements OnInit {
   constructor(private eventBus: EventBusService) {}
 
   ngOnInit(): void {
-    this.eventBus.on('show-component-browser', () => this.toggleDrawer())
+    this.eventBus.on('show-component-browser', () => this.toggleDrawer());
   }
 
   toggleDrawer(): void {

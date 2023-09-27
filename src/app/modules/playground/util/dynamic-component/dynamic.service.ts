@@ -7,6 +7,7 @@ import { DynamicComponent } from "@modules/playground/util/dynamic-component/dyn
 export class DynamicService {
   private dynamicHost: DynamicComponent;
   private hosts: DynamicComponent[] = [];
+  private activeHostName: string;
 
   // private component: any;
 
@@ -14,8 +15,12 @@ export class DynamicService {
     this.hosts.push(component);
   }
 
-  setComponent(hostName: string, component: Type<any>): void {
-    const host = this.hosts.find(host => host.componentName == hostName);
+  setActiveHostName(name: string): void {
+    this.activeHostName = name;
+  }
+
+  setComponent(/*hostName: string, */component: Type<any>): void {
+    const host = this.hosts.find(host => host.componentName == this.activeHostName);
     if (host) {
       host.loadComponent(component);
     }

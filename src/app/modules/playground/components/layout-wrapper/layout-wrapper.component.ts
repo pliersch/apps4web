@@ -4,6 +4,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { ScrollSpyDirective } from "@app/common/directives/scroll-spy.directive";
 import { EventBusService } from "@app/common/services/event-bus.service";
 import { DynamicComponent } from "@modules/playground/util/dynamic-component/dynamic.component";
+import { DynamicService } from "@modules/playground/util/dynamic-component/dynamic.service";
 
 @Component({
   selector: 'app-layout-wrapper',
@@ -14,20 +15,23 @@ import { DynamicComponent } from "@modules/playground/util/dynamic-component/dyn
 })
 export class LayoutWrapperComponent {
 
+  // todo try to use dynamicComponent direct
   dynamicComponentNames: string[] = [];
   count = 0;
-  locked = false;
 
-  constructor(private eventBus: EventBusService) { }
+  constructor(private eventBus: EventBusService,
+              private dynamicService: DynamicService) {
+  }
 
   onClickAddComponent(): void {
-    this.locked = true;
-    this.dynamicComponentNames.push('dyn' + this.count++);
+    const hostName = 'dyn' + this.count++;
+    this.dynamicComponentNames.push(hostName);
+    this.dynamicService.setActiveHostName(hostName);
     this.eventBus.emit('show-component-browser')
-
   }
 
   onScrollSpy($event: string): void {
+    console.log('LayoutWrapperComponent onScrollSpy: ',)
     this.eventBus.emit('scrolled-appbar', $event);
   }
 }

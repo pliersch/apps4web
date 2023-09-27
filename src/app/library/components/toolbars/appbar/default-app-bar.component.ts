@@ -1,6 +1,6 @@
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, isDevMode, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatToolbarModule } from "@angular/material/toolbar";
@@ -42,9 +42,8 @@ export class DefaultAppBarComponent {
 
   @Select(RouterState.getAccessibleRoutes)
   routes$: Observable<Route[]>;
-  protected readonly isDevMode = isDevMode;
 
-  isOpen = true;
+  isDense = false;
 
   constructor(private eventBus: EventBusService) {
     eventBus.on('scrolled-appbar', (evt: string) => this.changeBar(evt));
@@ -59,7 +58,6 @@ export class DefaultAppBarComponent {
   }
 
   private changeBar(evt: string): void {
-    this.isOpen = !this.isOpen;
-    console.log('DefaultAppBarComponent changeBar: ', evt, this.isOpen)
+    this.isDense = !this.isDense;
   }
 }

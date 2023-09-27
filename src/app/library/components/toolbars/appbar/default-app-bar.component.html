@@ -14,7 +14,7 @@
 
 <ng-template #desktop>
 
-  <mat-toolbar [@openClose]="isOpen ? 'open' : 'closed'" class="p8lr absolut z2 blur">
+  <mat-toolbar class="p8lr absolut z2 blur" [class.dense]="isDense">
     <mat-toolbar class="p8lr">
       <button mat-flat-button [routerLink]="['/']">
         <div class='app-logo'>

@@ -5,6 +5,7 @@ import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { ImageFallbackDirective } from "@app/common/directives/image-fallback-directive";
+import { EventBusService } from "@app/common/services/event-bus.service";
 import { DynamicDirective } from "@modules/playground/util/dynamic-component/dynamic.directive";
 import { DynamicService } from "@modules/playground/util/dynamic-component/dynamic.service";
 
@@ -25,7 +26,8 @@ export class DynamicComponent implements OnInit {
 
   currentComponent: Type<Component>;
 
-  constructor(private dynamicService: DynamicService) { }
+  constructor(private dynamicService: DynamicService,
+              private eventBus: EventBusService) { }
 
   ngOnInit(): void {
     this.dynamicService.addHost(this);
@@ -36,6 +38,7 @@ export class DynamicComponent implements OnInit {
     viewContainerRef.clear();
     viewContainerRef.createComponent(component);
     this.currentComponent = component;
+    // this.eventBus.emit('component-added');
   }
 
   removeComponent(component: Type<Component>): void {
@@ -59,4 +62,5 @@ export class DynamicComponent implements OnInit {
   onClickDelete(): void {
     this.removeComponent(this.currentComponent);
   }
+
 }

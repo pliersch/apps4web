@@ -10,13 +10,11 @@ export class ComponentChooserService {
   constructor(private dynamicService: DynamicService) { }
 
   setAppbar(): void {
-    this.dynamicService.setComponent('appbar', DefaultAppBarComponent)
-    // this.dynamicService.setComponent('bar', SimpleAppBarComponent)
+    this.dynamicService.setComponent(DefaultAppBarComponent)
   }
 
   setComponent(component: Type<any>): void {
-    this.dynamicService.setComponent('c0', component)
-    // this.dynamicService.setComponent('bar', SimpleAppBarComponent)
+    this.dynamicService.setComponent(component)
   }
 
 }

@@ -2,11 +2,11 @@
   <div [appScrollSpy]="50" (reachedEvent)="onScrollSpy($event)">
 
     <app-dynamic *ngFor="let component of dynamicComponentNames; let i=index"
-                 [componentName]="'c'+i"/>
+                 [componentName]="'dyn'+i"/>
 
     <div class="btn-container m10t">
       <button (click)="onClickAddComponent()" mat-raised-button
-              color="primary" [disabled]="locked">Add Component
+              color="primary">Add Component
       </button>
     </div>
   </div>

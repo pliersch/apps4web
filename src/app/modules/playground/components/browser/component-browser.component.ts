@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output, Type } from '@angular/core';
 import { MatButtonModule } from "@angular/material/button";
 import { EventBusService } from "@app/common/services/event-bus.service";
-import { LandingComponent } from "@app/library/components/layouts/landig/v1/landing.component";
+import { LandingComponent } from "@app/library/components/by_topic/landing/v1/landing.component";
 import { ComponentChooserService } from "@modules/playground/common/services/component-chooser.service";
 
 @Component({
@@ -25,7 +25,7 @@ export class ComponentBrowserComponent {
   select(component: Type<any>): void {
     // this.eventBus.emit('current-asset', component);
 // todo hard coded. make generic!
-    this.componentService.setComponent(LandingComponent);
+    this.componentService.setComponent(component);
     this.selectEvent.emit();
   }
 
