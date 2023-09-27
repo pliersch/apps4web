@@ -1,11 +1,13 @@
 <div class="layout-wrapper-container">
+  <div [appScrollSpy]="50" (reachedEvent)="onScrollSpy($event)">
 
-  <app-dynamic *ngFor="let component of dynamicComponentNames; let i=index"
-               [componentName]="'c'+i"/>
+    <app-dynamic *ngFor="let component of dynamicComponentNames; let i=index"
+                 [componentName]="'c'+i"/>
 
-  <div class="btn-container m10t">
-    <button (click)="onClickAddComponent()" mat-raised-button
-            color="primary" [disabled]="locked">Add Component
-    </button>
+    <div class="btn-container m10t">
+      <button (click)="onClickAddComponent()" mat-raised-button
+              color="primary" [disabled]="locked">Add Component
+      </button>
+    </div>
   </div>
 </div>
