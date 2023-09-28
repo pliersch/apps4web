@@ -1,7 +1,14 @@
 <div class="assets-container">
-  <div class="asset">
-    <app-landing/>
-    <button mat-raised-button color="primary" (click)="select(LandingComponent)">Select</button>
+  <div class="row-max-height">
+    <div class="column control-panel p5">
+      <div class="scrollbar-container">
+        <app-component-accordion/>
+      </div>
+    </div>
+    <div class="asset">
+      <app-landing/>
+      <button mat-raised-button color="primary" (click)="select(LandingComponent)">Select</button>
+    </div>
   </div>
-  <!--  <app-landing class="asset"/>-->
 </div>
+

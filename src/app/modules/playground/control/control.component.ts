@@ -3,7 +3,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { EventBusService } from "@app/common/services/event-bus.service";
-import { ComponentChooserService } from "@modules/playground/common/services/component-chooser.service";
+import { DefaultAppBarComponent } from "@app/library/components/toolbars/appbar/default-app-bar.component";
+import { DynamicComponentService } from "@modules/playground/util/dynamic-component/dynamic-component.service";
 
 @Component({
   selector: 'lib-control',
@@ -17,11 +18,12 @@ export class ControlComponent {
   @Output()
   toggleFullscreenEvent = new EventEmitter<void>();
 
-  constructor(private componentService: ComponentChooserService,
+  constructor(private dynamicService: DynamicComponentService,
               private eventBus: EventBusService) { }
 
   setAppbar(): void {
-    this.componentService.setAppbar();
+    this.dynamicService.setActiveHostName('appbar');
+    this.dynamicService.setComponent(DefaultAppBarComponent);
   }
 
   toggleFullscreen(): void {

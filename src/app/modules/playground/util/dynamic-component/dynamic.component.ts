@@ -6,8 +6,8 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { ImageFallbackDirective } from "@app/common/directives/image-fallback-directive";
 import { EventBusService } from "@app/common/services/event-bus.service";
+import { DynamicComponentService } from "@modules/playground/util/dynamic-component/dynamic-component.service";
 import { DynamicDirective } from "@modules/playground/util/dynamic-component/dynamic.directive";
-import { DynamicService } from "@modules/playground/util/dynamic-component/dynamic.service";
 
 @Component({
   selector: 'app-dynamic',
@@ -26,7 +26,7 @@ export class DynamicComponent implements OnInit {
 
   currentComponent: Type<Component>;
 
-  constructor(private dynamicService: DynamicService,
+  constructor(private dynamicService: DynamicComponentService,
               private eventBus: EventBusService) { }
 
   ngOnInit(): void {
