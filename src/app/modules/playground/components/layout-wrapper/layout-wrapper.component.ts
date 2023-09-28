@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { MatButtonModule } from "@angular/material/button";
 import { EventBusService } from "@app/common/services/event-bus.service";
-import { DynamicComponentService } from "@modules/playground/util/dynamic-component/dynamic-component.service";
-import { DynamicComponent } from "@modules/playground/util/dynamic-component/dynamic.component";
+import { DynamicComponentService } from "@modules/playground/components/dynamic-component/dynamic-component.service";
+import { DynamicComponent } from "@modules/playground/components/dynamic-component/dynamic.component";
 import { NgScrollbar } from "ngx-scrollbar";
 import { Subscription } from "rxjs";
 import { map, tap } from "rxjs/operators";
@@ -17,7 +17,7 @@ import { map, tap } from "rxjs/operators";
 })
 export class LayoutWrapperComponent implements AfterViewInit, OnDestroy {
 
-  dynamicComponentNames: string[] = [];
+  hostNames: string[] = [];
   count = 0;
 
   private inEmitted = false;
@@ -44,7 +44,7 @@ export class LayoutWrapperComponent implements AfterViewInit, OnDestroy {
 
   onClickAddComponent(): void {
     const hostName = 'dyn' + this.count++;
-    this.dynamicComponentNames.push(hostName);
+    this.hostNames.push(hostName);
     this.dynamicService.setActiveHostName(hostName);
     this.eventBus.emit('show-component-browser')
   }
@@ -61,4 +61,8 @@ export class LayoutWrapperComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  onDelete(hostName: string): void {
+    this.dynamicService.removeHost(hostName);
+    console.log('LayoutWrapperComponent onDelete: ', hostName)
+  }
 }

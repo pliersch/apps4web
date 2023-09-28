@@ -8,7 +8,7 @@
 
     <mat-action-list>
       <button *ngFor="let item of group.items" mat-list-item
-              (click)="onSelectAsset(item)">{{item}}</button>
+              (click)="onSelectAsset(item)">{{item.name}}</button>
     </mat-action-list>
 
   </mat-expansion-panel>

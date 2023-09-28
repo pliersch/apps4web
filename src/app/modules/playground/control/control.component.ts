@@ -4,7 +4,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { EventBusService } from "@app/common/services/event-bus.service";
 import { DefaultAppBarComponent } from "@app/library/components/toolbars/appbar/default-app-bar.component";
-import { DynamicComponentService } from "@modules/playground/util/dynamic-component/dynamic-component.service";
+import { DynamicComponentService } from "@modules/playground/components/dynamic-component/dynamic-component.service";
 
 @Component({
   selector: 'lib-control',

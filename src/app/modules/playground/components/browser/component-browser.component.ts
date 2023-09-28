@@ -7,7 +7,7 @@ import { LandingBgImgComponent } from "@app/library/components/by_topic/landing/
 import {
   ComponentAccordionComponent
 } from "@modules/playground/components/browser/component-accordion/component-accordion.component";
-import { DynamicComponentService } from "@modules/playground/util/dynamic-component/dynamic-component.service";
+import { DynamicComponentService } from "@modules/playground/components/dynamic-component/dynamic-component.service";
 
 @Component({
   selector: 'app-component-browser',
@@ -27,8 +27,7 @@ export class ComponentBrowserComponent {
 
   // maybe classname as arg
   select(component: Type<any>): void {
-    // this.eventBus.emit('current-asset', component);
-// todo hard coded. make generic!
+
     this.dynamicService.setComponent(component);
     this.selectEvent.emit();
   }
@@ -36,4 +35,16 @@ export class ComponentBrowserComponent {
 
   protected readonly LandingComponent = LandingComponent;
   protected readonly LandingBgImgComponent = LandingBgImgComponent;
+
+  onSelectAsset($event: Type<any>): void {
+    //     const elementRef = this.photoControls.get(this.currentIndex);
+    // if (elementRef) {
+    //   void this.scrollbar.scrollToElement(elementRef.nativeElement, {
+    //     duration: 0
+    //   });
+    // }
+    console.log('ComponentBrowserComponent onSelectAsset: ',)
+    // https://ngx-scrollbar.netlify.app/
+    // scrollToElement('#target', {duration: 800})
+  }
 }

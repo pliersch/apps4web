@@ -1,11 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output, Type } from '@angular/core';
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatListModule } from "@angular/material/list";
+import { LandingComponent } from "@app/library/components/by_topic/landing/v1/landing.component";
+import { LandingBgImgComponent } from "@app/library/components/by_topic/landing/v2/landing-bg-img.component";
+import { DefaultAppBarComponent } from "@app/library/components/toolbars/appbar/default-app-bar.component";
+import { SimpleAppBarComponent } from "@app/library/components/toolbars/simple-appbar/simple-app-bar.component";
 
 export interface AssetCategory {
   name: string;
-  items: string[];
+  items: Type<any>[];
 }
 
 @Component({
@@ -17,14 +21,17 @@ export interface AssetCategory {
 })
 export class ComponentAccordionComponent {
 
+  @Output()
+  selectEvent = new EventEmitter<Type<any>>();
+
   assetCategories: AssetCategory[] =
     [
-      {name: 'appbar', items: ['Foo1', 'Foo2']},
-      {name: 'landing', items: ['Bar1', 'Bar2']},
-      {name: 'contact', items: ['Baz1', 'Baz2']},
+      {name: 'appbar', items: [DefaultAppBarComponent, SimpleAppBarComponent]},
+      {name: 'landing', items: [LandingComponent, LandingBgImgComponent]},
+      // {name: 'contact', items: ['Baz1', 'Baz2']},
     ];
 
-  onSelectAsset(item: string): void {
-    console.log('ComponentAccordionComponent onSelectAsset: ', item)
+  onSelectAsset(item: Type<any>): void {
+    this.selectEvent.emit(item);
   }
 }

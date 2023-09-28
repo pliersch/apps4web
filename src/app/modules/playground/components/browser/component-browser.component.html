@@ -2,7 +2,7 @@
   <div class="row-max-height">
     <div class="column control-panel p5">
       <div class="scrollbar-container">
-        <app-component-accordion/>
+        <app-component-accordion (selectEvent)="onSelectAsset($event)"/>
       </div>
     </div>
     <div class="row">
