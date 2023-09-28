@@ -1,8 +1,4 @@
-.blur {
-  backdrop-filter: blur(12px);
-}
-
-.dense {
-  color: yellow;
-  background: yellow;
+.alpha0 {
+  background: rgba(255, 255, 255, 0);
+  transition: 0.5s all;
 }

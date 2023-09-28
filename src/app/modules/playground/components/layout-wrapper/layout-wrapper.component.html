@@ -1,5 +1,5 @@
-<div [appScrollSpy]="50" (reachedEvent)="onScrollSpy($event)" class="layout-wrapper-container">
-  <ng-scrollbar #scrollbar class="dark-scrollbar">
+<div class="layout-wrapper-container">
+  <ng-scrollbar class="dark-scrollbar">
 
     <app-dynamic *ngFor="let component of dynamicComponentNames; let i=index"
                  [componentName]="'dyn'+i"/>

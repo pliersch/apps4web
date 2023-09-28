@@ -14,8 +14,8 @@
 
 <ng-template #desktop>
 
-  <mat-toolbar class="p8lr absolut z2 blur" [class.dense]="isDense">
-    <mat-toolbar class="p8lr">
+  <mat-toolbar class="p8lr absolut z2" [class.alpha0]="isOnTop">
+    <mat-toolbar class="p8lr" [class.alpha0]="isOnTop">
       <button mat-flat-button [routerLink]="['/']">
         <div class='app-logo'>
           APPS<span class='logo-color'>4</span>WEB

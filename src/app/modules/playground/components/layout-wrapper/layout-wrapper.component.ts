@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, NgZone, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { MatButtonModule } from "@angular/material/button";
-import { ScrollSpyDirective } from "@app/common/directives/scroll-spy.directive";
 import { EventBusService } from "@app/common/services/event-bus.service";
 import { DynamicComponentService } from "@modules/playground/util/dynamic-component/dynamic-component.service";
 import { DynamicComponent } from "@modules/playground/util/dynamic-component/dynamic.component";
@@ -12,15 +11,17 @@ import { map, tap } from "rxjs/operators";
 @Component({
   selector: 'app-layout-wrapper',
   standalone: true,
-  imports: [CommonModule, DynamicComponent, MatButtonModule, ScrollSpyDirective, NgScrollbar],
+  imports: [CommonModule, DynamicComponent, MatButtonModule, NgScrollbar],
   templateUrl: './layout-wrapper.component.html',
   styleUrls: ['./layout-wrapper.component.scss']
 })
 export class LayoutWrapperComponent implements AfterViewInit, OnDestroy {
 
-  // todo try to use dynamicComponent direct
   dynamicComponentNames: string[] = [];
   count = 0;
+
+  private inEmitted = false;
+  private outEmitted = false;
 
   scrollSubscription = Subscription.EMPTY;
 
@@ -28,14 +29,12 @@ export class LayoutWrapperComponent implements AfterViewInit, OnDestroy {
   scrollbarRef: NgScrollbar;
 
   constructor(private eventBus: EventBusService,
-              private dynamicService: DynamicComponentService,
-              private zone: NgZone) { }
+              private dynamicService: DynamicComponentService) { }
 
   ngAfterViewInit(): void {
-    // Subscribe to scroll event
     this.scrollSubscription = this.scrollbarRef.scrolled.pipe(
-      map((e: any) => e.target.scrollTop > 50 ? 'in' : 'out'),
-      tap((reached: string) => this.zone.run(() => this.eventBus.emit('scrolled-appbar', reached)))
+      map((e: any) => e.target.scrollTop > 50),
+      tap((reached: boolean) => this.onScroll(reached))
     ).subscribe();
   }
 
@@ -50,8 +49,16 @@ export class LayoutWrapperComponent implements AfterViewInit, OnDestroy {
     this.eventBus.emit('show-component-browser')
   }
 
-  onScrollSpy($event: string): void {
-    console.log('LayoutWrapperComponent onScrollSpy: ',)
-    this.eventBus.emit('scrolled-appbar', $event);
+  onScroll(reached: boolean): void {
+    if (!this.inEmitted && reached) {
+      this.eventBus.emit('scrolled-appbar', 'in');
+      this.inEmitted = true;
+      this.outEmitted = false;
+    } else if (!this.outEmitted && !reached) {
+      this.eventBus.emit('scrolled-appbar', 'out');
+      this.outEmitted = true;
+      this.inEmitted = false;
+    }
   }
+
 }
