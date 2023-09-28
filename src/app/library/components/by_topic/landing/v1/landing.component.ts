@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { EventBusService } from "@app/common/services/event-bus.service";
 
 @Component({
-  selector: 'app-landing',
+  selector: 'app-landing-v1',
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss'],
   standalone: true,

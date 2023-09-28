@@ -12,10 +12,6 @@
   justify-content: center;
   -ms-flex-pack: center;
 
-  @media (max-height: 500px) {
-    height: 40vh !important;
-  }
-
   .filter::after {
     background-color: rgba(0, 0, 0, 0.5);
     content: "";
