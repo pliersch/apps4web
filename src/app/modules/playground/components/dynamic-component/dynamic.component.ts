@@ -1,5 +1,5 @@
 import { NgIf } from "@angular/common";
-import { Component, EventEmitter, Input, OnInit, Output, Type, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, Type, ViewChild } from '@angular/core';
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
@@ -16,7 +16,7 @@ import { DynamicDirective } from "@modules/playground/components/dynamic-compone
   standalone: true,
   imports: [DynamicDirective, ImageFallbackDirective, MatButtonModule, MatIconModule, MatCardModule, MatTooltipModule, NgIf]
 })
-export class DynamicComponent implements OnInit {
+export class DynamicComponent implements OnInit, OnDestroy {
 
   @ViewChild(DynamicDirective, {static: true})
   appDynamicHost!: DynamicDirective;
@@ -25,7 +25,7 @@ export class DynamicComponent implements OnInit {
   componentName!: string;
 
   @Output()
-  deleteEvent = new EventEmitter<string>();
+  deleteEvent = new EventEmitter<DynamicComponent>();
 
   currentComponent: Type<Component>;
 
@@ -34,6 +34,10 @@ export class DynamicComponent implements OnInit {
 
   ngOnInit(): void {
     this.dynamicService.addHost(this);
+  }
+
+  ngOnDestroy(): void {
+    this.dynamicService.removeHost(this);
   }
 
   loadComponent(component: Type<Component>): void {
@@ -64,7 +68,7 @@ export class DynamicComponent implements OnInit {
 
   onClickDelete(): void {
     console.log('DynamicComponent onClickDelete: ', this.componentName)
-    this.deleteEvent.emit(this.componentName);
+    this.deleteEvent.emit(this);
     // this.removeComponent(this.currentComponent);
   }
 

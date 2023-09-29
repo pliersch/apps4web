@@ -12,8 +12,8 @@ export class DynamicComponentService {
     this.hosts.push(host);
   }
 
-  setActiveHostName(name: string): void {
-    console.log('DynamicComponentService setActiveHostName: ', name)
+  setActiveHost(name: string): void {
+    // console.log('DynamicComponentService setActiveHost: ', name)
     this.activeHostName = name;
   }
 
@@ -25,15 +25,9 @@ export class DynamicComponentService {
     }
   }
 
-  removeHost(hostName: /*Type<any>*/string): void {
-    console.log('DynamicComponentService removeHost componentName: ', this.hosts[0].componentName)
-    console.log('DynamicComponentService removeHost hostName: ', hostName)
-    // const host =
-    //   this.hosts.find(host => host.componentName == hostName);
-    // if (host) {
-    //   host.removeComponent(component);
-    // }
-
+  removeHost(host: /*Type<any>*/DynamicComponent): void {
+    this.hosts = this.hosts.filter(item => item !== host);
+    console.log('DynamicComponentService removeHost: ', this.hosts)
   }
 
 }

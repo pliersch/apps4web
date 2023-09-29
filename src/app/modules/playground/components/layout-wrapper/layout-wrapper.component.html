@@ -2,7 +2,7 @@
   <ng-scrollbar class="dark-scrollbar">
 
     <app-dynamic *ngFor="let hostName of hostNames; let i=index"
-                 [componentName]="'dyn'+i" (deleteEvent)="onDelete(hostName)"/>
+                 [componentName]="hostName" (deleteEvent)="onDelete(hostName)"/>
 
     <div class="btn-container m10t">
       <button (click)="onClickAddComponent()" mat-raised-button

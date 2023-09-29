@@ -45,8 +45,8 @@ export class LayoutWrapperComponent implements AfterViewInit, OnDestroy {
   onClickAddComponent(): void {
     const hostName = 'dyn' + this.count++;
     this.hostNames.push(hostName);
-    this.dynamicService.setActiveHostName(hostName);
-    this.eventBus.emit('show-component-browser')
+    this.dynamicService.setActiveHost(hostName);
+    this.eventBus.emit('show-component-browser');
   }
 
   onScroll(reached: boolean): void {
@@ -62,7 +62,8 @@ export class LayoutWrapperComponent implements AfterViewInit, OnDestroy {
   }
 
   onDelete(hostName: string): void {
-    this.dynamicService.removeHost(hostName);
-    console.log('LayoutWrapperComponent onDelete: ', hostName)
+    this.hostNames = this.hostNames.filter(item => item !== hostName);
+    console.log('LayoutWrapperComponent onDelete: ', this.hostNames)
   }
+
 }

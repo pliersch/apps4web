@@ -22,7 +22,7 @@ export class ControlComponent {
               private eventBus: EventBusService) { }
 
   setAppbar(): void {
-    this.dynamicService.setActiveHostName('appbar');
+    this.dynamicService.setActiveHost('appbar');
     this.dynamicService.setComponent(DefaultAppBarComponent);
   }
 

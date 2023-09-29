@@ -25,9 +25,7 @@ export class ComponentBrowserComponent {
               private dynamicService: DynamicComponentService) {
   }
 
-  // maybe classname as arg
   select(component: Type<any>): void {
-
     this.dynamicService.setComponent(component);
     this.selectEvent.emit();
   }
