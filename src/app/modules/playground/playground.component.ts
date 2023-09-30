@@ -2,15 +2,15 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDrawer, MatSidenavModule } from "@angular/material/sidenav";
 import { EventBusService } from "@app/common/services/event-bus.service";
-import { SideNavComponent } from "@app/library/components/layouts/sidenav/side-nav.component";
 import { ComponentBrowserComponent } from "@modules/playground/components/browser/component-browser.component";
+import { SideNavWrapperComponent } from "@modules/playground/components/sidenav/side-nav-wrapper.component";
 import { ControlComponent } from "@modules/playground/control/control.component";
 import { NgScrollbar } from "ngx-scrollbar";
 
 @Component({
   selector: 'app-playground',
   standalone: true,
-  imports: [CommonModule, NgScrollbar, ControlComponent, SideNavComponent, MatSidenavModule, ComponentBrowserComponent],
+  imports: [CommonModule, NgScrollbar, ControlComponent, MatSidenavModule, ComponentBrowserComponent, SideNavWrapperComponent],
   templateUrl: './playground.component.html',
   styleUrls: ['./playground.component.scss']
 })
@@ -25,10 +25,10 @@ export class PlaygroundComponent implements OnInit {
   constructor(private eventBus: EventBusService) {}
 
   ngOnInit(): void {
-    this.eventBus.on('show-component-browser', () => this.toggleDrawer());
+    this.eventBus.on('show-component-browser', () => this.toggleComponentBrowser());
   }
 
-  toggleDrawer(): void {
+  toggleComponentBrowser(): void {
     void this.drawer.toggle();
   }
 
