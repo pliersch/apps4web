@@ -2,8 +2,7 @@ import { AccountState } from "@account/store/account.state";
 import { User } from "@account/store/user.model";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AsyncPipe, NgIf } from "@angular/common";
-import { Component, OnInit } from '@angular/core';
-import { BreakpointService } from "@app/common/services/breakpoint.service";
+import { Component } from '@angular/core';
 import { Select } from "@ngxs/store";
 import { NgScrollbar } from "ngx-scrollbar";
 import { Observable } from "rxjs";
@@ -19,24 +18,18 @@ import { WasteReminderComponent } from "../waste-calendar/waste-reminder.compone
   standalone: true,
   imports: [NgIf, WasteReminderComponent, PizzaComponent, PlayerComponent, NgScrollbar, AsyncPipe]
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
 
   @Select(AccountState.getUser)
   user$: Observable<User>;
 
-  protected readonly Breakpoints = Breakpoints;
-  currentBreakpoint: Observable<string>;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
     );
 
-  constructor(private breakpointObserver: BreakpointObserver,
-              private breakpointService: BreakpointService) { }
+  constructor(private breakpointObserver: BreakpointObserver) { }
 
-  ngOnInit(): void {
-    this.currentBreakpoint = this.breakpointService.breakpoint;
-  }
 
 }
