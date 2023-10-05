@@ -11,7 +11,7 @@
     <span class="spacer"></span>
     <app-widget></app-widget>
     <ng-template [ngIf]="isDevMode()">
-      <app-theme-menu (switchThemeEvent)="onSwitchTheme($event)"></app-theme-menu>
+      <app-theme-menu/>
     </ng-template>
     <app-signin></app-signin>
   </mat-toolbar>
@@ -30,7 +30,7 @@
     </mat-toolbar>
     <app-widget></app-widget>
     <ng-template [ngIf]="isDevMode()">
-      <app-theme-menu (switchThemeEvent)="onSwitchTheme($event)"></app-theme-menu>
+      <app-theme-menu/>
     </ng-template>
     <app-signin></app-signin>
   </mat-toolbar>

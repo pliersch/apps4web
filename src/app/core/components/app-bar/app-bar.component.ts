@@ -20,21 +20,17 @@ import { WidgetComponent } from '../widget/widget.component';
 })
 export class AppBarComponent {
 
-  @Input() appName: string;
   @Input() isHandset$: Observable<boolean>;
   @Output() toggleNavEvent = new EventEmitter<string>();
-  @Output() switchThemeEvent = new EventEmitter<string>();
 
   @Select(RouterState.getAccessibleRoutes)
   routes$: Observable<Route[]>;
   protected readonly isDevMode = isDevMode;
 
+  // appName = constants.APP_NAME;
+
   emitNavToggle(): void {
     this.toggleNavEvent.emit('toggle');
-  }
-
-  onSwitchTheme($event: string): void {
-    this.switchThemeEvent.emit($event);
   }
 
 }
