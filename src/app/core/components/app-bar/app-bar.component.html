@@ -1,5 +1,5 @@
 <ng-template [ngIf]="isHandset$ | async" [ngIfElse]="desktop">
-  <mat-toolbar class="p8lr">
+  <mat-toolbar>
     <button mat-icon-button (click)="emitNavToggle()">
       <mat-icon>menu</mat-icon>
     </button>
@@ -18,16 +18,16 @@
 </ng-template>
 
 <ng-template #desktop>
-  <mat-toolbar class="p8lr">
-    <mat-toolbar class="p8lr">
-      <a mat-flat-button [routerLink]="['/']">
-        <div class='app-logo'>
-          APPS<span class='logo-color'>4</span>WEB
-        </div>
-      </a>
-      <a mat-flat-button routerLinkActive='active-route'
-         *ngFor="let route of routes$ | async" [routerLink]="[route.path]">{{route.name}}</a>
-    </mat-toolbar>
+  <mat-toolbar>
+
+    <a mat-flat-button [routerLink]="['/']">
+      <div class='app-logo'>
+        APPS<span class='logo-color'>4</span>WEB
+      </div>
+    </a>
+    <a mat-flat-button routerLinkActive='active-route'
+       *ngFor="let route of routes$ | async" [routerLink]="[route.path]">{{route.name}}</a>
+    <span class="spacer"></span>
     <app-widget></app-widget>
     <ng-template [ngIf]="isDevMode()">
       <app-theme-menu/>
