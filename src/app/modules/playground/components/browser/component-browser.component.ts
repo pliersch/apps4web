@@ -21,6 +21,14 @@ export class ComponentBrowserComponent {
   @Output()
   selectEvent = new EventEmitter<void>();
 
+  // @Select(ComponentState.components)
+  // components$: Observable<IComponent[]>;
+
+  components = [
+    LandingComponent,
+    LandingBgImgComponent
+  ]
+
   constructor(private eventBus: EventBusService,
               private dynamicService: DynamicComponentService) {
   }
@@ -29,7 +37,6 @@ export class ComponentBrowserComponent {
     this.dynamicService.setComponent(component);
     this.selectEvent.emit();
   }
-
 
   protected readonly LandingComponent = LandingComponent;
   protected readonly LandingBgImgComponent = LandingBgImgComponent;

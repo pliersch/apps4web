@@ -13,6 +13,7 @@ import { PhotoService } from "@modules/photos/services/photo.service";
 import { TagService } from "@modules/photos/services/tag.service";
 import { PhotoState } from "@modules/photos/store/photos/photo.state";
 import { TagState } from "@modules/photos/store/tags/tag.state";
+import { ComponentState } from "@modules/playground/stores/component.state";
 import { NgxsModule } from "@ngxs/store";
 import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
 
@@ -64,7 +65,17 @@ export const ROUTES: Route[] = [
           )
         ]
       },
-      {path: 'playground', title: 'Playground', loadChildren: playgroundRoutes, canActivate: [AuthGuard]},
+      {
+        path: 'playground',
+        title: 'Playground',
+        loadChildren: playgroundRoutes,
+        canActivate: [AuthGuard],
+        providers: [
+          importProvidersFrom(
+            NgxsModule.forFeature([ComponentState])
+          )
+        ]
+      },
       {path: 'three', title: 'ThreeJS', loadComponent: three, canActivate: [AuthGuard]},
       {path: 'account', title: 'Account', loadComponent: accountComponent},
       {path: '**', redirectTo: '', pathMatch: 'full'},
