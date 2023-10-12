@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { EventEmitter } from "@app/common/base/event-emitter";
-import { VisibilityStateService } from "@app/common/services/visibility-state.service";
 import { RadioStation } from "@modules/radio/components/player/player.component";
 
 export type PlayerState = 'play' | 'pause' | 'stop'
@@ -24,10 +23,9 @@ export class PlayerService extends EventEmitter<RadioEvent> {
     return this._state;
   }
 
-  constructor(private visibilityService: VisibilityStateService) {
+  constructor() {
     super();
     this.initAudio();
-    this.listenVisibilityChange();
   }
 
   private initAudio(): void {
@@ -78,11 +76,4 @@ export class PlayerService extends EventEmitter<RadioEvent> {
     return this.radioStation;
   }
 
-  private listenVisibilityChange(): void {
-    this.visibilityService.on("visible", () => {
-      if (this._state === 'play' && this.audio.paused) {
-        this.play(this.radioStation!)
-      }
-    });
-  }
 }
