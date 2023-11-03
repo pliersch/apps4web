@@ -12,9 +12,15 @@ import {
   EditorPhotoControlComponent,
   EditPhotoPropertiesDialogData,
   EditPhotoPropertiesDialogResult,
+  PhotosActionPanelComponent,
+  PhotosDateFilterComponent,
   PhotosDeletePhotoComponent,
   PhotosEditPhotosComponent,
+  PhotosImageDetailComponent,
   PhotosManageTagsComponent,
+  PhotosMetaPanelEditorComponent,
+  PhotosRatingFilterComponent,
+  PhotosTagFilterComponent
 } from "@modules/photos/modules/explorer";
 import {
   EditorInstructionDialogComponent
@@ -31,15 +37,9 @@ import { TagState } from "@modules/photos/store/tags/tag.state";
 import { Select, Store } from "@ngxs/store";
 import { NgScrollbar } from 'ngx-scrollbar';
 import { Observable } from "rxjs";
-import { PhotosActionPanelComponent } from '../../components/action-panel/photos-action-panel.component';
-import { PhotosDateFilterComponent } from '../../components/date-filter/photos-date-filter.component';
-import { PhotosMetaPanelEditorComponent } from '../../components/editor-meta-panel/photos-meta-panel-editor.component';
 import {
   EditorPhotoControlComponent as EditorPhotoControlComponent_1
 } from '../../components/editor-photo-control/editor-photo-control.component';
-import { PhotosImageDetailComponent } from '../../components/image-detail/photos-image-detail.component';
-import { PhotosRatingFilterComponent } from '../../components/rating-filter/photos-rating-filter.component';
-import { PhotosTagFilterComponent } from '../../components/tag-filter/photos-tag-filter.component';
 
 export interface DeletePhotoDialogData {
   photo: Photo;
@@ -76,10 +76,10 @@ export class PhotosEditorComponent extends AbstractExplorerComponent implements 
   ];
 
   constructor(
-    public photoService: PhotoService,
-    public router: Router,
-    public dialog: MatDialog,
-    public store: Store,
+    protected override photoService: PhotoService,
+    protected override router: Router,
+    protected override dialog: MatDialog,
+    protected override store: Store,
   ) {
     super(photoService, router, dialog, store);
     // todo hack to disable instruction
