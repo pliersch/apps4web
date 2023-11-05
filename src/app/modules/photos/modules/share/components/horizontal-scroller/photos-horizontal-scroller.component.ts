@@ -24,9 +24,6 @@ export class PhotosHorizontalScrollerComponent implements OnInit, AfterViewInit,
   @Select(PhotoState.getFilteredPhotos)
   photos$: Observable<Photo[]>
 
-  @Select(PhotoState.getComparePhotos)
-  comparePhotos$: Observable<Photo[]>
-
   @Select(PhotoState.getCurrentIndex)
   currentIndex$: Observable<number>;
   currentIndex: number;
