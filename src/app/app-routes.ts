@@ -1,7 +1,6 @@
 import { AuthGuard } from "@account/guards/auth.guard";
 import { importProvidersFrom } from '@angular/core';
 import { Route } from '@angular/router';
-import { AlertService } from "@app/common/services/alert.service";
 import { AdminGuard } from "@modules/admin/guards/admin.guard";
 import { ProtocolState } from "@modules/admin/modules/protocol/store/protocol.state";
 import { UserState } from "@modules/admin/modules/user/store/user.state";
@@ -26,7 +25,7 @@ const chat = () => import('@app/modules/chat/chat.component').then(x => x.ChatCo
 
 export const ROUTES: Route[] = [
   {
-    path: '', component: DefaultLayoutComponent, providers: [AlertService], children: [
+    path: '', component: DefaultLayoutComponent, children: [
       {path: '', title: 'Home', component: DashboardComponent},
       // {path: 'impressum', title: 'Impressum', component: LegalNoticeComponent},
       // {path: 'error', title: 'Error', component: ErrorComponent},

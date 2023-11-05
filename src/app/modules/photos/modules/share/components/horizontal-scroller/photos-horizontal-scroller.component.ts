@@ -1,3 +1,4 @@
+import { AsyncPipe, NgFor } from '@angular/common';
 import { AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ScrollerItemComponent } from "@modules/photos/modules/share/components/scroller-item/scroller-item.component";
 import { SetCurrentPhoto } from "@modules/photos/store/photos/photo.actions";
@@ -7,14 +8,13 @@ import { Select, Store } from '@ngxs/store';
 import { NgScrollbar } from 'ngx-scrollbar';
 import { Observable, Subscription } from 'rxjs';
 import { ScrollerItemComponent as ScrollerItemComponent_1 } from '../scroller-item/scroller-item.component';
-import { NgFor, AsyncPipe } from '@angular/common';
 
 @Component({
-    selector: 'app-photos-horizontal-scroller',
-    templateUrl: './photos-horizontal-scroller.component.html',
-    styleUrls: ['./photos-horizontal-scroller.component.scss'],
-    standalone: true,
-    imports: [NgScrollbar, NgFor, ScrollerItemComponent_1, AsyncPipe]
+  selector: 'app-photos-horizontal-scroller',
+  templateUrl: './photos-horizontal-scroller.component.html',
+  styleUrls: ['./photos-horizontal-scroller.component.scss'],
+  standalone: true,
+  imports: [NgScrollbar, NgFor, ScrollerItemComponent_1, AsyncPipe]
 })
 export class PhotosHorizontalScrollerComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -32,6 +32,7 @@ export class PhotosHorizontalScrollerComponent implements OnInit, AfterViewInit,
   currentIndex: number;
   lastIndex: number;
 
+  // fixme not in use!?
   @Output()
   selectEvent = new EventEmitter<Photo>();
 
