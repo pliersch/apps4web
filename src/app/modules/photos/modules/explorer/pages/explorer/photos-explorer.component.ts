@@ -6,17 +6,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router } from "@angular/router";
 import { Action } from "@app/core/interfaces/action";
 import { SetCheckedInstruction } from "@app/core/stores/app/app.actions";
-import {
-  ExplorerPhotoControlComponent,
-  ExplorerPhotoControlComponent as ExplorerPhotoControlComponent_1,
-  PhotosActionPanelComponent,
-  PhotosDateFilterComponent,
-  PhotosImageDetailComponent,
-  PhotosMetaPanelExplorerComponent,
-  PhotosRatingFilterComponent,
-  PhotosTagFilterComponent
-} from '@modules/photos/modules/explorer';
 
+import { ExplorerPhotoControlComponent } from "@modules/photos/modules/explorer";
 import {
   ExplorerInstructionDialogComponent
 } from "@modules/photos/modules/explorer/components/explorer-instruction-dialog/explorer-instruction-dialog.component";
@@ -32,8 +23,18 @@ import { Select, Store } from "@ngxs/store";
 import { saveAs } from 'file-saver';
 import { NgScrollbar } from 'ngx-scrollbar';
 import { Observable } from "rxjs";
-
+import { PhotosActionPanelComponent } from '../../components/action-panel/photos-action-panel.component';
+import { PhotosDateFilterComponent } from '../../components/date-filter/photos-date-filter.component';
+import {
+  PhotosMetaPanelExplorerComponent
+} from '../../components/explorer-meta-panel/photos-meta-panel-explorer.component';
+import {
+  ExplorerPhotoControlComponent as ExplorerPhotoControlComponent_1
+} from '../../components/explorer-photo-control/explorer-photo-control.component';
+import { PhotosImageDetailComponent } from '../../components/image-detail/photos-image-detail.component';
+import { PhotosRatingFilterComponent } from '../../components/rating-filter/photos-rating-filter.component';
 import { PhotosSorterComponent } from '../../components/sorter/photos-sorter.component';
+import { PhotosTagFilterComponent } from '../../components/tag-filter/photos-tag-filter.component';
 
 @Component({
   selector: 'app-photos-explorer',
@@ -60,10 +61,10 @@ export class PhotosExplorerComponent extends AbstractExplorerComponent implement
   ];
 
   constructor(
-    protected override photoService: PhotoService,
-    protected override router: Router,
-    protected override dialog: MatDialog,
-    protected override store: Store,
+    public photoService: PhotoService,
+    public router: Router,
+    public dialog: MatDialog,
+    public store: Store,
   ) {
     super(photoService, router, dialog, store);
     // todo hack to disable instruction

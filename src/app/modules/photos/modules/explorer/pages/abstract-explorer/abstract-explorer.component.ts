@@ -22,8 +22,8 @@ import { tap } from "rxjs/operators";
 
 @Component({
   selector: 'app-abstract-explorer',
-  template: '',
-  styles: []
+  templateUrl: './abstract-explorer.component.html',
+  styleUrls: ['./abstract-explorer.component.scss']
 })
 export abstract class AbstractExplorerComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -97,10 +97,10 @@ export abstract class AbstractExplorerComponent implements OnInit, AfterViewInit
   private viewport: Element;
 
   protected constructor(
-    protected photoService: PhotoService,
-    protected router: Router,
-    protected dialog: MatDialog,
-    protected store: Store,
+    public photoService: PhotoService,
+    public router: Router,
+    public dialog: MatDialog,
+    public store: Store,
   ) {
   }
 
