@@ -1,8 +1,7 @@
 import { NgIf } from '@angular/common';
-import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { AlertService } from "@app/common/services/alert.service";
-import { PhotosHorizontalScrollerComponent } from "@modules/photos/core";
 import { SetNextPhoto, SetPreviousPhoto } from "@modules/photos/store/photos/photo.actions";
 import { Photo } from "@modules/photos/store/photos/photo.model";
 import { PhotoState } from "@modules/photos/store/photos/photo.state";
@@ -22,9 +21,6 @@ import { SlideShowControlBarComponent } from './components/controlbar/slide-show
   imports: [NgIf, SlideShowControlBarComponent, PhotosHorizontalScrollerComponent_1]
 })
 export class PhotosSlideshowComponent implements OnInit, OnDestroy {
-
-  @ViewChild(PhotosHorizontalScrollerComponent)
-  scroller!: PhotosHorizontalScrollerComponent;
 
   @Select(PhotoState.getCurrentPhoto)
   currentPhoto$: Observable<Photo>;

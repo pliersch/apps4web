@@ -14,7 +14,7 @@ export class WindowScrollSpyDirective {
   constructor(private scrollDispatcher: ScrollDispatcher) { }
 
   @HostListener('window:scroll', [])
-  onWindowScroll() {
+  onWindowScroll(): void {
     let inside = window.scrollY > this.appWindowScrollSpy;
     let outside = window.scrollY < this.appWindowScrollSpy;
 

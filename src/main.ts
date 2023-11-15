@@ -3,14 +3,7 @@ import { AccountState } from '@account/store/account.state';
 import { registerLocaleData } from '@angular/common';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';
-import {
-  APP_INITIALIZER,
-  enableProdMode,
-  ErrorHandler,
-  importProvidersFrom,
-  isDevMode,
-  LOCALE_ID
-} from '@angular/core';
+import { APP_INITIALIZER, enableProdMode, ErrorHandler, importProvidersFrom, LOCALE_ID } from '@angular/core';
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDialogModule } from "@angular/material/dialog";
@@ -18,7 +11,6 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { bootstrapApplication, BrowserModule } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from "@angular/router";
-import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { ROUTES } from '@app/app-routes';
 import { AppComponent } from '@app/app.component';
@@ -63,12 +55,16 @@ bootstrapApplication(AppComponent, {
       NgxsModule.forRoot([AppState, RouterState, ThemeState, AccountState], ngxsConfig),
       NgxsReduxDevtoolsPluginModule.forRoot( /*{disabled: !isDevMode()}*/),
       // WasteCalendarModule,
-      ServiceWorkerModule.register('ngsw-worker.js', {
-        enabled: !isDevMode(),
-        // Register the ServiceWorker as soon as the application is stable
-        // or after 30 seconds (whichever comes first).
-        registrationStrategy: 'registerWhenStable:30000'
-      }),
+
+
+      // ServiceWorkerModule.register('ngsw-worker.js', {
+      //   enabled: !isDevMode(),
+      //   // Register the ServiceWorker as soon as the application is stable
+      //   // or after 30 seconds (whichever comes first).
+      //   registrationStrategy: 'registerWhenStable:30000'
+      // }),
+
+
       NgScrollbarModule),
     {provide: LOCALE_ID, useValue: 'de'},
     {provide: DateAdapter, useClass: DateFnsAdapter, deps: [MAT_DATE_LOCALE]},

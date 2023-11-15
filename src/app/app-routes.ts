@@ -1,7 +1,6 @@
 import { AuthGuard } from "@account/guards/auth.guard";
 import { importProvidersFrom } from '@angular/core';
 import { Route } from '@angular/router';
-import { AlertService } from "@app/common/services/alert.service";
 import { AdminGuard } from "@modules/admin/guards/admin.guard";
 import { ProtocolState } from "@modules/admin/modules/protocol/store/protocol.state";
 import { UserState } from "@modules/admin/modules/user/store/user.state";
@@ -14,19 +13,22 @@ import { PhotoService } from "@modules/photos/services/photo.service";
 import { TagService } from "@modules/photos/services/tag.service";
 import { PhotoState } from "@modules/photos/store/photos/photo.state";
 import { TagState } from "@modules/photos/store/tags/tag.state";
+import { ComponentState } from "@modules/playground/stores/component.state";
 import { NgxsModule } from "@ngxs/store";
 import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
 
-const adminRoutes = import('@modules/admin/admin-routes');
-const photosRoutes = import('@modules/photos/photos-routes');
+const adminRoutes = () => import('@modules/admin/admin-routes');
+const photosRoutes = () => import('@modules/photos/photos-routes');
+const playgroundRoutes = () => import('@modules/playground/playground-routes');
 const accountComponent = () => import('@app/modules/account/account.component').then((x) => x.AccountComponent);
 // const adminComponent = import('@modules/admin/admin.component').then(x => x.AdminComponent);
 const three = () => import('@modules/three/three.component').then(x => x.ThreeComponent);
+// const playground = () => import('@modules/playground/playground.component').then(x => x.PlaygroundComponent);
 const chat = () => import('@app/modules/chat/chat.component').then(x => x.ChatComponent);
 
 export const ROUTES: Route[] = [
   {
-    path: '', component: DefaultLayoutComponent, providers: [AlertService], children: [
+    path: '', component: DefaultLayoutComponent, children: [
       {path: '', title: 'Home', component: DashboardComponent},
       // {path: 'impressum', title: 'Impressum', component: LegalNoticeComponent},
       // {path: 'error', title: 'Error', component: ErrorComponent},
@@ -42,9 +44,7 @@ export const ROUTES: Route[] = [
       },
       {
         path: 'admin',
-        // loadComponent: () => adminComponent,
-        // component: AdminComponent,
-        loadChildren: () => adminRoutes,
+        loadChildren: adminRoutes,
         title: 'Administration',
         canActivate: [AdminGuard],
         providers: [
@@ -55,9 +55,7 @@ export const ROUTES: Route[] = [
       },
       {
         path: 'photos',
-        // loadComponent: () => adminComponent,
-        // component: AdminComponent,
-        loadChildren: () => photosRoutes,
+        loadChildren: photosRoutes,
         title: 'Photos',
         canActivate: [AuthGuard],
         providers: [
@@ -67,9 +65,18 @@ export const ROUTES: Route[] = [
           )
         ]
       },
-      // {path: 'photos', title: 'Photos', loadChildren: photosModule, canActivate: [AuthGuard]},
+      {
+        path: 'playground',
+        title: 'Playground',
+        loadChildren: playgroundRoutes,
+        canActivate: [AuthGuard],
+        providers: [
+          importProvidersFrom(
+            NgxsModule.forFeature([ComponentState])
+          )
+        ]
+      },
       {path: 'three', title: 'ThreeJS', loadComponent: three, canActivate: [AuthGuard]},
-      {path: 'playground', title: 'Playground', loadComponent: three, canActivate: [AuthGuard]},
       {path: 'account', title: 'Account', loadComponent: accountComponent},
       {path: '**', redirectTo: '', pathMatch: 'full'},
       {path: '', redirectTo: '', pathMatch: 'full'},

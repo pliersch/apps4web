@@ -1,19 +1,29 @@
-import {
-  animate,
-  animateChild,
-  animation,
-  group,
-  query,
-  style,
-  transition,
-  trigger
-} from '@angular/animations';
+import { animate, animateChild, animation, group, query, style, transition, trigger } from '@angular/animations';
 
-export const transAnimation = animation([
+// export const fooAnimation = animation([
+//   state('open', style({
+//     opacity: 1,
+//     backgroundColor: 'yellow'
+//   })),
+//   state('closed', style({
+//     opacity: 0.8,
+//     backgroundColor: 'blue'
+//   })),
+//   transition('open => closed', [
+//     animate('1s')
+//   ]),
+//   transition('closed => open', [
+//     animate('0.5s')
+//   ]),
+// ]);
+
+
+export const transitionAnimation = animation([
   style({
     height: '{{ height }}',
     opacity: '{{ opacity }}',
-    backgroundColor: '{{ backgroundColor }}'
+    backgroundColor: '{{ backgroundColor }}',
+    color: '{{ color }}'
   }),
   animate('{{ time }}')
 ]);
@@ -22,7 +32,7 @@ export const transAnimation = animation([
 export const slideInAnimation =
   trigger('routeAnimations', [
     transition('HomePage <=> AboutPage', [
-      style({ position: 'relative' }),
+      style({position: 'relative'}),
       query(':enter, :leave', [
         style({
           position: 'absolute',
@@ -32,21 +42,21 @@ export const slideInAnimation =
         })
       ]),
       query(':enter', [
-        style({ left: '-100%' })
+        style({left: '-100%'})
       ]),
       query(':leave', animateChild()),
       group([
         query(':leave', [
-          animate('300ms ease-out', style({ left: '100%' }))
+          animate('300ms ease-out', style({left: '100%'}))
         ]),
         query(':enter', [
-          animate('300ms ease-out', style({ left: '0%' }))
+          animate('300ms ease-out', style({left: '0%'}))
         ])
       ]),
       query(':enter', animateChild())
     ]),
     transition('* <=> FilterPage', [
-      style({ position: 'relative' }),
+      style({position: 'relative'}),
       query(':enter, :leave', [
         style({
           position: 'absolute',
@@ -56,24 +66,17 @@ export const slideInAnimation =
         })
       ]),
       query(':enter', [
-        style({ left: '-100%' })
+        style({left: '-100%'})
       ]),
       query(':leave', animateChild()),
       group([
         query(':leave', [
-          animate('200ms ease-out', style({ left: '100%' }))
+          animate('200ms ease-out', style({left: '100%'}))
         ]),
         query(':enter', [
-          animate('300ms ease-out', style({ left: '0%' }))
+          animate('300ms ease-out', style({left: '0%'}))
         ])
       ]),
       query(':enter', animateChild())
     ])
   ]);
-
-
-/*
-Copyright 2017-2018 Google Inc. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
-*/

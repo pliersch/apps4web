@@ -23,6 +23,7 @@ import { Select, Store } from "@ngxs/store";
 import { saveAs } from 'file-saver';
 import { NgScrollbar } from 'ngx-scrollbar';
 import { Observable } from "rxjs";
+
 import { PhotosActionPanelComponent } from '../../components/action-panel/photos-action-panel.component';
 import { PhotosDateFilterComponent } from '../../components/date-filter/photos-date-filter.component';
 import {
@@ -61,10 +62,10 @@ export class PhotosExplorerComponent extends AbstractExplorerComponent implement
   ];
 
   constructor(
-    public photoService: PhotoService,
-    public router: Router,
-    public dialog: MatDialog,
-    public store: Store,
+    protected override photoService: PhotoService,
+    protected override router: Router,
+    protected override dialog: MatDialog,
+    protected override store: Store,
   ) {
     super(photoService, router, dialog, store);
     // todo hack to disable instruction

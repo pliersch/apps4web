@@ -2,6 +2,11 @@
   display: flex;
 }
 
+.flex-max-width {
+  display: flex;
+  flex-grow: 1;
+}
+
 .row {
   display: flex;
   flex-direction: row;

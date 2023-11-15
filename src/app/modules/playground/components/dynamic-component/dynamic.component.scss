@@ -1,0 +1,48 @@
+.dynamic-wrapper-container {
+  width: 100%;
+  position: relative;
+  //display: inline-flex;
+
+  &:hover {
+    border-color: darkgray;
+
+    .action-container {
+      opacity: 1;
+    }
+  }
+
+  &.active {
+    border-color: darkgray;
+  }
+}
+
+.component-exist {
+  box-sizing: border-box;
+  border: dashed 1px #979797;
+  width: 100%;
+}
+
+.action-container {
+  position: absolute;
+  height: fit-content;
+  top: 50%;
+  right: 50%;
+  transition: .2s ease;
+  //visibility: hidden;
+  opacity: 0;
+  z-index: 2;
+
+  &:hover {
+    border-color: darkgray;
+    visibility: visible;
+  }
+
+  mat-card-content {
+    padding: 0 !important;
+  }
+
+}
+
+//.hidden {
+//  visibility: hidden;
+//}

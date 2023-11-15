@@ -1,0 +1,15 @@
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let group of assetCategories" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ group.name}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-action-list>
+      <button *ngFor="let item of group.items" mat-list-item
+              (click)="onSelectAsset(item)">{{item.name}}</button>
+    </mat-action-list>
+
+  </mat-expansion-panel>
+</mat-accordion>

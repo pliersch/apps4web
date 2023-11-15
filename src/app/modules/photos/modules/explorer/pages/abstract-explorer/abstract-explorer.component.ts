@@ -97,10 +97,10 @@ export abstract class AbstractExplorerComponent implements OnInit, AfterViewInit
   private viewport: Element;
 
   protected constructor(
-    public photoService: PhotoService,
-    public router: Router,
-    public dialog: MatDialog,
-    public store: Store,
+    protected photoService: PhotoService,
+    protected router: Router,
+    protected dialog: MatDialog,
+    protected store: Store,
   ) {
   }
 

@@ -1,5 +1,5 @@
 <ng-scrollbar track="vertical">
-  <mat-accordion>
+  <mat-accordion multi>
     <mat-expansion-panel *ngFor="let group of tagGroups; let i = index"
                          [expanded]="step === i" (opened)="setStep(i)" hideToggle>
       <mat-expansion-panel-header>

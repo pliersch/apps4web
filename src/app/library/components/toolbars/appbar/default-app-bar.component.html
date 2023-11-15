@@ -1,0 +1,30 @@
+<ng-template [ngIf]="isHandset$ | async" [ngIfElse]="desktop">
+  <mat-toolbar class="p8lr absolut z2 blur">
+    <button mat-icon-button (click)="emitNavToggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <button mat-flat-button [routerLink]="['/']">
+      <div class='app-logo'>
+        APPS<span class='logo-color'>4</span>WEB
+      </div>
+    </button>
+  </mat-toolbar>
+</ng-template>
+
+<ng-template #desktop>
+
+  <mat-toolbar class="p8lr absolut z2" [class.alpha0]="isOnTop">
+    <mat-toolbar class="p8lr" [class.alpha0]="isOnTop">
+      <button mat-flat-button [routerLink]="['/']">
+        <div class='app-logo'>
+          APPS<span class='logo-color'>4</span>WEB
+        </div>
+      </button>
+      <span class="spacer"></span>
+      <a mat-flat-button routerLinkActive='active-route'
+         *ngFor="let route of routes$ | async" [routerLink]="[route.path]">{{route.name}}</a>
+    </mat-toolbar>
+  </mat-toolbar>
+</ng-template>
+

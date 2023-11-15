@@ -1,0 +1,9 @@
+.assets-container {
+  & .page-header {
+    height: 40vh !important;
+  }
+
+  & .presentation-title {
+    font-size: 5em !important;
+  }
+}
