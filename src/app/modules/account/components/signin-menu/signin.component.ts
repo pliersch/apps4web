@@ -3,7 +3,7 @@ import { AccountState } from "@account/store/account.state";
 import { GoogleUser } from "@account/store/google-user.model";
 import { User } from "@account/store/user.model";
 import { NgIf } from "@angular/common";
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, isDevMode, OnInit } from '@angular/core';
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
@@ -31,9 +31,9 @@ export class SigninComponent implements OnInit {
   googleUser$: Observable<GoogleUser>;
   googleUser: GoogleUser | null;
 
-  // isDevMode = isDevMode();
+  isDevMode = isDevMode();
 
-  isDevMode = false;
+  // isDevMode = false;
 
   constructor(private store: Store,
               private router: Router) { }

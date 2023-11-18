@@ -1,7 +1,32 @@
-ng-scrollbar.dark-scrollbar {
-  --scrollbar-size: 8px;
-  --scrollbar-thumb-color: #212121;
-  --scrollbar-thumb-hover-color: #000000;
+// default light-grey
+ng-scrollbar {
+  //--scrollbar-size: 8px;
+  --scrollbar-thumb-color: #a4a4a4 !important;
+  --scrollbar-thumb-hover-color: #bdbdbd !important;
+  //--scrollbar-border-radius: 4px;
+  //border: 1px solid gray;
+}
+
+ng-scrollbar.grey {
+  //--scrollbar-size: 8px;
+  --scrollbar-thumb-color: #5e5e5e !important;
+  --scrollbar-thumb-hover-color: #000000 !important;
+  //--scrollbar-border-radius: 4px;
+  //border: 1px solid gray;
+}
+
+ng-scrollbar.dark-grey {
+  //--scrollbar-size: 8px;
+  --scrollbar-thumb-color: #212121 !important;
+  --scrollbar-thumb-hover-color: #000000 !important;
+  //--scrollbar-border-radius: 4px;
+  //border: 1px solid gray;
+}
+
+ng-scrollbar.black {
+  //--scrollbar-size: 8px;
+  --scrollbar-thumb-color: #000000 !important;
+  --scrollbar-thumb-hover-color: #000000 !important;
   //--scrollbar-border-radius: 4px;
   //border: 1px solid gray;
 }
