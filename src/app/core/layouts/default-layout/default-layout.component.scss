@@ -17,15 +17,15 @@
   grid-area: appbar;
 }
 
-.main {
-  position: relative;
-  box-sizing: border-box;
-  height: 100%;
-  overflow-y: auto;
-  grid-area: main;
-  display: flex;
-  flex-direction: column;
-}
+//.main {
+//  //position: relative;
+//  //box-sizing: border-box;
+//  //height: 100%;
+//  //overflow-y: auto;
+//  //grid-area: main;
+//  //display: flex;
+//  //flex-direction: column;
+//}
 
 .sidenav-container {
   height: 100%;

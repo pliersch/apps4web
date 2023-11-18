@@ -18,9 +18,10 @@ import { NgxsModule } from "@ngxs/store";
 import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
 
 const adminRoutes = () => import('@modules/admin/admin-routes');
+const accountRoutes = () => import('@modules/account/account-routes');
 const photosRoutes = () => import('@modules/photos/photos-routes');
 const playgroundRoutes = () => import('@modules/playground/playground-routes');
-const accountComponent = () => import('@app/modules/account/account.component').then((x) => x.AccountComponent);
+// const accountComponent = () => import('@app/modules/account/account.component').then((x) => x.AccountComponent);
 // const adminComponent = import('@modules/admin/admin.component').then(x => x.AdminComponent);
 const three = () => import('@modules/three/three.component').then(x => x.ThreeComponent);
 // const playground = () => import('@modules/playground/playground.component').then(x => x.PlaygroundComponent);
@@ -77,9 +78,9 @@ export const ROUTES: Route[] = [
         ]
       },
       {path: 'three', title: 'ThreeJS', loadComponent: three, canActivate: [AuthGuard]},
-      {path: 'account', title: 'Account', loadComponent: accountComponent},
+      {path: 'account', title: 'Account', loadChildren: accountRoutes},
+      {path: 'login', redirectTo: 'account/login', pathMatch: 'full'},
       {path: '**', redirectTo: '', pathMatch: 'full'},
       {path: '', redirectTo: '', pathMatch: 'full'},
-      {path: 'login', redirectTo: 'account/login', pathMatch: 'full'},
     ]
   }];
