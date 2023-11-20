@@ -1,11 +1,12 @@
 import { CdkTextareaAutosize, TextFieldModule } from "@angular/cdk/text-field";
 import { Component, EventEmitter, HostListener, Output, ViewChild } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { UserIdentity } from "@app/core/interfaces/user-identiy";
 import { Emoji } from "@modules/chat/store/chat.model";
-import { ReactiveFormsModule, FormsModule } from "@angular/forms";
-import { MatInputModule } from "@angular/material/input";
-import { MatIconModule } from "@angular/material/icon";
-import { MatButtonModule } from "@angular/material/button";
 import { ChatEmojiPickerComponent } from "../emoji-picker/chat-emoji-picker.component";
 
 export interface HTMLInputEvent extends Event {
@@ -13,11 +14,11 @@ export interface HTMLInputEvent extends Event {
 }
 
 @Component({
-    selector: 'app-chat-input',
-    templateUrl: './chat-input.component.html',
-    styleUrls: ['./chat-input.component.scss'],
-    standalone: true,
-    imports: [ChatEmojiPickerComponent, MatButtonModule, MatIconModule, MatInputModule, TextFieldModule, ReactiveFormsModule, FormsModule]
+  selector: 'app-chat-input',
+  templateUrl: './chat-input.component.html',
+  styleUrls: ['./chat-input.component.scss'],
+  standalone: true,
+  imports: [ChatEmojiPickerComponent, MatButtonModule, MatIconModule, MatInputModule, TextFieldModule, ReactiveFormsModule, FormsModule, MatToolbarModule]
 })
 
 export class ChatInputComponent {

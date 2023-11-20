@@ -1,4 +1,4 @@
-<div class="flex-container primaryColor">
+<mat-toolbar>
   <app-chat-emoji-picker
     [visible]="emojiPanel" (close)="onClose()"
     (emojiSelectEvent)="addEmojiToMessage($event)"></app-chat-emoji-picker>
@@ -29,5 +29,5 @@
     (click)="emitMessage()" [disabled]="content === &quot;&quot;">
     <mat-icon>send</mat-icon>
   </button>
-</div>
+</mat-toolbar>
 
