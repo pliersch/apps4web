@@ -37,6 +37,8 @@ body {
 * {
   &:active,
   :focus {
+    //opacity: 0;
+    background: initial;
     outline: none !important;
   }
 

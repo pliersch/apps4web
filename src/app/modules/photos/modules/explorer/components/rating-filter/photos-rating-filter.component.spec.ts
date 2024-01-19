@@ -7,7 +7,6 @@ import { MatCardModule } from "@angular/material/card";
 import { By } from "@angular/platform-browser";
 import { PhotosRatingFilterComponent } from "@modules/photos/modules/explorer";
 import { StarRatingComponent } from "@modules/photos/modules/share/components/star-rating/star-rating.component";
-import { PhotosShareModule } from "@modules/photos/modules/share/photos-share.module";
 import { first } from "rxjs";
 
 let fixture: ComponentFixture<PhotosRatingFilterComponent>;
@@ -18,9 +17,9 @@ describe('PhotosRatingFilter', () => {
   describe('unit tests', () => {
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-    imports: [PhotosRatingFilterComponent, MockStarRatingComponent],
-    schemas: [NO_ERRORS_SCHEMA],
-}).compileComponents();
+        imports: [PhotosRatingFilterComponent, MockStarRatingComponent],
+        schemas: [NO_ERRORS_SCHEMA],
+      }).compileComponents();
       fixture = TestBed.createComponent(PhotosRatingFilterComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
@@ -58,8 +57,8 @@ describe('PhotosRatingFilter', () => {
 
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-    imports: [MatCardModule, PhotosShareModule, PhotosRatingFilterComponent],
-})
+        imports: [MatCardModule, PhotosRatingFilterComponent],
+      })
         .compileComponents();
       fixture = TestBed.createComponent(PhotosRatingFilterComponent);
       component = fixture.componentInstance;
@@ -89,9 +88,9 @@ describe('PhotosRatingFilter', () => {
 //////////////////////////////////////////////////////////
 
 @Component({
-    selector: 'app-photos-star-rating',
-    template: '',
-    standalone: true,
+  selector: 'app-photos-star-rating',
+  template: '',
+  standalone: true,
 })
 class MockStarRatingComponent implements Partial<StarRatingComponent> {
   @Input()

@@ -17,28 +17,11 @@
   grid-area: appbar;
 }
 
-//.main {
-//  //position: relative;
-//  //box-sizing: border-box;
-//  //height: 100%;
-//  //overflow-y: auto;
-//  //grid-area: main;
-//  //display: flex;
-//  //flex-direction: column;
-//}
-
 .sidenav-container {
   height: 100%;
 }
 
-.active-link {
-  color: var(--secondary-color);
-  background: rgba(255, 255, 255, 0.04);
-  //background: green;
-}
-
 .active-route {
   color: var(--secondary-color);
-  background: rgba(255, 255, 255, 0.04);
-  //background: green;
+  background: rgba(255, 255, 255, 0.2);
 }

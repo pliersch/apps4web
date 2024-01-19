@@ -1,11 +1,31 @@
-//.mat-expansion-panel-spacing {
+//.mat-accordion .mat-expansion-panel:not([class*=mat-elevation-z]) {
+//  box-shadow: unset;
+//}
+//
+//.mat-accordion .mat-expansion-panel.mat-expansion-panel-spacing {
 //  margin: 0;
 //}
 //
-//.mat-expansion-panel:not(:last-child) {
-//  border-bottom-right-radius: 0px;
-//  border-bottom-left-radius: 0px;
+//.mat-accordion .mat-expansion-panel {
+//  color: var(--blackColor);
+//  background-color: transparent;
 //}
+//
+//
+//.mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
+//  transition: var(--transition);
+//  background-color: transparent;
+//  color: var(--blackColor);
+//  border-radius: 5px;
+//  position: relative;
+//  display: block;
+//  height: auto;
+//  font-size: 14px;
+//  font-weight: 600;
+//  padding: 14px 60px 14px 37px;
+//}
+
+
 .mat-expansion-panel-header {
   font-size: 16px;
   font-weight: 400;
