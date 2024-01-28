@@ -3,7 +3,7 @@
     <mat-card-title>Radio Sender</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <mat-tab-group>
+    <mat-tab-group color="accent">
       <mat-tab label="Favoriten">
         <ng-scrollbar class="light-grey" [autoHeightDisabled]="false"
                       track="horizontal" visibility="always">
@@ -15,7 +15,7 @@
                    (click)="onClickPlay(radio)">
                 <div class="action-overlay" [class.active]="radio === current">
                   <button mat-mini-fab color="primary">
-                    <mat-icon>{{icon}}</mat-icon>
+                    <mat-icon>{{ icon }}</mat-icon>
                   </button>
                 </div>
               </div>
@@ -34,7 +34,7 @@
                    (click)="onClickPlay(radio)">
                 <div class="action-overlay" [class.active]="radio === current">
                   <button mat-mini-fab color="primary">
-                    <mat-icon>{{icon}}</mat-icon>
+                    <mat-icon>{{ icon }}</mat-icon>
                   </button>
                 </div>
               </div>

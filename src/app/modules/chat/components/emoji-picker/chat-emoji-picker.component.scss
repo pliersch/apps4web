@@ -20,6 +20,8 @@
   margin-top: 10px;
   overflow-y: auto;
   height: 200px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .emoji-picker span {

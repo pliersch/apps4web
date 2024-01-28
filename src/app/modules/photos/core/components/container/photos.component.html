@@ -1,9 +1,9 @@
 <section class="page">
   <header class="nav-bar">
-    <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+    <nav mat-tab-nav-bar color="accent" [tabPanel]="tabPanel">
       <a mat-tab-link *ngFor="let route of routes"
          (click)="navigateUrl(route.path)"
-         [active]="activeLink.includes(route.name.toLocaleLowerCase())"> {{route.name}} </a>
+         [active]="activeLink.includes(route.name.toLocaleLowerCase())"> {{ route.name }} </a>
     </nav>
   </header>
   <!--  <app-action-bar class="action-bar"></app-action-bar>-->
