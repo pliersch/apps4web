@@ -13,14 +13,12 @@ import { PhotoService } from "@modules/photos/services/photo.service";
 import { TagService } from "@modules/photos/services/tag.service";
 import { PhotoState } from "@modules/photos/store/photos/photo.state";
 import { TagState } from "@modules/photos/store/tags/tag.state";
-import { ComponentState } from "@modules/playground/stores/component.state";
 import { NgxsModule } from "@ngxs/store";
 import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-layout.component";
 
 const adminRoutes = () => import('@modules/admin/admin-routes');
 const accountRoutes = () => import('@modules/account/account-routes');
 const photosRoutes = () => import('@modules/photos/photos-routes');
-const playgroundRoutes = () => import('@modules/playground/playground-routes');
 // const accountComponent = () => import('@app/modules/account/account.component').then((x) => x.AccountComponent);
 // const adminComponent = import('@modules/admin/admin.component').then(x => x.AdminComponent);
 const three = () => import('@modules/three/three.component').then(x => x.ThreeComponent);
@@ -63,17 +61,6 @@ export const ROUTES: Route[] = [
           TagService, PhotoService, PhotosResolver,
           importProvidersFrom(
             NgxsModule.forFeature([PhotoState, TagState])
-          )
-        ]
-      },
-      {
-        path: 'playground',
-        title: 'Playground',
-        loadChildren: playgroundRoutes,
-        canActivate: [AuthGuard],
-        providers: [
-          importProvidersFrom(
-            NgxsModule.forFeature([ComponentState])
           )
         ]
       },
