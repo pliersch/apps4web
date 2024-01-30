@@ -22,7 +22,7 @@ const photosRoutes = () => import('@modules/photos/photos-routes');
 // const accountComponent = () => import('@app/modules/account/account.component').then((x) => x.AccountComponent);
 // const adminComponent = import('@modules/admin/admin.component').then(x => x.AdminComponent);
 const three = () => import('@modules/three/three.component').then(x => x.ThreeComponent);
-// const playground = () => import('@modules/playground/playground.component').then(x => x.PlaygroundComponent);
+const playground = () => import('@modules/playground/playground.component').then(x => x.PlaygroundComponent);
 const chat = () => import('@app/modules/chat/chat.component').then(x => x.ChatComponent);
 
 export const ROUTES: Route[] = [
@@ -66,6 +66,7 @@ export const ROUTES: Route[] = [
       },
       {path: 'three', title: 'ThreeJS', loadComponent: three, canActivate: [AuthGuard]},
       {path: 'account', title: 'Account', loadChildren: accountRoutes},
+      {path: 'playground', title: 'Playground', loadComponent: playground},
       {path: 'login', redirectTo: 'account/login', pathMatch: 'full'},
       {path: '**', redirectTo: '', pathMatch: 'full'},
       {path: '', redirectTo: '', pathMatch: 'full'},

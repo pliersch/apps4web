@@ -78,10 +78,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "apps4web:build:production"
+              "buildTarget": "apps4web:build:production"
             },
             "development": {
-              "browserTarget": "apps4web:build:development"
+              "buildTarget": "apps4web:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -89,7 +89,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "apps4web:build"
+            "buildTarget": "apps4web:build"
           }
         },
         "test": {
