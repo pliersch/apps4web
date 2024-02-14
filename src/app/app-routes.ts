@@ -19,8 +19,6 @@ import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-la
 const adminRoutes = () => import('@modules/admin/admin-routes');
 const accountRoutes = () => import('@modules/account/account-routes');
 const photosRoutes = () => import('@modules/photos/photos-routes');
-// const accountComponent = () => import('@app/modules/account/account.component').then((x) => x.AccountComponent);
-// const adminComponent = import('@modules/admin/admin.component').then(x => x.AdminComponent);
 const three = () => import('@modules/three/three.component').then(x => x.ThreeComponent);
 const playground = () => import('@modules/playground/playground.component').then(x => x.PlaygroundComponent);
 const chat = () => import('@app/modules/chat/chat.component').then(x => x.ChatComponent);

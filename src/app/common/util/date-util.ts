@@ -1,6 +1,5 @@
-import { format } from 'date-fns/format'
+import { format, parse } from 'date-fns'
 import { de, enUS } from "date-fns/locale";
-import { parse } from "date-fns/parse";
 
 
 /**

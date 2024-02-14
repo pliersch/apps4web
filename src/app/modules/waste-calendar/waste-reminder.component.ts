@@ -9,7 +9,7 @@ import { VisibilityStateService } from "@app/common/services/visibility-state.se
 import { formatGermanDayAndMonth, getDateWithoutTime, parseEnglish, parseGerman } from "@app/common/util/date-util";
 import wasteFile from "@assets/json/abfall.json";
 import { WasteDate, WasteEvent, WasteKey } from "@modules/waste-calendar/waste-dates";
-import { differenceInDays } from 'date-fns/differenceInDays'
+import { differenceInDays } from 'date-fns'
 import { de } from 'date-fns/locale'
 
 @Component({
