@@ -8,7 +8,7 @@ import { SafePipe } from '@app/common/pipes/safe.pipe';
     SafePipe
   ],
   templateUrl: './playground.component.html',
-  styleUrl: './playground.component.scss'
+  styleUrls: ['./playground.component.scss']
 })
 export class PlaygroundComponent {
 
