@@ -12,8 +12,7 @@
     "lint": "ng lint",
     "test": "ng test",
     "build:stats": "ng build --stats-json",
-    "serve:stats": "webpack-bundle-analyzer ./dist/apps4web/stats.json",
-    "ng": "ng"
+    "serve:stats": "webpack-bundle-analyzer ./dist/apps4web/stats.json"
   },
   "private": true,
   "dependencies": {
