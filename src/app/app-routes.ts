@@ -19,7 +19,6 @@ import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-la
 const adminRoutes = () => import('@modules/admin/admin-routes');
 const accountRoutes = () => import('@modules/account/account-routes');
 const photosRoutes = () => import('@modules/photos/photos-routes');
-const three = () => import('@modules/three/three.component').then(x => x.ThreeComponent);
 const playground = () => import('@modules/playground/playground.component').then(x => x.PlaygroundComponent);
 const chat = () => import('@app/modules/chat/chat.component').then(x => x.ChatComponent);
 
@@ -62,7 +61,6 @@ export const ROUTES: Route[] = [
           )
         ]
       },
-      {path: 'three', title: 'ThreeJS', loadComponent: three, canActivate: [AuthGuard]},
       {path: 'account', title: 'Account', loadChildren: accountRoutes},
       {path: 'playground', title: 'Playground', loadComponent: playground},
       {path: 'login', redirectTo: 'account/login', pathMatch: 'full'},
