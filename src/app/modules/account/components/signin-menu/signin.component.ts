@@ -58,7 +58,7 @@ export class SigninComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.isDevMode) {
-      this.store.dispatch(new LoginWithEmail('test.admin@a4w.de', '..,-fidM'))
+      this.store.dispatch(new LoginWithEmail('test.admin@a4w.de', 'a4w2024!'))
     }
     this.googleUser$.subscribe(res => {
       this.googleUser = res;
