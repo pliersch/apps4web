@@ -24,7 +24,7 @@ interface RouterStateModel {
       // {path: '', name: 'Home', accepted: Role.User},
       {path: 'photos', name: 'Photos', accepted: Role.User},
       {path: 'chat', name: 'Chat', accepted: Role.User},
-      {path: 'playground', name: 'Playground', accepted: Role.User},
+      // {path: 'playground', name: 'Playground', accepted: Role.User},
       {path: 'account', name: 'Account', accepted: Role.User},
       {path: 'admin', name: 'Admin', accepted: Role.Admin},
     ]

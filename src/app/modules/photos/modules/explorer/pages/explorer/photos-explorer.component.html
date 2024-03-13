@@ -32,9 +32,9 @@
   <div class="column-max-width">
     <div class="scrollbar-container">
       <ng-scrollbar #scrollbar class="light-grey">
-        <div class="images-wrapper">
+        <div class="flex-wrap">
           <app-explorer-photo-control
-            *ngFor="let photo of (downloadablePhotos$ | async); let i=index" class="selection-item"
+            *ngFor="let photo of (downloadablePhotos$ | async); let i=index" class="item selection-item"
             [selected]="currentIndex === i"
             (click)="setCurrent(photo)" [photo]="photo"
             [download]="selectedDownloads.includes(photo)"
