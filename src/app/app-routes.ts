@@ -19,7 +19,7 @@ import { DefaultLayoutComponent } from "./core/layouts/default-layout/default-la
 const adminRoutes = () => import('@modules/admin/admin-routes');
 const accountRoutes = () => import('@modules/account/account-routes');
 const photosRoutes = () => import('@modules/photos/photos-routes');
-// const playground = () => import('@modules/playground/playground.component').then(x => x.PlaygroundComponent);
+const playground = () => import('@modules/playground/playground.component').then(x => x.PlaygroundComponent);
 const chat = () => import('@app/modules/chat/chat.component').then(x => x.ChatComponent);
 
 export const ROUTES: Route[] = [
@@ -62,7 +62,7 @@ export const ROUTES: Route[] = [
         ]
       },
       {path: 'account', title: 'Account', loadChildren: accountRoutes},
-      // {path: 'playground', title: 'Playground', loadComponent: playground},
+      {path: 'playground', title: 'Playground', loadComponent: playground},
       {path: 'login', redirectTo: 'account/login', pathMatch: 'full'},
       {path: '**', redirectTo: '', pathMatch: 'full'},
       {path: '', redirectTo: '', pathMatch: 'full'},
