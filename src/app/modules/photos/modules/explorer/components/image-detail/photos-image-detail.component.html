@@ -1,17 +1,14 @@
 <mat-card class="card">
-  <!--  <mat-card-header>-->
-  <!--    <mat-card-title>Details</mat-card-title>-->
-  <!--  </mat-card-header>-->
-  <mat-card-content *ngIf="currentPhoto$ | async; let currentPhoto">
-    <span> Name: {{currentPhoto.fileName}}</span>
+  <mat-card-content>
+    <span> Name: {{ (currentPhoto$ | async)?.fileName }}</span>
     <br>
-    <span> Date: {{currentPhoto.recordDate | date}}</span>
+    <span> Date: {{ (currentPhoto$ | async)?.recordDate | date }}</span>
     <br>
-    <span> Owner: {{currentPhoto.user.givenName}} {{currentPhoto.user.surName}}</span>
+    <span> Owner: {{ (currentPhoto$ | async)?.user?.givenName }} {{ (currentPhoto$ | async)?.user?.surName }}</span>
     <app-photos-rating></app-photos-rating>
     <mat-chip-set>
-      <mat-chip *ngFor="let tag of currentPhoto.tags">
-        {{tag.name}}
+      <mat-chip *ngFor="let tag of (currentPhoto$ | async)?.tags">
+        {{ tag.name }}
       </mat-chip>
     </mat-chip-set>
   </mat-card-content>

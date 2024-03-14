@@ -34,3 +34,8 @@
 .mdc-list-item.mdc-list-item--with-one-line {
   height: 42px;
 }
+
+.fixed-height {
+  height: 100%;
+  min-height: 300px;
+}

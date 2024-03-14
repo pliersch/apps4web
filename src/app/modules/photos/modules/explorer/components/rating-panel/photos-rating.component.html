@@ -1,4 +1,4 @@
 <div>
-  <app-star-rating *ngIf="currentPhoto$ | async; let photo" [rate]="photo.rating"
+  <app-star-rating [rate]="(currentPhoto$ | async)?.rating || 0"
                    (rateChangeEvent)="onRateChange($event)"></app-star-rating>
 </div>

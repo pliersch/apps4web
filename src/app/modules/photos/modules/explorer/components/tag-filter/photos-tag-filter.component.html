@@ -1,17 +1,17 @@
-<ng-scrollbar track="vertical">
+<ng-scrollbar track="vertical" class="fixed-height">
   <mat-accordion multi>
     <mat-expansion-panel *ngFor="let group of tagGroups; let i = index"
                          [expanded]="step === i" (opened)="setStep(i)" hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          {{ group.name}}
+          {{ group.name }}
         </mat-panel-title>
       </mat-expansion-panel-header>
 
       <mat-selection-list>
         <mat-list-option *ngFor="let tag of group.tags" [selected]="activeTags.includes(tag)"
                          [value]="tag" (click)="onSelectionChange(tag)">
-          {{tag.name}}
+          {{ tag.name }}
         </mat-list-option>
       </mat-selection-list>
     </mat-expansion-panel>

@@ -1,34 +1,36 @@
 <div class="row-max-height">
-  <div class="column control-panel p5">
-    <div class="scrollbar-container">
+  <ng-scrollbar class="light-grey control-panel">
+    <div class="column control-panel p5">
+      <!--      <div class="scrollbar-container">-->
       <app-photos-tag-filter
         [tagGroups]="tagGroups" [activeTags]="activeTags" [photoCounts]="photoCounts"
         (addTagFilterEvent)="handleTagFilterChanged($event, true)"
         (removeTagFilterEvent)="handleTagFilterChanged($event, false)"></app-photos-tag-filter>
+      <!--      </div>-->
+      <app-photos-rating-filter
+        [currentRating]="currentRating"
+        (changeRatingEvent)="handleRatingChange($event)"></app-photos-rating-filter>
+      <app-photos-date-filter></app-photos-date-filter>
+      <app-photos-sorter (sortEvent)="handleChangeSorting($event)"></app-photos-sorter>
+      <div class="column">
+        <button
+          mat-raised-button color="primary"
+          type="button" (click)="onClickClearFilter()">
+          Clear Filter
+          <mat-icon>clear</mat-icon>
+        </button>
+      </div>
+      <app-photos-action-panel
+        [actions]="allowedActions" (actionEvent)="onAction($event)"></app-photos-action-panel>
+      <app-photos-image-detail
+        [currentPhoto$]="currentPhoto$"></app-photos-image-detail>
+      <app-photos-meta-explorer-panel
+        [filteredPhotosCount]="photos.length"
+        [loadedPhotos]="loadedPhotos"
+        [finalDownloadsPhotosCount]="finalDownloads.length"
+        [availablePhotos]="availablePhotos"></app-photos-meta-explorer-panel>
     </div>
-    <app-photos-rating-filter
-      [currentRating]="currentRating"
-      (changeRatingEvent)="handleRatingChange($event)"></app-photos-rating-filter>
-    <app-photos-date-filter></app-photos-date-filter>
-    <app-photos-sorter (sortEvent)="handleChangeSorting($event)"></app-photos-sorter>
-    <div class="column">
-      <button
-        mat-raised-button color="primary"
-        type="button" (click)="onClickClearFilter()">
-        Clear Filter
-        <mat-icon>clear</mat-icon>
-      </button>
-    </div>
-    <app-photos-action-panel
-      [actions]="allowedActions" (actionEvent)="onAction($event)"></app-photos-action-panel>
-    <app-photos-image-detail
-      [currentPhoto$]="currentPhoto$"></app-photos-image-detail>
-    <app-photos-meta-explorer-panel
-      [filteredPhotosCount]="photos.length"
-      [loadedPhotos]="loadedPhotos"
-      [finalDownloadsPhotosCount]="finalDownloads.length"
-      [availablePhotos]="availablePhotos"></app-photos-meta-explorer-panel>
-  </div>
+  </ng-scrollbar>
   <div class="column-max-width">
     <div class="scrollbar-container">
       <ng-scrollbar #scrollbar class="light-grey">
