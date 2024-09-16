@@ -10,8 +10,7 @@ const baseUrl = `${environment.apiUrl}/user`;
 @Injectable()
 export class AccountService {
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
   signin(user: GoogleUser): Observable<User> {
     return this.http.post<User>(baseUrl + '/signin', user);

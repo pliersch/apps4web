@@ -5,6 +5,7 @@
     "start": "ng serve",
     "build": "ng build && gzipper compress ./dist",
     "serve": "http-server -a 127.0.0.1 -p 4300",
+    "serve:node": "node dist/apps4web/index.html -p=4202",
     "serve-new": "http-server ./dist/apps4web -a 127.0.0.1 -p 4300",
     "serve:build-dev": "http-server ./dist/apps4web --port 4200",
     "serve:build_lite": "lite-server --baseDir=\"dist/apps4web\"\n",

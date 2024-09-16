@@ -1,9 +1,11 @@
-import { AfterContentInit, Component } from '@angular/core';
-import { UntypedFormControl, ReactiveFormsModule } from "@angular/forms";
 import { NgFor } from '@angular/common';
-import { MatListModule } from '@angular/material/list';
+import { AfterContentInit, Component } from '@angular/core';
+import { FormsModule, ReactiveFormsModule, UntypedFormControl } from "@angular/forms";
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatSlider, MatSliderThumb } from '@angular/material/slider';
+import { MatTab, MatTabGroup } from '@angular/material/tabs';
 
 export interface Ingredient {
   name: string;
@@ -11,21 +13,24 @@ export interface Ingredient {
 }
 
 @Component({
-    selector: 'app-ingredients',
-    templateUrl: './pizza.component.html',
-    styleUrls: ['./pizza.component.scss'],
-    standalone: true,
-    imports: [MatCardModule, MatButtonToggleModule, ReactiveFormsModule, MatListModule, NgFor]
+  selector: 'app-ingredients',
+  templateUrl: './pizza.component.html',
+  styleUrls: ['./pizza.component.scss'],
+  standalone: true,
+  imports: [MatCardModule, MatButtonToggleModule, ReactiveFormsModule, MatListModule, NgFor, MatSlider, FormsModule, MatSliderThumb, MatTab, MatTabGroup]
 })
 export class PizzaComponent implements AfterContentInit {
 
+  fluorPoolish = 50;
+  base = 50;
+  value = 50;
+
   countControl = new UntypedFormControl('4');
-  value = 270;
+
   poolish: Ingredient[] = [
     {name: 'Mehl', value: '0'},
     {name: 'Wasser', value: '0'},
-    {name: 'Hefe', value: '0'},
-    {name: 'Honig', value: '0'}];
+    {name: 'Hefe', value: '0'}];
 
   dough: Ingredient[] = [
     {name: 'Mehl', value: '0'},
@@ -33,26 +38,32 @@ export class PizzaComponent implements AfterContentInit {
     {name: 'Salz', value: '0'}];
 
   updateFields(): void {
+    const factor = this.value / this.base;
     const count = this.countControl.value;
 
     const poolishFlour: Ingredient = this.poolish.find(ingredient => ingredient.name === 'Mehl')!;
     const poolishWater: Ingredient = this.poolish.find(ingredient => ingredient.name === 'Wasser')!;
     const poolishYeast: Ingredient = this.poolish.find(ingredient => ingredient.name === 'Hefe')!;
-    const poolishHoney: Ingredient = this.poolish.find(ingredient => ingredient.name === 'Honig')!;
     const doughFlour: Ingredient = this.dough.find(ingredient => ingredient.name === 'Mehl')!;
     const doughWater: Ingredient = this.dough.find(ingredient => ingredient.name === 'Wasser')!;
     const doughSalt: Ingredient = this.dough.find(ingredient => ingredient.name === 'Salz')!;
 
-    poolishFlour.value = String(count * 50) + 'g';
-    poolishWater.value = String(count * 50) + 'g';
-    poolishHoney.value = String(count * 0.5) + 'g';
-    poolishYeast.value = String((count * 0.35).toFixed(1)) + 'g';
-    doughFlour.value = String(count * 105) + 'g';
-    doughWater.value = String(count * 65) + 'g';
-    doughSalt.value = String(count * 4.5) + 'g';
+    poolishFlour.value = this.toString(count * this.value);
+    poolishWater.value = this.toString(count * this.value);
+    poolishYeast.value = this.toString(count * 0.35 * factor);
+    doughFlour.value = this.toString(count * 105 * factor);
+    doughWater.value = this.toString(count * 65 * factor);
+    doughSalt.value = this.toString(count * 4.5 * factor);
   }
 
   ngAfterContentInit(): void {
     this.updateFields();
+  }
+
+  private toString(num: number): string {
+    if (num % 1 === 0) {
+      return String(num) + 'g';
+    }
+    return String(num.toFixed(1)) + 'g';
   }
 }

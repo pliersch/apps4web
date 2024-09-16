@@ -1,24 +1,23 @@
 import { User } from "@account/store/user.model";
+import { NgFor, NgIf } from "@angular/common";
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, ReactiveFormsModule } from "@angular/forms";
-import { MatDialogRef, MatDialogModule } from "@angular/material/dialog";
+import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
+import { MatButtonModule } from "@angular/material/button";
+import { MatOptionModule } from "@angular/material/core";
+import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatSelectModule } from "@angular/material/select";
 import { getValuesOfEnum } from "@app/common/util/enum-utils";
 import { Role } from "@modules/admin/modules/user/store/role";
 import { Status } from "@modules/admin/modules/user/store/status";
-import { MatButtonModule } from "@angular/material/button";
-import { MatOptionModule } from "@angular/material/core";
-import { MatSelectModule } from "@angular/material/select";
-import { NgIf, NgFor } from "@angular/common";
-import { MatInputModule } from "@angular/material/input";
-import { MatFormFieldModule } from "@angular/material/form-field";
-
 
 @Component({
-    selector: 'app-create-user-dialog',
-    templateUrl: './create-user-dialog.component.html',
-    styleUrls: ['./create-user-dialog.component.scss'],
-    standalone: true,
-    imports: [MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NgIf, MatSelectModule, NgFor, MatOptionModule, MatButtonModule]
+  selector: 'app-create-user-dialog',
+  templateUrl: './create-user-dialog.component.html',
+  styleUrls: ['./create-user-dialog.component.scss'],
+  standalone: true,
+  imports: [MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NgIf, MatSelectModule, NgFor, MatOptionModule, MatButtonModule]
 })
 export class CreateUserDialogComponent implements OnInit {
 

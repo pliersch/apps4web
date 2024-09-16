@@ -11,7 +11,11 @@ const baseUrl = `${environment.apiUrl}/user`;
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    http.get(`${environment.apiUrl}`).subscribe(res => {
+      console.log(res);
+    })
+  }
 
   getAll(): Observable<User[]> {
     return this.http.get<User[]>(baseUrl);

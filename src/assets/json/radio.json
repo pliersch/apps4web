@@ -9,16 +9,6 @@
       "name": "Klassik Radio Movie",
       "logoUrl": "/assets/radio/Klassik_Radio_movie.jpg",
       "stream": "https://live.streams.klassikradio.de/klassikradio-movie?aggregator=radioplayer&rp_source=1&=&&___cb=273082722066363"
-    },
-    {
-      "name": "Klassik Radio Schiller",
-      "logoUrl": "/assets/radio/Klassik_Radio_schiller.jpg",
-      "stream": "https://klassikr.streamabc.net/klr-schiller-mp3-192-1913826?sABC=636o5p40%230%231sn661781pp10567n0q87oq4r97q0n6o%23cubabfgne&aw_0_1st.playerid=phonostar&amsparams=playerid:phonostar;skey:1667980352"
-    },
-    {
-      "name": "Klassik Radio Schiller Berlin",
-      "logoUrl": "/assets/radio/Klassik_Radio_schiller-berlin.jpg",
-      "stream": "https://klassikr.streamabc.net/klr-schillerberlin-mp3-192-6610643?sABC=636o609n%230%231sn661781pp10567n0q87oq4r97q0n6o%23cubabfgne&aw_0_1st.playerid=phonostar&amsparams=playerid:phonostar;skey:1667981466"
     }
   ],
   "classic-radio": [
