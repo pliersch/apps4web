@@ -1,67 +1,75 @@
 <mat-card class="pizza-card component">
   <mat-card-header>
-    <mat-card-title>Pizza Teig</mat-card-title>
+    <mat-card-title>Teige</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <mat-tab-group color="accent">
-      <mat-tab label="Favoriten">
-        <div class="flexbox-panel">
-          <mat-button-toggle-group value="4" [formControl]="countControl"
-                                   class="m8-l-r" (change)="updateFields()">
-            <mat-button-toggle value="1">&nbsp;1&nbsp;</mat-button-toggle>
-            <mat-button-toggle value="2">&nbsp;2&nbsp;</mat-button-toggle>
-            <mat-button-toggle value="3">&nbsp;3&nbsp;</mat-button-toggle>
-            <mat-button-toggle value="4">&nbsp;4&nbsp;</mat-button-toggle>
-            <mat-button-toggle value="5">&nbsp;5&nbsp;</mat-button-toggle>
-            <mat-button-toggle value="6">&nbsp;6&nbsp;</mat-button-toggle>
-            <mat-button-toggle value="7">&nbsp;7&nbsp;</mat-button-toggle>
-            <mat-button-toggle value="8">&nbsp;8&nbsp;</mat-button-toggle>
-            <mat-button-toggle value="9">&nbsp;9&nbsp;</mat-button-toggle>
-          </mat-button-toggle-group>
-        </div>
-        <div class="example-label-container">
-          <label>{{ value }}g</label>
-        </div>
-        <mat-slider max="80" min="50" step="10" showTickMarks (change)="updateFields()">
-          <input matSliderThumb [(ngModel)]="value">
-        </mat-slider>
-        <mat-divider></mat-divider>
-        <div class="row-max-width">
-          <div class="col-6">
-            <div class="subtitle">Poolish</div>
-            <mat-list>
-              <mat-list-item *ngFor="let ingredient of poolish">
-                <div class="row-max-width">
-                  <div class="col-6">
-                    {{ ingredient.name }}:
-                  </div>
-                  <div class="col-6">
-                    {{ ingredient.value }}
-                  </div>
-                </div>
-              </mat-list-item>
-            </mat-list>
-          </div>
-          <div class="col-6">
-            <div class="subtitle">Hauptteig</div>
-            <mat-list>
-              <mat-list-item *ngFor="let ingredient of dough">
-                <div class="row-max-width">
-                  <div class="col-6">
-                    {{ ingredient.name }}:
-                  </div>
-                  <div class="col-6">
-                    {{ ingredient.value }}
-                  </div>
-                </div>
-              </mat-list-item>
-            </mat-list>
-          </div>
-        </div>
+    <mat-tab-group (selectedTabChange)="onSelectRecipe($event)" color="accent">
+      <mat-tab label="Pizza">
+        <ng-container [ngTemplateOutlet]="template"/>
       </mat-tab>
       <mat-tab label="Landbrot">
+        <ng-container [ngTemplateOutlet]="template"/>
       </mat-tab>
     </mat-tab-group>
   </mat-card-content>
 </mat-card>
 
+<!----------------------------------------------------->
+<!--                     template                    -->
+<!----------------------------------------------------->
+<!--wrap in template because content could exists only once-->
+<ng-template #template>
+  <div class="flexbox-panel">
+    <mat-button-toggle-group value="4" [formControl]="countControl"
+                             class="m8-l-r" (change)="updateFields()">
+      <mat-button-toggle value="1">&nbsp;1&nbsp;</mat-button-toggle>
+      <mat-button-toggle value="2">&nbsp;2&nbsp;</mat-button-toggle>
+      <mat-button-toggle value="3">&nbsp;3&nbsp;</mat-button-toggle>
+      <mat-button-toggle value="4">&nbsp;4&nbsp;</mat-button-toggle>
+      <mat-button-toggle value="5">&nbsp;5&nbsp;</mat-button-toggle>
+      <mat-button-toggle value="6">&nbsp;6&nbsp;</mat-button-toggle>
+      <mat-button-toggle value="7">&nbsp;7&nbsp;</mat-button-toggle>
+      <mat-button-toggle value="8">&nbsp;8&nbsp;</mat-button-toggle>
+      <mat-button-toggle value="9">&nbsp;9&nbsp;</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <div>
+    <label>{{ fluorPoolish }}g</label>
+  </div>
+  <mat-slider min="{{recipe.min}}" max="{{recipe.max}}" step="{{recipe.step}}" showTickMarks (change)="updateFields()">
+    <input matSliderThumb [(ngModel)]="fluorPoolish">
+  </mat-slider>
+  <mat-divider></mat-divider>
+  <div class="row-max-width">
+    <div class="col-6">
+      <div class="subtitle">Poolish</div>
+      <mat-list>
+        <mat-list-item *ngFor="let ingredient of poolish">
+          <div class="row-max-width">
+            <div class="col-6">
+              {{ ingredient.name }}:
+            </div>
+            <div class="col-6">
+              {{ ingredient.value }}
+            </div>
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <div class="col-6">
+      <div class="subtitle">Hauptteig</div>
+      <mat-list>
+        <mat-list-item *ngFor="let ingredient of dough">
+          <div class="row-max-width">
+            <div class="col-6">
+              {{ ingredient.name }}:
+            </div>
+            <div class="col-6">
+              {{ ingredient.value }}
+            </div>
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+</ng-template>

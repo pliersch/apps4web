@@ -1,13 +1,23 @@
-import { NgFor } from '@angular/common';
+import { NgFor, NgTemplateOutlet } from '@angular/common';
 import { AfterContentInit, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from "@angular/forms";
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatSlider, MatSliderThumb } from '@angular/material/slider';
-import { MatTab, MatTabGroup } from '@angular/material/tabs';
+import { MatTab, MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
 
-export interface Ingredient {
+interface Recipe {
+  yeast: number;
+  flour: number;
+  water: number;
+  salt: number;
+  min: number;
+  max: number;
+  step: number;
+}
+
+interface Ingredient {
   name: string;
   value: string;
 }
@@ -17,13 +27,19 @@ export interface Ingredient {
   templateUrl: './pizza.component.html',
   styleUrls: ['./pizza.component.scss'],
   standalone: true,
-  imports: [MatCardModule, MatButtonToggleModule, ReactiveFormsModule, MatListModule, NgFor, MatSlider, FormsModule, MatSliderThumb, MatTab, MatTabGroup]
+  imports: [MatCardModule, MatButtonToggleModule, ReactiveFormsModule, MatListModule, NgFor, MatSlider, FormsModule, MatSliderThumb, MatTab, MatTabGroup, NgTemplateOutlet]
 })
 export class PizzaComponent implements AfterContentInit {
 
-  fluorPoolish = 50;
+  private recipes = new Map<string, Recipe>([
+    ["Pizza", {min: 60, max: 80, step: 5, water: 65, yeast: 0.35, flour: 105, salt: 4.5}],
+    ["Landbrot", {min: 80, max: 160, step: 10, water: 65, yeast: 0.3, flour: 107, salt: 4.0}],
+  ]);
+
+  recipe: Recipe;
+
   base = 50;
-  value = 50;
+  fluorPoolish = 50;
 
   countControl = new UntypedFormControl('4');
 
@@ -38,7 +54,7 @@ export class PizzaComponent implements AfterContentInit {
     {name: 'Salz', value: '0'}];
 
   updateFields(): void {
-    const factor = this.value / this.base;
+    const factor = this.fluorPoolish / this.base;
     const count = this.countControl.value;
 
     const poolishFlour: Ingredient = this.poolish.find(ingredient => ingredient.name === 'Mehl')!;
@@ -48,15 +64,16 @@ export class PizzaComponent implements AfterContentInit {
     const doughWater: Ingredient = this.dough.find(ingredient => ingredient.name === 'Wasser')!;
     const doughSalt: Ingredient = this.dough.find(ingredient => ingredient.name === 'Salz')!;
 
-    poolishFlour.value = this.toString(count * this.value);
-    poolishWater.value = this.toString(count * this.value);
-    poolishYeast.value = this.toString(count * 0.35 * factor);
-    doughFlour.value = this.toString(count * 105 * factor);
-    doughWater.value = this.toString(count * 65 * factor);
-    doughSalt.value = this.toString(count * 4.5 * factor);
+    poolishFlour.value = this.toString(count * this.fluorPoolish);
+    poolishWater.value = this.toString(count * this.fluorPoolish);
+    poolishYeast.value = this.toString(count * this.recipe.yeast * factor);
+    doughFlour.value = this.toString(count * this.recipe.flour * factor);
+    doughWater.value = this.toString(count * this.recipe.water * factor);
+    doughSalt.value = this.toString(count * this.recipe.salt * factor);
   }
 
   ngAfterContentInit(): void {
+    this.recipe = this.recipes.get('Pizza')!;
     this.updateFields();
   }
 
@@ -65,5 +82,10 @@ export class PizzaComponent implements AfterContentInit {
       return String(num) + 'g';
     }
     return String(num.toFixed(1)) + 'g';
+  }
+
+  onSelectRecipe($event: MatTabChangeEvent): void {
+    this.recipe = this.recipes.get($event.tab.textLabel)!;
+    this.updateFields();
   }
 }
